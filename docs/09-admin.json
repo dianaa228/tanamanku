@@ -1,0 +1,20 @@
+{
+  "description": "Modul admin web Tanamanku.",
+  "role": "admin",
+  "scope": ["backend", "web"],
+  "pages": {
+    "Dashboard": "Ringkasan metrik platform (GMV, pesanan, pengguna, produk)",
+    "Users": "Kelola pengguna, aktifkan/nonaktifkan, ganti peran",
+    "Stores": "Verifikasi & moderasi toko seller",
+    "Categories": "CRUD kategori katalog",
+    "Products": "Moderasi produk terlarang/bermasalah",
+    "Orders": "Pantau seluruh pesanan platform",
+    "Payments": "Pantau status pembayaran & refund",
+    "Community": "Moderasi post, komentar, dan laporan",
+    "Reports": "Laporan & analitik (penjualan, pertumbuhan pengguna)",
+    "Settings": "Pengaturan platform (ongkir, biaya, banner)"
+  },
+  "authorization": "Semua halaman admin dilindungi middleware admin + Policy; hanya role admin yang dapat mengakses.",
+  "mobile": false,
+  "key_actions": ["Moderasi konten", "Verifikasi seller", "Kelola kategori & spesies", "Lihat laporan platform"]
+}

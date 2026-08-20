@@ -1,0 +1,26 @@
+{
+  "description": "Arsitektur keamanan Tanamanku.",
+  "authentication": "Laravel Sanctum (token) — semua endpoint protected memakai Bearer token",
+  "authorization": ["Middleware", "Policies", "Role", "Permission", "Ownership Check"],
+  "hard_rules": [
+    "Never trust user_id from client.",
+    "Never trust price calculated by client.",
+    "Never trust order total from client.",
+    "Never expose passwords.",
+    "Never expose tokens.",
+    "Validate every request.",
+    "Validate file uploads.",
+    "Use rate limiting.",
+    "Use database transactions for checkout."
+  ],
+  "additional_measures": [
+    "Password di-hash (bcrypt) — tidak pernah disimpan plaintext",
+    "Konfigurasi sensitif (DB, payment, mail) hanya di environment variables",
+    "Rate limiting pada endpoint auth & checkout",
+    "Validasi file upload (tipe, ukuran, ekstensi)",
+    "CORS dibatasi origin aplikasi resmi",
+    "Sanitasi input pada konten komunitas (XSS protection)",
+    "HTTPS di semua environment produksi"
+  ],
+  "ownership_sensitive_resources": ["orders", "user_plants", "posts", "carts", "reviews", "plant_listings", "service_orders"]
+}

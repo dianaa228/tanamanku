@@ -1,0 +1,41 @@
+{
+  "description": "Daftar fitur Tanamanku berdasarkan prioritas.",
+  "must_have": [
+    "Authentication (login, register, forgot password)",
+    "Product Marketplace",
+    "Category",
+    "Search",
+    "Product Detail",
+    "Cart",
+    "Checkout",
+    "Orders",
+    "My Garden",
+    "Plant Care Reminder"
+  ],
+  "next_version": [
+    "Plant Finder",
+    "Plant Diagnosis",
+    "Seller Dashboard",
+    "Reviews",
+    "Notifications"
+  ],
+  "future": [
+    "Community",
+    "Nursery",
+    "Plant Exchange",
+    "Gardening Services",
+    "Subscription",
+    "Loyalty System",
+    "Advanced Analytics"
+  ],
+  "frontend_coverage": {
+    "web_customer_pages": [
+      "Home", "Explore", "ProductDetail", "Cart", "Checkout", "Orders",
+      "OrderDetail", "MyGarden", "PlantDetail", "PlantFinder",
+      "PlantDiagnosis", "Community", "Profile"
+    ],
+    "web_auth_pages": ["Login", "Register", "ForgotPassword"],
+    "web_seller_pages": ["Dashboard", "Products", "CreateProduct", "EditProduct", "Orders", "Inventory", "Sales"],
+    "web_admin_pages": ["Dashboard", "Users", "Stores", "Categories", "Products", "Orders", "Payments", "Community", "Reports", "Settings"]
+  }
+}

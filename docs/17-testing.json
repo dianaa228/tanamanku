@@ -1,0 +1,25 @@
+{
+  "description": "Strategi pengujian Tanamanku.",
+  "backend": {
+    "tests/Feature": { "Auth": {}, "Marketplace": {}, "Cart": {}, "Order": {}, "Garden": {}, "Community": {} },
+    "tests/Unit": { "Services": {}, "Rules": {} },
+    "framework": "PHPUnit + Laravel Testing",
+    "priority": [
+      "Business rules penting (hitung total server-side, stok, transaksi checkout)",
+      "Authorization & ownership check (403 untuk akses bukan pemilik)",
+      "Validasi FormRequest (400/422)",
+      "Alur inti: auth → cart → checkout → order"
+    ]
+  },
+  "web": {
+    "framework": "Vitest + React Testing Library (saat implementasi)",
+    "priority": ["Komponen UI kritis (cart, checkout form)", "Routing protection"]
+  },
+  "mobile": {
+    "test": { "unit": {}, "widget": {}, "integration": {} },
+    "framework": "Flutter test"
+  },
+  "api": "Pengujian endpoint REST langsung (curl / Postman collection / Pest) sesuai docs/06-api.json",
+  "security_test": ["OWASP top 10 ringkas: auth bypass, IDOR (ownership), XSS komunitas, upload validation, rate limit"],
+  "ci": "Jalankan di pipeline: composer test (backend) + npm run test (web) + flutter test (mobile)"
+}

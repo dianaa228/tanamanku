@@ -1,0 +1,104 @@
+@import "tailwindcss";
+
+@theme {
+  /* Palet hijau daun (primary) */
+  --color-leaf-50: #f2f9f4;
+  --color-leaf-100: #e0f2e6;
+  --color-leaf-200: #c2e5cf;
+  --color-leaf-300: #96d1ad;
+  --color-leaf-400: #65b685;
+  --color-leaf-500: #419a67;
+  --color-leaf-600: #2f7c52;
+  --color-leaf-700: #286444;
+  --color-leaf-800: #235038;
+  --color-leaf-900: #1d422f;
+  --color-leaf-950: #0e2519;
+
+  /* Palet tanah (warm) */
+  --color-soil-50: #faf6f0;
+  --color-soil-100: #f3eadd;
+  --color-soil-200: #e6d3ba;
+  --color-soil-300: #d6b690;
+  --color-soil-400: #c49468;
+  --color-soil-500: #b47c4d;
+  --color-soil-600: #9c6540;
+  --color-soil-700: #7f4e36;
+  --color-soil-800: #684031;
+  --color-soil-900: #57362b;
+  --color-soil-950: #2f1b15;
+
+  /* Aksen matahari */
+  --color-sun-100: #fff7d6;
+  --color-sun-200: #ffeaa0;
+  --color-sun-300: #ffd866;
+  --color-sun-400: #ffc133;
+  --color-sun-500: #f5a714;
+  --color-sun-600: #d98509;
+
+  /* Latar */
+  --color-cream: #faf8f3;
+  --color-cream-dark: #f2eee5;
+
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+
+  --shadow-soft: 0 2px 12px -2px rgb(31 66 46 / 0.08), 0 6px 24px -6px rgb(31 66 46 / 0.08);
+  --shadow-lift: 0 12px 40px -8px rgb(31 66 46 / 0.18);
+
+  --animate-fade-up: fade-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-fade-in: fade-in 0.4s ease-out both;
+  --animate-float: float 5s ease-in-out infinite;
+  --animate-pop: pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  @keyframes pop {
+    from { opacity: 0; transform: scale(0.92); }
+    to { opacity: 1; transform: scale(1); }
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-cream text-leaf-950 font-sans antialiased;
+}
+
+::selection {
+  @apply bg-leaf-300/60 text-leaf-950;
+}
+
+/* Sembunyikan scrollbar horizontal pada baris kartu */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Scrollbar halus untuk konten */
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-thumb {
+  background: #c2e5cf;
+  border-radius: 8px;
+  border: 2px solid var(--color-cream);
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}

@@ -1,0 +1,41 @@
+{
+  "description": "Role pengguna dan permission model Tanamanku.",
+  "roles": [
+    {
+      "name": "customer",
+      "description": "Pengguna umum: belanja, kelola My Garden, ikut komunitas, plant exchange",
+      "permissions": [
+        "view_products", "create_order", "view_own_orders", "manage_cart",
+        "manage_own_garden", "create_post", "comment", "like_post",
+        "create_plant_listing", "book_service", "review_purchased_product"
+      ]
+    },
+    {
+      "name": "seller",
+      "description": "Pemilik toko: kelola produk, stok, pesanan, dan penjualan",
+      "permissions": [
+        "all_customer_permissions",
+        "manage_store", "manage_products", "manage_inventory",
+        "fulfill_orders", "view_sales", "manage_product_reviews"
+      ]
+    },
+    {
+      "name": "admin",
+      "description": "Pengelola platform: moderasi, kategori, laporan, pengaturan sistem",
+      "permissions": [
+        "all_permissions",
+        "manage_users", "manage_stores", "manage_categories",
+        "moderate_community", "view_reports", "manage_settings"
+      ]
+    }
+  ],
+  "authorization_mechanisms": ["Middleware", "Policies", "Role", "Permission", "Ownership Check"],
+  "ownership_check_examples": [
+    "Pesanan hanya dapat diakses oleh pemilik pesanan atau admin.",
+    "Produk hanya dapat diubah oleh pemilik toko (StorePolicy).",
+    "Post komunitas hanya dapat diedit oleh penulisnya (PostPolicy).",
+    "Tanaman My Garden hanya dapat dikelola oleh pemiliknya (UserPlantPolicy)."
+  ],
+  "default_role": "customer",
+  "seeder": "RoleSeeder.php — membuat role & permission awal; AdminSeeder.php — akun admin pertama"
+}

@@ -1,0 +1,40 @@
+{
+  "name": "Tanamanku",
+  "type": "Urban Gardening Marketplace & Management Platform",
+  "version": "1.0.0",
+  "architecture": "Monorepo",
+  "language": "Indonesian",
+  "market": "Indonesia",
+  "tagline": "Belanja, rawat, dan tumbuhkan kebun perkotaanmu dalam satu aplikasi.",
+  "repositories": {
+    "root": "tanamanku/",
+    "docs": "tanamanku/docs/",
+    "backend": "tanamanku/backend/",
+    "web": "tanamanku/web/",
+    "mobile": "tanamanku/mobile/"
+  },
+  "root_files": ["README.md", ".gitignore", "docker-compose.yml"],
+  "technology_stack": {
+    "backend": { "framework": "Laravel", "language": "PHP", "architecture": "REST API", "authentication": "Laravel Sanctum", "orm": "Eloquent" },
+    "web": { "framework": "React", "css": "Tailwind CSS", "bundler": "Vite" },
+    "mobile": { "framework": "Flutter", "platform": ["Android", "iOS"] },
+    "database": { "engine": "MySQL" }
+  },
+  "system_modules": {
+    "authentication": { "backend": true, "web": true, "mobile": true },
+    "marketplace": { "backend": true, "web": true, "mobile": true },
+    "cart": { "backend": true, "web": true, "mobile": true },
+    "checkout": { "backend": true, "web": true, "mobile": true },
+    "orders": { "backend": true, "web": true, "mobile": true },
+    "my_garden": { "backend": true, "web": true, "mobile": true },
+    "plant_care": { "backend": true, "web": true, "mobile": true },
+    "plant_finder": { "backend": true, "web": true, "mobile": true },
+    "plant_diagnosis": { "backend": true, "web": true, "mobile": true },
+    "community": { "backend": true, "web": true, "mobile": true },
+    "plant_exchange": { "backend": true, "web": true, "mobile": true },
+    "services": { "backend": true, "web": true, "mobile": true },
+    "admin": { "backend": true, "web": true, "mobile": false },
+    "seller": { "backend": true, "web": true, "mobile": false }
+  },
+  "core_principle": "Backend adalah source of truth. Frontend (React & Flutter) hanya bertanggung jawab terhadap UI, state, interaksi, dan API consumption."
+}

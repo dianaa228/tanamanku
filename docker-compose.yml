@@ -1,0 +1,57 @@
+# Tanamanku — docker compose untuk layanan pendukung pengembangan.
+# Catatan: PHP/Composer belum tersedia di host → backend dilayani via container ini.
+# Jalankan:  docker compose up -d
+# Setelah backend di-scaffold, build ulang:  docker compose up -d --build backend
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: tanamanku_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: tanamanku
+      MYSQL_USER: tanamanku
+      MYSQL_PASSWORD: tanamanku_secret
+      MYSQL_ROOT_PASSWORD: root_secret
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-proot_secret"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: tanamanku_phpmyadmin
+    restart: unless-stopped
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: tanamanku
+      PMA_PASSWORD: tanamanku_secret
+    ports:
+      - "8080:80"
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  # backend:
+  #   build: ./backend
+  #   container_name: tanamanku_backend
+  #   restart: unless-stopped
+  #   ports:
+  #     - "8000:8000"
+  #   environment:
+  #     DB_HOST: mysql
+  #     DB_DATABASE: tanamanku
+  #     DB_USERNAME: tanamanku
+  #     DB_PASSWORD: tanamanku_secret
+  #   depends_on:
+  #     mysql:
+  #       condition: service_healthy
+  #   command: php artisan serve --host=0.0.0.0 --port=8000
+
+volumes:
+  mysql_data:

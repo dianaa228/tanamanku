@@ -1,0 +1,33 @@
+{
+  "description": "Aturan pengembangan dan urutan implementasi Tanamanku.",
+  "development_order": [
+    { "phase": 1, "name": "Project Foundation", "modules": ["Laravel", "React", "Flutter", "MySQL", "API"] },
+    { "phase": 2, "name": "Authentication", "modules": ["Users", "Roles", "Login", "Register", "Sanctum"] },
+    { "phase": 3, "name": "Marketplace", "modules": ["Categories", "Stores", "Products", "Inventory", "Search"] },
+    { "phase": 4, "name": "Commerce", "modules": ["Cart", "Checkout", "Orders", "Payments", "Shipment", "Reviews"] },
+    { "phase": 5, "name": "My Garden", "modules": ["Plant Species", "User Plants", "Plant Photos", "Growth", "Care Logs"] },
+    { "phase": 6, "name": "Plant Care", "modules": ["Reminders", "Watering", "Fertilizing", "Repotting", "Notifications"] },
+    { "phase": 7, "name": "Smart Plant", "modules": ["Plant Finder", "Rule Engine", "Plant Diagnosis"] },
+    { "phase": 8, "name": "Community", "modules": ["Posts", "Comments", "Likes", "Reports"] },
+    { "phase": 9, "name": "Seller", "modules": ["Seller Dashboard", "Product Management", "Inventory", "Order Management", "Sales"] },
+    { "phase": 10, "name": "Services", "modules": ["Service", "Booking", "Schedule", "Provider"] },
+    { "phase": 11, "name": "Plant Exchange", "modules": ["Plant Listing", "Selling", "Exchange", "Exchange Request"] },
+    { "phase": 12, "name": "Testing & Production", "modules": ["Unit Test", "Feature Test", "API Test", "Security Test", "Deployment"] }
+  ],
+  "non_negotiables": [
+    "Backend adalah source of truth — aturan bisnis tidak boleh hanya di frontend.",
+    "Semua perubahan skema DB lewat migration; tidak ada duplikasi model/tabel.",
+    "React & Flutter mengonsumsi API yang sama dan tidak menduplikasi logic.",
+    "Frontend diorganisasi per fitur (feature-based).",
+    "Controller tipis; business logic di service classes.",
+    "Tulis test untuk aturan bisnis penting."
+  ],
+  "git_workflow": "Trunk-based ringan: branch fitur → PR → review → merge ke main; pesan commit deskriptif",
+  "definition_of_done": [
+    "Kode mengikuti struktur docs/07 & docs/08",
+    "Input divalidasi server-side",
+    "Resource ownership dicek",
+    "Tidak ada TODO tanpa pemilik",
+    "Build lulus (web: npm run build; backend: composer test)"
+  ]
+}

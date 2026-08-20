@@ -1,0 +1,48 @@
+{
+  "description": "Lokasi business logic dan aturan bisnis penting Tanamanku.",
+  "business_logic_location": {
+    "controllers": "Request handling only",
+    "requests": "Validation",
+    "services": "Business logic",
+    "models": "Relationships and persistence",
+    "policies": "Authorization",
+    "resources": "API response transformation",
+    "jobs": "Asynchronous processing",
+    "notifications": "User notification logic"
+  },
+  "services": {
+    "AuthService.php": "Authentication business logic",
+    "ProductService.php": "Product business logic",
+    "CartService.php": "Cart business logic",
+    "OrderService.php": "Order and checkout business logic",
+    "PaymentService.php": "Payment processing",
+    "InventoryService.php": "Stock management",
+    "PlantFinderService.php": "Plant recommendation engine",
+    "PlantDiagnosisService.php": "Plant diagnosis rules",
+    "GardenService.php": "My Garden business logic",
+    "ReminderService.php": "Plant reminder management",
+    "CommunityService.php": "Community business logic",
+    "PlantExchangeService.php": "Plant exchange logic",
+    "ServiceBookingService.php": "Gardening service booking"
+  },
+  "important_rules": [
+    "Backend is the source of truth.",
+    "Frontend must never contain critical business logic only.",
+    "All database changes must use migrations.",
+    "All API input must be validated.",
+    "All protected resources must check authorization.",
+    "All ownership-sensitive resources must check ownership.",
+    "Checkout must use database transaction.",
+    "Stock must be checked server-side.",
+    "Order totals must be calculated server-side.",
+    "Passwords must be hashed.",
+    "Sensitive configuration must be stored in environment variables.",
+    "Do not duplicate business logic between React and Flutter.",
+    "React and Flutter consume the same Laravel API.",
+    "Do not create duplicate models or tables.",
+    "Use feature-based organization for frontend modules.",
+    "Keep controllers thin.",
+    "Use service classes for complex business logic.",
+    "Write tests for important business rules."
+  ]
+}

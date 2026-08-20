@@ -1,0 +1,43 @@
+{
+  "description": "Pedoman desain UI/UX Tanamanku.",
+  "brand": {
+    "name": "Tanamanku",
+    "concept": "Segar, alami, hangat, dan modern — identitas kebun perkotaan",
+    "tone": "Ramah, membantu, menenangkan",
+    "language": "Indonesia (formal-santai)"
+  },
+  "colors": {
+    "primary": "Hijau daun (emerald/leaf)",
+    "secondary": "Tanah hangat (warm sand / terracotta)",
+    "background": "Krem lembut / putih alami",
+    "accent": "Kuning lemon / jingga matahari terbenam untuk CTA & info",
+    "semantic": { "success": "hijau", "warning": "amber", "danger": "merah hangat" }
+  },
+  "typography": {
+    "display": "Plus Jakarta Sans (bold)",
+    "body": "Plus Jakarta Sans / Inter",
+    "scale": "Mobile-first, heading besar dengan hierarki jelas"
+  },
+  "shapes": {
+    "radius": "Bulat sedang-luas (rounded-xl/2xl) — kesan organik & ramah",
+    "shadow": "Lembut, natural (soft shadow)",
+    "spacing": "Luas; konten bernapas"
+  },
+  "principles": [
+    "Mobile-first: seluruh halaman responsif dari layar kecil ke besar",
+    "Satu tujuan utama per halaman, CTA jelas",
+    "Mikro-interaksi: hover, transisi, feedback visual di semua elemen interaktif",
+    "Empty state selalu diberi aksi lanjutan (CTA)",
+    "Status tanaman ditampilkan visual (warna + ikon), bukan hanya teks",
+    "Konsistensi komponen melalui design system (components/ui)"
+  ],
+  "key_screens": {
+    "Home": "Hero cerah + kategori + produk unggulan + tips berkebun",
+    "Explore": "Grid produk + filter & pencarian",
+    "ProductDetail": "Galeri besar, varian, stok, CTA keranjang",
+    "MyGarden": "Kartu tanaman dengan status & pengingat",
+    "PlantFinder": "Alur rekomendasi berbasis pertanyaan, hasil berbentuk kartu",
+    "PlantDiagnosis": "Pilih gejala → hasil diagnosis + saran perawatan",
+    "Community": "Feed post dengan gambar, like, dan komentar"
+  }
+}

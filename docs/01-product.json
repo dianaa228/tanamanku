@@ -1,0 +1,32 @@
+{
+  "description": "Definisi produk Tanamanku — apa yang dijual dan bagaimana pasar berjalan.",
+  "product_definition": {
+    "core_product": "Marketplace tanaman & perlengkapan berkebun untuk area urban/perkotaan",
+    "value_proposition": [
+      "Pendamping berkebun digital: dari membeli tanaman hingga merawatnya harian",
+      "Rekomendasi tanaman yang cocok dengan lingkungan rumah pengguna",
+      "Diagnosis awal penyakit tanaman berbasis aturan",
+      "Komunitas pecinta tanaman untuk berbagi & bertukar"
+    ],
+    "target_user": [
+      "Penghuni apartemen / rumah dengan lahan terbatas",
+      "Pemula yang ingin mulai berkebun",
+      "Hobiis yang ingin memperluas koleksi",
+      "Pemilik nursery / toko tanaman (seller)",
+      "Penyedia jasa berkebun"
+    ]
+  },
+  "catalog_structure": {
+    "hierarchy": ["Kategori", "Produk", "Varian", "Stok"],
+    "category_examples": ["Tanaman Hias", "Sayuran & Herbal", "Buah", "Media Tanam", "Pupuk & Nutrisi", "Peralatan", "Pot & Dekorasi"],
+    "product_fields": [
+      "name", "slug", "description", "category_id", "store_id", "price",
+      "stock", "images", "variants", "plant_species_id", "care_level", "is_active"
+    ]
+  },
+  "rules": [
+    "Harga produk ditetapkan seller, divalidasi server.",
+    "Stok dikelola server-side; checkout selalu mengecek stok di server.",
+    "Ulasan hanya boleh dibuat oleh pembeli yang sudah menyelesaikan pesanan."
+  ]
+}

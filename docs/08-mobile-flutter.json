@@ -1,0 +1,36 @@
+{
+  "description": "Struktur aplikasi mobile Flutter (customer).",
+  "framework": "Flutter",
+  "platform": ["Android", "iOS"],
+  "rule": "Flutter hanya menangani UI, state, interaksi, dan konsumsi API. Business logic utama berada di backend. Tidak menduplikasi logic React.",
+  "directory": {
+    "lib/core": {
+      "config": "Konfigurasi (base URL, env)",
+      "constants": "Konstanta global",
+      "network": "HTTP client & interceptor",
+      "storage": "Local storage (shared_preferences)",
+      "theme": "Tema & gaya",
+      "utils": "Helper & formatter"
+    },
+    "lib/models": ["user.dart", "product.dart", "category.dart", "cart.dart", "order.dart", "plant.dart", "garden.dart", "reminder.dart", "post.dart"],
+    "lib/services": ["api_service.dart", "auth_service.dart", "product_service.dart", "cart_service.dart", "order_service.dart", "garden_service.dart", "community_service.dart"],
+    "lib/features": {
+      "auth": { "pages": {}, "widgets": {}, "controllers": {} },
+      "home": { "pages": {}, "widgets": {} },
+      "marketplace": { "pages": {}, "widgets": {}, "controllers": {} },
+      "cart": { "pages": {}, "widgets": {} },
+      "checkout": { "pages": {}, "widgets": {} },
+      "orders": { "pages": {}, "widgets": {} },
+      "my_garden": { "pages": {}, "widgets": {}, "controllers": {} },
+      "plant_finder": { "pages": {}, "widgets": {}, "controllers": {} },
+      "plant_diagnosis": { "pages": {}, "widgets": {}, "controllers": {} },
+      "community": { "pages": {}, "widgets": {}, "controllers": {} },
+      "profile": { "pages": {}, "widgets": {} }
+    },
+    "lib/widgets": ["app_button.dart", "app_card.dart", "app_text_field.dart", "product_card.dart", "plant_card.dart", "loading_widget.dart", "error_widget.dart"],
+    "lib/routes/app_routes.dart": "Definisi navigasi",
+    "lib/main.dart": "Entry point"
+  },
+  "test": { "unit": {}, "widget": {}, "integration": {} },
+  "state_management": "GetX / Riverpod (controller per fitur) — diputuskan saat implementasi"
+}

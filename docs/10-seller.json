@@ -1,0 +1,21 @@
+{
+  "description": "Modul seller web Tanamanku.",
+  "role": "seller",
+  "scope": ["backend", "web"],
+  "pages": {
+    "Dashboard": "Ringkasan toko (penjualan, pesanan baru, stok menipis)",
+    "Products": "Daftar & kelola produk toko",
+    "CreateProduct": "Tambah produk baru (foto, varian, stok, harga)",
+    "EditProduct": "Ubah produk",
+    "Orders": "Kelola & proses pesanan masuk",
+    "Inventory": "Manajemen stok produk",
+    "Sales": "Laporan penjualan toko"
+  },
+  "authorization": "Semua endpoint seller memeriksa kepemilikan toko (StorePolicy) — seller hanya dapat mengelola tokonya sendiri.",
+  "mobile": false,
+  "business_rules": [
+    "Produk divalidasi server sebelum aktif (harga > 0, stok >= 0).",
+    "Pesanan yang diproses seller otomatis mengubah status stok.",
+    "Seller tidak dapat melihat data toko lain."
+  ]
+}

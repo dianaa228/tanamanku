@@ -1,0 +1,28 @@
+{
+  "description": "Aturan validasi input di seluruh API Tanamanku.",
+  "principle": "Semua input API divalidasi di server (Laravel FormRequest). Frontend boleh memvalidasi untuk UX, tetapi server tetap otoritas final.",
+  "locations": {
+    "backend": "app/Http/Requests — per modul (Auth, Product, Cart, Order, Garden, Plant, Community, Service)",
+    "web": "Validasi form ringan di sisi klien (UX) sebelum submit",
+    "mobile": "Validasi form di sisi klien (UX) sebelum submit"
+  },
+  "module_rules": {
+    "Auth": [
+      "register: name (required, min 3), email (required, email, unique), password (required, min 8, confirmed), phone (optional, numeric)",
+      "login: email (required, email), password (required)",
+      "forgot: email (required, email, exists)"
+    ],
+    "Product": [
+      "name (required, max 191), slug (unique), price (required, numeric, min 0), stock (integer, min 0)",
+      "category_id (exists:categories), store_id (exists:stores, milik seller), images (image, max 2MB per file)",
+      "description (nullable, max 5000)"
+    ],
+    "Cart": ["product_id (exists, aktif), quantity (integer, min 1, max stok tersedia)"],
+    "Order": ["address_id (exists, milik user), shipping_method (in:list), payment_method (required)", "coupon (nullable)"],
+    "Garden": ["plant_species_id (exists), nickname (max 100), planted_at (date, nullable), location (max 191)"],
+    "Plant": ["user_plant_id (exists, milik user), type (in:water,fertilize,repot,prune,pest,other), frequency_days (integer 1-365)"],
+    "Community": ["content (required, max 5000), images (image, max 2MB)", "comment: content (required, max 2000)"],
+    "Service": ["service_id (exists, aktif), schedule_at (date, future), address_id (exists, milik user)"]
+  },
+  "error_response": { "success": false, "message": "Validasi gagal", "errors": { "field": ["pesan error"] } }
+}

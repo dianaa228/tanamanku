@@ -1,0 +1,28 @@
+{
+  "description": "Desain pembayaran Tanamanku.",
+  "principle": "Total pesanan dihitung server-side. Klien tidak pernah mengirim harga.",
+  "methods": [
+    { "name": "Transfer bank", "detail": "VA BCA / BRI / Mandiri (manual atau via payment gateway)" },
+    { "name": "E-wallet", "detail": "GoPay / OVO / DANA / ShopeePay" },
+    { "name": "QRIS", "detail": "Pembayaran QRIS sekali pakai" },
+    { "name": "COD", "detail": "Bayar di tempat (opsional per seller)" }
+  ],
+  "flow": [
+    "Customer checkout → server membuat Order (status: pending) + Payment (status: pending) di dalam satu transaksi database",
+    "Payment gateway mengembalikan instruksi pembayaran / QR / VA",
+    "Webhook gateway → PaymentController memverifikasi & menandai paid",
+    "Order.status naik ke processing → seller mulai memproses",
+    "Jika timeout, pesanan otomatis dibatalkan & stok dikembalikan"
+  ],
+  "statuses": {
+    "payment": ["pending", "paid", "failed", "expired", "refunded"],
+    "order": ["pending", "paid", "processing", "shipped", "delivered", "completed", "cancelled"]
+  },
+  "security": [
+    "Total & biaya ongkir dihitung di server",
+    "Webhook diverifikasi signature",
+    "Refund hanya via PaymentService setelah verifikasi",
+    "Log transaksi audit di tabel payments"
+  ],
+  "database": "payments (order_id, method, reference, amount, status, paid_at)"
+}

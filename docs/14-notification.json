@@ -1,0 +1,18 @@
+{
+  "description": "Sistem notifikasi Tanamanku.",
+  "database_table": "notifications (id uuid, type, notifiable_type, notifiable_id, data json, read_at) — schema channel 'database' bawaan Laravel; title/body disimpan di dalam data",
+  "backend_classes": {
+    "Notifications": ["OrderNotification.php", "PlantCareNotification.php", "CommunityNotification.php"],
+    "Jobs": ["ProcessPlantReminder.php", "SendOrderNotification.php", "UpdateInventory.php"]
+  },
+  "channel": "Notifikasi in-app (database) + WebPush/PWA untuk web; sinkron ke Flutter via API",
+  "types": {
+    "order": ["Pesanan dibuat", "Pembayaran berhasil", "Pesanan dikirim", "Pesanan selesai", "Pesanan dibatalkan"],
+    "plant_care": ["Pengingat menyiram", "Pengingat memupuk", "Pengingat repotting", "Pengingat pemeriksaan hama"],
+    "community": ["Post disukai", "Post dikomentari", "Post dilaporkan (admin)"],
+    "system": ["Selamat datang", "Verifikasi email", "Promosi & penawaran"]
+  },
+  "reminder_engine": "Job ProcessPlantReminder dijalankan scheduler (php artisan schedule:run) setiap jam; reminder jatuh tempo dikirim & dijadwalkan ulang (next_due_at = last_done + frequency_days)",
+  "read_state": "notifications.read_at null = belum dibaca; badge jumlah belum dibaca di UI",
+  "api_endpoint": "/api/v1/notifications (list, mark-as-read, mark-all-as-read)"
+}

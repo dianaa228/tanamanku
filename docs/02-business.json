@@ -1,0 +1,34 @@
+{
+  "description": "Model bisnis Tanamanku.",
+  "revenue_streams": [
+    {
+      "name": "Komisi penjualan marketplace",
+      "detail": "Persentase kecil dari setiap transaksi produk marketplace"
+    },
+    {
+      "name": "Fitur seller berbayar",
+      "detail": "Promosi produk, analitik penjualan lanjutan, langganan toko"
+    },
+    {
+      "name": "Jasa berkebun",
+      "detail": "Komisi dari pemesanan jasa perawatan taman / tanaman oleh penyedia"
+    },
+    {
+      "name": "Plant exchange premium",
+      "detail": "Listing unggulan untuk jual/tukar tanaman antar pengguna"
+    }
+  ],
+  "marketplace_model": "Multi-vendor (B2C + C2C) dengan 3 peran utama: customer, seller, admin",
+  "key_metrics": [
+    "GMV (Gross Merchandise Value)",
+    "Pesanan per hari",
+    "Tingkat konversi keranjang → checkout",
+    "Retensi pengguna My Garden (pengguna aktif perawatan)",
+    "NPS komunitas"
+  ],
+  "free_engagement_loops": [
+    "My Garden mendorong kunjungan harian melalui pengingat perawatan",
+    "Komunitas & Plant Finder meningkatkan keterlibatan non-transaksional",
+    "Diagnosis tanaman menjadi pintu masuk ke rekomendasi produk"
+  ]
+}

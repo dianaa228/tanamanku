@@ -1,0 +1,25 @@
+{
+  "description": "Struktur aplikasi web React (customer, seller, admin).",
+  "framework": { "framework": "React", "css": "Tailwind CSS", "bundler": "Vite", "router": "React Router" },
+  "rule": "Frontend hanya menangani UI, state, interaksi, dan konsumsi API. Business logic utama berada di backend.",
+  "directory": {
+    "src/assets": "Gambar & aset statis",
+    "src/components/ui": ["Button", "Input", "Modal", "Card", "Badge", "Dropdown", "Pagination", "Loading", "EmptyState"],
+    "src/components/layout": ["Navbar", "Sidebar", "Footer", "MobileNavigation"],
+    "src/components/product": ["ProductCard", "ProductGrid", "ProductFilter", "ProductSearch", "ProductGallery"],
+    "src/components/garden": ["PlantCard", "PlantStatus", "GrowthChart", "CareReminder"],
+    "src/pages/auth": ["Login", "Register", "ForgotPassword"],
+    "src/pages/customer": ["Home", "Explore", "ProductDetail", "Cart", "Checkout", "Orders", "OrderDetail", "MyGarden", "PlantDetail", "PlantFinder", "PlantDiagnosis", "Community", "Profile"],
+    "src/pages/seller": ["Dashboard", "Products", "CreateProduct", "EditProduct", "Orders", "Inventory", "Sales"],
+    "src/pages/admin": ["Dashboard", "Users", "Stores", "Categories", "Products", "Orders", "Payments", "Community", "Reports", "Settings"],
+    "src/services/api": ["client.js (Axios/API client)", "auth.js", "products.js", "cart.js", "orders.js", "garden.js", "community.js"],
+    "src/hooks": "Custom hooks",
+    "src/context": "React context (auth, cart, notification)",
+    "src/store": "State management ringan (cart)",
+    "src/utils": "Formatter (Rupiah, tanggal) & helper",
+    "src/types": "Konstanta & tipe data",
+    "src/router/index.jsx": "Application routing"
+  },
+  "state_management": "React Context + useReducer untuk MVP; siap dimigrasi ke backend API",
+  "api_client": "axios instance dengan baseURL /api/v1, interceptor token Bearer, dan penanganan error terpusat"
+}

@@ -1,0 +1,24 @@
+{
+  "description": "Rencana deployment Tanamanku.",
+  "environment": {
+    "dev": "Lokal — Docker (mysql) + Vite dev server + artisan serve",
+    "staging": "VPS / PaaS — mirror produksi untuk pengujian",
+    "production": "VPS / cloud — Nginx + PHP-FPM + MySQL"
+  },
+  "backend": {
+    "stack": "Nginx + PHP 8.3-FPM + MySQL 8",
+    "steps": [
+      "composer install --no-dev --optimize-autoloader",
+      "php artisan config:cache && route:cache && view:cache",
+      "php artisan migrate --force && db:seed --force (produksi: tanpa seeder demo)",
+      "php artisan storage:link",
+      "Scheduler: cron * * * * * php artisan schedule:run",
+      "Queue worker untuk job (notifikasi, reminder)"
+    ]
+  },
+  "web": { "build": "npm run build → web/dist disajikan Nginx/CDN", "env": "VITE_API_BASE_URL" },
+  "mobile": { "android": "APK/AAB ke Play Store", "ios": "IPA ke App Store" },
+  "docker": "docker-compose.yml tersedia untuk mysql + phpmyadmin + backend",
+  "backup": ["Daily backup database (mysqldump)", "Backup file upload (storage)", "Retensi 14 hari"],
+  "monitoring": ["Error logging (Laravel log / Sentry)", "Uptime monitoring", "Metrik: GMV, pesanan, error rate"]
+}

@@ -1,0 +1,72 @@
+{
+  "description": "Arsitektur API Tanamanku.",
+  "base": "/api/v1",
+  "groups": {
+    "auth": "/auth",
+    "products": "/products",
+    "categories": "/categories",
+    "stores": "/stores",
+    "cart": "/cart",
+    "orders": "/orders",
+    "garden": "/my-garden",
+    "plant_finder": "/plant-finder",
+    "plant_diagnosis": "/plant-diagnosis",
+    "community": "/community",
+    "exchange": "/plant-exchange",
+    "services": "/services",
+    "notifications": "/notifications"
+  },
+  "versioning": "URL prefix /api/v1 — perubahan breaking menaikkan versi",
+  "authentication": "Laravel Sanctum (token Bearer) untuk semua endpoint protected",
+  "endpoint_conventions": {
+    "list": "GET /resource",
+    "detail": "GET /resource/{id}",
+    "create": "POST /resource",
+    "update": "PUT/PATCH /resource/{id}",
+    "delete": "DELETE /resource/{id}",
+    "pagination": "?page=1&per_page=15",
+    "filter": "?category=slug&search=q&sort=price_asc"
+  },
+  "response_format": {
+    "success": { "success": true, "message": "Success", "data": {} },
+    "error": { "success": false, "message": "Error", "errors": {} }
+  },
+  "http_status_conventions": {
+    "200": "OK / sukses",
+    "201": "Resource dibuat",
+    "204": "Berhasil dihapus",
+    "400": "Validasi gagal / data tidak valid",
+    "401": "Belum autentikasi",
+    "403": "Tidak punya otorisasi",
+    "404": "Resource tidak ditemukan",
+    "409": "Konflik (mis. stok habis saat checkout)",
+    "422": "Unprocessable entity (validasi)",
+    "429": "Rate limit terlampaui",
+    "500": "Kesalahan server"
+  },
+  "controller_handlers": {
+    "AuthController": "Authentication",
+    "UserController": "User management",
+    "CategoryController": "Category management",
+    "ProductController": "Product marketplace",
+    "StoreController": "Store management",
+    "CartController": "Shopping cart",
+    "OrderController": "Orders",
+    "PaymentController": "Payments",
+    "ShipmentController": "Shipping",
+    "ReviewController": "Product reviews",
+    "PlantSpeciesController": "Plant master data",
+    "MyGardenController": "User garden",
+    "PlantGrowthController": "Growth tracking",
+    "PlantCareController": "Plant care",
+    "PlantReminderController": "Care reminders",
+    "PlantFinderController": "Plant recommendation",
+    "PlantDiagnosisController": "Plant diagnosis",
+    "CommunityController": "Community posts",
+    "CommentController": "Comments",
+    "PlantExchangeController": "Plant exchange",
+    "ServiceController": "Gardening services",
+    "ServiceOrderController": "Service booking",
+    "NotificationController": "Notifications"
+  }
+}
