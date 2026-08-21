@@ -26,6 +26,9 @@ import ListingDetail from '../pages/customer/ListingDetail'
 import CreateListing from '../pages/customer/CreateListing'
 import MyListings from '../pages/customer/MyListings'
 import MyExchanges from '../pages/customer/MyExchanges'
+import Loyalty from '../pages/customer/Loyalty'
+import LoyaltyRedeem from '../pages/customer/LoyaltyRedeem'
+import LoyaltyHistory from '../pages/customer/LoyaltyHistory'
 
 // Auth pages
 import Login from '../pages/auth/Login'
@@ -100,6 +103,9 @@ export const router = createBrowserRouter([
       { path: '/plant-exchange/:id', element: <ListingDetail /> },
       { path: '/my-listings', element: <MyListings /> },
       { path: '/my-exchanges', element: <MyExchanges /> },
+      { path: '/loyalty', element: <Loyalty /> },
+      { path: '/loyalty/redeem', element: <LoyaltyRedeem /> },
+      { path: '/loyalty/history', element: <LoyaltyHistory /> },
     ],
   },
 

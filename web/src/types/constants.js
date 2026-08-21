@@ -91,3 +91,14 @@ export const EXCHANGE_STATUS = {
   rejected: { label: 'Ditolak', icon: '✖️', badge: 'bg-rose-100 text-rose-800' },
   done: { label: 'Selesai', icon: '🎉', badge: 'bg-sky-100 text-sky-800' },
 }
+
+// ===== Loyalty System =====
+
+export const REWARD_TYPES = [
+  { value: 'voucher', label: 'Voucher', icon: '🎫' },
+  { value: 'shipping', label: 'Ongkir', icon: '🚚' },
+  { value: 'points', label: 'Poin', icon: '✨' },
+  { value: 'product', label: 'Produk', icon: '🌱' },
+  { value: 'service', label: 'Layanan', icon: '👩‍🌾' },
+  { value: 'subscription', label: 'Premium', icon: '📖' },
+]

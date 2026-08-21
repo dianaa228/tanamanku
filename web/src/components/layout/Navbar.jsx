@@ -117,6 +117,7 @@ export default function Navbar() {
               <DropdownItem onClick={() => navigate('/my-bookings')}>🔧 Pesanan Jasa</DropdownItem>
               <DropdownItem onClick={() => navigate('/my-listings')}>📋 Listing Saya</DropdownItem>
               <DropdownItem onClick={() => navigate('/my-exchanges')}>💬 Tawaran Saya</DropdownItem>
+              <DropdownItem onClick={() => navigate('/loyalty')}>⭐ Rewards</DropdownItem>
               {(user.role === 'seller' || user.role === 'admin') && (
                 <>
                   <div className="mx-3 border-t border-leaf-100 my-1" />
