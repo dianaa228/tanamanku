@@ -43,6 +43,7 @@ import SellerEditProduct from '../pages/seller/EditProduct'
 import SellerOrders from '../pages/seller/Orders'
 import SellerInventory from '../pages/seller/Inventory'
 import SellerSales from '../pages/seller/Sales'
+import SellerAnalytics from '../pages/seller/Analytics'
 
 // Admin pages
 import AdminDashboard from '../pages/admin/Dashboard'
@@ -63,6 +64,7 @@ const sellerNav = [
   { to: '/seller/orders', icon: '🧾', label: 'Pesanan' },
   { to: '/seller/inventory', icon: '📋', label: 'Inventaris' },
   { to: '/seller/sales', icon: '💰', label: 'Penjualan' },
+  { to: '/seller/analytics', icon: '📈', label: 'Analytics' },
 ]
 
 const adminNav = [
@@ -130,6 +132,7 @@ export const router = createBrowserRouter([
       { path: '/seller/orders', element: <SellerOrders /> },
       { path: '/seller/inventory', element: <SellerInventory /> },
       { path: '/seller/sales', element: <SellerSales /> },
+      { path: '/seller/analytics', element: <SellerAnalytics /> },
     ],
   },
 
