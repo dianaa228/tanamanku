@@ -112,6 +112,15 @@ export default function Navbar() {
               <DropdownItem onClick={() => navigate('/profile')}>👤 Profil saya</DropdownItem>
               <DropdownItem onClick={() => navigate('/orders')}>📦 Pesanan saya</DropdownItem>
               <DropdownItem onClick={() => navigate('/my-garden')}>🪴 Kebunku</DropdownItem>
+              {(user.role === 'seller' || user.role === 'admin') && (
+                <>
+                  <div className="mx-3 border-t border-leaf-100 my-1" />
+                  <DropdownItem onClick={() => navigate('/seller')}>🏪 Seller Dashboard</DropdownItem>
+                </>
+              )}
+              {user.role === 'admin' && (
+                <DropdownItem onClick={() => navigate('/admin')}>🛡️ Admin Panel</DropdownItem>
+              )}
               <DropdownItem
                 className="text-rose-600 hover:bg-rose-50"
                 onClick={async () => {
