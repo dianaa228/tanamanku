@@ -37,6 +37,12 @@ use Illuminate\Support\Facades\Route;
 | memakai Sanctum + ownership check via Policy.
 */
 
+// ===== Sanctum login redirect (for unauthenticated API responses) =====
+Route::post('/login', fn () => response()->json([
+    'success' => false,
+    'message' => 'Unauthenticated.',
+], 401))->name('login');
+
 // ===== Auth (publik) =====
 Route::prefix('auth')->group(function () {
     Route::post('/register', [AuthController::class, 'register']);

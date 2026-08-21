@@ -60,23 +60,36 @@ class AnalyticsService
         $totalOrders = Order::count();
 
         // User growth (6 months)
-        $userGrowth = User::select(DB::raw("DATE_FORMAT(created_at, '%b') as month"), DB::raw('COUNT(*) as users'))
+        $userGrowth = User::select(
+                DB::raw('YEAR(created_at) as year'),
+                DB::raw('MONTH(created_at) as month_num'),
+                DB::raw('COUNT(*) as users')
+            )
             ->where('created_at', '>=', Carbon::now()->subMonths(6))
-            ->groupBy('month')
-            ->orderBy('month')
-            ->get();
+            ->groupBy('year', 'month_num')
+            ->orderBy('year')
+            ->orderBy('month_num')
+            ->get()
+            ->map(function ($item) {
+                $item->month = Carbon::createFromDate($item->year, $item->month_num, 1)->format('M');
+                return $item;
+            });
 
         // Top sellers
         $topSellers = User::where('role', 'seller')
-            ->withCount(['orders as orders_count' => function ($q) {
-                $q->where('payment_status', 'paid');
-            }])
-            ->withSum('orders as revenue', function ($q) {
-                $q->where('payment_status', 'paid');
+            ->get(['id', 'name'])
+            ->map(function ($seller) {
+                $seller->orders_count = Order::where('user_id', $seller->id)
+                    ->where('payment_status', 'paid')
+                    ->count();
+                $seller->revenue = Order::where('user_id', $seller->id)
+                    ->where('payment_status', 'paid')
+                    ->sum('total');
+                return $seller;
             })
-            ->orderByDesc('revenue')
-            ->limit(5)
-            ->get(['id', 'name']);
+            ->sortByDesc('revenue')
+            ->values()
+            ->take(5);
 
         return [
             'overview' => [

@@ -83,12 +83,21 @@ class ProductController extends BaseController
     {
         $store = $request->user()->store;
 
+        if (!$store) {
+            return $this->forbidden('Anda belum memiliki toko.');
+        }
+
         return $this->success(ProductResource::collection($this->productService->sellerProducts($store->id)));
     }
 
     public function inventory(Request $request): JsonResponse
     {
         $store = $request->user()->store;
+
+        if (!$store) {
+            return $this->forbidden('Anda belum memiliki toko.');
+        }
+
         $items = Product::where('store_id', $store->id)
             ->with('inventory')
             ->latest()
