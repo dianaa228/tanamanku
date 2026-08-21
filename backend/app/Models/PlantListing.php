@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class PlantListing extends Model
 {
+    use HasFactory;
     public const TYPE_SELL = 'sell';
     public const TYPE_EXCHANGE = 'exchange';
 
@@ -36,6 +38,6 @@ class PlantListing extends Model
 
     public function exchanges(): HasMany
     {
-        return $this->hasMany(PlantExchange::class);
+        return $this->hasMany(PlantExchange::class, 'listing_id');
     }
 }

@@ -3,13 +3,17 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Product extends Model
 {
+    use HasFactory;
+
     public function getRouteKeyName(): string
     {
         return 'slug';
@@ -58,9 +62,9 @@ class Product extends Model
         return $this->hasOne(Inventory::class);
     }
 
-    public function reviews(): HasMany
+    public function reviews(): HasManyThrough
     {
-        return $this->hasMany(Review::class);
+        return $this->hasManyThrough(Review::class, OrderItem::class);
     }
 
     public function orderItems(): HasMany

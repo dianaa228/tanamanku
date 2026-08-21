@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class UserPlant extends Model
 {
+    use HasFactory;
     public const STATUS_HEALTHY = 'sehat';
     public const STATUS_NEEDS_WATER = 'perlu-air';
     public const STATUS_ATTENTION = 'perhatian';
@@ -43,6 +46,11 @@ class UserPlant extends Model
     public function growthLogs(): HasMany
     {
         return $this->hasMany(PlantGrowthLog::class);
+    }
+
+    public function latestGrowthLog(): HasOne
+    {
+        return $this->hasOne(PlantGrowthLog::class)->latestOfMany();
     }
 
     public function careLogs(): HasMany
