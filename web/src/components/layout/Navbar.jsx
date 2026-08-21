@@ -8,6 +8,7 @@ import { cx } from '../../utils/format'
 const links = [
   { to: '/', label: 'Beranda' },
   { to: '/explore', label: 'Jelajahi' },
+  { to: '/services', label: 'Jasa' },
   { to: '/my-garden', label: 'Kebunku' },
   { to: '/plant-finder', label: 'Plant Finder' },
   { to: '/community', label: 'Komunitas' },
@@ -112,6 +113,7 @@ export default function Navbar() {
               <DropdownItem onClick={() => navigate('/profile')}>👤 Profil saya</DropdownItem>
               <DropdownItem onClick={() => navigate('/orders')}>📦 Pesanan saya</DropdownItem>
               <DropdownItem onClick={() => navigate('/my-garden')}>🪴 Kebunku</DropdownItem>
+              <DropdownItem onClick={() => navigate('/my-bookings')}>🔧 Pesanan Jasa</DropdownItem>
               {(user.role === 'seller' || user.role === 'admin') && (
                 <>
                   <div className="mx-3 border-t border-leaf-100 my-1" />

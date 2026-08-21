@@ -18,6 +18,9 @@ import PlantFinder from '../pages/customer/PlantFinder'
 import PlantDiagnosis from '../pages/customer/PlantDiagnosis'
 import Community from '../pages/customer/Community'
 import Profile from '../pages/customer/Profile'
+import Services from '../pages/customer/Services'
+import ServiceDetail from '../pages/customer/ServiceDetail'
+import MyBookings from '../pages/customer/MyBookings'
 
 // Auth pages
 import Login from '../pages/auth/Login'
@@ -84,6 +87,9 @@ export const router = createBrowserRouter([
       { path: '/plant-diagnosis', element: <PlantDiagnosis /> },
       { path: '/community', element: <Community /> },
       { path: '/profile', element: <Profile /> },
+      { path: '/services', element: <Services /> },
+      { path: '/services/:id', element: <ServiceDetail /> },
+      { path: '/my-bookings', element: <MyBookings /> },
     ],
   },
 

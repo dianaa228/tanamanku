@@ -5,9 +5,9 @@ import { cx } from '../../utils/format'
 const items = [
   { to: '/', label: 'Beranda', icon: '🏠', end: true },
   { to: '/explore', label: 'Jelajahi', icon: '🌿', end: false },
+  { to: '/services', label: 'Jasa', icon: '🔧', end: false },
   { to: '/my-garden', label: 'Kebunku', icon: '🪴', end: false },
   { to: '/cart', label: 'Keranjang', icon: '🛒', end: false },
-  { to: '/community', label: 'Komunitas', icon: '💬', end: false },
 ]
 
 export default function MobileNavigation() {

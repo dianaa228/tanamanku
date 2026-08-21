@@ -52,3 +52,22 @@ export const PAYMENT_METHODS = [
   { value: 'qris', label: 'QRIS', icon: '🔳', desc: 'Scan QR sekali pakai' },
   { value: 'cod', label: 'COD', icon: '💵', desc: 'Bayar saat pesanan tiba' },
 ]
+
+// ===== Gardening Services =====
+
+export const SERVICE_CATEGORIES = [
+  { value: 'landscaping', label: 'Landscaping', icon: '🌳', desc: 'Desain & pembuatan taman' },
+  { value: 'maintenance', label: 'Perawatan Taman', icon: '🔧', desc: 'Pemotongan rumput, pemangkasan, siram' },
+  { value: 'planting', label: 'Penanaman', icon: '🌱', desc: 'Penanaman bibit & tanaman hias' },
+  { value: 'pest-control', label: 'Pengendalian Hama', icon: '🐛', desc: 'Fumigasi & pestisida organik' },
+  { value: 'consultation', label: 'Konsultasi', icon: '📋', desc: 'Konsultasi desain taman & tanaman' },
+  { value: 'delivery', label: 'Pengantaran', icon: '🚚', desc: 'Pengantaran tanaman & media tanam' },
+]
+
+export const BOOKING_STATUS = {
+  pending: { label: 'Menunggu', icon: '⏳', badge: 'bg-amber-100 text-amber-800' },
+  confirmed: { label: 'Dikonfirmasi', icon: '✅', badge: 'bg-sky-100 text-sky-800' },
+  'in-progress': { label: 'Sedang Dikerjakan', icon: '🔨', badge: 'bg-blue-100 text-blue-800' },
+  completed: { label: 'Selesai', icon: '🎉', badge: 'bg-leaf-100 text-leaf-800' },
+  cancelled: { label: 'Dibatalkan', icon: '✖️', badge: 'bg-rose-100 text-rose-800' },
+}
