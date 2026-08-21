@@ -116,7 +116,7 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     // Smart Plant
-    Route::get('/plant-finder/recommend', [PlantFinderController::class, 'recommend']);
+    Route::post('/plant-finder/recommend', [PlantFinderController::class, 'recommend']);
     Route::get('/plant-finder/questions', [PlantFinderController::class, 'questions']);
     Route::post('/plant-diagnosis', [PlantDiagnosisController::class, 'diagnose']);
 
@@ -135,8 +135,11 @@ Route::middleware('auth:sanctum')->group(function () {
     // Plant Exchange
     Route::prefix('plant-exchange')->group(function () {
         Route::get('/listings', [PlantExchangeController::class, 'index']);
+        Route::get('/listings/mine', [PlantExchangeController::class, 'myListings']);
         Route::post('/listings', [PlantExchangeController::class, 'store']);
+        Route::get('/listings/{plantListing}', [PlantExchangeController::class, 'show']);
         Route::post('/listings/{plantListing}/offer', [PlantExchangeController::class, 'offer']);
+        Route::get('/exchanges/mine', [PlantExchangeController::class, 'myExchanges']);
         Route::put('/exchanges/{plantExchange}', [PlantExchangeController::class, 'respond']);
     });
 

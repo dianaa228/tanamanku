@@ -19,6 +19,32 @@ class PlantExchangeController extends BaseController
         return $this->success($this->exchangeService->listings($request->only(['type'])));
     }
 
+    public function show(PlantListing $plantListing): JsonResponse
+    {
+        $plantListing->load('owner:id,name,avatar', 'species');
+        return $this->success($plantListing, 'Listing dimuat');
+    }
+
+    public function myListings(Request $request): JsonResponse
+    {
+        $listings = PlantListing::where('user_id', $request->user()->id)
+            ->with('species')
+            ->latest()
+            ->get();
+        return $this->success($listings, 'Listing saya dimuat');
+    }
+
+    public function myExchanges(Request $request): JsonResponse
+    {
+        $userId = $request->user()->id;
+        $exchanges = PlantExchange::whereHas('listing', fn($q) => $q->where('user_id', $userId))
+            ->orWhere('offerer_id', $userId)
+            ->with(['listing.user:id,name,avatar', 'offerer:id,name,avatar'])
+            ->latest()
+            ->get();
+        return $this->success($exchanges, 'Pertukaran saya dimuat');
+    }
+
     public function store(Request $request): JsonResponse
     {
         $data = $request->validate([

@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class PlantSpecies extends Model
 {
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
     protected $fillable = [
         'name', 'slug', 'scientific_name', 'category', 'light_requirement',
         'water_requirement', 'humidity', 'temperature', 'growth_duration',

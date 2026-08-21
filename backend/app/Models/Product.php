@@ -10,6 +10,11 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Product extends Model
 {
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
     protected $fillable = [
         'store_id', 'category_id', 'plant_species_id', 'name', 'slug',
         'description', 'price', 'stock', 'care_level', 'is_active',

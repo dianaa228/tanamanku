@@ -54,6 +54,11 @@ class User extends Authenticatable
         return $this->hasMany(Favorite::class);
     }
 
+    public function plantListings(): HasMany
+    {
+        return $this->hasMany(PlantListing::class);
+    }
+
     public function isAdmin(): bool
     {
         return $this->role === UserRole::Admin;
