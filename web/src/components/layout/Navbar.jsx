@@ -8,6 +8,7 @@ import { cx } from '../../utils/format'
 const links = [
   { to: '/', label: 'Beranda' },
   { to: '/explore', label: 'Jelajahi' },
+  { to: '/nurseries', label: 'Nursery' },
   { to: '/services', label: 'Jasa' },
   { to: '/plant-exchange', label: 'Exchange' },
   { to: '/my-garden', label: 'Kebunku' },

@@ -31,6 +31,8 @@ import LoyaltyRedeem from '../pages/customer/LoyaltyRedeem'
 import LoyaltyHistory from '../pages/customer/LoyaltyHistory'
 import Subscription from '../pages/customer/Subscription'
 import SubscriptionManage from '../pages/customer/SubscriptionManage'
+import Nurseries from '../pages/customer/Nurseries'
+import NurseryDetail from '../pages/customer/NurseryDetail'
 
 // Auth pages
 import Login from '../pages/auth/Login'
@@ -114,6 +116,8 @@ export const router = createBrowserRouter([
       { path: '/loyalty/history', element: <LoyaltyHistory /> },
       { path: '/subscription', element: <Subscription /> },
       { path: '/subscription/manage', element: <SubscriptionManage /> },
+      { path: '/nurseries', element: <Nurseries /> },
+      { path: '/nurseries/:slug', element: <NurseryDetail /> },
     ],
   },
 
