@@ -5,6 +5,7 @@ import { cx } from '../../utils/format'
 const items = [
   { to: '/', label: 'Beranda', icon: '🏠', end: true },
   { to: '/explore', label: 'Jelajahi', icon: '🌿', end: false },
+  { to: '/plant-exchange', label: 'Exchange', icon: '🔄', end: false },
   { to: '/services', label: 'Jasa', icon: '🔧', end: false },
   { to: '/my-garden', label: 'Kebunku', icon: '🪴', end: false },
   { to: '/cart', label: 'Keranjang', icon: '🛒', end: false },
@@ -14,7 +15,7 @@ export default function MobileNavigation() {
   const { count } = useCart()
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-40 border-t border-leaf-100 bg-white/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-lg md:hidden">
-      <div className="grid grid-cols-5">
+      <div className="grid grid-cols-6">
         {items.map((item) => (
           <NavLink
             key={item.to}

@@ -71,3 +71,23 @@ export const BOOKING_STATUS = {
   completed: { label: 'Selesai', icon: '🎉', badge: 'bg-leaf-100 text-leaf-800' },
   cancelled: { label: 'Dibatalkan', icon: '✖️', badge: 'bg-rose-100 text-rose-800' },
 }
+
+// ===== Plant Exchange =====
+
+export const LISTING_TYPES = [
+  { value: 'sell', label: 'Dijual', icon: '💰', desc: 'Jual tanaman' },
+  { value: 'exchange', label: 'Tukar Tukar', icon: '🔄', desc: 'Tukar tanaman' },
+]
+
+export const LISTING_STATUS = {
+  active: { label: 'Aktif', icon: '🟢', badge: 'bg-leaf-100 text-leaf-800' },
+  completed: { label: 'Selesai', icon: '✅', badge: 'bg-sky-100 text-sky-800' },
+  closed: { label: 'Ditutup', icon: '🔒', badge: 'bg-gray-100 text-gray-500' },
+}
+
+export const EXCHANGE_STATUS = {
+  pending: { label: 'Menunggu', icon: '⏳', badge: 'bg-amber-100 text-amber-800' },
+  accepted: { label: 'Diterima', icon: '✅', badge: 'bg-leaf-100 text-leaf-800' },
+  rejected: { label: 'Ditolak', icon: '✖️', badge: 'bg-rose-100 text-rose-800' },
+  done: { label: 'Selesai', icon: '🎉', badge: 'bg-sky-100 text-sky-800' },
+}

@@ -21,6 +21,11 @@ import Profile from '../pages/customer/Profile'
 import Services from '../pages/customer/Services'
 import ServiceDetail from '../pages/customer/ServiceDetail'
 import MyBookings from '../pages/customer/MyBookings'
+import PlantExchange from '../pages/customer/PlantExchange'
+import ListingDetail from '../pages/customer/ListingDetail'
+import CreateListing from '../pages/customer/CreateListing'
+import MyListings from '../pages/customer/MyListings'
+import MyExchanges from '../pages/customer/MyExchanges'
 
 // Auth pages
 import Login from '../pages/auth/Login'
@@ -90,6 +95,11 @@ export const router = createBrowserRouter([
       { path: '/services', element: <Services /> },
       { path: '/services/:id', element: <ServiceDetail /> },
       { path: '/my-bookings', element: <MyBookings /> },
+      { path: '/plant-exchange', element: <PlantExchange /> },
+      { path: '/plant-exchange/create', element: <CreateListing /> },
+      { path: '/plant-exchange/:id', element: <ListingDetail /> },
+      { path: '/my-listings', element: <MyListings /> },
+      { path: '/my-exchanges', element: <MyExchanges /> },
     ],
   },
 
