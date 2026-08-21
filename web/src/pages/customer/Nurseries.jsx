@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { nurseryApi } from '../../services/api/nursery'
-import { formatRupiah, cx } from '../../utils/format'
+import { cx } from '../../utils/format'
 import Loading from '../../components/ui/Loading'
 import EmptyState from '../../components/ui/EmptyState'
 import Badge from '../../components/ui/Badge'

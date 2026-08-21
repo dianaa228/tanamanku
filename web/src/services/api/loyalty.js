@@ -171,7 +171,7 @@ export const loyaltyApi = {
   getTiers: async () => {
     if (apiMode() === 'api') {
       const res = await api.get('/loyalty/tiers')
-      return { success: true, message: 'Tier dimuat', data: (res.data?.data || res.data || []).map(mapReward) }
+      return { success: true, message: 'Tier dimuat', data: res.data?.data || res.data }
     }
     await delay()
     return { success: true, message: 'Tier dimuat', data: mockTiers }

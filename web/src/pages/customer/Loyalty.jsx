@@ -32,7 +32,7 @@ export default function Loyalty() {
 
   if (loading) return <Loading label="Memuat data loyalitas..." />
 
-  const currentTier = tiers.find((t) => t.id === profile?.tier) || tiers[0]
+  const currentTier = tiers.find((tier) => tier.id === profile?.tier) || tiers[0]
   const nextTier = tiers[tiers.indexOf(currentTier) + 1]
   const progress = nextTier
     ? Math.min(100, ((profile.points - currentTier.minPoints) / (nextTier.minPoints - currentTier.minPoints)) * 100)
@@ -47,11 +47,11 @@ export default function Loyalty() {
       </div>
 
       {/* Points Card */}
-      <div className={cx('mt-8 rounded-3xl bg-gradient-to-br p-6 sm:p-8 text-white shadow-lift', colors.bg)}>
+      <div className={cx('mt-8 rounded-3xl bg-gradient-to-br p-6 sm:p-8 shadow-lift', colors.bg)}>
         <div className="flex items-center gap-3">
           <span className="text-5xl">{currentTier?.icon}</span>
           <div>
-            <p className="text-sm font-semibold opacity-80">Tier Anda</p>
+            <p className={cx('text-sm font-semibold opacity-70', colors.text)}>Tier Anda</p>
             <p className={cx('text-2xl font-extrabold', colors.text)}>{currentTier?.name}</p>
           </div>
         </div>
@@ -69,7 +69,7 @@ export default function Loyalty() {
         {/* Tier Progress */}
         {nextTier && (
           <div className="mt-6">
-            <div className="flex items-center justify-between text-xs opacity-70">
+            <div className={cx('flex items-center justify-between text-xs opacity-70', colors.text)}>
               <span>{currentTier.icon} {currentTier.name}</span>
               <span>{nextTier.icon} {nextTier.name} ({nextTier.minPoints.toLocaleString('id-ID')} poin)</span>
             </div>

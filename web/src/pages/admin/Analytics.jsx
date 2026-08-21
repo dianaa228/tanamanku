@@ -3,6 +3,11 @@ import { adminAnalyticsApi } from '../../services/api/adminAnalytics'
 import { formatRupiah, cx } from '../../utils/format'
 import Loading from '../../components/ui/Loading'
 
+const STATUS_COLORS = {
+  completed: '#22c55e', shipped: '#6366f1', processing: '#3b82f6',
+  pending: '#f59e0b', cancelled: '#ef4444', refunded: '#94a3b8',
+}
+
 export default function AdminAnalytics() {
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -176,16 +181,12 @@ export default function AdminAnalytics() {
           <h2 className="font-bold text-leaf-950">📦 Status Pesanan</h2>
           <div className="mt-4 flex justify-center">
             <div className="relative h-40 w-40">
-              <svg viewBox="0 0 36 36" className="h-full w-full -rotate-90">
+              <svg viewBox="0 0 36 36" className="h-full w-full -rotate-90" role="img" aria-label="Status pesanan">
                 {ordersByStatus.reduce((acc, b) => {
                   const pct = (b.count / totalStatus) * 100
-                  const colors = {
-                    completed: '#22c55e', shipped: '#6366f1', processing: '#3b82f6',
-                    pending: '#f59e0b', cancelled: '#ef4444', refunded: '#94a3b8',
-                  }
                   acc.elements.push(
                     <circle key={b.status} cx="18" cy="18" r="15.915" fill="none"
-                      stroke={colors[b.status] || '#94a3b8'} strokeWidth="3"
+                      stroke={STATUS_COLORS[b.status] || '#94a3b8'} strokeWidth="3"
                       strokeDasharray={`${pct} ${100 - pct}`} strokeDashoffset={`${-acc.offset}`} />
                   )
                   acc.offset += pct
@@ -202,7 +203,7 @@ export default function AdminAnalytics() {
             {ordersByStatus.map((b) => (
               <div key={b.status} className="flex items-center justify-between text-xs">
                 <span className="flex items-center gap-1.5">
-                  <span className="h-2 w-2 rounded-full" style={{ backgroundColor: { completed: '#22c55e', shipped: '#6366f1', processing: '#3b82f6', pending: '#f59e0b', cancelled: '#ef4444', refunded: '#94a3b8' }[b.status] }} />
+                  <span className="h-2 w-2 rounded-full" style={{ backgroundColor: STATUS_COLORS[b.status] }} />
                   <span className="text-leaf-900/70 capitalize">{b.status}</span>
                 </span>
                 <span className="font-semibold text-leaf-950">{b.count}</span>

@@ -123,7 +123,7 @@ export default function SellerAnalytics() {
           {/* Donut visual */}
           <div className="mt-6 flex justify-center">
             <div className="relative h-32 w-32">
-              <svg viewBox="0 0 36 36" className="h-full w-full -rotate-90">
+              <svg viewBox="0 0 36 36" className="h-full w-full -rotate-90" role="img" aria-label="Status pesanan">
                 {orderStatusBreakdown.reduce((acc, b) => {
                   const pct = (b.count / totalStatus) * 100
                   acc.elements.push(

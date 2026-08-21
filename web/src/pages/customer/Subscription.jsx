@@ -58,6 +58,8 @@ export default function Subscription() {
 
   if (loading) return <Loading label="Memuat paket langganan..." />
 
+  const activePlan = currentPlan ? plans.find((p) => p.id === currentPlan.plan_id) : null
+
   const planColors = {
     free: { bg: 'bg-gray-50', border: 'border-gray-200', accent: 'text-gray-600', btn: 'secondary' },
     'plant-care-pro': { bg: 'bg-leaf-50', border: 'border-leaf-300', accent: 'text-leaf-700', btn: 'primary' },
@@ -81,8 +83,7 @@ export default function Subscription() {
             <div>
               <p className="text-sm font-semibold opacity-80">Paket Aktif</p>
               <p className="text-xl font-extrabold">
-                {plans.find((p) => p.id === currentPlan.plan_id)?.badge}{' '}
-                {plans.find((p) => p.id === currentPlan.plan_id)?.name}
+                {activePlan?.badge}{' '}{activePlan?.name}
               </p>
             </div>
             <Button to="/subscription/manage" variant="secondary" size="sm">
