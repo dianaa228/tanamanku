@@ -18,6 +18,13 @@ import '../features/my_garden/plant_finder_page.dart';
 import '../features/my_garden/plant_diagnosis_page.dart';
 import '../features/community/community_page.dart';
 import '../features/profile/profile_page.dart';
+import '../features/exchange/plant_exchange_page.dart';
+import '../features/exchange/listing_detail_page.dart';
+import '../features/services/services_page.dart';
+import '../features/loyalty/loyalty_page.dart';
+import '../features/loyalty/loyalty_redeem_page.dart';
+import '../features/loyalty/loyalty_history_page.dart';
+import '../features/nursery/nurseries_page.dart';
 import '../widgets/loading_widget.dart';
 
 /// Router utama Tanamanku — menggunakan GoRouter.
@@ -109,6 +116,41 @@ class AppRouter {
           path: '/community',
           parentNavigatorKey: _rootNavigatorKey,
           builder: (_, __) => const CommunityPage(),
+        ),
+        GoRoute(
+          path: '/plant-exchange',
+          parentNavigatorKey: _rootNavigatorKey,
+          builder: (_, __) => const PlantExchangePage(),
+        ),
+        GoRoute(
+          path: '/plant-exchange/:id',
+          parentNavigatorKey: _rootNavigatorKey,
+          builder: (_, state) => ListingDetailPage(listingId: int.parse(state.pathParameters['id']!)),
+        ),
+        GoRoute(
+          path: '/services',
+          parentNavigatorKey: _rootNavigatorKey,
+          builder: (_, __) => const ServicesPage(),
+        ),
+        GoRoute(
+          path: '/loyalty',
+          parentNavigatorKey: _rootNavigatorKey,
+          builder: (_, __) => const LoyaltyPage(),
+        ),
+        GoRoute(
+          path: '/loyalty/redeem',
+          parentNavigatorKey: _rootNavigatorKey,
+          builder: (_, __) => const LoyaltyRedeemPage(),
+        ),
+        GoRoute(
+          path: '/loyalty/history',
+          parentNavigatorKey: _rootNavigatorKey,
+          builder: (_, __) => const LoyaltyHistoryPage(),
+        ),
+        GoRoute(
+          path: '/nurseries',
+          parentNavigatorKey: _rootNavigatorKey,
+          builder: (_, __) => const NurseriesPage(),
         ),
         GoRoute(
           path: '/profile',
