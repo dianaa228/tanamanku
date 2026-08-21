@@ -23,6 +23,10 @@ use App\Http\Controllers\Api\V1\ServiceOrderController;
 use App\Http\Controllers\Api\V1\ShipmentController;
 use App\Http\Controllers\Api\V1\StoreController;
 use App\Http\Controllers\Api\V1\UserController;
+use App\Http\Controllers\Api\V1\LoyaltyController;
+use App\Http\Controllers\Api\V1\SubscriptionController;
+use App\Http\Controllers\Api\V1\NurseryController;
+use App\Http\Controllers\Api\V1\AnalyticsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -142,6 +146,32 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/{notification}/read', [NotificationController::class, 'markAsRead']);
         Route::post('/read-all', [NotificationController::class, 'markAllAsRead']);
     });
+
+    // Loyalty
+    Route::prefix('loyalty')->group(function () {
+        Route::get('/profile', [LoyaltyController::class, 'profile']);
+        Route::get('/tiers', [LoyaltyController::class, 'tiers']);
+        Route::get('/rewards', [LoyaltyController::class, 'rewards']);
+        Route::post('/rewards/{rewardId}/redeem', [LoyaltyController::class, 'redeem']);
+        Route::get('/history', [LoyaltyController::class, 'history']);
+    });
+
+    // Subscription
+    Route::prefix('subscription')->group(function () {
+        Route::get('/plans', [SubscriptionController::class, 'plans']);
+        Route::get('/current', [SubscriptionController::class, 'current']);
+        Route::post('/subscribe', [SubscriptionController::class, 'subscribe']);
+        Route::post('/cancel', [SubscriptionController::class, 'cancel']);
+        Route::get('/billing', [SubscriptionController::class, 'billing']);
+    });
+
+    // Nursery
+    Route::get('/nurseries', [NurseryController::class, 'index']);
+    Route::get('/nurseries/{idOrSlug}', [NurseryController::class, 'show']);
+    Route::get('/nurseries/{nurseryId}/products', [NurseryController::class, 'products']);
+
+    // Seller Analytics
+    Route::get('/seller/analytics', [AnalyticsController::class, 'seller']);
 });
 
 // ===== Seller (web) =====
@@ -176,6 +206,9 @@ Route::middleware(['auth:sanctum', 'role:admin'])->prefix('admin')->group(functi
     Route::post('/community/reports/{report}/resolve', [CommunityController::class, 'resolveReport']);
     Route::post('/plant-species', [PlantSpeciesController::class, 'store']);
     Route::put('/plant-species/{plantSpecies}', [PlantSpeciesController::class, 'update']);
+
+    // Admin Analytics
+    Route::get('/analytics', [AnalyticsController::class, 'admin']);
 });
 
 // Webhook pembayaran (publik, diverifikasi signature di PaymentService)
