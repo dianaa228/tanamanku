@@ -41,3 +41,11 @@ export const timeAgo = (iso) => {
 export const cx = (...classes) => classes.filter(Boolean).join(' ')
 
 export const daysUntil = (iso) => Math.ceil((new Date(iso) - Date.now()) / 86400000)
+
+export const durationText = (min) => {
+  if (!min) return '—'
+  if (min < 60) return `${min} menit`
+  const h = Math.floor(min / 60)
+  const m = min % 60
+  return m ? `${h}j ${m}m` : `${h} jam`
+}

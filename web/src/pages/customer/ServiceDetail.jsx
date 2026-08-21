@@ -2,21 +2,13 @@ import { useEffect, useState } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { servicesApi } from '../../services/api/services'
 import { SERVICE_CATEGORIES } from '../../types/constants'
-import { formatRupiah, formatDateTime } from '../../utils/format'
+import { formatRupiah, formatDateTime, durationText } from '../../utils/format'
 import { useAuth } from '../../context/AuthContext'
 import { useToast } from '../../context/ToastContext'
 import Button from '../../components/ui/Button'
 import Badge from '../../components/ui/Badge'
 import Modal from '../../components/ui/Modal'
 import Loading from '../../components/ui/Loading'
-
-const durationText = (min) => {
-  if (!min) return '—'
-  if (min < 60) return `${min} menit`
-  const h = Math.floor(min / 60)
-  const m = min % 60
-  return m ? `${h}j ${m}m` : `${h} jam`
-}
 
 export default function ServiceDetail() {
   const { id } = useParams()

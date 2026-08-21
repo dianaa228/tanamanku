@@ -2,18 +2,9 @@ import { useEffect, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { servicesApi } from '../../services/api/services'
 import { SERVICE_CATEGORIES } from '../../types/constants'
-import { formatRupiah } from '../../utils/format'
+import { formatRupiah, durationText, cx } from '../../utils/format'
 import Loading from '../../components/ui/Loading'
 import EmptyState from '../../components/ui/EmptyState'
-import { cx } from '../../utils/format'
-
-const durationText = (min) => {
-  if (!min) return '—'
-  if (min < 60) return `${min} menit`
-  const h = Math.floor(min / 60)
-  const m = min % 60
-  return m ? `${h}j ${m}m` : `${h} jam`
-}
 
 export default function Services() {
   const [searchParams, setSearchParams] = useSearchParams()
