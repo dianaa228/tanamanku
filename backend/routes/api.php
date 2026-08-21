@@ -99,6 +99,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // My Garden
     Route::prefix('my-garden')->group(function () {
         Route::get('/', [MyGardenController::class, 'index']);
+        Route::get('/reminders', [MyGardenController::class, 'allReminders']);
         Route::post('/', [MyGardenController::class, 'store']);
         Route::get('/{userPlant}', [MyGardenController::class, 'show'])->middleware('can:view,userPlant');
         Route::put('/{userPlant}', [MyGardenController::class, 'update'])->middleware('can:update,userPlant');

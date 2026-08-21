@@ -46,6 +46,15 @@ class MyGardenController extends BaseController
         return $this->deleted('Tanaman dihapus dari kebun');
     }
 
+    public function allReminders(Request $request): JsonResponse
+    {
+        $reminders = \App\Models\PlantReminder::whereHas('userPlant', function ($q) use ($request) {
+            $q->where('user_id', $request->user()->id);
+        })->with('userPlant:id,nickname')->get();
+
+        return $this->success($reminders, 'Pengingat berhasil dimuat');
+    }
+
     public function addPhoto(Request $request, UserPlant $userPlant): JsonResponse
     {
         $data = $request->validate([
