@@ -49,3 +49,4 @@ mobile/android/app/.cxx/
 .idea/
 .vscode/
 *.swp
+backend/.phpunit.cache/
