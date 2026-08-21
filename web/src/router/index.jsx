@@ -29,6 +29,8 @@ import MyExchanges from '../pages/customer/MyExchanges'
 import Loyalty from '../pages/customer/Loyalty'
 import LoyaltyRedeem from '../pages/customer/LoyaltyRedeem'
 import LoyaltyHistory from '../pages/customer/LoyaltyHistory'
+import Subscription from '../pages/customer/Subscription'
+import SubscriptionManage from '../pages/customer/SubscriptionManage'
 
 // Auth pages
 import Login from '../pages/auth/Login'
@@ -55,6 +57,7 @@ import AdminPayments from '../pages/admin/Payments'
 import AdminCommunity from '../pages/admin/Community'
 import AdminReports from '../pages/admin/Reports'
 import AdminSettings from '../pages/admin/Settings'
+import AdminAnalytics from '../pages/admin/Analytics'
 
 // ── Nav config ──
 
@@ -69,6 +72,7 @@ const sellerNav = [
 
 const adminNav = [
   { to: '/admin', icon: '📊', label: 'Dashboard' },
+  { to: '/admin/analytics', icon: '📈', label: 'Analytics' },
   { to: '/admin/users', icon: '👥', label: 'Pengguna' },
   { to: '/admin/stores', icon: '🏪', label: 'Toko' },
   { to: '/admin/categories', icon: '🏷️', label: 'Kategori' },
@@ -108,6 +112,8 @@ export const router = createBrowserRouter([
       { path: '/loyalty', element: <Loyalty /> },
       { path: '/loyalty/redeem', element: <LoyaltyRedeem /> },
       { path: '/loyalty/history', element: <LoyaltyHistory /> },
+      { path: '/subscription', element: <Subscription /> },
+      { path: '/subscription/manage', element: <SubscriptionManage /> },
     ],
   },
 
@@ -149,6 +155,7 @@ export const router = createBrowserRouter([
       { path: '/admin/community', element: <AdminCommunity /> },
       { path: '/admin/reports', element: <AdminReports /> },
       { path: '/admin/settings', element: <AdminSettings /> },
+      { path: '/admin/analytics', element: <AdminAnalytics /> },
     ],
   },
 
