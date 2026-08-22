@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Enums\UserRole;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 
 class UserFactory extends Factory
 {

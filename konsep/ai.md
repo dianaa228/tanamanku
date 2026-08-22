@@ -215,7 +215,7 @@
           },
 
           "factories": {
-            "UserFactory.php": {},
+            "ctory.php": {},
             "ProductFactory.php": {},
             "PlantSpeciesFactory.php": {},
             "PostFactory.php": {}
