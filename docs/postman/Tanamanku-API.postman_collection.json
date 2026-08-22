@@ -1,0 +1,1164 @@
+{
+  "info": {
+    "_postman_id": "tanamanku-api-collection",
+    "name": "Tanamanku API v1",
+    "description": "Urban Gardening Marketplace & Management Platform REST API.\n\n## Setup\n1. Set `baseUrl` variable to your server (default: `http://localhost:8000/api/v1`)\n2. Register/Login to get a token\n3. Set `token` variable from the login response\n\n## Variables\n- `baseUrl`: API base URL\n- `token`: Bearer token (set after login)\n- `userId`: Current user ID\n- `productId`: Product ID for testing\n- `orderId`: Order ID for testing\n- `plantId`: User plant ID for testing\n- `postId`: Community post ID for testing",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8000/api/v1" },
+    { "key": "token", "value": "" },
+    { "key": "userId", "value": "" },
+    { "key": "productId", "value": "1" },
+    { "key": "orderId", "value": "1" },
+    { "key": "plantId", "value": "1" },
+    { "key": "postId", "value": "1" },
+    { "key": "storeId", "value": "1" },
+    { "key": "cartItemId", "value": "1" },
+    { "key": "serviceId", "value": "1" },
+    { "key": "listingId", "value": "1" },
+    { "key": "rewardId", "value": "1" },
+    { "key": "nurseryId", "value": "1" },
+    { "key": "reminderId", "value": "1" },
+    { "key": "reportId", "value": "1" },
+    { "key": "notificationId", "value": "" },
+    { "key": "subscriptionPlanId", "value": "1" }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      { "key": "token", "value": "{{token}}", "type": "string" }
+    ]
+  },
+  "item": [
+    {
+      "name": "🔑 Auth",
+      "item": [
+        {
+          "name": "Register",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status is 201', () => pm.response.to.have.status(201));",
+                  "pm.test('Returns token', () => {",
+                  "  const res = pm.response.json();",
+                  "  pm.expect(res.success).to.be.true;",
+                  "  pm.expect(res.data).to.have.property('token');",
+                  "  if (res.data.token) {",
+                  "    pm.collectionVariables.set('token', res.data.token);",
+                  "    pm.collectionVariables.set('userId', res.data.id);",
+                  "  }",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Rina Kartika\",\n  \"email\": \"rina@example.com\",\n  \"phone\": \"081234567890\",\n  \"password\": \"rahasia123\",\n  \"password_confirmation\": \"rahasia123\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/auth/register", "host": ["{{baseUrl}}"], "path": ["auth", "register"] }
+          }
+        },
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Returns token and saves it', () => {",
+                  "  const res = pm.response.json();",
+                  "  pm.expect(res.success).to.be.true;",
+                  "  pm.expect(res.data).to.have.property('token');",
+                  "  pm.collectionVariables.set('token', res.data.token);",
+                  "  pm.collectionVariables.set('userId', res.data.id);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"rina@example.com\",\n  \"password\": \"rahasia123\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/auth/login", "host": ["{{baseUrl}}"], "path": ["auth", "login"] }
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "url": { "raw": "{{baseUrl}}/auth/logout", "host": ["{{baseUrl}}"], "path": ["auth", "logout"] }
+          }
+        },
+        {
+          "name": "Get Profile (me)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Returns user data', () => {",
+                  "  const res = pm.response.json();",
+                  "  pm.expect(res.success).to.be.true;",
+                  "  pm.expect(res.data).to.have.property('email');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/auth/me", "host": ["{{baseUrl}}"], "path": ["auth", "me"] }
+          }
+        },
+        {
+          "name": "Forgot Password",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"rina@example.com\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/auth/forgot-password", "host": ["{{baseUrl}}"], "path": ["auth", "forgot-password"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "📂 Categories",
+      "item": [
+        {
+          "name": "List Categories",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/categories", "host": ["{{baseUrl}}"], "path": ["categories"] }
+          }
+        },
+        {
+          "name": "Get Category by Slug",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/categories/tanaman-hias", "host": ["{{baseUrl}}"], "path": ["categories", "tanaman-hias"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🛒 Products",
+      "item": [
+        {
+          "name": "List Products",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/products?page=1&per_page=15",
+              "host": ["{{baseUrl}}"],
+              "path": ["products"],
+              "query": [
+                { "key": "search", "value": "", "description": "Search keyword" },
+                { "key": "category", "value": "", "description": "Category slug" },
+                { "key": "care", "value": "", "description": "mudah | sedang | sulit", "disabled": true },
+                { "key": "sort", "value": "", "description": "harga-asc | harga-desc | terlaris | rating", "disabled": true },
+                { "key": "page", "value": "1" },
+                { "key": "per_page", "value": "15" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Product Detail",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/products/monstera-deliciosa", "host": ["{{baseUrl}}"], "path": ["products", "monstera-deliciosa"] }
+          }
+        },
+        {
+          "name": "Toggle Favorite",
+          "request": {
+            "method": "POST",
+            "url": { "raw": "{{baseUrl}}/products/{{productId}}/favorite", "host": ["{{baseUrl}}"], "path": ["products", "{{productId}}", "favorite"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🏪 Stores",
+      "item": [
+        {
+          "name": "List Stores",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/stores", "host": ["{{baseUrl}}"], "path": ["stores"] }
+          }
+        },
+        {
+          "name": "Get Store Detail",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/stores/green-leaf-nursery", "host": ["{{baseUrl}}"], "path": ["stores", "green-leaf-nursery"] }
+          }
+        },
+        {
+          "name": "List Store Products",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/stores/{{storeId}}/products", "host": ["{{baseUrl}}"], "path": ["stores", "{{storeId}}", "products"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🛒 Cart",
+      "item": [
+        {
+          "name": "Get Cart",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Returns cart structure', () => {",
+                  "  const res = pm.response.json();",
+                  "  pm.expect(res.success).to.be.true;",
+                  "  pm.expect(res.data).to.have.property('items');",
+                  "  pm.expect(res.data).to.have.property('count');",
+                  "  pm.expect(res.data).to.have.property('subtotal');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/cart", "host": ["{{baseUrl}}"], "path": ["cart"] }
+          }
+        },
+        {
+          "name": "Add to Cart",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status is 201 or 200', () => pm.expect(pm.response.code).to.be.oneOf([200, 201]));",
+                  "pm.test('Returns success', () => {",
+                  "  const res = pm.response.json();",
+                  "  pm.expect(res.success).to.be.true;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"product_id\": {{productId}},\n  \"quantity\": 1\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/cart/items", "host": ["{{baseUrl}}"], "path": ["cart", "items"] }
+          }
+        },
+        {
+          "name": "Update Cart Item",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"quantity\": 2\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/cart/items/{{cartItemId}}", "host": ["{{baseUrl}}"], "path": ["cart", "items", "{{cartItemId}}"] }
+          }
+        },
+        {
+          "name": "Remove Cart Item",
+          "request": {
+            "method": "DELETE",
+            "url": { "raw": "{{baseUrl}}/cart/items/{{cartItemId}}", "host": ["{{baseUrl}}"], "path": ["cart", "items", "{{cartItemId}}"] }
+          }
+        },
+        {
+          "name": "Clear Cart",
+          "request": {
+            "method": "DELETE",
+            "url": { "raw": "{{baseUrl}}/cart", "host": ["{{baseUrl}}"], "path": ["cart"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "📦 Orders",
+      "item": [
+        {
+          "name": "Create Order (Checkout)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status is 201', () => pm.response.to.have.status(201));",
+                  "pm.test('Returns order', () => {",
+                  "  const res = pm.response.json();",
+                  "  pm.expect(res.success).to.be.true;",
+                  "  if (res.data && res.data.id) pm.collectionVariables.set('orderId', res.data.id);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"payment_method\": \"transfer\",\n  \"courier\": \"reguler\",\n  \"note\": \"Tolong bungkus dengan aman ya\",\n  \"address\": {\n    \"label\": \"Rumah\",\n    \"recipient\": \"Rina Kartika\",\n    \"phone\": \"081234567890\",\n    \"street\": \"Jl. Melati No. 10\",\n    \"city\": \"Jakarta Selatan\",\n    \"province\": \"DKI Jakarta\",\n    \"postal_code\": \"12345\"\n  }\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/orders", "host": ["{{baseUrl}}"], "path": ["orders"] }
+          }
+        },
+        {
+          "name": "List Orders",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/orders?page=1", "host": ["{{baseUrl}}"], "path": ["orders"], "query": [{ "key": "page", "value": "1" }] }
+          }
+        },
+        {
+          "name": "Get Order Detail",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/orders/{{orderId}}", "host": ["{{baseUrl}}"], "path": ["orders", "{{orderId}}"] }
+          }
+        },
+        {
+          "name": "Cancel Order",
+          "request": {
+            "method": "POST",
+            "url": { "raw": "{{baseUrl}}/orders/{{orderId}}/cancel", "host": ["{{baseUrl}}"], "path": ["orders", "{{orderId}}", "cancel"] }
+          }
+        },
+        {
+          "name": "Pay Order",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"method\": \"transfer\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/orders/{{orderId}}/pay", "host": ["{{baseUrl}}"], "path": ["orders", "{{orderId}}", "pay"] }
+          }
+        },
+        {
+          "name": "Get Shipment Tracking",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/orders/{{orderId}}/shipment", "host": ["{{baseUrl}}"], "path": ["orders", "{{orderId}}", "shipment"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "⭐ Reviews",
+      "item": [
+        {
+          "name": "List Reviews",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/reviews?product_id={{productId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["reviews"],
+              "query": [{ "key": "product_id", "value": "{{productId}}" }]
+            }
+          }
+        },
+        {
+          "name": "Submit Review",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"order_item_id\": 1,\n  \"rating\": 5,\n  \"comment\": \"Tanaman sangat sehat dan pengemasan rapi!\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/reviews", "host": ["{{baseUrl}}"], "path": ["reviews"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🌿 My Garden",
+      "item": [
+        {
+          "name": "List My Plants",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/my-garden", "host": ["{{baseUrl}}"], "path": ["my-garden"] }
+          }
+        },
+        {
+          "name": "Add Plant to Garden",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status is 201', () => pm.response.to.have.status(201));",
+                  "pm.test('Returns plant data', () => {",
+                  "  const res = pm.response.json();",
+                  "  pm.expect(res.success).to.be.true;",
+                  "  if (res.data && res.data.id) pm.collectionVariables.set('plantId', res.data.id);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nickname\": \"Momo\",\n  \"plant_species_id\": 1,\n  \"location\": \"Ruang Tamu\",\n  \"planted_at\": \"2026-08-01\",\n  \"water_frequency_days\": 3\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/my-garden", "host": ["{{baseUrl}}"], "path": ["my-garden"] }
+          }
+        },
+        {
+          "name": "Get Plant Detail",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/my-garden/{{plantId}}", "host": ["{{baseUrl}}"], "path": ["my-garden", "{{plantId}}"] }
+          }
+        },
+        {
+          "name": "Update Plant",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nickname\": \"Momo Jr\",\n  \"location\": \"Balkon\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/my-garden/{{plantId}}", "host": ["{{baseUrl}}"], "path": ["my-garden", "{{plantId}}"] }
+          }
+        },
+        {
+          "name": "Delete Plant",
+          "request": {
+            "method": "DELETE",
+            "url": { "raw": "{{baseUrl}}/my-garden/{{plantId}}", "host": ["{{baseUrl}}"], "path": ["my-garden", "{{plantId}}"] }
+          }
+        },
+        {
+          "name": "List Growth Logs",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/my-garden/{{plantId}}/growth", "host": ["{{baseUrl}}"], "path": ["my-garden", "{{plantId}}", "growth"] }
+          }
+        },
+        {
+          "name": "Log Growth",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"height_cm\": 25.5,\n  \"note\": \"Daun baru mulai tumbuh\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/my-garden/{{plantId}}/growth", "host": ["{{baseUrl}}"], "path": ["my-garden", "{{plantId}}", "growth"] }
+          }
+        },
+        {
+          "name": "Log Care Activity",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"siram\",\n  \"note\": \"Siram pagi hari\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/my-garden/{{plantId}}/care", "host": ["{{baseUrl}}"], "path": ["my-garden", "{{plantId}}", "care"] }
+          }
+        },
+        {
+          "name": "List Reminders (All Plants)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/my-garden/reminders", "host": ["{{baseUrl}}"], "path": ["my-garden", "reminders"] }
+          }
+        },
+        {
+          "name": "List Reminders (Plant)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/my-garden/{{plantId}}/reminders", "host": ["{{baseUrl}}"], "path": ["my-garden", "{{plantId}}", "reminders"] }
+          }
+        },
+        {
+          "name": "Create Reminder",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status is 201', () => pm.response.to.have.status(201));",
+                  "pm.test('Returns reminder', () => {",
+                  "  const res = pm.response.json();",
+                  "  pm.expect(res.success).to.be.true;",
+                  "  if (res.data && res.data.id) pm.collectionVariables.set('reminderId', res.data.id);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"siram\",\n  \"frequency_days\": 3\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/my-garden/{{plantId}}/reminders", "host": ["{{baseUrl}}"], "path": ["my-garden", "{{plantId}}", "reminders"] }
+          }
+        },
+        {
+          "name": "Mark Reminder Done",
+          "request": {
+            "method": "POST",
+            "url": { "raw": "{{baseUrl}}/my-garden/reminders/{{reminderId}}/done", "host": ["{{baseUrl}}"], "path": ["my-garden", "reminders", "{{reminderId}}", "done"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🌱 Plant Species",
+      "item": [
+        {
+          "name": "List Species",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/plant-species", "host": ["{{baseUrl}}"], "path": ["plant-species"] }
+          }
+        },
+        {
+          "name": "Get Species Detail",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/plant-species/monstera-deliciosa", "host": ["{{baseUrl}}"], "path": ["plant-species", "monstera-deliciosa"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🔍 Smart Plant",
+      "item": [
+        {
+          "name": "Get Finder Questions",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/plant-finder/questions", "host": ["{{baseUrl}}"], "path": ["plant-finder", "questions"] }
+          }
+        },
+        {
+          "name": "Get Recommendations",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lokasi\": \"indoor\",\n  \"pengalaman\": \"pemula\",\n  \"tujuan\": \"hias\",\n  \"waktu\": \"sedikit\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/plant-finder/recommend", "host": ["{{baseUrl}}"], "path": ["plant-finder", "recommend"] }
+          }
+        },
+        {
+          "name": "Diagnose Plant",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_plant_id\": 1,\n  \"symptoms\": [\"daun menguning\", \"daun gugur\"]\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/plant-diagnosis", "host": ["{{baseUrl}}"], "path": ["plant-diagnosis"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "💬 Community",
+      "item": [
+        {
+          "name": "List Posts",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/community/posts?per_page=30", "host": ["{{baseUrl}}"], "path": ["community", "posts"], "query": [{ "key": "per_page", "value": "30" }] }
+          }
+        },
+        {
+          "name": "Create Post",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status is 201', () => pm.response.to.have.status(201));",
+                  "pm.test('Returns post', () => {",
+                  "  const res = pm.response.json();",
+                  "  pm.expect(res.success).to.be.true;",
+                  "  if (res.data && res.data.id) pm.collectionVariables.set('postId', res.data.id);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": \"Momo akhirnya tumbuh daun baru! 🌿 Momen yang ditunggu-tunggu!\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/community/posts", "host": ["{{baseUrl}}"], "path": ["community", "posts"] }
+          }
+        },
+        {
+          "name": "Get Post Detail",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/community/posts/{{postId}}", "host": ["{{baseUrl}}"], "path": ["community", "posts", "{{postId}}"] }
+          }
+        },
+        {
+          "name": "Delete Post",
+          "request": {
+            "method": "DELETE",
+            "url": { "raw": "{{baseUrl}}/community/posts/{{postId}}", "host": ["{{baseUrl}}"], "path": ["community", "posts", "{{postId}}"] }
+          }
+        },
+        {
+          "name": "Toggle Like",
+          "request": {
+            "method": "POST",
+            "url": { "raw": "{{baseUrl}}/community/posts/{{postId}}/like", "host": ["{{baseUrl}}"], "path": ["community", "posts", "{{postId}}", "like"] }
+          }
+        },
+        {
+          "name": "Add Comment",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": \"Bagus sekali! Keep it up! 🌱\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/community/posts/{{postId}}/comments", "host": ["{{baseUrl}}"], "path": ["community", "posts", "{{postId}}", "comments"] }
+          }
+        },
+        {
+          "name": "Report Post",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"Konten tidak pantas atau spam\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/community/posts/{{postId}}/report", "host": ["{{baseUrl}}"], "path": ["community", "posts", "{{postId}}", "report"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🔄 Plant Exchange",
+      "item": [
+        {
+          "name": "List Listings",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/plant-exchange/listings", "host": ["{{baseUrl}}"], "path": ["plant-exchange", "listings"] }
+          }
+        },
+        {
+          "name": "Create Listing",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status is 201', () => pm.response.to.have.status(201));",
+                  "pm.test('Returns listing', () => {",
+                  "  const res = pm.response.json();",
+                  "  pm.expect(res.success).to.be.true;",
+                  "  if (res.data && res.data.id) pm.collectionVariables.set('listingId', res.data.id);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Monstera Baby 15cm\",\n  \"description\": \"Hasil propagasi, sehat dan sudah berakar\",\n  \"price\": 75000,\n  \"type\": \"sell\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/plant-exchange/listings", "host": ["{{baseUrl}}"], "path": ["plant-exchange", "listings"] }
+          }
+        },
+        {
+          "name": "My Listings",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/plant-exchange/listings/mine", "host": ["{{baseUrl}}"], "path": ["plant-exchange", "listings", "mine"] }
+          }
+        },
+        {
+          "name": "Make Offer",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"message\": \"Mau tuker dengan Pothos golden, bagaimana?\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/plant-exchange/listings/{{listingId}}/offer", "host": ["{{baseUrl}}"], "path": ["plant-exchange", "listings", "{{listingId}}", "offer"] }
+          }
+        },
+        {
+          "name": "My Exchanges",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/plant-exchange/exchanges/mine", "host": ["{{baseUrl}}"], "path": ["plant-exchange", "exchanges", "mine"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🔧 Services",
+      "item": [
+        {
+          "name": "List Services",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/services", "host": ["{{baseUrl}}"], "path": ["services"] }
+          }
+        },
+        {
+          "name": "Get Service Detail",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/services/{{serviceId}}", "host": ["{{baseUrl}}"], "path": ["services", "{{serviceId}}"] }
+          }
+        },
+        {
+          "name": "Book Service",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"service_id\": 1,\n  \"schedule_at\": \"2026-09-01T09:00:00.000000Z\",\n  \"address\": {\n    \"label\": \"Rumah\",\n    \"recipient\": \"Rina Kartika\",\n    \"phone\": \"081234567890\",\n    \"street\": \"Jl. Melati No. 10\",\n    \"city\": \"Jakarta Selatan\",\n    \"province\": \"DKI Jakarta\"\n  },\n  \"notes\": \"Tolong bawa alat sendiri\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/service-orders", "host": ["{{baseUrl}}"], "path": ["service-orders"] }
+          }
+        },
+        {
+          "name": "My Service Bookings",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/service-orders", "host": ["{{baseUrl}}"], "path": ["service-orders"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🔔 Notifications",
+      "item": [
+        {
+          "name": "List Notifications",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Returns notifications with unread count', () => {",
+                  "  const res = pm.response.json();",
+                  "  pm.expect(res.success).to.be.true;",
+                  "  pm.expect(res.data).to.have.property('unread_count');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/notifications", "host": ["{{baseUrl}}"], "path": ["notifications"] }
+          }
+        },
+        {
+          "name": "Mark as Read",
+          "request": {
+            "method": "POST",
+            "url": { "raw": "{{baseUrl}}/notifications/{{notificationId}}/read", "host": ["{{baseUrl}}"], "path": ["notifications", "{{notificationId}}", "read"] }
+          }
+        },
+        {
+          "name": "Mark All as Read",
+          "request": {
+            "method": "POST",
+            "url": { "raw": "{{baseUrl}}/notifications/read-all", "host": ["{{baseUrl}}"], "path": ["notifications", "read-all"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🎯 Loyalty",
+      "item": [
+        {
+          "name": "Get Loyalty Profile",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Returns points and tier', () => {",
+                  "  const res = pm.response.json();",
+                  "  pm.expect(res.success).to.be.true;",
+                  "  pm.expect(res.data).to.have.property('points');",
+                  "  pm.expect(res.data).to.have.property('tier');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/loyalty/profile", "host": ["{{baseUrl}}"], "path": ["loyalty", "profile"] }
+          }
+        },
+        {
+          "name": "List Tiers",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/loyalty/tiers", "host": ["{{baseUrl}}"], "path": ["loyalty", "tiers"] }
+          }
+        },
+        {
+          "name": "List Rewards",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/loyalty/rewards", "host": ["{{baseUrl}}"], "path": ["loyalty", "rewards"] }
+          }
+        },
+        {
+          "name": "Redeem Reward",
+          "request": {
+            "method": "POST",
+            "url": { "raw": "{{baseUrl}}/loyalty/rewards/{{rewardId}}/redeem", "host": ["{{baseUrl}}"], "path": ["loyalty", "rewards", "{{rewardId}}", "redeem"] }
+          }
+        },
+        {
+          "name": "Point History",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/loyalty/history?type=earn",
+              "host": ["{{baseUrl}}"],
+              "path": ["loyalty", "history"],
+              "query": [{ "key": "type", "value": "earn", "description": "earn | redeem", "disabled": true }]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "💳 Subscription",
+      "item": [
+        {
+          "name": "List Plans",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/subscription/plans", "host": ["{{baseUrl}}"], "path": ["subscription", "plans"] }
+          }
+        },
+        {
+          "name": "Get Current Subscription",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/subscription/current", "host": ["{{baseUrl}}"], "path": ["subscription", "current"] }
+          }
+        },
+        {
+          "name": "Subscribe",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"plan_id\": \"premium\",\n  \"payment_method\": \"transfer\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/subscription/subscribe", "host": ["{{baseUrl}}"], "path": ["subscription", "subscribe"] }
+          }
+        },
+        {
+          "name": "Cancel Subscription",
+          "request": {
+            "method": "POST",
+            "url": { "raw": "{{baseUrl}}/subscription/cancel", "host": ["{{baseUrl}}"], "path": ["subscription", "cancel"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🏡 Nursery",
+      "item": [
+        {
+          "name": "List Nurseries",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/nurseries",
+              "host": ["{{baseUrl}}"],
+              "path": ["nurseries"],
+              "query": [
+                { "key": "city", "value": "", "description": "Filter by city", "disabled": true },
+                { "key": "search", "value": "", "description": "Search name", "disabled": true },
+                { "key": "open_only", "value": "true", "description": "Show only open", "disabled": true }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Nursery Detail",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/nurseries/{{nurseryId}}", "host": ["{{baseUrl}}"], "path": ["nurseries", "{{nurseryId}}"] }
+          }
+        },
+        {
+          "name": "List Nursery Products",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/nurseries/{{nurseryId}}/products", "host": ["{{baseUrl}}"], "path": ["nurseries", "{{nurseryId}}", "products"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "📊 Seller",
+      "item": [
+        {
+          "name": "Get Dashboard",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/seller/dashboard", "host": ["{{baseUrl}}"], "path": ["seller", "dashboard"] }
+          }
+        },
+        {
+          "name": "Get My Store",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/seller/store", "host": ["{{baseUrl}}"], "path": ["seller", "store"] }
+          }
+        },
+        {
+          "name": "Update Store",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Green Leaf Nursery\",\n  \"description\": \"Toko tanaman hias terlengkap\",\n  \"phone\": \"081987654321\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/seller/store", "host": ["{{baseUrl}}"], "path": ["seller", "store"] }
+          }
+        },
+        {
+          "name": "List My Products",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/seller/products", "host": ["{{baseUrl}}"], "path": ["seller", "products"] }
+          }
+        },
+        {
+          "name": "Create Product",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Monstera Deliciosa\",\n  \"description\": \"Monstera sehat 30cm\",\n  \"price\": 150000,\n  \"category_id\": 1,\n  \"stock\": 10,\n  \"care_level\": \"mudah\",\n  \"images\": [\"https://example.com/monstera.jpg\"]\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/seller/products", "host": ["{{baseUrl}}"], "path": ["seller", "products"] }
+          }
+        },
+        {
+          "name": "Update Product",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"price\": 140000,\n  \"stock\": 15\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/seller/products/{{productId}}", "host": ["{{baseUrl}}"], "path": ["seller", "products", "{{productId}}"] }
+          }
+        },
+        {
+          "name": "Delete Product",
+          "request": {
+            "method": "DELETE",
+            "url": { "raw": "{{baseUrl}}/seller/products/{{productId}}", "host": ["{{baseUrl}}"], "path": ["seller", "products", "{{productId}}"] }
+          }
+        },
+        {
+          "name": "Update Stock",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"stock\": 20,\n  \"low_stock_threshold\": 5\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/seller/inventory/{{productId}}", "host": ["{{baseUrl}}"], "path": ["seller", "inventory", "{{productId}}"] }
+          }
+        },
+        {
+          "name": "List Seller Orders",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/seller/orders", "host": ["{{baseUrl}}"], "path": ["seller", "orders"] }
+          }
+        },
+        {
+          "name": "Update Order Status",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"shipped\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/seller/orders/{{orderId}}/status", "host": ["{{baseUrl}}"], "path": ["seller", "orders", "{{orderId}}", "status"] }
+          }
+        },
+        {
+          "name": "Sales Report",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/seller/sales", "host": ["{{baseUrl}}"], "path": ["seller", "sales"] }
+          }
+        },
+        {
+          "name": "Analytics",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/seller/analytics", "host": ["{{baseUrl}}"], "path": ["seller", "analytics"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "👑 Admin",
+      "item": [
+        {
+          "name": "Dashboard Stats",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/admin/dashboard", "host": ["{{baseUrl}}"], "path": ["admin", "dashboard"] }
+          }
+        },
+        {
+          "name": "List Users",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/admin/users", "host": ["{{baseUrl}}"], "path": ["admin", "users"] }
+          }
+        },
+        {
+          "name": "Update User Role",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"role\": \"seller\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/admin/users/{{userId}}/role", "host": ["{{baseUrl}}"], "path": ["admin", "users", "{{userId}}", "role"] }
+          }
+        },
+        {
+          "name": "List Stores",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/admin/stores", "host": ["{{baseUrl}}"], "path": ["admin", "stores"] }
+          }
+        },
+        {
+          "name": "Verify Store",
+          "request": {
+            "method": "POST",
+            "url": { "raw": "{{baseUrl}}/admin/stores/{{storeId}}/verify", "host": ["{{baseUrl}}"], "path": ["admin", "stores", "{{storeId}}", "verify"] }
+          }
+        },
+        {
+          "name": "List Community Reports",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/admin/community/reports", "host": ["{{baseUrl}}"], "path": ["admin", "community", "reports"] }
+          }
+        },
+        {
+          "name": "Resolve Report",
+          "request": {
+            "method": "POST",
+            "url": { "raw": "{{baseUrl}}/admin/community/reports/{{reportId}}/resolve", "host": ["{{baseUrl}}"], "path": ["admin", "community", "reports", "{{reportId}}", "resolve"] }
+          }
+        },
+        {
+          "name": "Platform Analytics",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/admin/analytics", "host": ["{{baseUrl}}"], "path": ["admin", "analytics"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🔗 Webhooks",
+      "item": [
+        {
+          "name": "Payment Webhook",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"event\": \"payment.success\",\n  \"order_id\": 1,\n  \"status\": \"paid\",\n  \"amount\": 150000,\n  \"signature\": \"sha256=...\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/webhooks/payment", "host": ["{{baseUrl}}"], "path": ["webhooks", "payment"] }
+          }
+        }
+      ]
+    }
+  ]
+}

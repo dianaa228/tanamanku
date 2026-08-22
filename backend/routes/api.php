@@ -43,11 +43,14 @@ Route::post('/login', fn () => response()->json([
     'message' => 'Unauthenticated.',
 ], 401))->name('login');
 
-// ===== Auth (publik) =====
+// ===== Auth (publik) — rate limit ketat untuk brute-force protection =====
 Route::prefix('auth')->group(function () {
-    Route::post('/register', [AuthController::class, 'register']);
-    Route::post('/login', [AuthController::class, 'login']);
-    Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
+    Route::post('/register', [AuthController::class, 'register'])
+        ->middleware('throttle:5,1'); // 5 registrasi per menit
+    Route::post('/login', [AuthController::class, 'login'])
+        ->middleware('throttle:5,1'); // 5 login per menit
+    Route::post('/forgot-password', [AuthController::class, 'forgotPassword'])
+        ->middleware('throttle:3,1'); // 3 reset per menit
     Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
     Route::get('/me', [AuthController::class, 'me'])->middleware('auth:sanctum');
 });

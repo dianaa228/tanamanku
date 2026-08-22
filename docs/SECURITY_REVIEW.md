@@ -11,8 +11,8 @@
 | XSS | ✅ Safe | React escapes by default, API-only backend |
 | CSRF | ✅ Safe | API uses tokens, not cookies |
 | Business Logic | ✅ Good | Server-side calculations, DB transactions |
-| Rate Limiting | ⚠️ Needs work | No explicit rate limiting configured |
-| Token Expiry | ⚠️ Needs work | Sanctum tokens never expire |
+| Rate Limiting | ✅ Fixed | Global throttle api,60,1 + stricter 5/min on auth endpoints |
+| Token Expiry | ✅ Fixed | Sanctum tokens expire after 7 days (10080 min) |
 | Error Handling | ✅ Good | Consistent JSON error format |
 
 ---
@@ -210,59 +210,38 @@ if ($secret && ($payload['secret'] ?? null) !== $secret) {
 
 ## 🔧 Recommended Fixes (Priority Order)
 
-### 1. Add Rate Limiting (Critical)
+### 1. ~~Add Rate Limiting (Critical)~~ ✅ FIXED
 
+Rate limiting sudah ditambahkan:
+- **Global**: `ThrottleRequests::class.':api,60,1'` (60 requests/menit)
+- **Auth endpoints**: `throttle:5,1` (5 attempts/menit untuk register & login)
+- **Forgot password**: `throttle:3,1` (3 attempts/menit)
+
+### 2. ~~Set Token Expiration (Critical)~~ ✅ FIXED
+
+Sanctum token expiry di-set ke 7 hari (10080 menit) di `config/sanctum.php`:
 ```php
-// bootstrap/app.php
-$middleware->api(append: [
-    HandleCors::class,
-    \Illuminate\Routing\Middleware\ThrottleRequests::class.':api,60,1',
-]);
+'expiration' => (int) env('SANCTUM_TOKEN_EXPIRATION', 10080), // 7 hari
 ```
 
-### 2. Set Token Expiration (Critical)
+### 3. ~~Add CORS Config (Medium)~~ ✅ Already present
 
-```php
-// config/sanctum.php
-'expiration' => 60 * 24 * 7, // 7 days
-```
+CORS sudah dikonfigurasi di `config/cors.php` dengan `allowed_origins` dari env `FRONTEND_URL`.
 
-### 3. Add CORS Config (Medium)
+### 4. ~~Fix Password Reset Info Leak (Medium)~~ ✅ Already secure
 
-```bash
-php artisan cors:install
-```
+AuthService sudah tidak mengungkapkan apakah email terdaftar — selalu return success.
 
-Then customize `config/cors.php`.
+### 5. ~~Add Security Headers (Low)~~ ✅ FIXED
 
-### 4. Fix Password Reset Info Leak (Medium)
-
-```php
-// AuthService.php
-public function forgotPassword(string $email): void
-{
-    // Always return success, don't reveal email existence
-    User::where('email', $email)->first();
-}
-```
-
-### 5. Add Security Headers (Low)
-
-```php
-// app/Http/Middleware/SecurityHeaders.php
-class SecurityHeaders
-{
-    public function handle($request, Closure $next)
-    {
-        $response = $next($request);
-        $response->headers->set('X-Content-Type-Options', 'nosniff');
-        $response->headers->set('X-Frame-Options', 'SAMEORIGIN');
-        $response->headers->set('X-XSS-Protection', '1; mode=block');
-        $response->headers->set('Referrer-Policy', 'strict-origin-when-cross-origin');
-        return $response;
-    }
-}
-```
+Security headers middleware sudah dibuat dan didaftarkan:
+- `X-Content-Type-Options: nosniff`
+- `X-Frame-Options: DENY`
+- `X-XSS-Protection: 1; mode=block`
+- `Referrer-Policy: strict-origin-when-cross-origin`
+- `Cache-Control: no-store` untuk API
+- `Content-Security-Policy: default-src 'none'` untuk API
+- `Strict-Transport-Security` untuk HTTPS
 
 ---
 
@@ -270,23 +249,23 @@ class SecurityHeaders
 
 | Category | Score | Details |
 |----------|-------|---------|
-| Authentication | 8/10 | Missing rate limiting |
+| Authentication | 9/10 | Rate limiting + token expiry configured |
 | Authorization | 9/10 | Good ownership checks |
 | Input Validation | 9/10 | Comprehensive FormRequests |
 | Data Protection | 9/10 | Hashed passwords, no sensitive data exposed |
-| API Security | 7/10 | Missing rate limiting, token expiry |
+| API Security | 9/10 | Rate limiting, token expiry, security headers |
 | Error Handling | 9/10 | Consistent format, no stack traces |
 | Business Logic | 9/10 | Server-side calculations, transactions |
-| **Overall** | **8.4/10** | Production-ready with minor fixes |
+| **Overall** | **9.0/10** | Production-ready |
 
 ---
 
 ## 🎯 Action Items
 
-1. **[CRITICAL]** Add rate limiting to auth endpoints
-2. **[CRITICAL]** Set Sanctum token expiration (7 days)
-3. **[MEDIUM]** Create CORS configuration
-4. **[MEDIUM]** Fix password reset info leak
-5. **[LOW]** Add security headers middleware
-6. **[LOW]** Implement proper webhook signature verification
+1. ~~**[CRITICAL]** Add rate limiting to auth endpoints~~ ✅
+2. ~~**[CRITICAL]** Set Sanctum token expiration (7 days)~~ ✅
+3. ~~**[MEDIUM]** Create CORS configuration~~ ✅ (already present)
+4. ~~**[MEDIUM]** Fix password reset info leak~~ ✅ (already secure)
+5. ~~**[LOW]** Add security headers middleware~~ ✅
+6. **[LOW]** Implement proper webhook signature verification — for production payment gateway integration
 7. **[LOW]** Consider adding audit logging for admin actions
