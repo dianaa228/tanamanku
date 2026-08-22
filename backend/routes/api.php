@@ -203,8 +203,8 @@ Route::middleware(['auth:sanctum', 'role:seller,admin'])->prefix('seller')->grou
     Route::get('/sales', [OrderController::class, 'salesReport']);
 });
 
-// ===== Admin (web) =====
-Route::middleware(['auth:sanctum', 'role:admin'])->prefix('admin')->group(function () {
+// ===== Admin (web) — semua aksi tercatat di audit log =====
+Route::middleware(['auth:sanctum', 'role:admin', \App\Http\Middleware\AuditLogMiddleware::class])->prefix('admin')->group(function () {
     Route::get('/dashboard', [UserController::class, 'adminDashboard']);
     Route::get('/users', [UserController::class, 'adminUsers']);
     Route::put('/users/{user}/role', [UserController::class, 'adminUpdateRole']);

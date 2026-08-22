@@ -23,11 +23,11 @@ class PaymentController extends BaseController
     }
 
     /**
-     * Webhook dari payment gateway — publik, signature diverifikasi di service.
+     * Webhook dari payment gateway — publik, HMAC signature diverifikasi di service.
      */
     public function webhook(Request $request): JsonResponse
     {
-        $payment = $this->paymentService->handleWebhook($request->all());
+        $payment = $this->paymentService->handleWebhook($request);
 
         return $this->success(['status' => $payment->status], 'Webhook diterima');
     }

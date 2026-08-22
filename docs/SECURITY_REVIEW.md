@@ -141,15 +141,13 @@ public function forgotPassword(string $email): void
 
 ### 🟢 Low
 
-#### 6. Webhook Signature Verification is Placeholder
-```php
-// Current: simple secret check
-if ($secret && ($payload['secret'] ?? null) !== $secret) {
-    abort(403);
-}
-```
+#### 6. ~~Webhook Signature Verification is Placeholder~~ ✅ FIXED
 
-**Fix:** Implement proper HMAC signature verification for production payment gateway.
+HMAC-SHA256 signature verification sudah diimplementasi di `PaymentService`:
+- Verifikasi signature dari raw request body menggunakan `hash_hmac('sha256', ...)`
+- Timing-safe comparison dengan `hash_equals()` untuk mencegah timing attacks
+- Header name dikonfigurasi via env `PAYMENT_WEBHOOK_HEADER`
+- Dev/stub mode: skip verifikasi jika secret kosong
 
 #### 7. No File Upload Validation on Avatar
 **Risk:** Malicious file uploads.
@@ -256,7 +254,7 @@ Security headers middleware sudah dibuat dan didaftarkan:
 | API Security | 9/10 | Rate limiting, token expiry, security headers |
 | Error Handling | 9/10 | Consistent format, no stack traces |
 | Business Logic | 9/10 | Server-side calculations, transactions |
-| **Overall** | **9.0/10** | Production-ready |
+| **Overall** | **9.2/10** | Production-ready with full audit trail |
 
 ---
 
@@ -267,5 +265,5 @@ Security headers middleware sudah dibuat dan didaftarkan:
 3. ~~**[MEDIUM]** Create CORS configuration~~ ✅ (already present)
 4. ~~**[MEDIUM]** Fix password reset info leak~~ ✅ (already secure)
 5. ~~**[LOW]** Add security headers middleware~~ ✅
-6. **[LOW]** Implement proper webhook signature verification — for production payment gateway integration
-7. **[LOW]** Consider adding audit logging for admin actions
+6. ~~**[LOW]** Implement proper webhook signature verification~~ ✅
+7. ~~**[LOW]** Consider adding audit logging for admin actions~~ ✅
