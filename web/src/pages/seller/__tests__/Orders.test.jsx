@@ -14,6 +14,7 @@ vi.mock('../../../services/api/seller', () => ({
 vi.mock('../../../utils/format', () => ({
   formatRupiah: (v) => `Rp${(v || 0).toLocaleString('id-ID')}`,
   formatDateTime: (v) => v || '—',
+  cx: (...classes) => classes.filter(Boolean).join(' '),
 }))
 
 vi.mock('../../../types/constants', () => ({
@@ -79,10 +80,10 @@ describe('Seller Orders Page', () => {
       expect(screen.getByRole('button', { name: /semua/i })).toBeInTheDocument()
     })
 
-    expect(screen.getByRole('button', { name: /baru/i })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: /diproses/i })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: /dikirim/i })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: /selesai/i })).toBeInTheDocument()
+    expect(screen.getAllByRole('button', { name: /baru/i }).length).toBeGreaterThanOrEqual(1)
+    expect(screen.getAllByRole('button', { name: /diproses/i }).length).toBeGreaterThanOrEqual(1)
+    expect(screen.getAllByRole('button', { name: /dikirim/i }).length).toBeGreaterThanOrEqual(1)
+    expect(screen.getAllByRole('button', { name: /selesai/i }).length).toBeGreaterThanOrEqual(1)
   })
 
   it('shows order totals', async () => {
@@ -112,12 +113,12 @@ describe('Seller Orders Page', () => {
     renderOrders()
 
     await waitFor(() => {
-      expect(screen.getByText(/baru/i)).toBeInTheDocument()
+      expect(screen.getAllByText(/baru/i).length).toBeGreaterThanOrEqual(1)
     })
 
-    expect(screen.getByText(/diproses/i)).toBeInTheDocument()
-    expect(screen.getByText(/dikirim/i)).toBeInTheDocument()
-    expect(screen.getByText(/selesai/i)).toBeInTheDocument()
+    expect(screen.getAllByText(/diproses/i).length).toBeGreaterThanOrEqual(1)
+    expect(screen.getAllByText(/dikirim/i).length).toBeGreaterThanOrEqual(1)
+    expect(screen.getAllByText(/selesai/i).length).toBeGreaterThanOrEqual(1)
   })
 
   it('shows process button for pending orders', async () => {

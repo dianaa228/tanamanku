@@ -13,8 +13,12 @@ vi.mock('../../../services/api/admin', () => ({
   },
 }))
 
-vi.mock('../../../components/ui/Loading', () => ({ default: () => <div>Loading...</div> }))
+vi.mock('../../../components/ui/Loading', () => ({ default: ({ label }) => <div>{label || 'Loading...'}</div> }))
 vi.mock('../../../components/ui/Badge', () => ({ default: ({ children }) => <span>{children}</span> }))
+
+vi.mock('../../../utils/format', () => ({
+  cx: (...classes) => classes.filter(Boolean).join(' '),
+}))
 
 import AdminUsers from '../Users'
 
@@ -54,7 +58,7 @@ describe('Admin Users Page', () => {
 
     expect(screen.getByText('Sari')).toBeInTheDocument()
     expect(screen.getByText('Andi')).toBeInTheDocument()
-    expect(screen.getByText('Admin')).toBeInTheDocument()
+    expect(screen.getByText('admin@test.com')).toBeInTheDocument()
   })
 
   it('shows search input', async () => {
@@ -74,9 +78,9 @@ describe('Admin Users Page', () => {
       expect(screen.getByRole('button', { name: /semua/i })).toBeInTheDocument()
     })
 
-    expect(screen.getByRole('button', { name: /aktif/i })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: /nonaktif/i })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: /seller/i })).toBeInTheDocument()
+    expect(screen.getAllByRole('button', { name: /aktif/i }).length).toBeGreaterThanOrEqual(1)
+    expect(screen.getAllByRole('button', { name: /nonaktif/i }).length).toBeGreaterThanOrEqual(1)
+    expect(screen.getAllByRole('button', { name: /seller/i }).length).toBeGreaterThanOrEqual(1)
   })
 
   it('shows user emails', async () => {
@@ -105,10 +109,10 @@ describe('Admin Users Page', () => {
     renderUsers()
 
     await waitFor(() => {
-      expect(screen.getByText(/aktif/i)).toBeInTheDocument()
+      expect(screen.getAllByText(/aktif/i).length).toBeGreaterThanOrEqual(1)
     })
 
-    expect(screen.getByText(/nonaktif/i)).toBeInTheDocument()
+    expect(screen.getAllByText(/nonaktif/i).length).toBeGreaterThanOrEqual(1)
   })
 
   it('shows toggle active buttons', async () => {

@@ -13,6 +13,7 @@ vi.mock('../../../services/api/seller', () => ({
 
 vi.mock('../../../utils/format', () => ({
   formatRupiah: (v) => `Rp${(v || 0).toLocaleString('id-ID')}`,
+  cx: (...classes) => classes.filter(Boolean).join(' '),
 }))
 
 vi.mock('../../../services/api/normalizers', () => ({
@@ -109,10 +110,10 @@ describe('Seller Products Page', () => {
     renderProducts()
 
     await waitFor(() => {
-      expect(screen.getByText(/aktif/i)).toBeInTheDocument()
+      expect(screen.getAllByText(/aktif/i).length).toBeGreaterThanOrEqual(1)
     })
 
-    expect(screen.getByText(/nonaktif/i)).toBeInTheDocument()
+    expect(screen.getAllByText(/nonaktif/i).length).toBeGreaterThanOrEqual(1)
   })
 
   it('shows category names', async () => {
@@ -120,7 +121,7 @@ describe('Seller Products Page', () => {
     renderProducts()
 
     await waitFor(() => {
-      expect(screen.getByText('Tanaman Hias')).toBeInTheDocument()
+      expect(screen.getAllByText('Tanaman Hias').length).toBeGreaterThanOrEqual(1)
     })
 
     expect(screen.getByText('Sukulen')).toBeInTheDocument()

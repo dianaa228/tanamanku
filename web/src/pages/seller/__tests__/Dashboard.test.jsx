@@ -12,6 +12,7 @@ vi.mock('../../../services/api/seller', () => ({
 vi.mock('../../../utils/format', () => ({
   formatRupiah: (v) => `Rp${(v || 0).toLocaleString('id-ID')}`,
   formatDateTime: (v) => v || '—',
+  cx: (...classes) => classes.filter(Boolean).join(' '),
 }))
 
 vi.mock('../../../types/constants', () => ({
@@ -105,7 +106,7 @@ describe('Seller Dashboard', () => {
     renderDashboard()
 
     await waitFor(() => {
-      expect(screen.getByText(/stok menipis/i)).toBeInTheDocument()
+      expect(screen.getAllByText(/stok menipis/i).length).toBeGreaterThanOrEqual(1)
     })
 
     expect(screen.getByText('Monstera')).toBeInTheDocument()

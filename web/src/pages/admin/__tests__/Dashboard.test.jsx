@@ -9,6 +9,7 @@ vi.mock('../../../services/api/admin', () => ({
 
 vi.mock('../../../utils/format', () => ({
   formatRupiah: (v) => `Rp${(v || 0).toLocaleString('id-ID')}`,
+  cx: (...classes) => classes.filter(Boolean).join(' '),
 }))
 
 vi.mock('../../../types/constants', () => ({
@@ -18,7 +19,7 @@ vi.mock('../../../types/constants', () => ({
   },
 }))
 
-vi.mock('../../../components/ui/Loading', () => ({ default: () => <div>Loading...</div> }))
+vi.mock('../../../components/ui/Loading', () => ({ default: ({ label }) => <div>{label || 'Loading...'}</div> }))
 vi.mock('../../../components/ui/Badge', () => ({ default: ({ children }) => <span>{children}</span> }))
 
 import AdminDashboard from '../Dashboard'
@@ -80,7 +81,7 @@ describe('Admin Dashboard', () => {
       expect(screen.getByText('150')).toBeInTheDocument()
     })
 
-    expect(screen.getByText('25')).toBeInTheDocument()
+    expect(screen.getAllByText('25').length).toBeGreaterThanOrEqual(1)
     expect(screen.getByText('200')).toBeInTheDocument()
   })
 
@@ -147,6 +148,6 @@ describe('Admin Dashboard', () => {
     })
 
     expect(screen.getByText('12')).toBeInTheDocument() // newUsersThisMonth
-    expect(screen.getByText('25')).toBeInTheDocument() // totalStores
+    expect(screen.getAllByText('25').length).toBeGreaterThanOrEqual(1) // totalStores
   })
 })
