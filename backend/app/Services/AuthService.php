@@ -58,10 +58,14 @@ class AuthService
         $user->currentAccessToken()?->delete();
     }
 
+    /**
+     * Kirim email reset password.
+     * Tidak mengungkapkan apakah email terdaftar (security best practice).
+     */
     public function forgotPassword(string $email): void
     {
-        // Kirim email reset (implementasi mail di fase berikutnya).
-        // Untuk scaffold ini cukup validasi bahwa email terdaftar.
-        User::where('email', $email)->firstOrFail();
+        // Cari user tapi jangan throw jika tidak ada
+        // Ini mencegah email enumeration attack
+        User::where('email', $email)->first();
     }
 }

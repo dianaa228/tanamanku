@@ -29,6 +29,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->api(append: [
             HandleCors::class,
+            \Illuminate\Routing\Middleware\ThrottleRequests::class.':api,60,1',
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
