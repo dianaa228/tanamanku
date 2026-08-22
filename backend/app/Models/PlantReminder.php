@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class PlantReminder extends Model
 {
+    use HasFactory;
+
     public const TYPE_WATER = 'siram';
     public const TYPE_FERTILIZE = 'pupuk';
     public const TYPE_REPOT = 'repot';
