@@ -1,0 +1,1321 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Tanamanku API",
+    "description": "Urban Gardening Marketplace & Management Platform REST API. Backend Laravel 11 + Sanctum auth. Base URL: /api/v1",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Tanamanku Team",
+      "email": "api@tanamanku.id"
+    }
+  },
+  "servers": [
+    { "url": "http://localhost:8000/api/v1", "description": "Local development" },
+    { "url": "https://api.tanamanku.id/api/v1", "description": "Production" }
+  ],
+  "tags": [
+    { "name": "Auth", "description": "Authentication & registration" },
+    { "name": "Categories", "description": "Product categories" },
+    { "name": "Products", "description": "Product marketplace" },
+    { "name": "Stores", "description": "Seller stores" },
+    { "name": "Cart", "description": "Shopping cart" },
+    { "name": "Orders", "description": "Customer orders" },
+    { "name": "Payments", "description": "Payment processing" },
+    { "name": "Reviews", "description": "Product reviews" },
+    { "name": "My Garden", "description": "User plant garden" },
+    { "name": "Plant Species", "description": "Plant species database" },
+    { "name": "Plant Finder", "description": "Plant recommendation engine" },
+    { "name": "Plant Diagnosis", "description": "Plant health diagnosis" },
+    { "name": "Community", "description": "Community posts & comments" },
+    { "name": "Plant Exchange", "description": "Plant listing & exchange" },
+    { "name": "Services", "description": "Gardening services" },
+    { "name": "Notifications", "description": "User notifications" },
+    { "name": "Loyalty", "description": "Loyalty points & rewards" },
+    { "name": "Subscription", "description": "Subscription plans" },
+    { "name": "Nursery", "description": "Nursery directory" },
+    { "name": "Seller", "description": "Seller dashboard & management" },
+    { "name": "Admin", "description": "Admin management" }
+  ],
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Register new user",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["name", "email", "password", "password_confirmation"],
+                "properties": {
+                  "name": { "type": "string", "example": "Rina Kartika" },
+                  "email": { "type": "string", "format": "email", "example": "rina@example.com" },
+                  "phone": { "type": "string", "example": "081234567890" },
+                  "password": { "type": "string", "minLength": 8, "example": "rahasia123" },
+                  "password_confirmation": { "type": "string", "example": "rahasia123" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Registration successful", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AuthResponse" } } } },
+          "422": { "$ref": "#/components/responses/ValidationError" }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Login user",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["email", "password"],
+                "properties": {
+                  "email": { "type": "string", "format": "email" },
+                  "password": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Login successful", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AuthResponse" } } } },
+          "422": { "$ref": "#/components/responses/ValidationError" }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Logout user",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": { "description": "Logout successful" }
+        }
+      }
+    },
+    "/auth/me": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "Get current user profile",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": { "description": "User profile", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UserResponse" } } } }
+        }
+      }
+    },
+    "/auth/forgot-password": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Send password reset link",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["email"],
+                "properties": { "email": { "type": "string", "format": "email" } }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Reset link sent" },
+          "404": { "description": "Email not found" }
+        }
+      }
+    },
+    "/categories": {
+      "get": {
+        "tags": ["Categories"],
+        "summary": "List all categories",
+        "responses": {
+          "200": { "description": "Category list", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/SuccessResponse" } } } }
+        }
+      }
+    },
+    "/categories/{category}": {
+      "get": {
+        "tags": ["Categories"],
+        "summary": "Get category by slug",
+        "parameters": [{ "name": "category", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "responses": {
+          "200": { "description": "Category detail" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      }
+    },
+    "/products": {
+      "get": {
+        "tags": ["Products"],
+        "summary": "List products with filters",
+        "parameters": [
+          { "name": "search", "in": "query", "schema": { "type": "string" } },
+          { "name": "category", "in": "query", "schema": { "type": "string" } },
+          { "name": "care", "in": "query", "schema": { "type": "string", "enum": ["mudah", "sedang", "sulit"] } },
+          { "name": "sort", "in": "query", "schema": { "type": "string", "enum": ["harga-asc", "harga-desc", "terlaris", "rating"] } },
+          { "name": "page", "in": "query", "schema": { "type": "integer", "default": 1 } },
+          { "name": "per_page", "in": "query", "schema": { "type": "integer", "default": 15 } }
+        ],
+        "responses": {
+          "200": { "description": "Paginated product list" }
+        }
+      }
+    },
+    "/products/{product}": {
+      "get": {
+        "tags": ["Products"],
+        "summary": "Get product detail by slug",
+        "parameters": [{ "name": "product", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "responses": {
+          "200": { "description": "Product detail" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      }
+    },
+    "/products/{product}/favorite": {
+      "post": {
+        "tags": ["Products"],
+        "summary": "Toggle product favorite",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "name": "product", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "responses": {
+          "200": { "description": "Favorite toggled" }
+        }
+      }
+    },
+    "/stores": {
+      "get": {
+        "tags": ["Stores"],
+        "summary": "List active stores",
+        "responses": {
+          "200": { "description": "Store list" }
+        }
+      }
+    },
+    "/stores/{store}": {
+      "get": {
+        "tags": ["Stores"],
+        "summary": "Get store detail",
+        "parameters": [{ "name": "store", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "responses": {
+          "200": { "description": "Store detail" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      }
+    },
+    "/stores/{store}/products": {
+      "get": {
+        "tags": ["Products"],
+        "summary": "List products by store",
+        "parameters": [{ "name": "store", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "responses": {
+          "200": { "description": "Store products" }
+        }
+      }
+    },
+    "/cart": {
+      "get": {
+        "tags": ["Cart"],
+        "summary": "Get cart contents",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": { "description": "Cart with items, count, subtotal" }
+        }
+      },
+      "delete": {
+        "tags": ["Cart"],
+        "summary": "Clear entire cart",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": { "description": "Cart cleared" }
+        }
+      }
+    },
+    "/cart/items": {
+      "post": {
+        "tags": ["Cart"],
+        "summary": "Add item to cart",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["product_id", "quantity"],
+                "properties": {
+                  "product_id": { "type": "integer" },
+                  "variant_id": { "type": "integer", "nullable": true },
+                  "quantity": { "type": "integer", "minimum": 1, "maximum": 99 }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Item added" },
+          "422": { "$ref": "#/components/responses/ValidationError" }
+        }
+      }
+    },
+    "/cart/items/{cartItem}": {
+      "put": {
+        "tags": ["Cart"],
+        "summary": "Update cart item quantity",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "name": "cartItem", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["quantity"],
+                "properties": { "quantity": { "type": "integer", "minimum": 1 } }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Item updated" },
+          "403": { "description": "Not your cart item" }
+        }
+      },
+      "delete": {
+        "tags": ["Cart"],
+        "summary": "Remove item from cart",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "name": "cartItem", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "responses": {
+          "200": { "description": "Item removed" },
+          "403": { "description": "Not your cart item" }
+        }
+      }
+    },
+    "/orders": {
+      "get": {
+        "tags": ["Orders"],
+        "summary": "List user orders",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "page", "in": "query", "schema": { "type": "integer", "default": 1 } }
+        ],
+        "responses": {
+          "200": { "description": "Paginated order list" }
+        }
+      },
+      "post": {
+        "tags": ["Orders"],
+        "summary": "Create order from cart (checkout)",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["payment_method", "address"],
+                "properties": {
+                  "payment_method": { "type": "string", "enum": ["transfer", "ewallet", "qris", "cod"] },
+                  "courier": { "type": "string", "default": "reguler" },
+                  "note": { "type": "string", "nullable": true },
+                  "address": {
+                    "type": "object",
+                    "required": ["label", "recipient", "phone", "street", "city", "province"],
+                    "properties": {
+                      "label": { "type": "string" },
+                      "recipient": { "type": "string" },
+                      "phone": { "type": "string" },
+                      "street": { "type": "string" },
+                      "city": { "type": "string" },
+                      "province": { "type": "string" },
+                      "postal_code": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Order created" },
+          "422": { "$ref": "#/components/responses/ValidationError" }
+        }
+      }
+    },
+    "/orders/{order}": {
+      "get": {
+        "tags": ["Orders"],
+        "summary": "Get order detail",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "name": "order", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "responses": {
+          "200": { "description": "Order detail with items, payment, shipment" },
+          "403": { "description": "Not your order" }
+        }
+      }
+    },
+    "/orders/{order}/cancel": {
+      "post": {
+        "tags": ["Orders"],
+        "summary": "Cancel order",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "name": "order", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "responses": {
+          "200": { "description": "Order cancelled, stock released" },
+          "422": { "description": "Cannot cancel at this status" }
+        }
+      }
+    },
+    "/orders/{order}/pay": {
+      "post": {
+        "tags": ["Payments"],
+        "summary": "Create payment for order",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "name": "order", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["method"],
+                "properties": { "method": { "type": "string", "enum": ["transfer", "ewallet", "qris", "cod"] } }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Payment instructions" }
+        }
+      }
+    },
+    "/orders/{order}/shipment": {
+      "get": {
+        "tags": ["Orders"],
+        "summary": "Get order shipment tracking",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "name": "order", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "responses": {
+          "200": { "description": "Shipment tracking info" }
+        }
+      }
+    },
+    "/reviews": {
+      "get": {
+        "tags": ["Reviews"],
+        "summary": "List reviews",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "product_id", "in": "query", "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "200": { "description": "Paginated review list" }
+        }
+      },
+      "post": {
+        "tags": ["Reviews"],
+        "summary": "Submit review (only for completed orders)",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["order_item_id", "rating"],
+                "properties": {
+                  "order_item_id": { "type": "integer" },
+                  "rating": { "type": "integer", "minimum": 1, "maximum": 5 },
+                  "comment": { "type": "string", "maxLength": 2000 }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Review submitted" },
+          "403": { "description": "Order not completed or not yours" }
+        }
+      }
+    },
+    "/my-garden": {
+      "get": {
+        "tags": ["My Garden"],
+        "summary": "List user plants",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": { "description": "User plant list" }
+        }
+      },
+      "post": {
+        "tags": ["My Garden"],
+        "summary": "Add plant to garden",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["nickname", "plant_species_id"],
+                "properties": {
+                  "nickname": { "type": "string" },
+                  "plant_species_id": { "type": "integer" },
+                  "location": { "type": "string" },
+                  "planted_at": { "type": "string", "format": "date" },
+                  "water_frequency_days": { "type": "integer" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Plant added" }
+        }
+      }
+    },
+    "/my-garden/reminders": {
+      "get": {
+        "tags": ["My Garden"],
+        "summary": "List all reminders across all plants",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": { "description": "All reminders" }
+        }
+      }
+    },
+    "/my-garden/{userPlant}": {
+      "get": {
+        "tags": ["My Garden"],
+        "summary": "Get plant detail",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "name": "userPlant", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "responses": {
+          "200": { "description": "Plant detail with photos, growth logs, care logs" },
+          "403": { "description": "Not your plant" }
+        }
+      },
+      "put": {
+        "tags": ["My Garden"],
+        "summary": "Update plant info",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "name": "userPlant", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "responses": {
+          "200": { "description": "Plant updated" }
+        }
+      },
+      "delete": {
+        "tags": ["My Garden"],
+        "summary": "Remove plant from garden",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "name": "userPlant", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "responses": {
+          "200": { "description": "Plant removed" }
+        }
+      }
+    },
+    "/my-garden/{userPlant}/growth": {
+      "get": {
+        "tags": ["My Garden"],
+        "summary": "List growth logs for a plant",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "name": "userPlant", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "responses": { "200": { "description": "Growth log list" } }
+      },
+      "post": {
+        "tags": ["My Garden"],
+        "summary": "Log plant growth",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "name": "userPlant", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "height_cm": { "type": "number" },
+                  "note": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "201": { "description": "Growth logged" } }
+      }
+    },
+    "/my-garden/{userPlant}/care": {
+      "post": {
+        "tags": ["My Garden"],
+        "summary": "Log plant care activity",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "name": "userPlant", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["type"],
+                "properties": {
+                  "type": { "type": "string", "enum": ["siram", "pupuk", "repot", "cek-hama", "pangkas"] },
+                  "note": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "201": { "description": "Care logged" } }
+      }
+    },
+    "/my-garden/{userPlant}/reminders": {
+      "get": {
+        "tags": ["My Garden"],
+        "summary": "List reminders for a plant",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "name": "userPlant", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "responses": { "200": { "description": "Reminder list" } }
+      },
+      "post": {
+        "tags": ["My Garden"],
+        "summary": "Create reminder for a plant",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "name": "userPlant", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["type", "frequency_days"],
+                "properties": {
+                  "type": { "type": "string", "enum": ["siram", "pupuk", "repot", "cek-hama", "pangkas"] },
+                  "frequency_days": { "type": "integer", "minimum": 1 }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "201": { "description": "Reminder created" } }
+      }
+    },
+    "/my-garden/reminders/{plantReminder}/done": {
+      "post": {
+        "tags": ["My Garden"],
+        "summary": "Mark reminder as done",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "name": "plantReminder", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "responses": { "200": { "description": "Reminder marked done, rescheduled" } }
+      }
+    },
+    "/plant-species": {
+      "get": {
+        "tags": ["Plant Species"],
+        "summary": "List plant species",
+        "responses": { "200": { "description": "Species list" } }
+      }
+    },
+    "/plant-species/{plantSpecies}": {
+      "get": {
+        "tags": ["Plant Species"],
+        "summary": "Get species detail",
+        "parameters": [{ "name": "plantSpecies", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "Species detail" }, "404": { "$ref": "#/components/responses/NotFound" } }
+      }
+    },
+    "/plant-finder/questions": {
+      "get": {
+        "tags": ["Plant Finder"],
+        "summary": "Get plant finder questions",
+        "security": [{ "bearerAuth": [] }],
+        "responses": { "200": { "description": "Questions and options" } }
+      }
+    },
+    "/plant-finder/recommend": {
+      "post": {
+        "tags": ["Plant Finder"],
+        "summary": "Get plant recommendations",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "lokasi": { "type": "string" },
+                  "pengalaman": { "type": "string" },
+                  "tujuan": { "type": "string" },
+                  "waktu": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "200": { "description": "Top 3 recommended species" } }
+      }
+    },
+    "/plant-diagnosis": {
+      "post": {
+        "tags": ["Plant Diagnosis"],
+        "summary": "Diagnose plant health",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["user_plant_id", "symptoms"],
+                "properties": {
+                  "user_plant_id": { "type": "integer" },
+                  "symptoms": { "type": "array", "items": { "type": "string" } }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "200": { "description": "Diagnosis result with advice" } }
+      }
+    },
+    "/community/posts": {
+      "get": {
+        "tags": ["Community"],
+        "summary": "List community posts",
+        "security": [{ "bearerAuth": [] }],
+        "responses": { "200": { "description": "Paginated posts" } }
+      },
+      "post": {
+        "tags": ["Community"],
+        "summary": "Create a post",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["content"],
+                "properties": { "content": { "type": "string", "maxLength": 5000 } }
+              }
+            }
+          }
+        },
+        "responses": { "201": { "description": "Post created" } }
+      }
+    },
+    "/community/posts/{post}": {
+      "get": {
+        "tags": ["Community"],
+        "summary": "Get post detail",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "name": "post", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "responses": { "200": { "description": "Post with comments" } }
+      },
+      "delete": {
+        "tags": ["Community"],
+        "summary": "Delete own post",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "name": "post", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "responses": { "200": { "description": "Post deleted" }, "403": { "description": "Not your post" } }
+      }
+    },
+    "/community/posts/{post}/like": {
+      "post": {
+        "tags": ["Community"],
+        "summary": "Toggle like on post",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "name": "post", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "responses": { "200": { "description": "Like toggled" } }
+      }
+    },
+    "/community/posts/{post}/comments": {
+      "post": {
+        "tags": ["Community"],
+        "summary": "Add comment to post",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "name": "post", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["content"],
+                "properties": { "content": { "type": "string", "maxLength": 2000 } }
+              }
+            }
+          }
+        },
+        "responses": { "201": { "description": "Comment added" } }
+      }
+    },
+    "/community/posts/{post}/report": {
+      "post": {
+        "tags": ["Community"],
+        "summary": "Report a post",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "name": "post", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["reason"],
+                "properties": { "reason": { "type": "string", "maxLength": 500 } }
+              }
+            }
+          }
+        },
+        "responses": { "201": { "description": "Report submitted" } }
+      }
+    },
+    "/plant-exchange/listings": {
+      "get": {
+        "tags": ["Plant Exchange"],
+        "summary": "List active plant listings",
+        "security": [{ "bearerAuth": [] }],
+        "responses": { "200": { "description": "Listing list" } }
+      },
+      "post": {
+        "tags": ["Plant Exchange"],
+        "summary": "Create a listing",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["title", "description", "type"],
+                "properties": {
+                  "title": { "type": "string" },
+                  "description": { "type": "string" },
+                  "price": { "type": "integer" },
+                  "type": { "type": "string", "enum": ["sell", "exchange"] }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "201": { "description": "Listing created" } }
+      }
+    },
+    "/plant-exchange/listings/mine": {
+      "get": {
+        "tags": ["Plant Exchange"],
+        "summary": "List my listings",
+        "security": [{ "bearerAuth": [] }],
+        "responses": { "200": { "description": "My listings" } }
+      }
+    },
+    "/plant-exchange/listings/{plantListing}/offer": {
+      "post": {
+        "tags": ["Plant Exchange"],
+        "summary": "Make an offer on a listing",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "name": "plantListing", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": { "message": { "type": "string" } }
+              }
+            }
+          }
+        },
+        "responses": { "201": { "description": "Offer sent" }, "422": { "description": "Cannot offer on own listing" } }
+      }
+    },
+    "/plant-exchange/exchanges/mine": {
+      "get": {
+        "tags": ["Plant Exchange"],
+        "summary": "List my exchanges",
+        "security": [{ "bearerAuth": [] }],
+        "responses": { "200": { "description": "My exchanges" } }
+      }
+    },
+    "/services": {
+      "get": {
+        "tags": ["Services"],
+        "summary": "List gardening services",
+        "security": [{ "bearerAuth": [] }],
+        "responses": { "200": { "description": "Service list" } }
+      }
+    },
+    "/services/{service}": {
+      "get": {
+        "tags": ["Services"],
+        "summary": "Get service detail",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "name": "service", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "responses": { "200": { "description": "Service detail" } }
+      }
+    },
+    "/service-orders": {
+      "get": {
+        "tags": ["Services"],
+        "summary": "List my service bookings",
+        "security": [{ "bearerAuth": [] }],
+        "responses": { "200": { "description": "Booking list" } }
+      },
+      "post": {
+        "tags": ["Services"],
+        "summary": "Book a service",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["service_id", "schedule_at", "address"],
+                "properties": {
+                  "service_id": { "type": "integer" },
+                  "schedule_at": { "type": "string", "format": "date-time" },
+                  "address": { "type": "object" },
+                  "notes": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "201": { "description": "Booking created" } }
+      }
+    },
+    "/notifications": {
+      "get": {
+        "tags": ["Notifications"],
+        "summary": "List notifications",
+        "security": [{ "bearerAuth": [] }],
+        "responses": { "200": { "description": "Notifications with unread count" } }
+      }
+    },
+    "/notifications/{notification}/read": {
+      "post": {
+        "tags": ["Notifications"],
+        "summary": "Mark notification as read",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "name": "notification", "in": "path", "required": true, "schema": { "type": "string", "format": "uuid" } }],
+        "responses": { "200": { "description": "Marked as read" }, "403": { "description": "Not your notification" } }
+      }
+    },
+    "/notifications/read-all": {
+      "post": {
+        "tags": ["Notifications"],
+        "summary": "Mark all notifications as read",
+        "security": [{ "bearerAuth": [] }],
+        "responses": { "200": { "description": "All marked as read" } }
+      }
+    },
+    "/loyalty/profile": {
+      "get": {
+        "tags": ["Loyalty"],
+        "summary": "Get loyalty profile",
+        "security": [{ "bearerAuth": [] }],
+        "responses": { "200": { "description": "Loyalty profile with points and tier" } }
+      }
+    },
+    "/loyalty/tiers": {
+      "get": {
+        "tags": ["Loyalty"],
+        "summary": "List loyalty tiers",
+        "security": [{ "bearerAuth": [] }],
+        "responses": { "200": { "description": "Tier list (bronze, silver, gold, platinum)" } }
+      }
+    },
+    "/loyalty/rewards": {
+      "get": {
+        "tags": ["Loyalty"],
+        "summary": "List available rewards",
+        "security": [{ "bearerAuth": [] }],
+        "responses": { "200": { "description": "Active rewards" } }
+      }
+    },
+    "/loyalty/rewards/{rewardId}/redeem": {
+      "post": {
+        "tags": ["Loyalty"],
+        "summary": "Redeem a reward",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "name": "rewardId", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "responses": { "201": { "description": "Reward redeemed, voucher code returned" }, "422": { "description": "Insufficient points" } }
+      }
+    },
+    "/loyalty/history": {
+      "get": {
+        "tags": ["Loyalty"],
+        "summary": "Get point history",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "type", "in": "query", "schema": { "type": "string", "enum": ["earn", "redeem"] } }
+        ],
+        "responses": { "200": { "description": "Transaction history" } }
+      }
+    },
+    "/subscription/plans": {
+      "get": {
+        "tags": ["Subscription"],
+        "summary": "List subscription plans",
+        "security": [{ "bearerAuth": [] }],
+        "responses": { "200": { "description": "Active plans" } }
+      }
+    },
+    "/subscription/current": {
+      "get": {
+        "tags": ["Subscription"],
+        "summary": "Get current subscription",
+        "security": [{ "bearerAuth": [] }],
+        "responses": { "200": { "description": "Current subscription or null" } }
+      }
+    },
+    "/subscription/subscribe": {
+      "post": {
+        "tags": ["Subscription"],
+        "summary": "Subscribe to a plan",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["plan_id", "payment_method"],
+                "properties": {
+                  "plan_id": { "type": "string" },
+                  "payment_method": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "201": { "description": "Subscription created" } }
+      }
+    },
+    "/subscription/cancel": {
+      "post": {
+        "tags": ["Subscription"],
+        "summary": "Cancel subscription",
+        "security": [{ "bearerAuth": [] }],
+        "responses": { "200": { "description": "Subscription cancelled" }, "404": { "description": "No active subscription" } }
+      }
+    },
+    "/nurseries": {
+      "get": {
+        "tags": ["Nursery"],
+        "summary": "List nurseries",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "city", "in": "query", "schema": { "type": "string" } },
+          { "name": "search", "in": "query", "schema": { "type": "string" } },
+          { "name": "open_only", "in": "query", "schema": { "type": "string", "enum": ["true", "false"] } }
+        ],
+        "responses": { "200": { "description": "Nursery list" } }
+      }
+    },
+    "/nurseries/{idOrSlug}": {
+      "get": {
+        "tags": ["Nursery"],
+        "summary": "Get nursery detail",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "name": "idOrSlug", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "Nursery detail" }, "404": { "$ref": "#/components/responses/NotFound" } }
+      }
+    },
+    "/nurseries/{nurseryId}/products": {
+      "get": {
+        "tags": ["Nursery"],
+        "summary": "List nursery products",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "name": "nurseryId", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "responses": { "200": { "description": "Active nursery products" } }
+      }
+    },
+    "/seller/dashboard": {
+      "get": {
+        "tags": ["Seller"],
+        "summary": "Get seller dashboard",
+        "security": [{ "bearerAuth": [] }],
+        "responses": { "200": { "description": "Dashboard with store and orders" } }
+      }
+    },
+    "/seller/store": {
+      "get": {
+        "tags": ["Seller"],
+        "summary": "Get my store info",
+        "security": [{ "bearerAuth": [] }],
+        "responses": { "200": { "description": "Store detail" } }
+      },
+      "put": {
+        "tags": ["Seller"],
+        "summary": "Update store info",
+        "security": [{ "bearerAuth": [] }],
+        "responses": { "200": { "description": "Store updated" } }
+      }
+    },
+    "/seller/products": {
+      "get": {
+        "tags": ["Seller"],
+        "summary": "List my products",
+        "security": [{ "bearerAuth": [] }],
+        "responses": { "200": { "description": "Seller products" } }
+      },
+      "post": {
+        "tags": ["Seller"],
+        "summary": "Create product",
+        "security": [{ "bearerAuth": [] }],
+        "responses": { "201": { "description": "Product created" } }
+      }
+    },
+    "/seller/products/{product}": {
+      "put": {
+        "tags": ["Seller"],
+        "summary": "Update product",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "name": "product", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "responses": { "200": { "description": "Product updated" } }
+      },
+      "delete": {
+        "tags": ["Seller"],
+        "summary": "Delete product",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "name": "product", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "responses": { "200": { "description": "Product deleted" } }
+      }
+    },
+    "/seller/inventory/{product}": {
+      "put": {
+        "tags": ["Seller"],
+        "summary": "Update product stock",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "name": "product", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "responses": { "200": { "description": "Stock updated" } }
+      }
+    },
+    "/seller/orders": {
+      "get": {
+        "tags": ["Seller"],
+        "summary": "List seller orders",
+        "security": [{ "bearerAuth": [] }],
+        "responses": { "200": { "description": "Orders for this store" } }
+      }
+    },
+    "/seller/orders/{order}/status": {
+      "put": {
+        "tags": ["Seller"],
+        "summary": "Update order status",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "name": "order", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["status"],
+                "properties": { "status": { "type": "string", "enum": ["processing", "shipped", "delivered", "completed"] } }
+              }
+            }
+          }
+        },
+        "responses": { "200": { "description": "Status updated" } }
+      }
+    },
+    "/seller/sales": {
+      "get": {
+        "tags": ["Seller"],
+        "summary": "Get sales report",
+        "security": [{ "bearerAuth": [] }],
+        "responses": { "200": { "description": "Sales summary" } }
+      }
+    },
+    "/seller/analytics": {
+      "get": {
+        "tags": ["Seller"],
+        "summary": "Get seller analytics",
+        "security": [{ "bearerAuth": [] }],
+        "responses": { "200": { "description": "Analytics data" } }
+      }
+    },
+    "/admin/dashboard": {
+      "get": {
+        "tags": ["Admin"],
+        "summary": "Get admin dashboard stats",
+        "security": [{ "bearerAuth": [] }],
+        "responses": { "200": { "description": "Users, sellers, orders, revenue" } }
+      }
+    },
+    "/admin/users": {
+      "get": {
+        "tags": ["Admin"],
+        "summary": "List all users",
+        "security": [{ "bearerAuth": [] }],
+        "responses": { "200": { "description": "Paginated user list" } }
+      }
+    },
+    "/admin/users/{user}/role": {
+      "put": {
+        "tags": ["Admin"],
+        "summary": "Update user role",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "name": "user", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["role"],
+                "properties": { "role": { "type": "string", "enum": ["customer", "seller", "admin"] } }
+              }
+            }
+          }
+        },
+        "responses": { "200": { "description": "Role updated" } }
+      }
+    },
+    "/admin/stores": {
+      "get": {
+        "tags": ["Admin"],
+        "summary": "List all stores",
+        "security": [{ "bearerAuth": [] }],
+        "responses": { "200": { "description": "Store list" } }
+      }
+    },
+    "/admin/stores/{store}/verify": {
+      "post": {
+        "tags": ["Admin"],
+        "summary": "Verify a store",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "name": "store", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "responses": { "200": { "description": "Store verified" } }
+      }
+    },
+    "/admin/community/reports": {
+      "get": {
+        "tags": ["Admin"],
+        "summary": "List community reports",
+        "security": [{ "bearerAuth": [] }],
+        "responses": { "200": { "description": "Open reports" } }
+      }
+    },
+    "/admin/community/reports/{report}/resolve": {
+      "post": {
+        "tags": ["Admin"],
+        "summary": "Resolve a report",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "name": "report", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "responses": { "200": { "description": "Report resolved" } }
+      }
+    },
+    "/admin/analytics": {
+      "get": {
+        "tags": ["Admin"],
+        "summary": "Get admin analytics",
+        "security": [{ "bearerAuth": [] }],
+        "responses": { "200": { "description": "Platform analytics" } }
+      }
+    },
+    "/webhooks/payment": {
+      "post": {
+        "tags": ["Payments"],
+        "summary": "Payment gateway webhook (public)",
+        "description": "Webhook from payment gateway. Signature verified in PaymentService.",
+        "responses": { "200": { "description": "Webhook received" } }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "Laravel Sanctum token"
+      }
+    },
+    "schemas": {
+      "SuccessResponse": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean", "example": true },
+          "message": { "type": "string", "example": "Success" },
+          "data": { "type": "object" }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean", "example": false },
+          "message": { "type": "string" },
+          "errors": { "type": "object" }
+        }
+      },
+      "AuthResponse": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean" },
+          "message": { "type": "string" },
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "integer" },
+              "name": { "type": "string" },
+              "email": { "type": "string" },
+              "role": { "type": "string", "enum": ["customer", "seller", "admin"] },
+              "token": { "type": "string" }
+            }
+          }
+        }
+      },
+      "UserResponse": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean" },
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "integer" },
+              "name": { "type": "string" },
+              "email": { "type": "string" },
+              "phone": { "type": "string" },
+              "role": { "type": "string" },
+              "avatar": { "type": "string" },
+              "addresses": { "type": "array" }
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "ValidationError": {
+        "description": "Validation failed",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "Resource not found",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+          }
+        }
+      },
+      "Unauthorized": {
+        "description": "Unauthenticated",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+          }
+        }
+      },
+      "Forbidden": {
+        "description": "Not authorized",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+          }
+        }
+      }
+    }
+  }
+}
