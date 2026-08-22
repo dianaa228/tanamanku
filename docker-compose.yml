@@ -1,9 +1,11 @@
-# Tanamanku — docker compose untuk layanan pendukung pengembangan.
-# Catatan: PHP/Composer belum tersedia di host → backend dilayani via container ini.
+# Tanamanku — Docker Compose untuk development & production
 # Jalankan:  docker compose up -d
-# Setelah backend di-scaffold, build ulang:  docker compose up -d --build backend
+# Build:     docker compose up -d --build
+# Logs:      docker compose logs -f
+# Stop:      docker compose down
 
 services:
+  # ── MySQL Database ──
   mysql:
     image: mysql:8.0
     container_name: tanamanku_mysql
@@ -22,7 +24,10 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - tanamanku
 
+  # ── phpMyAdmin (dev only) ──
   phpmyadmin:
     image: phpmyadmin:latest
     container_name: tanamanku_phpmyadmin
@@ -36,22 +41,60 @@ services:
     depends_on:
       mysql:
         condition: service_healthy
+    networks:
+      - tanamanku
 
-  # backend:
-  #   build: ./backend
-  #   container_name: tanamanku_backend
-  #   restart: unless-stopped
-  #   ports:
-  #     - "8000:8000"
-  #   environment:
-  #     DB_HOST: mysql
-  #     DB_DATABASE: tanamanku
-  #     DB_USERNAME: tanamanku
-  #     DB_PASSWORD: tanamanku_secret
-  #   depends_on:
-  #     mysql:
-  #       condition: service_healthy
-  #   command: php artisan serve --host=0.0.0.0 --port=8000
+  # ── Laravel Backend API ──
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: tanamanku_backend
+    restart: unless-stopped
+    ports:
+      - "8000:80"
+    environment:
+      APP_NAME: "Tanamanku"
+      APP_ENV: local
+      APP_DEBUG: "true"
+      APP_URL: http://localhost:8000
+      APP_TIMEZONE: Asia/Jakarta
+      DB_CONNECTION: mysql
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_DATABASE: tanamanku
+      DB_USERNAME: tanamanku
+      DB_PASSWORD: tanamanku_secret
+      FRONTEND_URL: http://localhost:5173
+      SESSION_DRIVER: database
+      CACHE_STORE: database
+      QUEUE_CONNECTION: database
+    depends_on:
+      mysql:
+        condition: service_healthy
+    volumes:
+      - storage_upload:/var/www/html/storage/app/public
+    networks:
+      - tanamanku
+
+  # ── React Web App ──
+  web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    container_name: tanamanku_web
+    restart: unless-stopped
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+    networks:
+      - tanamanku
 
 volumes:
   mysql_data:
+  storage_upload:
+
+networks:
+  tanamanku:
+    driver: bridge
