@@ -5,25 +5,44 @@ namespace Database\Seeders;
 use App\Enums\UserRole;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class RoleSeeder extends Seeder
 {
-    /**
-     * Role & permission didefinisikan di config/roles.php (docs/03-user-roles.json).
-     * Seeder ini membuat contoh user per role untuk pengembangan.
-     */
     public function run(): void
     {
-        User::factory()->create([
-            'name' => 'Demo Seller',
-            'email' => 'seller@tanamanku.id',
-            'role' => UserRole::Seller,
-        ]);
+        $createUser = function (
+            string $name,
+            string $email,
+            string $phone,
+            UserRole $role
+        ): void {
+            $user = User::firstOrNew(['email' => $email]);
 
-        User::factory()->create([
-            'name' => 'Demo Customer',
-            'email' => 'customer@tanamanku.id',
-            'role' => UserRole::Customer,
-        ]);
+            $user->forceFill([
+                'name' => $name,
+                'phone' => $phone,
+                'password' => Hash::make('password'),
+                'email_verified_at' => now(),
+                'role' => $role,
+                'is_active' => true,
+            ]);
+
+            $user->save();
+        };
+
+        $createUser(
+            'Demo Seller',
+            'seller@tanamanku.id',
+            '08964672904',
+            UserRole::Seller
+        );
+
+        $createUser(
+            'Demo Customer',
+            'customer@tanamanku.id',
+            '08964672905',
+            UserRole::Customer
+        );
     }
 }
