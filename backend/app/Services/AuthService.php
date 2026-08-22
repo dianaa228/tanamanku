@@ -15,13 +15,16 @@ class AuthService
      */
     public function register(array $data): User
     {
-        $user = User::create([
+        // Gunakan fill() + save() karena 'role' tidak di $fillable (security fix)
+        $user = new User();
+        $user->fill([
             'name' => $data['name'],
             'email' => $data['email'],
             'phone' => $data['phone'] ?? null,
             'password' => $data['password'],
-            'role' => UserRole::Customer,
         ]);
+        $user->role = UserRole::Customer;
+        $user->save();
 
         $user->token = $user->createToken('tanamanku')->plainTextToken;
 

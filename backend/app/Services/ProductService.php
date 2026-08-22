@@ -11,8 +11,15 @@ class ProductService
     /**
      * Pencarian & filter produk (docs/06-api.json): ?search, ?category, ?sort, ?care.
      */
+    /**
+     * Pencarian & filter produk (docs/06-api.json): ?search, ?category, ?sort, ?care.
+     * Batasi per_page maksimal 100 untuk mencegah DoS.
+     */
     public function index(array $filters): LengthAwarePaginator
     {
+        // Batasi per_page maksimal 100 untuk mencegah DoS
+        $perPage = min(max((int) ($filters['per_page'] ?? 15), 1), 100);
+
         return Product::query()
             ->with(['store:id,name,slug', 'category:id,name,slug', 'images'])
             ->withCount('orderItems')
@@ -30,7 +37,7 @@ class ProductService
                     default => $q->latest(),
                 };
             })
-            ->paginate($filters['per_page'] ?? 15)
+            ->paginate($perPage)
             ->withQueryString();
     }
 

@@ -53,10 +53,12 @@ class PlantFinderService
 
     /**
      * Rekomendasi 3 spesies terbaik berdasarkan jawaban pengguna.
+     * Batasi query maksimal 500 spesies untuk mencegah DoS.
      */
     public function recommend(array $answers): array
     {
         return PlantSpecies::query()
+            ->limit(500) // Batasi untuk mencegah memory exhaustion
             ->get()
             ->map(fn ($species) => ['species' => $species, 'score' => $this->score($species, $answers)])
             ->sortByDesc('score')

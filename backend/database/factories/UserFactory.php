@@ -15,10 +15,25 @@ class UserFactory extends Factory
             'email' => fake()->unique()->safeEmail(),
             'phone' => '08' . fake()->numerify('#########'),
             'password' => Hash::make('password'),
-            'role' => UserRole::Customer,
-            'is_active' => true,
             'email_verified_at' => now(),
+            // 'role' dan 'is_active' tidak di $fillable — diatur via configure()
         ];
+    }
+
+    /**
+     * Konfigurasi user setelah creation karena role/is_active tidak di $fillable.
+     */
+    public function configure(): static
+    {
+        return $this->afterMaking(function (User $user) {
+            // Default values jika belum diset via state
+            if (! $user->role) {
+                $user->role = UserRole::Customer;
+            }
+            if (is_null($user->is_active)) {
+                $user->is_active = true;
+            }
+        });
     }
 
     public function seller(): static

@@ -10,14 +10,18 @@ class AdminSeeder extends Seeder
 {
     public function run(): void
     {
-        User::firstOrCreate(
+        $user = User::firstOrCreate(
             ['email' => 'admin@tanamanku.id'],
             [
                 'name' => 'Admin Tanamanku',
                 'password' => 'password',
-                'role' => UserRole::Admin,
-                'is_active' => true,
+                // 'role' dan 'is_active' tidak di $fillable — diatur di bawah
             ],
         );
+
+        // Set role dan is_active secara eksplisit
+        $user->role = UserRole::Admin;
+        $user->is_active = true;
+        $user->save();
     }
 }

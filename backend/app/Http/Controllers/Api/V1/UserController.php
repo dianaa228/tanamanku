@@ -108,14 +108,18 @@ class UserController extends BaseController
             'role' => ['required', 'in:customer,seller,admin'],
         ]);
 
-        $user->update(['role' => $data['role']]);
+        // Gunakan fill() karena 'role' tidak di $fillable (security fix)
+        $user->fill(['role' => $data['role']]);
+        $user->save();
 
         return $this->success(new UserResource($user), 'Role diperbarui');
     }
 
     public function adminToggleActive(User $user): JsonResponse
     {
-        $user->update(['is_active' => ! $user->is_active]);
+        // Gunakan fill() karena 'is_active' tidak di $fillable (security fix)
+        $user->fill(['is_active' => ! $user->is_active]);
+        $user->save();
 
         return $this->success(new UserResource($user), 'Status akun diperbarui');
     }
