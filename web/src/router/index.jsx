@@ -1,65 +1,76 @@
+import { lazy, Suspense } from 'react'
 import { createBrowserRouter } from 'react-router-dom'
 import PublicLayout from '../components/layout/PublicLayout'
 import AuthLayout from '../components/layout/AuthLayout'
 import DashboardLayout from '../components/layout/DashboardLayout'
 import NotFound from '../pages/NotFound'
+import Loading from '../components/ui/Loading'
 
-// Customer pages
-import Home from '../pages/customer/Home'
-import Explore from '../pages/customer/Explore'
-import ProductDetail from '../pages/customer/ProductDetail'
-import Cart from '../pages/customer/Cart'
-import Checkout from '../pages/customer/Checkout'
-import Orders from '../pages/customer/Orders'
-import OrderDetail from '../pages/customer/OrderDetail'
-import MyGarden from '../pages/customer/MyGarden'
-import PlantDetail from '../pages/customer/PlantDetail'
-import PlantFinder from '../pages/customer/PlantFinder'
-import PlantDiagnosis from '../pages/customer/PlantDiagnosis'
-import Community from '../pages/customer/Community'
-import Profile from '../pages/customer/Profile'
-import Services from '../pages/customer/Services'
-import ServiceDetail from '../pages/customer/ServiceDetail'
-import MyBookings from '../pages/customer/MyBookings'
-import PlantExchange from '../pages/customer/PlantExchange'
-import ListingDetail from '../pages/customer/ListingDetail'
-import CreateListing from '../pages/customer/CreateListing'
-import MyListings from '../pages/customer/MyListings'
-import MyExchanges from '../pages/customer/MyExchanges'
-import Loyalty from '../pages/customer/Loyalty'
-import LoyaltyRedeem from '../pages/customer/LoyaltyRedeem'
-import LoyaltyHistory from '../pages/customer/LoyaltyHistory'
-import Subscription from '../pages/customer/Subscription'
-import SubscriptionManage from '../pages/customer/SubscriptionManage'
-import Nurseries from '../pages/customer/Nurseries'
-import NurseryDetail from '../pages/customer/NurseryDetail'
+// ── Lazy-loaded Customer pages ──
+const Home = lazy(() => import('../pages/customer/Home'))
+const Explore = lazy(() => import('../pages/customer/Explore'))
+const ProductDetail = lazy(() => import('../pages/customer/ProductDetail'))
+const Cart = lazy(() => import('../pages/customer/Cart'))
+const Checkout = lazy(() => import('../pages/customer/Checkout'))
+const Orders = lazy(() => import('../pages/customer/Orders'))
+const OrderDetail = lazy(() => import('../pages/customer/OrderDetail'))
+const MyGarden = lazy(() => import('../pages/customer/MyGarden'))
+const PlantDetail = lazy(() => import('../pages/customer/PlantDetail'))
+const PlantFinder = lazy(() => import('../pages/customer/PlantFinder'))
+const PlantDiagnosis = lazy(() => import('../pages/customer/PlantDiagnosis'))
+const Community = lazy(() => import('../pages/customer/Community'))
+const Profile = lazy(() => import('../pages/customer/Profile'))
+const Services = lazy(() => import('../pages/customer/Services'))
+const ServiceDetail = lazy(() => import('../pages/customer/ServiceDetail'))
+const MyBookings = lazy(() => import('../pages/customer/MyBookings'))
+const PlantExchange = lazy(() => import('../pages/customer/PlantExchange'))
+const ListingDetail = lazy(() => import('../pages/customer/ListingDetail'))
+const CreateListing = lazy(() => import('../pages/customer/CreateListing'))
+const MyListings = lazy(() => import('../pages/customer/MyListings'))
+const MyExchanges = lazy(() => import('../pages/customer/MyExchanges'))
+const Loyalty = lazy(() => import('../pages/customer/Loyalty'))
+const LoyaltyRedeem = lazy(() => import('../pages/customer/LoyaltyRedeem'))
+const LoyaltyHistory = lazy(() => import('../pages/customer/LoyaltyHistory'))
+const Subscription = lazy(() => import('../pages/customer/Subscription'))
+const SubscriptionManage = lazy(() => import('../pages/customer/SubscriptionManage'))
+const Nurseries = lazy(() => import('../pages/customer/Nurseries'))
+const NurseryDetail = lazy(() => import('../pages/customer/NurseryDetail'))
 
-// Auth pages
-import Login from '../pages/auth/Login'
-import Register from '../pages/auth/Register'
-import ForgotPassword from '../pages/auth/ForgotPassword'
+// ── Lazy-loaded Auth pages ──
+const Login = lazy(() => import('../pages/auth/Login'))
+const Register = lazy(() => import('../pages/auth/Register'))
+const ForgotPassword = lazy(() => import('../pages/auth/ForgotPassword'))
 
-// Seller pages
-import SellerDashboard from '../pages/seller/Dashboard'
-import SellerProducts from '../pages/seller/Products'
-import SellerCreateProduct from '../pages/seller/CreateProduct'
-import SellerEditProduct from '../pages/seller/EditProduct'
-import SellerOrders from '../pages/seller/Orders'
-import SellerInventory from '../pages/seller/Inventory'
-import SellerSales from '../pages/seller/Sales'
-import SellerAnalytics from '../pages/seller/Analytics'
+// ── Lazy-loaded Seller pages ──
+const SellerDashboard = lazy(() => import('../pages/seller/Dashboard'))
+const SellerProducts = lazy(() => import('../pages/seller/Products'))
+const SellerCreateProduct = lazy(() => import('../pages/seller/CreateProduct'))
+const SellerEditProduct = lazy(() => import('../pages/seller/EditProduct'))
+const SellerOrders = lazy(() => import('../pages/seller/Orders'))
+const SellerInventory = lazy(() => import('../pages/seller/Inventory'))
+const SellerSales = lazy(() => import('../pages/seller/Sales'))
+const SellerAnalytics = lazy(() => import('../pages/seller/Analytics'))
 
-// Admin pages
-import AdminDashboard from '../pages/admin/Dashboard'
-import AdminUsers from '../pages/admin/Users'
-import AdminStores from '../pages/admin/Stores'
-import AdminCategories from '../pages/admin/Categories'
-import AdminOrders from '../pages/admin/Orders'
-import AdminPayments from '../pages/admin/Payments'
-import AdminCommunity from '../pages/admin/Community'
-import AdminReports from '../pages/admin/Reports'
-import AdminSettings from '../pages/admin/Settings'
-import AdminAnalytics from '../pages/admin/Analytics'
+// ── Lazy-loaded Admin pages ──
+const AdminDashboard = lazy(() => import('../pages/admin/Dashboard'))
+const AdminUsers = lazy(() => import('../pages/admin/Users'))
+const AdminStores = lazy(() => import('../pages/admin/Stores'))
+const AdminCategories = lazy(() => import('../pages/admin/Categories'))
+const AdminOrders = lazy(() => import('../pages/admin/Orders'))
+const AdminPayments = lazy(() => import('../pages/admin/Payments'))
+const AdminCommunity = lazy(() => import('../pages/admin/Community'))
+const AdminReports = lazy(() => import('../pages/admin/Reports'))
+const AdminSettings = lazy(() => import('../pages/admin/Settings'))
+const AdminAnalytics = lazy(() => import('../pages/admin/Analytics'))
+
+// ── Suspense wrapper ──
+function LazyPage({ children }) {
+  return (
+    <Suspense fallback={<Loading label="Memuat halaman..." />}>
+      {children}
+    </Suspense>
+  )
+}
 
 // ── Nav config ──
 
@@ -90,34 +101,34 @@ export const router = createBrowserRouter([
   {
     element: <PublicLayout />,
     children: [
-      { path: '/', element: <Home /> },
-      { path: '/explore', element: <Explore /> },
-      { path: '/product/:slug', element: <ProductDetail /> },
-      { path: '/cart', element: <Cart /> },
-      { path: '/checkout', element: <Checkout /> },
-      { path: '/orders', element: <Orders /> },
-      { path: '/orders/:id', element: <OrderDetail /> },
-      { path: '/my-garden', element: <MyGarden /> },
-      { path: '/my-garden/:id', element: <PlantDetail /> },
-      { path: '/plant-finder', element: <PlantFinder /> },
-      { path: '/plant-diagnosis', element: <PlantDiagnosis /> },
-      { path: '/community', element: <Community /> },
-      { path: '/profile', element: <Profile /> },
-      { path: '/services', element: <Services /> },
-      { path: '/services/:id', element: <ServiceDetail /> },
-      { path: '/my-bookings', element: <MyBookings /> },
-      { path: '/plant-exchange', element: <PlantExchange /> },
-      { path: '/plant-exchange/create', element: <CreateListing /> },
-      { path: '/plant-exchange/:id', element: <ListingDetail /> },
-      { path: '/my-listings', element: <MyListings /> },
-      { path: '/my-exchanges', element: <MyExchanges /> },
-      { path: '/loyalty', element: <Loyalty /> },
-      { path: '/loyalty/redeem', element: <LoyaltyRedeem /> },
-      { path: '/loyalty/history', element: <LoyaltyHistory /> },
-      { path: '/subscription', element: <Subscription /> },
-      { path: '/subscription/manage', element: <SubscriptionManage /> },
-      { path: '/nurseries', element: <Nurseries /> },
-      { path: '/nurseries/:slug', element: <NurseryDetail /> },
+      { path: '/', element: <LazyPage><Home /></LazyPage> },
+      { path: '/explore', element: <LazyPage><Explore /></LazyPage> },
+      { path: '/product/:slug', element: <LazyPage><ProductDetail /></LazyPage> },
+      { path: '/cart', element: <LazyPage><Cart /></LazyPage> },
+      { path: '/checkout', element: <LazyPage><Checkout /></LazyPage> },
+      { path: '/orders', element: <LazyPage><Orders /></LazyPage> },
+      { path: '/orders/:id', element: <LazyPage><OrderDetail /></LazyPage> },
+      { path: '/my-garden', element: <LazyPage><MyGarden /></LazyPage> },
+      { path: '/my-garden/:id', element: <LazyPage><PlantDetail /></LazyPage> },
+      { path: '/plant-finder', element: <LazyPage><PlantFinder /></LazyPage> },
+      { path: '/plant-diagnosis', element: <LazyPage><PlantDiagnosis /></LazyPage> },
+      { path: '/community', element: <LazyPage><Community /></LazyPage> },
+      { path: '/profile', element: <LazyPage><Profile /></LazyPage> },
+      { path: '/services', element: <LazyPage><Services /></LazyPage> },
+      { path: '/services/:id', element: <LazyPage><ServiceDetail /></LazyPage> },
+      { path: '/my-bookings', element: <LazyPage><MyBookings /></LazyPage> },
+      { path: '/plant-exchange', element: <LazyPage><PlantExchange /></LazyPage> },
+      { path: '/plant-exchange/create', element: <LazyPage><CreateListing /></LazyPage> },
+      { path: '/plant-exchange/:id', element: <LazyPage><ListingDetail /></LazyPage> },
+      { path: '/my-listings', element: <LazyPage><MyListings /></LazyPage> },
+      { path: '/my-exchanges', element: <LazyPage><MyExchanges /></LazyPage> },
+      { path: '/loyalty', element: <LazyPage><Loyalty /></LazyPage> },
+      { path: '/loyalty/redeem', element: <LazyPage><LoyaltyRedeem /></LazyPage> },
+      { path: '/loyalty/history', element: <LazyPage><LoyaltyHistory /></LazyPage> },
+      { path: '/subscription', element: <LazyPage><Subscription /></LazyPage> },
+      { path: '/subscription/manage', element: <LazyPage><SubscriptionManage /></LazyPage> },
+      { path: '/nurseries', element: <LazyPage><Nurseries /></LazyPage> },
+      { path: '/nurseries/:slug', element: <LazyPage><NurseryDetail /></LazyPage> },
     ],
   },
 
@@ -125,9 +136,9 @@ export const router = createBrowserRouter([
   {
     element: <AuthLayout />,
     children: [
-      { path: '/login', element: <Login /> },
-      { path: '/register', element: <Register /> },
-      { path: '/forgot-password', element: <ForgotPassword /> },
+      { path: '/login', element: <LazyPage><Login /></LazyPage> },
+      { path: '/register', element: <LazyPage><Register /></LazyPage> },
+      { path: '/forgot-password', element: <LazyPage><ForgotPassword /></LazyPage> },
     ],
   },
 
@@ -135,14 +146,14 @@ export const router = createBrowserRouter([
   {
     element: <DashboardLayout role="seller" navItems={sellerNav} />,
     children: [
-      { path: '/seller', element: <SellerDashboard /> },
-      { path: '/seller/products', element: <SellerProducts /> },
-      { path: '/seller/products/create', element: <SellerCreateProduct /> },
-      { path: '/seller/products/:id/edit', element: <SellerEditProduct /> },
-      { path: '/seller/orders', element: <SellerOrders /> },
-      { path: '/seller/inventory', element: <SellerInventory /> },
-      { path: '/seller/sales', element: <SellerSales /> },
-      { path: '/seller/analytics', element: <SellerAnalytics /> },
+      { path: '/seller', element: <LazyPage><SellerDashboard /></LazyPage> },
+      { path: '/seller/products', element: <LazyPage><SellerProducts /></LazyPage> },
+      { path: '/seller/products/create', element: <LazyPage><SellerCreateProduct /></LazyPage> },
+      { path: '/seller/products/:id/edit', element: <LazyPage><SellerEditProduct /></LazyPage> },
+      { path: '/seller/orders', element: <LazyPage><SellerOrders /></LazyPage> },
+      { path: '/seller/inventory', element: <LazyPage><SellerInventory /></LazyPage> },
+      { path: '/seller/sales', element: <LazyPage><SellerSales /></LazyPage> },
+      { path: '/seller/analytics', element: <LazyPage><SellerAnalytics /></LazyPage> },
     ],
   },
 
@@ -150,16 +161,16 @@ export const router = createBrowserRouter([
   {
     element: <DashboardLayout role="admin" navItems={adminNav} />,
     children: [
-      { path: '/admin', element: <AdminDashboard /> },
-      { path: '/admin/users', element: <AdminUsers /> },
-      { path: '/admin/stores', element: <AdminStores /> },
-      { path: '/admin/categories', element: <AdminCategories /> },
-      { path: '/admin/orders', element: <AdminOrders /> },
-      { path: '/admin/payments', element: <AdminPayments /> },
-      { path: '/admin/community', element: <AdminCommunity /> },
-      { path: '/admin/reports', element: <AdminReports /> },
-      { path: '/admin/settings', element: <AdminSettings /> },
-      { path: '/admin/analytics', element: <AdminAnalytics /> },
+      { path: '/admin', element: <LazyPage><AdminDashboard /></LazyPage> },
+      { path: '/admin/users', element: <LazyPage><AdminUsers /></LazyPage> },
+      { path: '/admin/stores', element: <LazyPage><AdminStores /></LazyPage> },
+      { path: '/admin/categories', element: <LazyPage><AdminCategories /></LazyPage> },
+      { path: '/admin/orders', element: <LazyPage><AdminOrders /></LazyPage> },
+      { path: '/admin/payments', element: <LazyPage><AdminPayments /></LazyPage> },
+      { path: '/admin/community', element: <LazyPage><AdminCommunity /></LazyPage> },
+      { path: '/admin/reports', element: <LazyPage><AdminReports /></LazyPage> },
+      { path: '/admin/settings', element: <LazyPage><AdminSettings /></LazyPage> },
+      { path: '/admin/analytics', element: <LazyPage><AdminAnalytics /></LazyPage> },
     ],
   },
 

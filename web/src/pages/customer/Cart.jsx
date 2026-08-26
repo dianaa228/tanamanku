@@ -105,7 +105,7 @@ export default function Cart() {
         </div>
 
         {/* Ringkasan */}
-        <div className="h-fit rounded-3xl border border-leaf-100 bg-white p-6 shadow-soft lg:sticky lg:top-20">
+        <div className="sticky top-20 h-fit rounded-3xl border border-leaf-100 bg-white p-6 shadow-soft">
           <h2 className="text-lg font-bold text-leaf-950">Ringkasan Belanja</h2>
           <dl className="mt-4 space-y-3 text-sm">
             <div className="flex justify-between">

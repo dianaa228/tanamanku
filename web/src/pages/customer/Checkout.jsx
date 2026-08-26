@@ -4,7 +4,8 @@ import { useCart } from '../../context/CartContext'
 import { useAuth } from '../../context/AuthContext'
 import { useToast } from '../../context/ToastContext'
 import { formatRupiah } from '../../utils/format'
-import { SHIPPING_OPTIONS, PAYMENT_METHODS } from '../../types/constants'
+import { SHIPPING_OPTIONS } from '../../types/constants'
+import { createPayment, processPayment, PAYMENT_METHODS } from '../../services/api/payment'
 import ProductVisual from '../../components/product/ProductVisual'
 import Button from '../../components/ui/Button'
 import EmptyState from '../../components/ui/EmptyState'
@@ -18,7 +19,7 @@ export default function Checkout() {
   const navigate = useNavigate()
 
   const [shipping, setShipping] = useState(SHIPPING_OPTIONS[0].value)
-  const [payment, setPayment] = useState(PAYMENT_METHODS[0].value)
+  const [payment, setPayment] = useState(PAYMENT_METHODS[0].id)
   const [note, setNote] = useState('')
   const [submitting, setSubmitting] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
@@ -41,22 +42,70 @@ export default function Checkout() {
       navigate('/login')
       return
     }
+
     setSubmitting(true)
     try {
-      const res = await ordersApi.createOrder({
+      // Step 1: Create order in backend
+      const orderRes = await ordersApi.createOrder({
         address: user?.address,
         paymentMethod: payment,
         items,
         subtotal,
         shippingCost: ship.price,
       })
-      clearCart()
-      setCreatedOrder(res.data)
-      setShowSuccess(true)
-      showToast('Pesanan berhasil dibuat! 🎉')
-      window.scrollTo({ top: 0, behavior: 'smooth' })
+
+      const order = orderRes.data
+
+      // Step 2: Create Midtrans payment
+      const paymentRes = await createPayment({
+        order_id: order.id,
+        gross_amount: total,
+        customer: {
+          first_name: user.name,
+          email: user.email,
+          phone: user.phone,
+        },
+        item_details: items.map((item) => ({
+          id: item.productId || item.slug,
+          name: item.name,
+          price: item.price,
+          quantity: item.qty,
+        })),
+        shipping_address: {
+          first_name: user.address.recipient,
+          phone: user.address.phone,
+          address: user.address.street,
+          city: user.address.city,
+          postal_code: user.address.postalCode,
+        },
+      })
+
+      // Step 3: Process payment with Snap.js
+      await processPayment(paymentRes.data.token, {
+        onSuccess: (result) => {
+          clearCart()
+          setCreatedOrder(order)
+          setShowSuccess(true)
+          showToast('Pembayaran berhasil! 🎉')
+          window.scrollTo({ top: 0, behavior: 'smooth' })
+        },
+        onPending: (result) => {
+          clearCart()
+          setCreatedOrder(order)
+          setShowSuccess(true)
+          showToast('Pembayaran sedang diproses ⏳')
+          window.scrollTo({ top: 0, behavior: 'smooth' })
+        },
+        onError: () => {
+          showToast('Pembayaran gagal. Silakan coba lagi.', 'error')
+        },
+        onClose: () => {
+          showToast('Pembayaran dibatalkan. Pesanan masih tersimpan.', 'info')
+          // Don't clear cart - user might want to retry
+        },
+      })
     } catch {
-      showToast('Gagal membuat pesanan. Coba lagi.', 'error')
+      showToast('Gagal memproses pesanan. Coba lagi.', 'error')
     } finally {
       setSubmitting(false)
     }
@@ -69,9 +118,15 @@ export default function Checkout() {
           <div className="animate-float text-7xl">🎉</div>
           <h1 className="mt-6 text-3xl font-extrabold text-leaf-950">Pesanan berhasil dibuat!</h1>
           <p className="mt-3 text-sm leading-relaxed text-leaf-900/60">
-            Pesanan <strong>{createdOrder.id}</strong> sedang diproses. Silakan selesaikan pembayaran
-            {payment === 'transfer' ? ' melalui Transfer Bank' : payment === 'ewallet' ? ' melalui E-Wallet' : payment === 'qris' ? ' via QRIS' : ' (COD)'}.
+            Pesanan <strong>{createdOrder.id}</strong> sedang diproses. 
+            Pembayaran akan diproses oleh Midtrans secara otomatis.
           </p>
+          <div className="mt-6 rounded-2xl bg-leaf-50 p-4">
+            <div className="flex items-center justify-center gap-2 text-sm text-leaf-700">
+              <span>🔒</span>
+              <span className="font-semibold">Pembayaran aman via Midtrans</span>
+            </div>
+          </div>
           <div className="mt-8 flex flex-col gap-3">
             <Button to={`/orders/${createdOrder.id}`} size="lg">
               Lihat detail pesanan
@@ -146,25 +201,29 @@ export default function Checkout() {
             </div>
           </section>
 
-          {/* Pembayaran */}
+          {/* Pembayaran via Midtrans */}
           <section className="rounded-3xl border border-leaf-100 bg-white p-6 shadow-soft">
             <h2 className="flex items-center gap-2 text-lg font-bold text-leaf-950">
               <span className="flex h-8 w-8 items-center justify-center rounded-full bg-leaf-100 text-sm text-leaf-700">3</span>
               Metode Pembayaran
             </h2>
+            <div className="mt-3 flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-50 to-cyan-50 px-4 py-2.5">
+              <span className="text-lg">💳</span>
+              <p className="text-xs font-semibold text-blue-700">Powered by Midtrans — Pembayaran aman & terenkripsi</p>
+            </div>
             <div className="mt-4 grid gap-2.5 sm:grid-cols-2">
               {PAYMENT_METHODS.map((m) => (
                 <button
-                  key={m.value}
-                  onClick={() => setPayment(m.value)}
+                  key={m.id}
+                  onClick={() => setPayment(m.id)}
                   className={cx(
                     'flex items-start gap-3 rounded-2xl border-2 p-4 text-left transition',
-                    payment === m.value ? 'border-leaf-600 bg-leaf-50' : 'border-leaf-100 hover:border-leaf-300',
+                    payment === m.id ? 'border-leaf-600 bg-leaf-50' : 'border-leaf-100 hover:border-leaf-300',
                   )}
                 >
                   <span className="text-2xl">{m.icon}</span>
                   <div className="min-w-0">
-                    <p className="font-bold text-leaf-950">{m.label}</p>
+                    <p className="font-bold text-leaf-950">{m.name}</p>
                     <p className="text-xs text-leaf-900/50">{m.desc}</p>
                   </div>
                 </button>
@@ -180,7 +239,7 @@ export default function Checkout() {
         </div>
 
         {/* Ringkasan */}
-        <div className="h-fit rounded-3xl border border-leaf-100 bg-white p-6 shadow-soft lg:sticky lg:top-20">
+        <div className="sticky top-20 h-fit rounded-3xl border border-leaf-100 bg-white p-6 shadow-soft">
           <h2 className="text-lg font-bold text-leaf-950">Ringkasan Pesanan</h2>
           <div className="mt-4 space-y-3">
             {items.map((item) => (
@@ -209,9 +268,12 @@ export default function Checkout() {
             </div>
           </dl>
           <Button size="lg" className="mt-6 w-full" loading={submitting} onClick={submit}>
-            {submitting ? 'Memproses...' : 'Buat pesanan'}
+            {submitting ? 'Memproses pembayaran...' : '💳 Bayar dengan Midtrans'}
           </Button>
-          <p className="mt-3 text-center text-xs text-leaf-900/45">🔒 Transaksi diproses aman dengan enkripsi.</p>
+          <div className="mt-3 flex items-center justify-center gap-2 text-xs text-leaf-900/45">
+            <span>🔒</span>
+            <span>Transaksi aman via Midtrans</span>
+          </div>
         </div>
       </div>
     </div>

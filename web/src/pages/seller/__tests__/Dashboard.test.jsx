@@ -75,8 +75,8 @@ describe('Seller Dashboard', () => {
     })
 
     expect(screen.getByText('Total Pesanan')).toBeInTheDocument()
-    expect(screen.getByText('Pesanan Baru')).toBeInTheDocument()
-    expect(screen.getByText('Stok Menipis')).toBeInTheDocument()
+    expect(screen.getAllByText('Pesanan Baru').length).toBeGreaterThanOrEqual(1)
+    expect(screen.getAllByText('Stok Menipis').length).toBeGreaterThanOrEqual(1)
   })
 
   it('displays correct stat values', async () => {

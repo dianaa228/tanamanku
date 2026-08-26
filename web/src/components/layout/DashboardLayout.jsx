@@ -72,15 +72,25 @@ export default function DashboardLayout({ role = 'seller', navItems = [] }) {
           })}
         </nav>
 
-        {/* Back to store */}
+        {/* Back to store / Admin link */}
         <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-leaf-100">
-          <Link
-            to="/"
-            className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-leaf-900/60 hover:bg-leaf-50 transition"
-          >
-            <span>🏪</span>
-            <span>Kembali ke Toko</span>
-          </Link>
+          {user.role === 'admin' && role === 'seller' ? (
+            <Link
+              to="/admin"
+              className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-leaf-900/60 hover:bg-leaf-50 transition"
+            >
+              <span>🛡️</span>
+              <span>Kembali ke Admin Panel</span>
+            </Link>
+          ) : (
+            <Link
+              to="/"
+              className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-leaf-900/60 hover:bg-leaf-50 transition"
+            >
+              <span>🏪</span>
+              <span>Kembali ke Toko</span>
+            </Link>
+          )}
         </div>
       </aside>
 
@@ -115,7 +125,7 @@ export default function DashboardLayout({ role = 'seller', navItems = [] }) {
               {user.avatar || '🧑‍🌾'}
             </div>
             <button
-              onClick={async () => { await logout(); window.location.href = '/' }}
+              onClick={async () => { await logout(); window.location.href = '/login' }}
               className="p-2 rounded-xl hover:bg-rose-50 text-leaf-900/40 hover:text-rose-600 transition"
               title="Keluar"
             >
@@ -129,10 +139,32 @@ export default function DashboardLayout({ role = 'seller', navItems = [] }) {
         </header>
 
         {/* Content */}
-        <main className="flex-1 p-4 sm:p-6">
+        <main className="flex-1 p-4 pb-24 sm:p-6 lg:pb-6">
           <Outlet />
         </main>
       </div>
+
+      {/* Mobile Bottom Navigation */}
+      <nav className="fixed bottom-0 left-0 right-0 z-40 border-t border-leaf-100 bg-white/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-lg lg:hidden">
+        <div className="grid grid-cols-6 gap-1 px-2">
+          {navItems.slice(0, 6).map((item) => {
+            const active = location.pathname === item.to || location.pathname.startsWith(item.to + '/')
+            return (
+              <Link
+                key={item.to}
+                to={item.to}
+                onClick={() => setSidebarOpen(false)}
+                className={`flex flex-col items-center gap-0.5 rounded-xl py-2.5 text-[10px] font-semibold transition ${
+                  active ? 'bg-leaf-600 text-white' : 'text-leaf-900/45 hover:bg-leaf-50'
+                }`}
+              >
+                <span className={`text-lg ${active ? 'scale-110' : ''}`}>{item.icon}</span>
+                <span className="truncate px-1">{item.label}</span>
+              </Link>
+            )
+          })}
+        </div>
+      </nav>
     </div>
   )
 }

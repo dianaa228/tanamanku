@@ -113,18 +113,18 @@ describe('DashboardLayout', () => {
     expect(screen.getByText('Admin Panel')).toBeInTheDocument()
   })
 
-  it('renders nav items in sidebar', () => {
+  it('renders nav items in sidebar and mobile bottom nav', () => {
     renderDashboardLayout({ name: 'Budi', role: 'seller' })
     expect(screen.getAllByText('Dashboard').length).toBeGreaterThanOrEqual(1)
-    expect(screen.getByText('Produk')).toBeInTheDocument()
-    expect(screen.getByText('Pesanan')).toBeInTheDocument()
+    expect(screen.getAllByText('Produk').length).toBeGreaterThanOrEqual(1)
+    expect(screen.getAllByText('Pesanan').length).toBeGreaterThanOrEqual(1)
   })
 
-  it('renders nav item icons', () => {
+  it('renders nav item icons in sidebar and mobile bottom nav', () => {
     renderDashboardLayout({ name: 'Budi', role: 'seller' })
-    expect(screen.getByText('📊')).toBeInTheDocument()
-    expect(screen.getByText('📦')).toBeInTheDocument()
-    expect(screen.getByText('🧾')).toBeInTheDocument()
+    expect(screen.getAllByText('📊').length).toBeGreaterThanOrEqual(1)
+    expect(screen.getAllByText('📦').length).toBeGreaterThanOrEqual(1)
+    expect(screen.getAllByText('🧾').length).toBeGreaterThanOrEqual(1)
   })
 
   it('renders user name and role in topbar', () => {

@@ -15,6 +15,7 @@ export default function Explore() {
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
   const [page, setPage] = useState(1)
+  const [filterOpen, setFilterOpen] = useState(false)
 
   const filters = {
     search: searchParams.get('q') || '',
@@ -76,9 +77,19 @@ export default function Explore() {
         </p>
       </div>
 
+      {/* Mobile Filter Toggle */}
+      <div className="mt-4 lg:hidden">
+        <button
+          onClick={() => setFilterOpen(!filterOpen)}
+          className="flex w-full items-center justify-center gap-2 rounded-2xl border border-leaf-200 bg-white px-4 py-3 text-sm font-semibold text-leaf-900 shadow-sm transition hover:bg-leaf-50"
+        >
+          🔎 Filter & Urutkan {filterOpen ? '▲' : '▼'}
+        </button>
+      </div>
+
       <div className="mt-6 lg:grid lg:grid-cols-[16rem_1fr] lg:gap-8">
         {/* Filter sidebar */}
-        <div className="mb-6 lg:mb-0">
+        <div className={`mb-6 lg:mb-0 ${filterOpen ? 'block' : 'hidden lg:block'}`}>
           <div className="sticky top-20 rounded-3xl border border-leaf-100 bg-white p-5 shadow-soft">
             <h2 className="mb-4 text-base font-bold text-leaf-950">🔎 Filter</h2>
             <ProductFilter categories={categories} active={filters} onChange={update} />
