@@ -211,7 +211,7 @@ export default function Checkout() {
               <span className="text-lg">💳</span>
               <p className="text-xs font-semibold text-blue-700">Powered by Midtrans — Pembayaran aman & terenkripsi</p>
             </div>
-            <div className="mt-4 grid gap-2.5 sm:grid-cols-2">
+            <div className="mt-4 grid grid-cols-1 gap-2.5 sm:grid-cols-2">
               {PAYMENT_METHODS.map((m) => (
                 <button
                   key={m.id}

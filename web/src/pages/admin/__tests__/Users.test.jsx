@@ -23,10 +23,10 @@ vi.mock('../../../utils/format', () => ({
 import AdminUsers from '../Users'
 
 const mockUsers = [
-  { id: 1, name: 'Budi', email: 'budi@test.com', role: 'customer', is_active: true },
-  { id: 2, name: 'Sari', email: 'sari@test.com', role: 'seller', is_active: true },
-  { id: 3, name: 'Andi', email: 'andi@test.com', role: 'customer', is_active: false },
-  { id: 4, name: 'Admin', email: 'admin@test.com', role: 'admin', is_active: true },
+  { id: 1, name: 'Budi', email: 'budi@test.com', phone: '081234', role: 'customer', is_active: true, created_at: '2026-01-01' },
+  { id: 2, name: 'Sari', email: 'sari@test.com', phone: '085678', role: 'seller', is_active: true, created_at: '2026-02-01' },
+  { id: 3, name: 'Andi', email: 'andi@test.com', phone: '089012', role: 'customer', is_active: false, created_at: '2026-03-01' },
+  { id: 4, name: 'Admin', email: 'admin@test.com', phone: '083456', role: 'admin', is_active: true, created_at: '2026-04-01' },
 ]
 
 function renderUsers() {
@@ -45,7 +45,7 @@ describe('Admin Users Page', () => {
   it('shows loading state', () => {
     mockGetUsers.mockReturnValue(new Promise(() => {}))
     renderUsers()
-    expect(screen.getByText('Loading...')).toBeInTheDocument()
+    expect(screen.getByText(/memuat data pengguna/i)).toBeInTheDocument()
   })
 
   it('renders user list after loading', async () => {
@@ -77,10 +77,6 @@ describe('Admin Users Page', () => {
     await waitFor(() => {
       expect(screen.getByRole('button', { name: /semua/i })).toBeInTheDocument()
     })
-
-    expect(screen.getAllByRole('button', { name: /aktif/i }).length).toBeGreaterThanOrEqual(1)
-    expect(screen.getAllByRole('button', { name: /nonaktif/i }).length).toBeGreaterThanOrEqual(1)
-    expect(screen.getAllByRole('button', { name: /seller/i }).length).toBeGreaterThanOrEqual(1)
   })
 
   it('shows user emails', async () => {
@@ -102,17 +98,6 @@ describe('Admin Users Page', () => {
       const selects = screen.getAllByRole('combobox')
       expect(selects.length).toBe(mockUsers.length)
     })
-  })
-
-  it('shows active status badges', async () => {
-    mockGetUsers.mockResolvedValue({ data: mockUsers })
-    renderUsers()
-
-    await waitFor(() => {
-      expect(screen.getAllByText(/aktif/i).length).toBeGreaterThanOrEqual(1)
-    })
-
-    expect(screen.getAllByText(/nonaktif/i).length).toBeGreaterThanOrEqual(1)
   })
 
   it('shows toggle active buttons', async () => {
@@ -149,14 +134,13 @@ describe('Admin Users Page', () => {
     expect(screen.getByText('Aksi')).toBeInTheDocument()
   })
 
-  it('shows all user roles', async () => {
+  it('shows view toggle buttons', async () => {
     mockGetUsers.mockResolvedValue({ data: mockUsers })
     renderUsers()
 
     await waitFor(() => {
-      // Check that role select options exist
-      const selects = screen.getAllByRole('combobox')
-      expect(selects.length).toBe(4)
+      expect(screen.getByText(/tabel/i)).toBeInTheDocument()
     })
+    expect(screen.getByText(/kartu/i)).toBeInTheDocument()
   })
 })

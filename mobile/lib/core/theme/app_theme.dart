@@ -9,6 +9,7 @@ class AppTheme {
   static const Color leaf50 = Color(0xFFF0FDF4);
   static const Color leaf100 = Color(0xFFDCFCE7);
   static const Color leaf200 = Color(0xFFBBF7D0);
+  static const Color leaf300 = Color(0xFF86EFAC);
   static const Color leaf400 = Color(0xFF4ADE80);
   static const Color leaf500 = Color(0xFF22C55E);
   static const Color leaf600 = Color(0xFF16A34A);

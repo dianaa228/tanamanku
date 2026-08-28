@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen, waitFor, act } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 
@@ -53,12 +53,26 @@ vi.mock('../../../context/AuthContext', () => ({
 
 import ProductDetail from '../ProductDetail'
 
-function renderDetail(slug = 'monstera-deliciosa') {
+function renderDetailSync(slug = 'monstera-deliciosa') {
   return render(
     <MemoryRouter initialEntries={[`/product/${slug}`]}>
       <ProductDetail />
-    </MemoryRouter>
+    </MemoryRouter>,
   )
+}
+
+async function renderDetail(slug = 'monstera-deliciosa') {
+  let result
+  await act(async () => {
+    result = render(
+      <MemoryRouter initialEntries={[`/product/${slug}`]}>
+        <ProductDetail />
+      </MemoryRouter>,
+    )
+  })
+  // Flush any remaining async state updates
+  await act(async () => {})
+  return result
 }
 
 describe('ProductDetail Page', () => {
@@ -66,13 +80,22 @@ describe('ProductDetail Page', () => {
     vi.clearAllMocks()
   })
 
-  it('shows loading initially', () => {
-    renderDetail()
+  it('shows loading initially', async () => {
+    const res = render(
+      <MemoryRouter initialEntries={[`/product/monstera-deliciosa`]}>
+        <ProductDetail />
+      </MemoryRouter>,
+    )
+    // Check loading before async resolves
     expect(document.querySelector('.animate-spin')).toBeInTheDocument()
+    // Wait for async to settle to avoid unhandled promise warning
+    await waitFor(() => {
+      expect(screen.queryByText(/loading/i)).not.toBeInTheDocument()
+    })
   })
 
   it('renders product name after loading', async () => {
-    renderDetail()
+    await renderDetail()
     await waitFor(() => {
       // Use heading role to be specific
       expect(screen.getByRole('heading', { name: 'Monstera Deliciosa' })).toBeInTheDocument()
@@ -80,7 +103,7 @@ describe('ProductDetail Page', () => {
   })
 
   it('renders breadcrumb navigation', async () => {
-    renderDetail()
+    await renderDetail()
     await waitFor(() => {
       expect(screen.getByText('Beranda')).toHaveAttribute('href', '/')
       expect(screen.getByText('Jelajahi')).toHaveAttribute('href', '/explore')
@@ -88,42 +111,42 @@ describe('ProductDetail Page', () => {
   })
 
   it('renders product price', async () => {
-    renderDetail()
+    await renderDetail()
     await waitFor(() => {
       expect(screen.getByText(/145.*000/)).toBeInTheDocument()
     })
   })
 
   it('renders store name', async () => {
-    renderDetail()
+    await renderDetail()
     await waitFor(() => {
       expect(screen.getByText(/nursery hijau/i)).toBeInTheDocument()
     })
   })
 
   it('renders sold count', async () => {
-    renderDetail()
+    await renderDetail()
     await waitFor(() => {
       expect(screen.getByText(/340\+ terjual/)).toBeInTheDocument()
     })
   })
 
   it('renders rating value', async () => {
-    renderDetail()
+    await renderDetail()
     await waitFor(() => {
       expect(screen.getByText('4.9')).toBeInTheDocument()
     })
   })
 
   it('renders review count', async () => {
-    renderDetail()
+    await renderDetail()
     await waitFor(() => {
       expect(screen.getByText(/214 ulasan/)).toBeInTheDocument()
     })
   })
 
   it('renders tags', async () => {
-    renderDetail()
+    await renderDetail()
     await waitFor(() => {
       expect(screen.getByText('Tanaman Indoor')).toBeInTheDocument()
       expect(screen.getByText('Populer')).toBeInTheDocument()
@@ -131,7 +154,7 @@ describe('ProductDetail Page', () => {
   })
 
   it('renders variant buttons', async () => {
-    renderDetail()
+    await renderDetail()
     await waitFor(() => {
       expect(screen.getByText('Polos 60cm')).toBeInTheDocument()
       expect(screen.getByText('Polos 80cm')).toBeInTheDocument()
@@ -139,21 +162,21 @@ describe('ProductDetail Page', () => {
   })
 
   it('renders add to cart button', async () => {
-    renderDetail()
+    await renderDetail()
     await waitFor(() => {
       expect(screen.getByText(/tambah ke keranjang/i)).toBeInTheDocument()
     })
   })
 
   it('renders buy now button', async () => {
-    renderDetail()
+    await renderDetail()
     await waitFor(() => {
       expect(screen.getByText(/beli sekarang/i)).toBeInTheDocument()
     })
   })
 
   it('renders description section', async () => {
-    renderDetail()
+    await renderDetail()
     await waitFor(() => {
       expect(screen.getByText(/deskripsi produk/i)).toBeInTheDocument()
       expect(screen.getByText(/ikonik dengan daun berlubang/i)).toBeInTheDocument()
@@ -161,7 +184,7 @@ describe('ProductDetail Page', () => {
   })
 
   it('renders benefits', async () => {
-    renderDetail()
+    await renderDetail()
     await waitFor(() => {
       expect(screen.getByText('Membersihkan udara')).toBeInTheDocument()
       expect(screen.getByText('Cocok untuk pemula')).toBeInTheDocument()
@@ -169,28 +192,28 @@ describe('ProductDetail Page', () => {
   })
 
   it('renders reviews section', async () => {
-    renderDetail()
+    await renderDetail()
     await waitFor(() => {
       expect(screen.getByText(/ulasan pembeli/i)).toBeInTheDocument()
     })
   })
 
   it('renders related products section', async () => {
-    renderDetail()
+    await renderDetail()
     await waitFor(() => {
       expect(screen.getByText(/produk terkait/i)).toBeInTheDocument()
     })
   })
 
   it('shows login prompt when not authenticated', async () => {
-    renderDetail()
+    await renderDetail()
     await waitFor(() => {
       expect(screen.getByText(/sudah punya akun/i)).toBeInTheDocument()
     })
   })
 
   it('renders quantity controls', async () => {
-    renderDetail()
+    await renderDetail()
     await waitFor(() => {
       expect(screen.getByRole('button', { name: /kurangi jumlah/i })).toBeInTheDocument()
       expect(screen.getByRole('button', { name: /tambah jumlah/i })).toBeInTheDocument()
@@ -198,14 +221,14 @@ describe('ProductDetail Page', () => {
   })
 
   it('shows stock info', async () => {
-    renderDetail()
+    await renderDetail()
     await waitFor(() => {
       expect(screen.getByText(/stok tersedia/i)).toBeInTheDocument()
     })
   })
 
   it('renders shipping info cards', async () => {
-    renderDetail()
+    await renderDetail()
     await waitFor(() => {
       expect(screen.getByText(/pengiriman aman/i)).toBeInTheDocument()
       expect(screen.getByText(/garansi 7 hari/i)).toBeInTheDocument()
@@ -215,7 +238,7 @@ describe('ProductDetail Page', () => {
 
   it('increments quantity on + click', async () => {
     const user = userEvent.setup()
-    renderDetail()
+    await renderDetail()
     await waitFor(() => {
       expect(screen.getByText('1')).toBeInTheDocument()
     })
@@ -226,7 +249,7 @@ describe('ProductDetail Page', () => {
 
   it('quantity does not go below 1', async () => {
     const user = userEvent.setup()
-    renderDetail()
+    await renderDetail()
     await waitFor(() => {
       expect(screen.getByText('1')).toBeInTheDocument()
     })
@@ -237,7 +260,7 @@ describe('ProductDetail Page', () => {
 
   it('calls addItem when add to cart clicked', async () => {
     const user = userEvent.setup()
-    renderDetail()
+    await renderDetail()
     await waitFor(() => {
       expect(screen.getByText(/tambah ke keranjang/i)).toBeInTheDocument()
     })

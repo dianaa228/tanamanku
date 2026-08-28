@@ -48,7 +48,7 @@ export default function AdminReports() {
       {/* User growth chart */}
       <div className="rounded-2xl border border-leaf-100 bg-white p-6 shadow-soft">
         <h3 className="font-bold text-leaf-950">📈 Pertumbuhan Pengguna Mingguan</h3>
-        <div className="mt-4 flex items-end gap-3 h-48">
+        <div className="mt-4 flex items-end gap-3 h-48 overflow-x-auto">
           {userGrowth.map((u, i) => {
             const max = Math.max(...userGrowth.map((d) => d.count))
             return (

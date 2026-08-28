@@ -48,7 +48,7 @@ class _PlantFinderPageState extends State<PlantFinderPage> {
 
   Future<void> _choose(dynamic value) async {
     final q = _questions[_step];
-    final next = {..._answers, q['id']: value};
+    final next = {..._answers, q['id'] as String: value};
     setState(() => _answers = next);
 
     if (_step < _questions.length - 1) {

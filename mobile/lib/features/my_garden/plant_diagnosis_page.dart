@@ -111,7 +111,7 @@ class _PlantDiagnosisPageState extends State<PlantDiagnosisPage> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(s['icon'] as String, style: TextStyle(fontSize: 24, scale: active ? 1.1 : 1.0)),
+                        Text(s['icon'] as String, style: TextStyle(fontSize: active ? 26 : 24)),
                         const SizedBox(height: 4),
                         Text(
                           s['label'] as String,

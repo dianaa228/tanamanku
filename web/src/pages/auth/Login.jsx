@@ -18,9 +18,17 @@ export default function Login() {
     setLoading(true)
     setError('')
     try {
-      await login(form)
+      const res = await login(form)
       showToast('Selamat datang kembali! 🌿')
-      navigate('/')
+      // Redirect berdasarkan role
+      const userRole = res.data?.user?.role
+      if (userRole === 'admin') {
+        navigate('/admin')
+      } else if (userRole === 'seller') {
+        navigate('/seller')
+      } else {
+        navigate('/')
+      }
     } catch (err) {
       setError(err.response?.data?.message || 'Gagal masuk. Coba lagi.')
     } finally {

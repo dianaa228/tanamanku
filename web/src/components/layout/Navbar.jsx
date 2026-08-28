@@ -16,6 +16,12 @@ const links = [
   { to: '/community', label: 'Komunitas' },
 ]
 
+const roleConfig = {
+  admin: { icon: '🛡️', label: 'Admin', color: 'bg-violet-100 text-violet-700 ring-violet-200' },
+  seller: { icon: '🏪', label: 'Seller', color: 'bg-amber-100 text-amber-700 ring-amber-200' },
+  customer: { icon: '🧑‍🌾', label: 'Pembeli', color: 'bg-leaf-100 text-leaf-700 ring-leaf-200' },
+}
+
 export default function Navbar() {
   const { user, logout } = useAuth()
   const { count } = useCart()
@@ -103,14 +109,46 @@ export default function Navbar() {
           {user ? (
             <Dropdown
               trigger={
-                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-leaf-400 to-leaf-600 text-xl shadow-soft transition hover:scale-105">
-                  {user.avatar || '🧑‍🌾'}
-                </span>
+                <div className="flex items-center gap-2">
+                  {/* Role Badge */}
+                  {roleConfig[user.role] && (
+                    <span className={`hidden items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-bold ring-1 ring-inset sm:flex ${roleConfig[user.role].color}`}>
+                      <span>{roleConfig[user.role].icon}</span>
+                      <span>{roleConfig[user.role].label}</span>
+                    </span>
+                  )}
+                  <span className="relative flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-leaf-400 to-leaf-600 text-xl shadow-soft transition hover:scale-105">
+                    {user.avatar || '🧑‍🌾'}
+                    {/* Online dot */}
+                    <span className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full border-2 border-white bg-emerald-400" />
+                  </span>
+                </div>
               }
             >
-              <div className="border-b border-leaf-100 px-3 py-2">
-                <p className="text-sm font-bold text-leaf-950">{user.name}</p>
-                <p className="text-xs text-leaf-900/50">{user.email}</p>
+              {/* User Info Header */}
+              <div className="border-b border-leaf-100 px-4 py-3">
+                <div className="flex items-center gap-3">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-leaf-400 to-leaf-600 text-xl text-white shadow-sm">
+                    {user.avatar || '🧑‍🌾'}
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate text-sm font-bold text-leaf-950">{user.name}</p>
+                    <p className="truncate text-xs text-leaf-900/50">{user.email}</p>
+                  </div>
+                </div>
+                {/* Role Badge in Dropdown */}
+                {roleConfig[user.role] && (
+                  <div className="mt-2.5 flex items-center gap-2">
+                    <span className={`inline-flex items-center gap-1 rounded-lg px-2 py-0.5 text-[11px] font-bold ${roleConfig[user.role].color}`}>
+                      {roleConfig[user.role].icon} {roleConfig[user.role].label}
+                    </span>
+                    {user.role === 'admin' && (
+                      <span className="inline-flex items-center gap-1 rounded-lg bg-emerald-50 px-2 py-0.5 text-[11px] font-bold text-emerald-700">
+                        ✅ Full Access
+                      </span>
+                    )}
+                  </div>
+                )}
               </div>
               <DropdownItem onClick={() => navigate('/profile')}>👤 Profil saya</DropdownItem>
               <DropdownItem onClick={() => navigate('/orders')}>📦 Pesanan saya</DropdownItem>
@@ -120,20 +158,24 @@ export default function Navbar() {
               <DropdownItem onClick={() => navigate('/my-exchanges')}>💬 Tawaran Saya</DropdownItem>
               <DropdownItem onClick={() => navigate('/loyalty')}>⭐ Rewards</DropdownItem>
               <DropdownItem onClick={() => navigate('/subscription')}>💎 Langganan</DropdownItem>
-              {(user.role === 'seller' || user.role === 'admin') && (
+              {user.role === 'admin' && (
+                <>
+                  <div className="mx-3 border-t border-leaf-100 my-1" />
+                  <DropdownItem onClick={() => navigate('/admin')}>🛡️ Admin Panel</DropdownItem>
+                  <DropdownItem onClick={() => navigate('/seller')}>🏪 Seller Panel</DropdownItem>
+                </>
+              )}
+              {user.role === 'seller' && (
                 <>
                   <div className="mx-3 border-t border-leaf-100 my-1" />
                   <DropdownItem onClick={() => navigate('/seller')}>🏪 Seller Dashboard</DropdownItem>
                 </>
               )}
-              {user.role === 'admin' && (
-                <DropdownItem onClick={() => navigate('/admin')}>🛡️ Admin Panel</DropdownItem>
-              )}
               <DropdownItem
                 className="text-rose-600 hover:bg-rose-50"
                 onClick={async () => {
                   await logout()
-                  navigate('/')
+                  navigate('/login')
                 }}
               >
                 🚪 Keluar
@@ -211,6 +253,21 @@ export default function Navbar() {
                 <Link to="/register" onClick={() => setMenuOpen(false)} className="flex-1 rounded-xl bg-leaf-600 px-4 py-3 text-center text-sm font-semibold text-white">
                   Daftar
                 </Link>
+              </div>
+            )}
+            {/* Mobile Role Badge */}
+            {user && roleConfig[user.role] && (
+              <div className="mt-2 flex items-center gap-2 rounded-xl bg-leaf-50 px-4 py-3">
+                <span className="text-xl">{roleConfig[user.role].icon}</span>
+                <div>
+                  <p className="text-xs text-leaf-900/50">Login sebagai</p>
+                  <p className="text-sm font-bold text-leaf-950">{roleConfig[user.role].label}</p>
+                </div>
+                {user.role === 'admin' && (
+                  <span className="ml-auto rounded-lg bg-emerald-100 px-2 py-0.5 text-[10px] font-bold text-emerald-700">
+                    Full Access
+                  </span>
+                )}
               </div>
             )}
           </nav>

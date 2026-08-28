@@ -44,5 +44,12 @@ class RoleSeeder extends Seeder
             '08964672905',
             UserRole::Customer
         );
+
+         $createUser(
+            'Demo Admin',
+            'admin@tanamanku.id',
+            '08964672906',
+            UserRole::Admin
+        );
     }
 }

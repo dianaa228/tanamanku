@@ -49,7 +49,7 @@ export default function SellerProducts() {
       ) : (
         <div className="rounded-2xl border border-leaf-100 bg-white shadow-soft overflow-hidden">
           <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+            <table className="w-full min-w-[600px] text-sm">
               <thead>
                 <tr className="border-b border-leaf-100 bg-leaf-50/50">
                   <th className="px-4 py-3 text-left font-semibold text-leaf-900/70">Produk</th>

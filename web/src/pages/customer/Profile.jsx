@@ -122,7 +122,7 @@ export default function Profile() {
           onClick={async () => {
             await logout()
             showToast('Sampai jumpa! Sampai ketemu lagi 👋')
-            navigate('/')
+            navigate('/login')
           }}
           className={cx('rounded-2xl px-6 py-3 text-sm font-bold text-rose-600 ring-1 ring-rose-200 transition hover:bg-rose-50')}
         >

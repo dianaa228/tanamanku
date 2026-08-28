@@ -11,7 +11,7 @@ vi.mock('../../../services/api/admin', () => ({
 }))
 
 vi.mock('../../../components/ui/Loading', () => ({
-  default: () => <div>Loading...</div>,
+  default: ({ label }) => <div>{label || 'Loading...'}</div>,
 }))
 
 vi.mock('../../../components/ui/Badge', () => ({
@@ -57,7 +57,7 @@ describe('Admin Orders Page', () => {
   it('shows loading state initially', () => {
     mockGetOrders.mockReturnValue(new Promise(() => {}))
     renderOrders()
-    expect(screen.getByText('Loading...')).toBeInTheDocument()
+    expect(screen.getByText(/memuat pesanan/i)).toBeInTheDocument()
   })
 
   it('renders orders after loading', async () => {
@@ -76,14 +76,14 @@ describe('Admin Orders Page', () => {
     renderOrders()
 
     await waitFor(() => {
-      expect(screen.getByText(/semua/i)).toBeInTheDocument()
+      const buttons = screen.getAllByRole('button')
+      const tabLabels = buttons.map(b => b.textContent).filter(t => t)
+      // Check for tab filter buttons with count
+      expect(tabLabels.some(t => /menunggu/i.test(t))).toBe(true)
+      expect(tabLabels.some(t => /diproses/i.test(t))).toBe(true)
+      expect(tabLabels.some(t => /dikirim/i.test(t))).toBe(true)
+      expect(tabLabels.some(t => /selesai/i.test(t))).toBe(true)
     })
-
-    expect(screen.getAllByText(/menunggu/i).length).toBeGreaterThanOrEqual(1)
-    expect(screen.getAllByText(/diproses/i).length).toBeGreaterThanOrEqual(1)
-    expect(screen.getAllByText(/dikirim/i).length).toBeGreaterThanOrEqual(1)
-    expect(screen.getAllByText(/selesai/i).length).toBeGreaterThanOrEqual(1)
-    expect(screen.getAllByText(/batal/i).length).toBeGreaterThanOrEqual(1)
   })
 
   it('shows customer names', async () => {
@@ -127,7 +127,7 @@ describe('Admin Orders Page', () => {
       expect(screen.getByText(/pending/i)).toBeInTheDocument()
     })
 
-    expect(screen.getByText(/dibayar/i)).toBeInTheDocument()
+    expect(screen.getAllByText(/dibayar/i).length).toBeGreaterThanOrEqual(1)
   })
 
   it('shows table headers', async () => {
@@ -150,5 +150,25 @@ describe('Admin Orders Page', () => {
     await waitFor(() => {
       expect(screen.getByText(/tidak ada pesanan/i)).toBeInTheDocument()
     })
+  })
+
+  it('shows search input', async () => {
+    mockGetOrders.mockResolvedValue({ data: mockOrders })
+    renderOrders()
+
+    await waitFor(() => {
+      expect(screen.getByPlaceholderText(/cari id pesanan/i)).toBeInTheDocument()
+    })
+  })
+
+  it('shows stats cards', async () => {
+    mockGetOrders.mockResolvedValue({ data: mockOrders })
+    renderOrders()
+
+    await waitFor(() => {
+      expect(screen.getByText('Total Pesanan')).toBeInTheDocument()
+    })
+
+    expect(screen.getByText('Total Revenue')).toBeInTheDocument()
   })
 })

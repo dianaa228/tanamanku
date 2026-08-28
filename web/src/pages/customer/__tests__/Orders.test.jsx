@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen, waitFor, act } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 
@@ -29,12 +29,20 @@ vi.mock('../../../context/AuthContext', () => ({
 
 import Orders from '../Orders'
 
-function renderOrders() {
-  return render(
-    <MemoryRouter>
-      <Orders />
-    </MemoryRouter>
-  )
+
+
+async function renderOrders() {
+  let result
+  await act(async () => {
+    result = render(
+      <MemoryRouter>
+        <Orders />
+      </MemoryRouter>,
+    )
+  })
+  // Flush any remaining async state updates
+  await act(async () => {})
+  return result
 }
 
 describe('Orders Page', () => {
@@ -42,20 +50,29 @@ describe('Orders Page', () => {
     vi.clearAllMocks()
   })
 
-  it('shows loading initially', () => {
-    renderOrders()
+  it('shows loading initially', async () => {
+    render(
+      <MemoryRouter>
+        <Orders />
+      </MemoryRouter>,
+    )
+    // Check loading before async resolves
     expect(screen.getByText(/memuat data/i)).toBeInTheDocument()
+    // Wait for async to settle to avoid unhandled promise warning
+    await waitFor(() => {
+      expect(screen.queryByText(/memuat data/i)).not.toBeInTheDocument()
+    })
   })
 
   it('renders page title after loading', async () => {
-    renderOrders()
+    await renderOrders()
     await waitFor(() => {
       expect(screen.getByText(/pesanan saya/i)).toBeInTheDocument()
     })
   })
 
   it('renders filter tabs', async () => {
-    renderOrders()
+    await renderOrders()
     await waitFor(() => {
       expect(screen.getByRole('button', { name: /semua/i })).toBeInTheDocument()
       expect(screen.getByRole('button', { name: /menunggu/i })).toBeInTheDocument()
@@ -64,7 +81,7 @@ describe('Orders Page', () => {
   })
 
   it('renders orders after loading', async () => {
-    renderOrders()
+    await renderOrders()
     await waitFor(() => {
       expect(screen.getByText('ORD-001')).toBeInTheDocument()
       expect(screen.getByText('ORD-002')).toBeInTheDocument()
@@ -72,7 +89,7 @@ describe('Orders Page', () => {
   })
 
   it('renders subtitle text', async () => {
-    renderOrders()
+    await renderOrders()
     await waitFor(() => {
       expect(screen.getByText(/pantau status belanja/i)).toBeInTheDocument()
     })
@@ -80,7 +97,7 @@ describe('Orders Page', () => {
 
   it('filters by status tab', async () => {
     const user = userEvent.setup()
-    renderOrders()
+    await renderOrders()
     await waitFor(() => {
       expect(screen.getByText('ORD-001')).toBeInTheDocument()
     })
@@ -93,7 +110,7 @@ describe('Orders Page', () => {
 
   it('shows empty state for tab with no orders', async () => {
     const user = userEvent.setup()
-    renderOrders()
+    await renderOrders()
     await waitFor(() => {
       expect(screen.getByText('ORD-001')).toBeInTheDocument()
     })
@@ -104,21 +121,21 @@ describe('Orders Page', () => {
   })
 
   it('shows order status badge', async () => {
-    renderOrders()
+    await renderOrders()
     await waitFor(() => {
       expect(screen.getByText(/dalam pengiriman/i)).toBeInTheDocument()
     })
   })
 
   it('shows order total', async () => {
-    renderOrders()
+    await renderOrders()
     await waitFor(() => {
       expect(screen.getByText(/160.*000/)).toBeInTheDocument()
     })
   })
 
   it('renders order links', async () => {
-    renderOrders()
+    await renderOrders()
     await waitFor(() => {
       const links = screen.getAllByRole('link')
       const orderLink = links.find(l => l.getAttribute('href')?.includes('/orders/'))
@@ -128,7 +145,7 @@ describe('Orders Page', () => {
 
   it('switches back to all tab', async () => {
     const user = userEvent.setup()
-    renderOrders()
+    await renderOrders()
     await waitFor(() => {
       expect(screen.getByText('ORD-001')).toBeInTheDocument()
     })

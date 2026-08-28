@@ -97,7 +97,8 @@ describe('Navbar', () => {
 
   it('shows default avatar when user has no avatar', () => {
     renderNavbar({ name: 'Budi', email: 'budi@test.com', role: 'customer', avatar: null })
-    expect(screen.getByText('🧑‍🌾')).toBeInTheDocument()
+    const emojis = screen.getAllByText('🧑‍🌾')
+    expect(emojis.length).toBeGreaterThanOrEqual(1)
   })
 
   it('shows hamburger menu button on mobile', () => {

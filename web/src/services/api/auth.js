@@ -26,7 +26,32 @@ const mockImpl = {
     if (!email || !password) {
       throw { response: { status: 422, data: { message: 'Email dan password wajib diisi', errors: { email: ['Email wajib diisi'] } } } }
     }
-    const user = email === demoUser.email ? demoUser : { ...demoUser, id: 2, name: email.split('@')[0], email }
+    // Determine role based on email
+    let role = 'customer'
+    let name = email.split('@')[0]
+    let avatar = '🧑‍🌾'
+    
+    if (email.includes('admin')) {
+      role = 'admin'
+      name = 'Admin Tanamanku'
+      avatar = '🛡️'
+    } else if (email.includes('seller')) {
+      role = 'seller'
+      name = 'Seller Tanamanku'
+      avatar = '🏪'
+    }
+    
+    const user = {
+      id: Date.now(),
+      name,
+      email,
+      phone: '0812-3456-7890',
+      role,
+      avatar,
+      memberSince: '2025-11-03',
+      address: demoUser.address,
+      stats: { plants: 4, orders: 12, posts: 8 },
+    }
     const token = 'mock-token-' + Date.now()
     persistSession(user, token)
     return { success: true, message: 'Login berhasil', data: { user, token } }

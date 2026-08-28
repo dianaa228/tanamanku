@@ -93,9 +93,9 @@ export default function Cart() {
                 </div>
                 <div className="mt-auto flex items-center justify-between pt-3">
                   <div className="flex items-center rounded-xl bg-leaf-50">
-                    <button onClick={() => onQty(item.lineId, item.qty - 1)} aria-label="Kurangi jumlah" className="px-3 py-1.5 font-bold text-leaf-700 transition hover:text-leaf-900">−</button>
+                    <button onClick={() => onQty(item.lineId, item.qty - 1)} aria-label="Kurangi jumlah" className="min-h-[44px] min-w-[44px] px-3 py-2 font-bold text-leaf-700 transition hover:text-leaf-900">−</button>
                     <span className="w-8 text-center text-sm font-bold text-leaf-950" aria-live="polite">{item.qty}</span>
-                    <button onClick={() => onQty(item.lineId, item.qty + 1)} aria-label="Tambah jumlah" className="px-3 py-1.5 font-bold text-leaf-700 transition hover:text-leaf-900">+</button>
+                    <button onClick={() => onQty(item.lineId, item.qty + 1)} aria-label="Tambah jumlah" className="min-h-[44px] min-w-[44px] px-3 py-2 font-bold text-leaf-700 transition hover:text-leaf-900">+</button>
                   </div>
                   <p className="font-extrabold text-leaf-700">{formatRupiah(item.price * item.qty)}</p>
                 </div>

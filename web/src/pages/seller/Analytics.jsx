@@ -206,7 +206,7 @@ export default function SellerAnalytics() {
         {/* Peak Hours */}
         <div className="rounded-2xl border border-leaf-100 bg-white p-6 shadow-soft">
           <h2 className="font-bold text-leaf-950">🕐 Jam Ramai Pesanan</h2>
-          <div className="mt-4 flex items-end gap-2 h-40">
+          <div className="mt-4 flex items-end gap-2 h-40 overflow-x-auto">
             {peakHours.map((h, i) => (
               <div key={i} className="flex-1 flex flex-col items-center gap-1">
                 <div

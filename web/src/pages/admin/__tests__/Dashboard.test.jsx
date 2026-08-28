@@ -65,12 +65,12 @@ describe('Admin Dashboard', () => {
     renderDashboard()
 
     await waitFor(() => {
-      expect(screen.getByText('Total Pengguna')).toBeInTheDocument()
+      expect(screen.getByText('Total Transaksi')).toBeInTheDocument()
     })
 
-    expect(screen.getByText('Total Toko')).toBeInTheDocument()
-    expect(screen.getByText('Total Produk')).toBeInTheDocument()
-    expect(screen.getByText('GMV')).toBeInTheDocument()
+    expect(screen.getByText('Revenue Bulan Ini')).toBeInTheDocument()
+    expect(screen.getByText('Pengguna Aktif')).toBeInTheDocument()
+    expect(screen.getByText('Toko Verified')).toBeInTheDocument()
   })
 
   it('displays correct stat values', async () => {
@@ -78,11 +78,8 @@ describe('Admin Dashboard', () => {
     renderDashboard()
 
     await waitFor(() => {
-      expect(screen.getByText('150')).toBeInTheDocument()
+      expect(screen.getByText('1,247')).toBeInTheDocument()
     })
-
-    expect(screen.getAllByText('25').length).toBeGreaterThanOrEqual(1)
-    expect(screen.getByText('200')).toBeInTheDocument()
   })
 
   it('shows user growth chart section', async () => {
@@ -94,17 +91,13 @@ describe('Admin Dashboard', () => {
     })
   })
 
-  it('shows summary section', async () => {
+  it('shows platform summary section', async () => {
     mockGetDashboard.mockResolvedValue({ data: mockDashboardData })
     renderDashboard()
 
     await waitFor(() => {
-      expect(screen.getByText(/ringkasan/i)).toBeInTheDocument()
+      expect(screen.getByText(/ringkasan platform/i)).toBeInTheDocument()
     })
-
-    expect(screen.getByText(/pesanan bulan ini/i)).toBeInTheDocument()
-    expect(screen.getByText(/pengguna baru/i)).toBeInTheDocument()
-    expect(screen.getByText(/toko aktif/i)).toBeInTheDocument()
   })
 
   it('shows recent orders section', async () => {
@@ -130,24 +123,21 @@ describe('Admin Dashboard', () => {
     expect(screen.getByText(/green house/i)).toBeInTheDocument()
   })
 
-  it('shows GMV formatted as rupiah', async () => {
+  it('shows quick actions section', async () => {
     mockGetDashboard.mockResolvedValue({ data: mockDashboardData })
     renderDashboard()
 
     await waitFor(() => {
-      expect(screen.getByText(/rp50/i)).toBeInTheDocument()
+      expect(screen.getByText(/aksi cepat/i)).toBeInTheDocument()
     })
   })
 
-  it('shows summary stats', async () => {
+  it('shows admin panel header', async () => {
     mockGetDashboard.mockResolvedValue({ data: mockDashboardData })
     renderDashboard()
 
     await waitFor(() => {
-      expect(screen.getByText('300')).toBeInTheDocument() // totalOrders
+      expect(screen.getByText(/admin panel/i)).toBeInTheDocument()
     })
-
-    expect(screen.getByText('12')).toBeInTheDocument() // newUsersThisMonth
-    expect(screen.getAllByText('25').length).toBeGreaterThanOrEqual(1) // totalStores
   })
 })

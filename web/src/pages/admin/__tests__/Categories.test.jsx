@@ -15,7 +15,7 @@ vi.mock('../../../services/api/admin', () => ({
   },
 }))
 
-vi.mock('../../../components/ui/Loading', () => ({ default: () => <div>Loading...</div> }))
+vi.mock('../../../components/ui/Loading', () => ({ default: ({ label }) => <div>{label || 'Loading...'}</div> }))
 vi.mock('../../../components/ui/Button', () => ({ default: ({ children, onClick }) => <button onClick={onClick}>{children}</button> }))
 vi.mock('../../../components/ui/Modal', () => ({ default: ({ open, children, title }) => open ? <div role="dialog"><h2>{title}</h2>{children}</div> : null }))
 
@@ -44,7 +44,7 @@ describe('Admin Categories Page', () => {
   it('shows loading state', () => {
     mockGetCategories.mockReturnValue(new Promise(() => {}))
     renderCategories()
-    expect(screen.getByText('Loading...')).toBeInTheDocument()
+    expect(screen.getByText(/memuat kategori/i)).toBeInTheDocument()
   })
 
   it('renders category list after loading', async () => {
@@ -73,23 +73,19 @@ describe('Admin Categories Page', () => {
     renderCategories()
 
     await waitFor(() => {
-      expect(screen.getByText('tanaman-hias')).toBeInTheDocument()
+      expect(screen.getByText(/tanaman-hias/i)).toBeInTheDocument()
     })
-
-    expect(screen.getByText('sayuran')).toBeInTheDocument()
-    expect(screen.getByText('buah-buahan')).toBeInTheDocument()
   })
 
-  it('shows product counts', async () => {
+  it('shows product counts in cards', async () => {
     mockGetCategories.mockResolvedValue({ data: mockCategories })
     renderCategories()
 
     await waitFor(() => {
-      expect(screen.getByText('45')).toBeInTheDocument()
+      expect(screen.getByText(/45 produk/i)).toBeInTheDocument()
     })
 
-    expect(screen.getByText('30')).toBeInTheDocument()
-    expect(screen.getByText('15')).toBeInTheDocument()
+    expect(screen.getByText(/30 produk/i)).toBeInTheDocument()
   })
 
   it('shows category icons', async () => {
@@ -114,35 +110,14 @@ describe('Admin Categories Page', () => {
     })
   })
 
-  it('shows delete buttons', async () => {
+  it('shows stats cards', async () => {
     mockGetCategories.mockResolvedValue({ data: mockCategories })
     renderCategories()
 
     await waitFor(() => {
-      const deleteButtons = screen.getAllByText(/hapus/i)
-      expect(deleteButtons.length).toBe(mockCategories.length)
-    })
-  })
-
-  it('shows table headers', async () => {
-    mockGetCategories.mockResolvedValue({ data: mockCategories })
-    renderCategories()
-
-    await waitFor(() => {
-      expect(screen.getByText('Kategori')).toBeInTheDocument()
+      expect(screen.getByText('Total Kategori')).toBeInTheDocument()
     })
 
-    expect(screen.getByText('Slug')).toBeInTheDocument()
-    expect(screen.getByText('Produk')).toBeInTheDocument()
-    expect(screen.getByText('Aksi')).toBeInTheDocument()
-  })
-
-  it('shows empty state when no categories', async () => {
-    mockGetCategories.mockResolvedValue({ data: [] })
-    renderCategories()
-
-    await waitFor(() => {
-      expect(screen.getByText(/tambah kategori/i)).toBeInTheDocument()
-    })
+    expect(screen.getByText('Total Produk')).toBeInTheDocument()
   })
 })

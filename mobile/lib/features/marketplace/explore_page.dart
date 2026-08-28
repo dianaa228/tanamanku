@@ -41,21 +41,19 @@ class _ExplorePageState extends State<ExplorePage> {
   Future<void> _loadData() async {
     setState(() => _loading = true);
     try {
-      final results = await Future.wait([
-        _service.getProducts(
+      final products = await _service.getProducts(
           search: _searchCtrl.text,
           category: _selectedCategory,
           sort: _selectedSort,
-        ),
-        _service.getCategories(),
-      ]);
-      if (mounted) {
-        setState(() {
-          _products = results[0];
-          _categories = results[1];
-          _loading = false;
-        });
-      }
+        );
+        final categories = await _service.getCategories();
+        if (mounted) {
+          setState(() {
+            _products = products;
+            _categories = categories;
+            _loading = false;
+          });
+        }
     } catch (_) {
       if (mounted) setState(() => _loading = false);
     }

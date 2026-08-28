@@ -42,9 +42,11 @@ export function AuthProvider({ children }) {
 
   const login = useCallback(async (payload) => {
     const res = await authApi.login(payload)
-    setUser(res.data.user)
-    localStorage.setItem(USER_KEY, JSON.stringify(res.data.user))
-    return res
+    const user = res.data.user
+    setUser(user)
+    localStorage.setItem(USER_KEY, JSON.stringify(user))
+    // Return user data for role-based redirect
+    return { ...res, data: { ...res.data, user } }
   }, [])
 
   const register = useCallback(async (payload) => {

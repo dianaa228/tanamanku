@@ -80,9 +80,9 @@ export default function Orders() {
                 </div>
                 <div className="mt-4 flex items-center gap-3">
                   <div className="flex -space-x-3">
-                    {order.items.slice(0, 3).map((item) => (
+                    {order.items.slice(0, 3).map((item, idx) => (
                       <ProductVisual
-                        key={item.productId}
+                        key={`${order.id}-${item.productId ?? item.name ?? idx}`}
                         emoji={item.emoji}
                         gradient={item.gradient}
                         className="h-12 w-12 rounded-2xl border-2 border-white"

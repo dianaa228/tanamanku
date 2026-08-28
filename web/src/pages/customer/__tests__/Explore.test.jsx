@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen, waitFor, act } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 
 vi.mock('../../../services/api/products', () => ({
@@ -33,12 +33,18 @@ vi.mock('../../../context/AuthContext', () => ({
 
 import Explore from '../Explore'
 
-function renderExplore(initialEntries = ['/explore']) {
-  return render(
-    <MemoryRouter initialEntries={initialEntries}>
-      <Explore />
-    </MemoryRouter>
-  )
+async function renderExplore(initialEntries = ['/explore']) {
+  let result
+  await act(async () => {
+    result = render(
+      <MemoryRouter initialEntries={initialEntries}>
+        <Explore />
+      </MemoryRouter>,
+    )
+  })
+  // Flush any remaining async state updates
+  await act(async () => {})
+  return result
 }
 
 describe('Explore Page', () => {
@@ -46,41 +52,50 @@ describe('Explore Page', () => {
     vi.clearAllMocks()
   })
 
-  it('renders loading state initially', () => {
-    renderExplore()
+  it('renders loading state initially', async () => {
+    render(
+      <MemoryRouter initialEntries={['/explore']}>
+        <Explore />
+      </MemoryRouter>,
+    )
+    // Check loading before async resolves
     expect(screen.getByText(/menyiapkan produk terbaik/i)).toBeInTheDocument()
+    // Wait for async to settle to avoid unhandled promise warning
+    await waitFor(() => {
+      expect(screen.queryByText(/menyiapkan produk terbaik/i)).not.toBeInTheDocument()
+    })
   })
 
   it('renders page title after loading', async () => {
-    renderExplore()
+    await renderExplore()
     await waitFor(() => {
       expect(screen.getByText(/jelajahi katalog/i)).toBeInTheDocument()
     })
   })
 
   it('renders product count after loading', async () => {
-    renderExplore()
+    await renderExplore()
     await waitFor(() => {
       expect(screen.getByText(/2 produk ditemukan/i)).toBeInTheDocument()
     })
   })
 
   it('renders filter sidebar heading', async () => {
-    renderExplore()
+    await renderExplore()
     await waitFor(() => {
       expect(screen.getByText('🔎 Filter')).toBeInTheDocument()
     })
   })
 
   it('renders search input', async () => {
-    renderExplore()
+    await renderExplore()
     await waitFor(() => {
       expect(screen.getByPlaceholderText(/cari tanaman/i)).toBeInTheDocument()
     })
   })
 
   it('renders sort controls', async () => {
-    renderExplore()
+    await renderExplore()
     await waitFor(() => {
       const sortElements = screen.getAllByText('Urutkan')
       expect(sortElements.length).toBeGreaterThanOrEqual(1)
@@ -88,7 +103,7 @@ describe('Explore Page', () => {
   })
 
   it('renders products after loading', async () => {
-    renderExplore()
+    await renderExplore()
     await waitFor(() => {
       expect(screen.getByText('Monstera')).toBeInTheDocument()
       expect(screen.getByText('Sirih Gading')).toBeInTheDocument()
@@ -96,7 +111,7 @@ describe('Explore Page', () => {
   })
 
   it('renders categories in filter', async () => {
-    renderExplore()
+    await renderExplore()
     await waitFor(() => {
       expect(screen.getByText(/tanaman hias/i)).toBeInTheDocument()
       expect(screen.getByText(/sayuran/i)).toBeInTheDocument()
@@ -104,14 +119,14 @@ describe('Explore Page', () => {
   })
 
   it('shows search query in subtitle', async () => {
-    renderExplore(['/explore?q=monstera'])
+    await renderExplore(['/explore?q=monstera'])
     await waitFor(() => {
       expect(screen.getByText(/monstera/i)).toBeInTheDocument()
     })
   })
 
   it('renders product links', async () => {
-    renderExplore()
+    await renderExplore()
     await waitFor(() => {
       const links = screen.getAllByRole('link')
       const monsteraLink = links.find(l => l.getAttribute('href') === '/product/monstera')

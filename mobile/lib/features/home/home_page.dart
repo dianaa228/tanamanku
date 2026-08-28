@@ -29,14 +29,12 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> _loadData() async {
     try {
-      final results = await Future.wait([
-        _service.getProducts(sort: 'terlaris', perPage: 8),
-        _service.getCategories(),
-      ]);
+      final featured = await _service.getProducts(sort: 'terlaris', perPage: 8);
+      final categories = await _service.getCategories();
       if (mounted) {
         setState(() {
-          _featured = results[0];
-          _categories = results[1];
+          _featured = featured;
+          _categories = categories;
           _loading = false;
         });
       }

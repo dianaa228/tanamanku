@@ -44,7 +44,7 @@ export default function SellerSales() {
         {/* Daily sales chart */}
         <div className="rounded-2xl border border-leaf-100 bg-white p-6 shadow-soft">
           <h2 className="font-bold text-leaf-950">📈 Penjualan Harian</h2>
-          <div className="mt-4 flex items-end gap-2 h-48">
+          <div className="mt-4 flex items-end gap-2 h-48 overflow-x-auto">
             {data.dailySales.map((s, i) => {
               const max = Math.max(...data.dailySales.map((d) => d.total))
               return (

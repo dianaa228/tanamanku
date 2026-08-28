@@ -88,7 +88,7 @@ export default function AdminAnalytics() {
         {/* User Growth */}
         <div className="rounded-2xl border border-leaf-100 bg-white p-6 shadow-soft">
           <h2 className="font-bold text-leaf-950">📈 Pertumbuhan Pengguna</h2>
-          <div className="mt-4 flex items-end gap-3 h-44">
+          <div className="mt-4 flex items-end gap-3 h-44 overflow-x-auto">
             {userGrowth.map((u, i) => (
               <div key={i} className="flex-1 flex flex-col items-center gap-1">
                 <p className="text-[10px] font-semibold text-leaf-700">{u.users}</p>
@@ -112,7 +112,7 @@ export default function AdminAnalytics() {
         {/* Revenue by Month */}
         <div className="rounded-2xl border border-leaf-100 bg-white p-6 shadow-soft">
           <h2 className="font-bold text-leaf-950">💰 Pendapatan Bulanan</h2>
-          <div className="mt-4 flex items-end gap-3 h-44">
+          <div className="mt-4 flex items-end gap-3 h-44 overflow-x-auto">
             {revenueByMonth.map((r, i) => (
               <div key={i} className="flex-1 flex flex-col items-center gap-1">
                 <p className="text-[10px] font-semibold text-leaf-700">{formatRupiah(r.revenue)}</p>
@@ -251,7 +251,7 @@ export default function AdminAnalytics() {
       {/* Daily Orders */}
       <div className="rounded-2xl border border-leaf-100 bg-white p-6 shadow-soft">
         <h2 className="font-bold text-leaf-950">📅 Pesanan Harian (7 Hari)</h2>
-        <div className="mt-4 flex items-end gap-2 h-32">
+        <div className="mt-4 flex items-end gap-2 h-32 overflow-x-auto">
           {dailyOrders.map((d, i) => (
             <div key={i} className="flex-1 flex flex-col items-center gap-1">
               <p className="text-[10px] font-semibold text-leaf-700">{d.orders}</p>
