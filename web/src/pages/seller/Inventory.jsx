@@ -11,10 +11,10 @@ export default function SellerInventory() {
   const [editValue, setEditValue] = useState('')
 
   useEffect(() => {
-    sellerApi.getInventory().then((res) => {
-      setProducts(res.data)
-      setLoading(false)
-    })
+    sellerApi.getInventory()
+      .then((res) => setProducts(res.data))
+      .catch(() => {})
+      .finally(() => setLoading(false))
   }, [])
 
   const saveStock = async (id) => {

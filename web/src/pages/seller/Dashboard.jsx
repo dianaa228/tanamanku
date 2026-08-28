@@ -18,10 +18,10 @@ export default function SellerDashboard() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    sellerApi.getDashboard().then((res) => {
-      setData(res.data)
-      setLoading(false)
-    })
+    sellerApi.getDashboard()
+      .then((res) => setData(res.data))
+      .catch(() => {})
+      .finally(() => setLoading(false))
   }, [])
 
   if (loading) return <Loading label="Memuat dashboard..." />

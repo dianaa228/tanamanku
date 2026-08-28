@@ -11,10 +11,10 @@ export default function AdminStores() {
   const [view, setView] = useState('card')
 
   useEffect(() => {
-    adminApi.getStores().then((res) => {
-      setStores(res.data)
-      setLoading(false)
-    })
+    adminApi.getStores()
+      .then((res) => setStores(res.data))
+      .catch(() => {})
+      .finally(() => setLoading(false))
   }, [])
 
   const verifyStore = async (id) => {

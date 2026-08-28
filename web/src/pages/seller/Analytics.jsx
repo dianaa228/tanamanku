@@ -9,10 +9,10 @@ export default function SellerAnalytics() {
   const [period, setPeriod] = useState('30d')
 
   useEffect(() => {
-    analyticsApi.getAnalytics().then((res) => {
-      setData(res.data)
-      setLoading(false)
-    })
+    analyticsApi.getAnalytics()
+      .then((res) => setData(res.data))
+      .catch(() => {})
+      .finally(() => setLoading(false))
   }, [])
 
   if (loading) return <Loading label="Memuat analytics..." />

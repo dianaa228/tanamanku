@@ -9,10 +9,10 @@ export default function AdminPayments() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    adminApi.getOrders().then((res) => {
-      setOrders(res.data)
-      setLoading(false)
-    })
+    adminApi.getOrders()
+      .then((res) => setOrders(res.data))
+      .catch(() => {})
+      .finally(() => setLoading(false))
   }, [])
 
   if (loading) return <Loading />

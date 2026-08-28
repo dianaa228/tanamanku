@@ -13,10 +13,10 @@ export default function SellerOrders() {
   const [tab, setTab] = useState('semua')
 
   useEffect(() => {
-    sellerApi.getOrders().then((res) => {
-      setOrders(res.data)
-      setLoading(false)
-    })
+    sellerApi.getOrders()
+      .then((res) => setOrders(res.data))
+      .catch(() => {})
+      .finally(() => setLoading(false))
   }, [])
 
   const handleStatus = async (orderId, status) => {

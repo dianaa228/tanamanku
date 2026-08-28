@@ -12,10 +12,10 @@ export default function AdminOrders() {
   const [search, setSearch] = useState('')
 
   useEffect(() => {
-    adminApi.getOrders().then((res) => {
-      setOrders(res.data)
-      setLoading(false)
-    })
+    adminApi.getOrders()
+      .then((res) => setOrders(res.data))
+      .catch(() => {})
+      .finally(() => setLoading(false))
   }, [])
 
   const tabs = [

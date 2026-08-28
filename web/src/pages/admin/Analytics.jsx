@@ -13,10 +13,10 @@ export default function AdminAnalytics() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    adminAnalyticsApi.getAnalytics().then((res) => {
-      setData(res.data)
-      setLoading(false)
-    })
+    adminAnalyticsApi.getAnalytics()
+      .then((res) => setData(res.data))
+      .catch(() => {})
+      .finally(() => setLoading(false))
   }, [])
 
   if (loading) return <Loading label="Memuat analytics platform..." />

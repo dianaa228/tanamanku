@@ -8,10 +8,10 @@ export default function AdminReports() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    adminApi.getDashboard().then((res) => {
-      setData(res.data)
-      setLoading(false)
-    })
+    adminApi.getDashboard()
+      .then((res) => setData(res.data))
+      .catch(() => {})
+      .finally(() => setLoading(false))
   }, [])
 
   if (loading) return <Loading />

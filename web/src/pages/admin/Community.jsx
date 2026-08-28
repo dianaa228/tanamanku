@@ -11,10 +11,10 @@ export default function AdminCommunity() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    adminApi.getReports().then((res) => {
-      setReports(res.data)
-      setLoading(false)
-    })
+    adminApi.getReports()
+      .then((res) => setReports(res.data))
+      .catch(() => {})
+      .finally(() => setLoading(false))
   }, [])
 
   const resolve = async (id) => {

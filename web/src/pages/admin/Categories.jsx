@@ -12,10 +12,10 @@ export default function AdminCategories() {
   const [form, setForm] = useState({ name: '', slug: '', icon: '🪴' })
 
   useEffect(() => {
-    adminApi.getCategories().then((res) => {
-      setCategories(res.data)
-      setLoading(false)
-    })
+    adminApi.getCategories()
+      .then((res) => setCategories(res.data))
+      .catch(() => {})
+      .finally(() => setLoading(false))
   }, [])
 
   const openCreate = () => {

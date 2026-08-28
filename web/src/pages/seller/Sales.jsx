@@ -8,10 +8,10 @@ export default function SellerSales() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    sellerApi.getSales().then((res) => {
-      setData(res.data)
-      setLoading(false)
-    })
+    sellerApi.getSales()
+      .then((res) => setData(res.data))
+      .catch(() => {})
+      .finally(() => setLoading(false))
   }, [])
 
   if (loading) return <Loading />

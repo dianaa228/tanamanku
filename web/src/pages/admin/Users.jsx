@@ -11,10 +11,10 @@ export default function AdminUsers() {
   const [view, setView] = useState('table') // 'table' or 'card'
 
   useEffect(() => {
-    adminApi.getUsers().then((res) => {
-      setUsers(res.data)
-      setLoading(false)
-    })
+    adminApi.getUsers()
+      .then((res) => setUsers(res.data))
+      .catch(() => {})
+      .finally(() => setLoading(false))
   }, [])
 
   const toggleActive = async (id) => {

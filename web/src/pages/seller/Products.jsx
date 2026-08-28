@@ -14,10 +14,10 @@ export default function SellerProducts() {
   const [search, setSearch] = useState('')
 
   useEffect(() => {
-    sellerApi.getProducts().then((res) => {
-      setProducts(res.data)
-      setLoading(false)
-    })
+    sellerApi.getProducts()
+      .then((res) => setProducts(res.data))
+      .catch(() => {})
+      .finally(() => setLoading(false))
   }, [])
 
   const filtered = products.filter((p) =>
