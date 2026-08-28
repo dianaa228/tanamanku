@@ -118,7 +118,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                 ),
               )
             else
-              Text('Belum ada alamat. Tambahkan di profil.', style: GoogleFonts.poppins(fontSize: 13, color: AppTheme.leaf900.withOpacity(0.5))),
+              Text('Belum ada alamat. Tambahkan di profil.', style: GoogleFonts.poppins(fontSize: 13, color: AppTheme.leaf900.withValues(alpha: 0.5))),
 
             const SizedBox(height: 24),
 
@@ -190,7 +190,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
             const SizedBox(height: 12),
 
             Center(
-              child: Text('🔒 Transaksi diproses aman dengan enkripsi.', style: GoogleFonts.poppins(fontSize: 11, color: AppTheme.leaf900.withOpacity(0.4))),
+              child: Text('🔒 Transaksi diproses aman dengan enkripsi.', style: GoogleFonts.poppins(fontSize: 11, color: AppTheme.leaf900.withValues(alpha: 0.4))),
             ),
           ],
         ),
@@ -229,7 +229,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
           children: [
             Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text(label, style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w600)),
-              Text('Estimasi $eta', style: GoogleFonts.poppins(fontSize: 11, color: AppTheme.leaf900.withOpacity(0.5))),
+              Text('Estimasi $eta', style: GoogleFonts.poppins(fontSize: 11, color: AppTheme.leaf900.withValues(alpha: 0.5))),
             ])),
             Text(AppFormatter.rupiah(price), style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w700, color: AppTheme.leaf700)),
           ],
@@ -260,7 +260,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: GoogleFonts.poppins(fontSize: 13, color: AppTheme.leaf900.withOpacity(0.6))),
+          Text(label, style: GoogleFonts.poppins(fontSize: 13, color: AppTheme.leaf900.withValues(alpha: 0.6))),
           Text(value, style: GoogleFonts.poppins(fontSize: 13, fontWeight: FontWeight.w600)),
         ],
       ),

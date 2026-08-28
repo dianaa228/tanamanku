@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import '../../core/theme/app_theme.dart';
 import '../../core/utils/app_formatter.dart';
 import '../../features/auth/auth_provider.dart';
-import '../../widgets/app_button.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -26,7 +25,7 @@ class ProfilePage extends StatelessWidget {
               const SizedBox(height: 16),
               Text('Masuk dulu yuk', style: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.w800)),
               const SizedBox(height: 8),
-              Text('Masuk untuk mengakses profil & kebunmu', style: GoogleFonts.poppins(fontSize: 13, color: AppTheme.leaf900.withOpacity(0.5))),
+              Text('Masuk untuk mengakses profil & kebunmu', style: GoogleFonts.poppins(fontSize: 13, color: AppTheme.leaf900.withValues(alpha: 0.5))),
               const SizedBox(height: 24),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -62,7 +61,7 @@ class ProfilePage extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     radius: 40,
-                    backgroundColor: Colors.white.withOpacity(0.15),
+                    backgroundColor: Colors.white.withValues(alpha: 0.15),
                     child: Text(user.avatar ?? '🧑‍🌾', style: const TextStyle(fontSize: 36)),
                   ),
                   const SizedBox(height: 12),
@@ -70,12 +69,12 @@ class ProfilePage extends StatelessWidget {
                   const SizedBox(height: 4),
                   Text(
                     '${user.email} · ${user.phone ?? ''}',
-                    style: GoogleFonts.poppins(fontSize: 12, color: Colors.white.withOpacity(0.7)),
+                    style: GoogleFonts.poppins(fontSize: 12, color: Colors.white.withValues(alpha: 0.7)),
                   ),
                   if (user.memberSince != null)
                     Text(
                       'Bergabung ${AppFormatter.date(AppFormatter.parseDate(user.memberSince))}',
-                      style: GoogleFonts.poppins(fontSize: 11, color: Colors.white.withOpacity(0.5)),
+                      style: GoogleFonts.poppins(fontSize: 11, color: Colors.white.withValues(alpha: 0.5)),
                     ),
                 ],
               ),
@@ -152,7 +151,7 @@ class ProfilePage extends StatelessWidget {
             Text(icon, style: const TextStyle(fontSize: 20)),
             const SizedBox(height: 4),
             Text(value, style: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.w800)),
-            Text(label, style: GoogleFonts.poppins(fontSize: 10, color: AppTheme.leaf900.withOpacity(0.5))),
+            Text(label, style: GoogleFonts.poppins(fontSize: 10, color: AppTheme.leaf900.withValues(alpha: 0.5))),
           ],
         ),
       ),
@@ -170,8 +169,8 @@ class ProfilePage extends StatelessWidget {
           child: Center(child: Text(icon, style: const TextStyle(fontSize: 22))),
         ),
         title: Text(label, style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w600)),
-        subtitle: Text(desc, style: GoogleFonts.poppins(fontSize: 11, color: AppTheme.leaf900.withOpacity(0.5))),
-        trailing: Icon(Icons.chevron_right_rounded, color: AppTheme.leaf900.withOpacity(0.3)),
+        subtitle: Text(desc, style: GoogleFonts.poppins(fontSize: 11, color: AppTheme.leaf900.withValues(alpha: 0.5))),
+        trailing: Icon(Icons.chevron_right_rounded, color: AppTheme.leaf900.withValues(alpha: 0.3)),
         onTap: () => context.push(route),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
         tileColor: Colors.white,

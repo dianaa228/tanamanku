@@ -73,7 +73,7 @@ class _ListingDetailPageState extends State<ListingDetailPage> {
                                     children: [
                                       Text(_listing!.title, style: GoogleFonts.poppins(fontWeight: FontWeight.w700, fontSize: 18)),
                                       Text(_listing!.type == 'sell' ? 'Dijual' : 'Tukar Tukar',
-                                          style: GoogleFonts.poppins(fontSize: 12, color: AppTheme.leaf900.withOpacity(0.5))),
+                                          style: GoogleFonts.poppins(fontSize: 12, color: AppTheme.leaf900.withValues(alpha: 0.5))),
                                     ],
                                   ),
                                 ),
@@ -85,7 +85,7 @@ class _ListingDetailPageState extends State<ListingDetailPage> {
                             ],
                             if (_listing!.description != null) ...[
                               const SizedBox(height: 16),
-                              Text(_listing!.description!, style: GoogleFonts.poppins(fontSize: 14, color: AppTheme.leaf900.withOpacity(0.7), height: 1.5)),
+                              Text(_listing!.description!, style: GoogleFonts.poppins(fontSize: 14, color: AppTheme.leaf900.withValues(alpha: 0.7), height: 1.5)),
                             ],
                           ],
                         ),
@@ -163,10 +163,9 @@ class _ListingDetailPageState extends State<ListingDetailPage> {
               child: ElevatedButton(
                 onPressed: () async {
                   await _service.makeOffer(widget.listingId, message: ctrl.text);
-                  if (ctx.mounted) {
-                    Navigator.pop(ctx);
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Tawaran terkirim! 🎉')));
-                  }
+                  if (!ctx.mounted) return;
+                  Navigator.pop(ctx);
+                  if (mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Tawaran terkirim! 🎉')));
                 },
                 style: ElevatedButton.styleFrom(backgroundColor: AppTheme.leaf600, padding: const EdgeInsets.symmetric(vertical: 14)),
                 child: Text('Kirim', style: GoogleFonts.poppins(fontWeight: FontWeight.w700, color: Colors.white)),

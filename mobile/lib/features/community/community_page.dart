@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../../core/theme/app_theme.dart';
@@ -98,7 +97,7 @@ class _CommunityPageState extends State<CommunityPage> {
                         enabledBorder: InputBorder.none,
                         focusedBorder: InputBorder.none,
                         filled: false,
-                        hintStyle: GoogleFonts.poppins(fontSize: 13, color: AppTheme.leaf900.withOpacity(0.4)),
+                        hintStyle: GoogleFonts.poppins(fontSize: 13, color: AppTheme.leaf900.withValues(alpha: 0.4)),
                       ),
                     ),
                     const SizedBox(height: 8),
@@ -177,7 +176,7 @@ class _CommunityPageState extends State<CommunityPage> {
                     Text(post.user?.name ?? 'Pekebun', style: GoogleFonts.poppins(fontSize: 13, fontWeight: FontWeight.w600)),
                     Text(
                       AppFormatter.timeAgo(post.createdAt),
-                      style: GoogleFonts.poppins(fontSize: 10, color: AppTheme.leaf900.withOpacity(0.4)),
+                      style: GoogleFonts.poppins(fontSize: 10, color: AppTheme.leaf900.withValues(alpha: 0.4)),
                     ),
                   ],
                 ),
@@ -200,9 +199,9 @@ class _CommunityPageState extends State<CommunityPage> {
                   onTap: () => _toggleLike(post.id),
                   child: Row(
                     children: [
-                      Text('🤍', style: TextStyle(fontSize: 16)),
+                      const Text('🤍', style: TextStyle(fontSize: 16)),
                       const SizedBox(width: 4),
-                      Text('${post.likesCount}', style: GoogleFonts.poppins(fontSize: 12, color: AppTheme.leaf900.withOpacity(0.6))),
+                      Text('${post.likesCount}', style: GoogleFonts.poppins(fontSize: 12, color: AppTheme.leaf900.withValues(alpha: 0.6))),
                     ],
                   ),
                 ),
@@ -211,7 +210,7 @@ class _CommunityPageState extends State<CommunityPage> {
                   children: [
                     const Text('💬', style: TextStyle(fontSize: 16)),
                     const SizedBox(width: 4),
-                    Text('${post.commentsCount}', style: GoogleFonts.poppins(fontSize: 12, color: AppTheme.leaf900.withOpacity(0.6))),
+                    Text('${post.commentsCount}', style: GoogleFonts.poppins(fontSize: 12, color: AppTheme.leaf900.withValues(alpha: 0.6))),
                   ],
                 ),
               ],
@@ -222,7 +221,7 @@ class _CommunityPageState extends State<CommunityPage> {
           if (post.comments.isNotEmpty) ...[
             const SizedBox(height: 10),
             Container(
-              color: AppTheme.leaf50.withOpacity(0.5),
+              color: AppTheme.leaf50.withValues(alpha: 0.5),
               padding: const EdgeInsets.all(12),
               child: Column(
                 children: post.comments.take(3).map((c) => Padding(
@@ -241,7 +240,7 @@ class _CommunityPageState extends State<CommunityPage> {
                           text: TextSpan(
                             children: [
                               TextSpan(text: '${c.user?.name ?? ''} ', style: GoogleFonts.poppins(fontSize: 11, fontWeight: FontWeight.w700, color: AppTheme.leaf900)),
-                              TextSpan(text: c.content, style: GoogleFonts.poppins(fontSize: 11, color: AppTheme.leaf900.withOpacity(0.7))),
+                              TextSpan(text: c.content, style: GoogleFonts.poppins(fontSize: 11, color: AppTheme.leaf900.withValues(alpha: 0.7))),
                             ],
                           ),
                         ),

@@ -31,7 +31,7 @@ class AppErrorWidget extends StatelessWidget {
               textAlign: TextAlign.center,
               style: GoogleFonts.poppins(
                 fontSize: 14,
-                color: AppTheme.leaf900.withOpacity(0.6),
+                color: AppTheme.leaf900.withValues(alpha: 0.6),
               ),
             ),
             if (onRetry != null) ...[

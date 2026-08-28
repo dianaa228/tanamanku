@@ -137,7 +137,7 @@ class _ListingCard extends StatelessWidget {
         title: Text(listing.title, style: GoogleFonts.poppins(fontWeight: FontWeight.w600, fontSize: 14)),
         subtitle: Text(
           isSell && listing.price != null ? 'Rp ${listing.price!.toInt()}' : (listing.description ?? ''),
-          style: GoogleFonts.poppins(fontSize: 12, color: AppTheme.leaf900.withOpacity(0.6)),
+          style: GoogleFonts.poppins(fontSize: 12, color: AppTheme.leaf900.withValues(alpha: 0.6)),
           maxLines: 1, overflow: TextOverflow.ellipsis,
         ),
         trailing: const Icon(Icons.chevron_right),

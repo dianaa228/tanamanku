@@ -59,7 +59,7 @@ class _PlantDetailPageState extends State<PlantDetailPage> {
             flexibleSpace: FlexibleSpaceBar(
               title: Text(plant.nickname, style: GoogleFonts.poppins(fontWeight: FontWeight.w700, fontSize: 16)),
               background: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
@@ -84,7 +84,7 @@ class _PlantDetailPageState extends State<PlantDetailPage> {
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                         decoration: BoxDecoration(
-                          color: statusColor.withOpacity(0.1),
+                          color: statusColor.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Text(
@@ -94,7 +94,7 @@ class _PlantDetailPageState extends State<PlantDetailPage> {
                       ),
                       const SizedBox(width: 8),
                       if (species != null)
-                        Text(species.scientificName ?? '', style: GoogleFonts.poppins(fontSize: 11, fontStyle: FontStyle.italic, color: AppTheme.leaf900.withOpacity(0.5))),
+                        Text(species.scientificName ?? '', style: GoogleFonts.poppins(fontSize: 11, fontStyle: FontStyle.italic, color: AppTheme.leaf900.withValues(alpha: 0.5))),
                     ],
                   ),
 
@@ -123,7 +123,8 @@ class _PlantDetailPageState extends State<PlantDetailPage> {
                       onPressed: () async {
                         await _service.waterPlant(plant.id);
                         _loadPlant();
-                        if (mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Penyiraman dicatat! 💚')));
+                        if (!context.mounted) return;
+                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Penyiraman dicatat! 💚')));
                       },
                       icon: const Icon(Icons.water_drop_outlined, size: 18),
                       label: const Text('Siram sekarang'),
@@ -155,7 +156,7 @@ class _PlantDetailPageState extends State<PlantDetailPage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(AppFormatter.date(log.loggedAt), style: GoogleFonts.poppins(fontSize: 12, color: AppTheme.leaf900.withOpacity(0.6))),
+                          Text(AppFormatter.date(log.loggedAt), style: GoogleFonts.poppins(fontSize: 12, color: AppTheme.leaf900.withValues(alpha: 0.6))),
                           Text('${log.heightCm?.toInt() ?? 0} cm', style: GoogleFonts.poppins(fontSize: 13, fontWeight: FontWeight.w700)),
                         ],
                       ),
@@ -187,7 +188,7 @@ class _PlantDetailPageState extends State<PlantDetailPage> {
                                     days != null ? (days <= 0 ? 'Jatuh tempo!' : '$days hari lagi') : '—',
                                     style: GoogleFonts.poppins(
                                       fontSize: 11,
-                                      color: days != null && days <= 0 ? const Color(0xFFEF4444) : AppTheme.leaf900.withOpacity(0.5),
+                                      color: days != null && days <= 0 ? const Color(0xFFEF4444) : AppTheme.leaf900.withValues(alpha: 0.5),
                                     ),
                                   ),
                                 ],
@@ -222,7 +223,7 @@ class _PlantDetailPageState extends State<PlantDetailPage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: GoogleFonts.poppins(fontSize: 13, color: AppTheme.leaf900.withOpacity(0.6))),
+          Text(label, style: GoogleFonts.poppins(fontSize: 13, color: AppTheme.leaf900.withValues(alpha: 0.6))),
           Text(value, style: GoogleFonts.poppins(fontSize: 13, fontWeight: FontWeight.w600)),
         ],
       ),
@@ -239,8 +240,8 @@ class _PlantDetailPageState extends State<PlantDetailPage> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(label, style: GoogleFonts.poppins(fontSize: 10, fontWeight: FontWeight.w700, color: AppTheme.leaf900.withOpacity(0.4))),
-              Text(value, style: GoogleFonts.poppins(fontSize: 12, color: AppTheme.leaf900.withOpacity(0.7))),
+              Text(label, style: GoogleFonts.poppins(fontSize: 10, fontWeight: FontWeight.w700, color: AppTheme.leaf900.withValues(alpha: 0.4))),
+              Text(value, style: GoogleFonts.poppins(fontSize: 12, color: AppTheme.leaf900.withValues(alpha: 0.7))),
             ],
           ),
         ],

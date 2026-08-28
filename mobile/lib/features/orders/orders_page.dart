@@ -132,13 +132,13 @@ class _OrdersPageState extends State<OrdersPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(order.orderNumber, style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w700)),
-                    Text(AppFormatter.dateTime(order.createdAt), style: GoogleFonts.poppins(fontSize: 11, color: AppTheme.leaf900.withOpacity(0.5))),
+                    Text(AppFormatter.dateTime(order.createdAt), style: GoogleFonts.poppins(fontSize: 11, color: AppTheme.leaf900.withValues(alpha: 0.5))),
                   ],
                 ),
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                   decoration: BoxDecoration(
-                    color: meta['color'].withOpacity(0.1),
+                    color: meta['color'].withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
@@ -153,7 +153,7 @@ class _OrdersPageState extends State<OrdersPage> {
               order.items.map((i) => i.product?.name ?? 'Produk').join(', '),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: GoogleFonts.poppins(fontSize: 12, color: AppTheme.leaf900.withOpacity(0.6)),
+              style: GoogleFonts.poppins(fontSize: 12, color: AppTheme.leaf900.withValues(alpha: 0.6)),
             ),
             const SizedBox(height: 4),
             Text(

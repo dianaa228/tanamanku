@@ -55,7 +55,7 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
             margin: const EdgeInsets.only(right: 16),
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
             decoration: BoxDecoration(
-              color: meta['color'].withOpacity(0.1),
+              color: meta['color'].withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Text(
@@ -106,7 +106,7 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                             ),
                             Text(
                               '${item.quantity}× ${AppFormatter.rupiah(item.unitPrice)}',
-                              style: GoogleFonts.poppins(fontSize: 11, color: AppTheme.leaf900.withOpacity(0.5)),
+                              style: GoogleFonts.poppins(fontSize: 11, color: AppTheme.leaf900.withValues(alpha: 0.5)),
                             ),
                           ],
                         ),
@@ -176,10 +176,9 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                 expanded: true,
                 onPressed: () async {
                   await _service.cancelOrder(order.orderNumber);
-                  if (mounted) {
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Pesanan dibatalkan')));
-                    context.pop();
-                  }
+                  if (!context.mounted) return;
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Pesanan dibatalkan')));
+                  context.pop();
                 },
               ),
             ],
@@ -228,7 +227,7 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                   style: GoogleFonts.poppins(
                     fontSize: 8,
                     fontWeight: current ? FontWeight.w700 : FontWeight.w500,
-                    color: current ? AppTheme.leaf700 : AppTheme.leaf900.withOpacity(0.4),
+                    color: current ? AppTheme.leaf700 : AppTheme.leaf900.withValues(alpha: 0.4),
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -266,7 +265,7 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: GoogleFonts.poppins(fontSize: 13, color: AppTheme.leaf900.withOpacity(0.5))),
+          Text(label, style: GoogleFonts.poppins(fontSize: 13, color: AppTheme.leaf900.withValues(alpha: 0.5))),
           Text(value, style: GoogleFonts.poppins(fontSize: 13, fontWeight: FontWeight.w600)),
         ],
       ),

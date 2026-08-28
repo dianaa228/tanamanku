@@ -61,17 +61,17 @@ class _LoyaltyPageState extends State<LoyaltyPage> {
                         width: double.infinity,
                         padding: const EdgeInsets.all(24),
                         decoration: BoxDecoration(
-                          gradient: LinearGradient(colors: [AppTheme.leaf700, AppTheme.leaf500]),
+                          gradient: const LinearGradient(colors: [AppTheme.leaf700, AppTheme.leaf500]),
                           borderRadius: BorderRadius.circular(24),
                         ),
                         child: Column(
                           children: [
                             Text(_profile!.tierIcon, style: const TextStyle(fontSize: 48)),
                             const SizedBox(height: 8),
-                            Text(_profile!.tierLabel, style: GoogleFonts.poppins(color: Colors.white.withOpacity(0.8), fontWeight: FontWeight.w600)),
+                            Text(_profile!.tierLabel, style: GoogleFonts.poppins(color: Colors.white.withValues(alpha: 0.8), fontWeight: FontWeight.w600)),
                             const SizedBox(height: 4),
                             Text('${_profile!.points}', style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.w800, fontSize: 36)),
-                            Text('poin tersedia', style: GoogleFonts.poppins(color: Colors.white.withOpacity(0.7), fontSize: 13)),
+                            Text('poin tersedia', style: GoogleFonts.poppins(color: Colors.white.withValues(alpha: 0.7), fontSize: 13)),
                           ],
                         ),
                       ),
@@ -96,7 +96,7 @@ class _LoyaltyPageState extends State<LoyaltyPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(tier['name'] ?? '', style: GoogleFonts.poppins(fontWeight: FontWeight.w600, fontSize: 14)),
-                                Text('${tier['min_points'] ?? 0}+ poin', style: GoogleFonts.poppins(fontSize: 11, color: AppTheme.leaf900.withOpacity(0.5))),
+                                Text('${tier['min_points'] ?? 0}+ poin', style: GoogleFonts.poppins(fontSize: 11, color: AppTheme.leaf900.withValues(alpha: 0.5))),
                               ],
                             )),
                             if (tier['id'] == _profile!.tier)

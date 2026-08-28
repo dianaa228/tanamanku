@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../core/constants/app_constants.dart';
 import '../core/theme/app_theme.dart';
-import '../core/utils/app_formatter.dart';
 import '../models/user_plant_model.dart';
 
 /// Kartu tanaman untuk My Garden.
@@ -27,7 +26,7 @@ class PlantCard extends StatelessWidget {
           border: Border.all(color: AppTheme.leaf100),
           boxShadow: [
             BoxShadow(
-              color: AppTheme.leaf900.withOpacity(0.04),
+              color: AppTheme.leaf900.withValues(alpha: 0.04),
               blurRadius: 12,
               offset: const Offset(0, 4),
             ),
@@ -58,7 +57,7 @@ class PlantCard extends StatelessWidget {
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                       decoration: BoxDecoration(
-                        color: statusColor.withOpacity(0.15),
+                        color: statusColor.withValues(alpha: 0.15),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Text(
@@ -94,7 +93,7 @@ class PlantCard extends StatelessWidget {
                     species?.name ?? '—',
                     style: GoogleFonts.poppins(
                       fontSize: 11,
-                      color: AppTheme.leaf900.withOpacity(0.5),
+                      color: AppTheme.leaf900.withValues(alpha: 0.5),
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -130,7 +129,7 @@ class PlantCard extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
           style: GoogleFonts.poppins(
             fontSize: 9,
-            color: AppTheme.leaf900.withOpacity(0.6),
+            color: AppTheme.leaf900.withValues(alpha: 0.6),
           ),
         ),
       ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../core/theme/app_theme.dart';
 import '../../models/product_model.dart';
@@ -79,7 +78,7 @@ class _ExplorePageState extends State<ExplorePage> {
                   const SizedBox(height: 4),
                   Text(
                     _loading ? 'Mencari...' : '${_products.length} produk ditemukan',
-                    style: GoogleFonts.poppins(fontSize: 12, color: AppTheme.leaf900.withOpacity(0.5)),
+                    style: GoogleFonts.poppins(fontSize: 12, color: AppTheme.leaf900.withValues(alpha: 0.5)),
                   ),
                   const SizedBox(height: 12),
 

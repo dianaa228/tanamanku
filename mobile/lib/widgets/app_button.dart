@@ -106,7 +106,6 @@ class AppButton extends StatelessWidget {
         );
         break;
       case AppButtonVariant.primary:
-      default:
         button = ElevatedButton(
           onPressed: loading ? null : onPressed,
           style: ElevatedButton.styleFrom(minimumSize: Size(0, effectiveHeight)),

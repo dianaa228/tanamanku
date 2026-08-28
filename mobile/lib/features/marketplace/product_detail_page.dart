@@ -7,7 +7,6 @@ import '../../models/product_model.dart';
 import '../../services/product_service.dart';
 import '../../services/cart_service.dart';
 import '../../widgets/loading_widget.dart';
-import '../../widgets/app_button.dart';
 
 class ProductDetailPage extends StatefulWidget {
   final String slug;
@@ -87,7 +86,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             ),
             flexibleSpace: FlexibleSpaceBar(
               background: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
@@ -139,7 +138,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                       const SizedBox(width: 4),
                       Text(
                         '${p.ratingAvg.toStringAsFixed(1)} (${p.soldCount} terjual)',
-                        style: GoogleFonts.poppins(fontSize: 13, color: AppTheme.leaf900.withOpacity(0.6)),
+                        style: GoogleFonts.poppins(fontSize: 13, color: AppTheme.leaf900.withValues(alpha: 0.6)),
                       ),
                     ],
                   ),
@@ -229,7 +228,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   const SizedBox(height: 8),
                   Text(
                     p.description ?? '—',
-                    style: GoogleFonts.poppins(fontSize: 13, color: AppTheme.leaf900.withOpacity(0.7), height: 1.6),
+                    style: GoogleFonts.poppins(fontSize: 13, color: AppTheme.leaf900.withValues(alpha: 0.7), height: 1.6),
                   ),
 
                   const SizedBox(height: 120),
@@ -246,7 +245,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         decoration: BoxDecoration(
           color: Colors.white,
           boxShadow: [
-            BoxShadow(color: AppTheme.leaf900.withOpacity(0.05), blurRadius: 16, offset: const Offset(0, -4)),
+            BoxShadow(color: AppTheme.leaf900.withValues(alpha: 0.05), blurRadius: 16, offset: const Offset(0, -4)),
           ],
         ),
         child: Row(

@@ -73,7 +73,7 @@ class AppTextField extends StatelessWidget {
           decoration: InputDecoration(
             hintText: hint,
             prefixIcon: prefixIcon != null
-                ? Icon(prefixIcon, size: 20, color: AppTheme.leaf900.withOpacity(0.4))
+                ? Icon(prefixIcon, size: 20, color: AppTheme.leaf900.withValues(alpha: 0.4))
                 : null,
             suffixIcon: suffix,
             errorText: error,
@@ -84,7 +84,7 @@ class AppTextField extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             hintBelow!,
-            style: GoogleFonts.poppins(fontSize: 11, color: AppTheme.leaf900.withOpacity(0.4)),
+            style: GoogleFonts.poppins(fontSize: 11, color: AppTheme.leaf900.withValues(alpha: 0.4)),
           ),
         ],
       ],

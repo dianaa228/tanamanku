@@ -31,7 +31,7 @@ class LoadingWidget extends StatelessWidget {
                 label!,
                 style: GoogleFonts.poppins(
                   fontSize: 13,
-                  color: AppTheme.leaf900.withOpacity(0.5),
+                  color: AppTheme.leaf900.withValues(alpha: 0.5),
                 ),
               ),
             ],

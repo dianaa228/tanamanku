@@ -57,7 +57,7 @@ class _LoginPageState extends State<LoginPage> {
                   'Masuk untuk lanjut merawat kebunmu.',
                   style: GoogleFonts.poppins(
                     fontSize: 14,
-                    color: AppTheme.leaf900.withOpacity(0.6),
+                    color: AppTheme.leaf900.withValues(alpha: 0.6),
                   ),
                 ),
 
@@ -109,7 +109,7 @@ class _LoginPageState extends State<LoginPage> {
                     icon: Icon(
                       _obscure ? Icons.visibility_off_outlined : Icons.visibility_outlined,
                       size: 20,
-                      color: AppTheme.leaf900.withOpacity(0.4),
+                      color: AppTheme.leaf900.withValues(alpha: 0.4),
                     ),
                     onPressed: () => setState(() => _obscure = !_obscure),
                   ),
@@ -173,7 +173,7 @@ class _LoginPageState extends State<LoginPage> {
                     '💡 Mode demo: email sudah terisi — cukup isi password apa pun lalu klik Masuk.',
                     style: GoogleFonts.poppins(
                       fontSize: 12,
-                      color: AppTheme.leaf900.withOpacity(0.6),
+                      color: AppTheme.leaf900.withValues(alpha: 0.6),
                     ),
                   ),
                 ),
@@ -189,7 +189,7 @@ class _LoginPageState extends State<LoginPage> {
                         text: 'Belum punya akun? ',
                         style: GoogleFonts.poppins(
                           fontSize: 14,
-                          color: AppTheme.leaf900.withOpacity(0.6),
+                          color: AppTheme.leaf900.withValues(alpha: 0.6),
                         ),
                         children: [
                           TextSpan(

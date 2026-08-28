@@ -58,7 +58,7 @@ class _LoyaltyHistoryPageState extends State<LoyaltyHistoryPage> {
                 // List
                 Expanded(
                   child: _history.isEmpty
-                      ? Center(child: Text('Belum ada riwayat', style: GoogleFonts.poppins(color: AppTheme.leaf900.withOpacity(0.5))))
+                      ? Center(child: Text('Belum ada riwayat', style: GoogleFonts.poppins(color: AppTheme.leaf900.withValues(alpha: 0.5))))
                       : ListView.builder(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           itemCount: _history.length,
@@ -85,7 +85,7 @@ class _LoyaltyHistoryPageState extends State<LoyaltyHistoryPage> {
                                       children: [
                                         Text(t.description ?? t.type, style: GoogleFonts.poppins(fontWeight: FontWeight.w600, fontSize: 13)),
                                         if (t.createdAt != null)
-                                          Text(t.createdAt!.substring(0, 10), style: GoogleFonts.poppins(fontSize: 11, color: AppTheme.leaf900.withOpacity(0.4))),
+                                          Text(t.createdAt!.substring(0, 10), style: GoogleFonts.poppins(fontSize: 11, color: AppTheme.leaf900.withValues(alpha: 0.4))),
                                       ],
                                     ),
                                   ),
@@ -108,13 +108,13 @@ class _LoyaltyHistoryPageState extends State<LoyaltyHistoryPage> {
     return Expanded(
       child: Container(
         padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(color: color.withOpacity(0.08), borderRadius: BorderRadius.circular(14)),
+        decoration: BoxDecoration(color: color.withValues(alpha: 0.08), borderRadius: BorderRadius.circular(14)),
         child: Column(
           children: [
             Text(icon, style: const TextStyle(fontSize: 20)),
             const SizedBox(height: 4),
             Text(value, style: GoogleFonts.poppins(fontWeight: FontWeight.w800, fontSize: 18, color: color)),
-            Text(label, style: GoogleFonts.poppins(fontSize: 10, color: AppTheme.leaf900.withOpacity(0.5))),
+            Text(label, style: GoogleFonts.poppins(fontSize: 10, color: AppTheme.leaf900.withValues(alpha: 0.5))),
           ],
         ),
       ),

@@ -76,7 +76,7 @@ class _NurseriesPageState extends State<NurseriesPage> {
                                   children: [
                                     Text(n.name, style: GoogleFonts.poppins(fontWeight: FontWeight.w600, fontSize: 14)),
                                     if (n.address != null)
-                                      Text(n.address!, style: GoogleFonts.poppins(fontSize: 11, color: AppTheme.leaf900.withOpacity(0.5)), maxLines: 1, overflow: TextOverflow.ellipsis),
+                                      Text(n.address!, style: GoogleFonts.poppins(fontSize: 11, color: AppTheme.leaf900.withValues(alpha: 0.5)), maxLines: 1, overflow: TextOverflow.ellipsis),
                                   ],
                                 ),
                               ),

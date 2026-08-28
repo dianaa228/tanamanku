@@ -42,7 +42,7 @@ class _LoyaltyRedeemPageState extends State<LoyaltyRedeemPage> {
       body: _loading
           ? const LoadingWidget()
           : _rewards.isEmpty
-              ? Center(child: Text('Belum ada reward tersedia', style: GoogleFonts.poppins(color: AppTheme.leaf900.withOpacity(0.5))))
+              ? Center(child: Text('Belum ada reward tersedia', style: GoogleFonts.poppins(color: AppTheme.leaf900.withValues(alpha: 0.5))))
               : RefreshIndicator(
                   onRefresh: _load,
                   child: ListView.builder(
@@ -69,7 +69,7 @@ class _LoyaltyRedeemPageState extends State<LoyaltyRedeemPage> {
                                 children: [
                                   Text(r.name, style: GoogleFonts.poppins(fontWeight: FontWeight.w600, fontSize: 14)),
                                   if (r.description != null)
-                                    Text(r.description!, style: GoogleFonts.poppins(fontSize: 11, color: AppTheme.leaf900.withOpacity(0.5)), maxLines: 1, overflow: TextOverflow.ellipsis),
+                                    Text(r.description!, style: GoogleFonts.poppins(fontSize: 11, color: AppTheme.leaf900.withValues(alpha: 0.5)), maxLines: 1, overflow: TextOverflow.ellipsis),
                                   const SizedBox(height: 4),
                                   Text('${r.pointsCost} poin', style: GoogleFonts.poppins(fontWeight: FontWeight.w700, fontSize: 12, color: AppTheme.leaf600)),
                                 ],
@@ -79,7 +79,8 @@ class _LoyaltyRedeemPageState extends State<LoyaltyRedeemPage> {
                               onPressed: canRedeem ? () async {
                                 await _service.redeemReward(r.id);
                                 _load();
-                                if (mounted) ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Berhasil menukar ${r.name}! 🎉')));
+                                if (!context.mounted) return;
+                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Berhasil menukar ${r.name}! 🎉')));
                               } : null,
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: canRedeem ? AppTheme.leaf600 : AppTheme.leaf200,

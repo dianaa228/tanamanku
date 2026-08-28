@@ -7,7 +7,6 @@ import '../../services/cart_service.dart';
 import '../../models/cart_model.dart';
 import '../../widgets/loading_widget.dart';
 import '../../widgets/app_button.dart';
-import '../../widgets/error_widget.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({super.key});
@@ -131,7 +130,7 @@ class _CartPageState extends State<CartPage> {
                                           const SizedBox(height: 2),
                                           Text(
                                             'Varian: ${item.variantName}',
-                                            style: GoogleFonts.poppins(fontSize: 11, color: AppTheme.leaf900.withOpacity(0.5)),
+                                            style: GoogleFonts.poppins(fontSize: 11, color: AppTheme.leaf900.withValues(alpha: 0.5)),
                                           ),
                                         ],
                                         const SizedBox(height: 8),
@@ -194,7 +193,7 @@ class _CartPageState extends State<CartPage> {
                       decoration: BoxDecoration(
                         color: Colors.white,
                         boxShadow: [
-                          BoxShadow(color: AppTheme.leaf900.withOpacity(0.05), blurRadius: 16, offset: const Offset(0, -4)),
+                          BoxShadow(color: AppTheme.leaf900.withValues(alpha: 0.05), blurRadius: 16, offset: const Offset(0, -4)),
                         ],
                       ),
                       child: Column(
@@ -202,7 +201,7 @@ class _CartPageState extends State<CartPage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('Subtotal (${_cart!.itemCount} item)', style: GoogleFonts.poppins(fontSize: 13, color: AppTheme.leaf900.withOpacity(0.6))),
+                              Text('Subtotal (${_cart!.itemCount} item)', style: GoogleFonts.poppins(fontSize: 13, color: AppTheme.leaf900.withValues(alpha: 0.6))),
                               Text(AppFormatter.rupiah(_cart!.subtotal), style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w700)),
                             ],
                           ),
@@ -210,7 +209,7 @@ class _CartPageState extends State<CartPage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('Ongkir (estimasi)', style: GoogleFonts.poppins(fontSize: 13, color: AppTheme.leaf900.withOpacity(0.6))),
+                              Text('Ongkir (estimasi)', style: GoogleFonts.poppins(fontSize: 13, color: AppTheme.leaf900.withValues(alpha: 0.6))),
                               Text(AppFormatter.rupiah(15000), style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w700)),
                             ],
                           ),

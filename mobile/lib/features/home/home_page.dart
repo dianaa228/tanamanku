@@ -89,7 +89,7 @@ class _HomePageState extends State<HomePage> {
               color: Colors.white,
               borderRadius: BorderRadius.circular(20),
               boxShadow: [
-                BoxShadow(color: AppTheme.leaf900.withOpacity(0.05), blurRadius: 8),
+                BoxShadow(color: AppTheme.leaf900.withValues(alpha: 0.05), blurRadius: 8),
               ],
             ),
             child: Text(
@@ -112,7 +112,7 @@ class _HomePageState extends State<HomePage> {
             'Belanja tanaman sehat dari nursery terpercaya, kelola kebun pribadimu, dan dapatkan pengingat perawatan cerdas.',
             style: GoogleFonts.poppins(
               fontSize: 13,
-              color: AppTheme.leaf900.withOpacity(0.6),
+              color: AppTheme.leaf900.withValues(alpha: 0.6),
               height: 1.5,
             ),
           ),
@@ -138,9 +138,9 @@ class _HomePageState extends State<HomePage> {
           ),
           const SizedBox(height: 24),
           // Stats
-          Row(
+          const Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: const [
+            children: [
               _StatItem(value: '500+', label: 'Produk'),
               _StatItem(value: '120+', label: 'Nursery'),
               _StatItem(value: '10rb+', label: 'Kebun'),
@@ -269,9 +269,9 @@ class _HomePageState extends State<HomePage> {
               child: Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: (f['color'] as Color).withOpacity(0.1),
+                  color: (f['color'] as Color).withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: (f['color'] as Color).withOpacity(0.2)),
+                  border: Border.all(color: (f['color'] as Color).withValues(alpha: 0.2)),
                 ),
                 child: Row(
                   children: [
@@ -287,12 +287,12 @@ class _HomePageState extends State<HomePage> {
                           ),
                           Text(
                             f['desc'] as String,
-                            style: GoogleFonts.poppins(fontSize: 12, color: AppTheme.leaf900.withOpacity(0.6)),
+                            style: GoogleFonts.poppins(fontSize: 12, color: AppTheme.leaf900.withValues(alpha: 0.6)),
                           ),
                         ],
                       ),
                     ),
-                    Icon(Icons.chevron_right_rounded, color: AppTheme.leaf900.withOpacity(0.3)),
+                    Icon(Icons.chevron_right_rounded, color: AppTheme.leaf900.withValues(alpha: 0.3)),
                   ],
                 ),
               ),
@@ -319,7 +319,7 @@ class _StatItem extends StatelessWidget {
         ),
         Text(
           label,
-          style: GoogleFonts.poppins(fontSize: 11, color: AppTheme.leaf900.withOpacity(0.5)),
+          style: GoogleFonts.poppins(fontSize: 11, color: AppTheme.leaf900.withValues(alpha: 0.5)),
         ),
       ],
     );

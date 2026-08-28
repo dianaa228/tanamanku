@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../core/theme/app_theme.dart';
 import '../../core/constants/app_constants.dart';
@@ -66,7 +65,7 @@ class _MyGardenPageState extends State<MyGardenPage> {
                         const SizedBox(height: 16),
                         Text('Kebunmu masih kosong', style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.w700)),
                         const SizedBox(height: 8),
-                        Text('Tambahkan tanaman untuk mulai merawat', style: GoogleFonts.poppins(fontSize: 13, color: AppTheme.leaf900.withOpacity(0.5))),
+                        Text('Tambahkan tanaman untuk mulai merawat', style: GoogleFonts.poppins(fontSize: 13, color: AppTheme.leaf900.withValues(alpha: 0.5))),
                         const SizedBox(height: 20),
                         ElevatedButton.icon(
                           onPressed: () => _showAddPlantSheet(),
@@ -121,7 +120,7 @@ class _MyGardenPageState extends State<MyGardenPage> {
                               Text('🔔 Pengingat Perawatan', style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.w700)),
                               Container(
                                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                                decoration: BoxDecoration(color: AppTheme.sun300.withOpacity(0.3), borderRadius: BorderRadius.circular(12)),
+                                decoration: BoxDecoration(color: AppTheme.sun300.withValues(alpha: 0.3), borderRadius: BorderRadius.circular(12)),
                                 child: Text('${todayReminders.length} aktif', style: GoogleFonts.poppins(fontSize: 11, fontWeight: FontWeight.w700, color: AppTheme.sun500)),
                               ),
                             ],
@@ -136,14 +135,14 @@ class _MyGardenPageState extends State<MyGardenPage> {
                                 child: Container(
                                   padding: const EdgeInsets.all(24),
                                   decoration: BoxDecoration(
-                                    color: AppTheme.leaf50.withOpacity(0.5),
+                                    color: AppTheme.leaf50.withValues(alpha: 0.5),
                                     borderRadius: BorderRadius.circular(16),
                                     border: Border.all(color: AppTheme.leaf200, style: BorderStyle.solid),
                                   ),
                                   child: Center(
                                     child: Text(
                                       'Belum ada pengingat. 🌱',
-                                      style: GoogleFonts.poppins(fontSize: 13, color: AppTheme.leaf900.withOpacity(0.5)),
+                                      style: GoogleFonts.poppins(fontSize: 13, color: AppTheme.leaf900.withValues(alpha: 0.5)),
                                     ),
                                   ),
                                 ),
@@ -162,11 +161,11 @@ class _MyGardenPageState extends State<MyGardenPage> {
                                       decoration: BoxDecoration(
                                         color: Colors.white,
                                         borderRadius: BorderRadius.circular(14),
-                                        border: Border.all(color: overdue ? const Color(0xFFEF4444).withOpacity(0.3) : AppTheme.leaf100),
+                                        border: Border.all(color: overdue ? const Color(0xFFEF4444).withValues(alpha: 0.3) : AppTheme.leaf100),
                                       ),
                                       child: Row(
                                         children: [
-                                          Text(item.plant.species?.name?.substring(0, 1) ?? '🌱', style: const TextStyle(fontSize: 24)),
+                                          Text(item.plant.species?.name.substring(0, 1) ?? '🌱', style: const TextStyle(fontSize: 24)),
                                           const SizedBox(width: 12),
                                           Expanded(
                                             child: Column(
@@ -181,7 +180,7 @@ class _MyGardenPageState extends State<MyGardenPage> {
                                                   style: GoogleFonts.poppins(
                                                     fontSize: 11,
                                                     fontWeight: FontWeight.w600,
-                                                    color: overdue ? const Color(0xFFEF4444) : AppTheme.leaf900.withOpacity(0.5),
+                                                    color: overdue ? const Color(0xFFEF4444) : AppTheme.leaf900.withValues(alpha: 0.5),
                                                   ),
                                                 ),
                                               ],
@@ -191,7 +190,8 @@ class _MyGardenPageState extends State<MyGardenPage> {
                                             onPressed: () async {
                                               await _service.markReminderDone(item.reminder.id);
                                               _loadPlants();
-                                              if (mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Selesai dicatat! 💚')));
+                                              if (!context.mounted) return;
+                                              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Selesai dicatat! 💚')));
                                             },
                                             child: Text('✓ Selesai', style: GoogleFonts.poppins(fontSize: 12, fontWeight: FontWeight.w600, color: AppTheme.leaf600)),
                                           ),
@@ -216,7 +216,7 @@ class _MyGardenPageState extends State<MyGardenPage> {
       child: Container(
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-          color: color.withOpacity(0.08),
+          color: color.withValues(alpha: 0.08),
           borderRadius: BorderRadius.circular(14),
         ),
         child: Column(
@@ -224,7 +224,7 @@ class _MyGardenPageState extends State<MyGardenPage> {
             Text(icon, style: const TextStyle(fontSize: 20)),
             const SizedBox(height: 4),
             Text('$count', style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.w800)),
-            Text(label, style: GoogleFonts.poppins(fontSize: 10, color: AppTheme.leaf900.withOpacity(0.5))),
+            Text(label, style: GoogleFonts.poppins(fontSize: 10, color: AppTheme.leaf900.withValues(alpha: 0.5))),
           ],
         ),
       ),
@@ -260,7 +260,7 @@ class _MyGardenPageState extends State<MyGardenPage> {
               const SizedBox(height: 16),
               Text(
                 'Pilih spesies tanaman yang ingin ditambahkan ke kebunmu.',
-                style: GoogleFonts.poppins(fontSize: 13, color: AppTheme.leaf900.withOpacity(0.6)),
+                style: GoogleFonts.poppins(fontSize: 13, color: AppTheme.leaf900.withValues(alpha: 0.6)),
               ),
               const SizedBox(height: 20),
               // Placeholder — nanti diisi dengan species list dari API
@@ -270,7 +270,7 @@ class _MyGardenPageState extends State<MyGardenPage> {
                 return ListTile(
                   leading: Text(emoji[i], style: const TextStyle(fontSize: 28)),
                   title: Text(species[i], style: GoogleFonts.poppins(fontWeight: FontWeight.w600)),
-                  subtitle: Text('Ketuk untuk menambah', style: GoogleFonts.poppins(fontSize: 11, color: AppTheme.leaf900.withOpacity(0.5))),
+                  subtitle: Text('Ketuk untuk menambah', style: GoogleFonts.poppins(fontSize: 11, color: AppTheme.leaf900.withValues(alpha: 0.5))),
                   onTap: () {
                     Navigator.pop(context);
                     ScaffoldMessenger.of(context).showSnackBar(

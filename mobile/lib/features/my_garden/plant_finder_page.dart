@@ -4,7 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../core/theme/app_theme.dart';
 import '../../models/plant_species_model.dart';
 import '../../services/garden_service.dart';
-import '../../widgets/app_button.dart';
 import '../../widgets/loading_widget.dart';
 
 class PlantFinderPage extends StatefulWidget {
@@ -102,7 +101,7 @@ class _PlantFinderPageState extends State<PlantFinderPage> {
             ),
           ),
           const SizedBox(height: 6),
-          Text('Langkah ${_step + 1} dari ${_questions.length}', style: GoogleFonts.poppins(fontSize: 11, color: AppTheme.leaf900.withOpacity(0.5))),
+          Text('Langkah ${_step + 1} dari ${_questions.length}', style: GoogleFonts.poppins(fontSize: 11, color: AppTheme.leaf900.withValues(alpha: 0.5))),
 
           const Spacer(),
 
@@ -140,11 +139,11 @@ class _PlantFinderPageState extends State<PlantFinderPage> {
                         children: [
                           Text(opt['label'] ?? '', style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w600)),
                           if (opt['desc'] != null)
-                            Text(opt['desc'], style: GoogleFonts.poppins(fontSize: 11, color: AppTheme.leaf900.withOpacity(0.5))),
+                            Text(opt['desc'], style: GoogleFonts.poppins(fontSize: 11, color: AppTheme.leaf900.withValues(alpha: 0.5))),
                         ],
                       ),
                     ),
-                    Icon(Icons.chevron_right_rounded, color: AppTheme.leaf900.withOpacity(0.3)),
+                    Icon(Icons.chevron_right_rounded, color: AppTheme.leaf900.withValues(alpha: 0.3)),
                   ],
                 ),
               ),
@@ -154,7 +153,7 @@ class _PlantFinderPageState extends State<PlantFinderPage> {
           // Kembali
           TextButton(
             onPressed: _step > 0 ? () => setState(() => _step--) : null,
-            child: Text('← Kembali', style: GoogleFonts.poppins(fontSize: 13, color: AppTheme.leaf900.withOpacity(0.5))),
+            child: Text('← Kembali', style: GoogleFonts.poppins(fontSize: 13, color: AppTheme.leaf900.withValues(alpha: 0.5))),
           ),
 
           const Spacer(flex: 2),
@@ -180,7 +179,7 @@ class _PlantFinderPageState extends State<PlantFinderPage> {
                 const SizedBox(height: 4),
                 Text(
                   _answers.values.join(' · '),
-                  style: GoogleFonts.poppins(fontSize: 11, color: AppTheme.leaf900.withOpacity(0.5)),
+                  style: GoogleFonts.poppins(fontSize: 11, color: AppTheme.leaf900.withValues(alpha: 0.5)),
                   textAlign: TextAlign.center,
                 ),
               ],
@@ -211,7 +210,7 @@ class _PlantFinderPageState extends State<PlantFinderPage> {
                         if (i == 0)
                           Text('🥇 Paling cocok', style: GoogleFonts.poppins(fontSize: 10, fontWeight: FontWeight.w700, color: AppTheme.sun500)),
                         Text(s.name, style: GoogleFonts.poppins(fontSize: 15, fontWeight: FontWeight.w700)),
-                        Text(s.scientificName ?? '', style: GoogleFonts.poppins(fontSize: 10, fontStyle: FontStyle.italic, color: AppTheme.leaf900.withOpacity(0.4))),
+                        Text(s.scientificName ?? '', style: GoogleFonts.poppins(fontSize: 10, fontStyle: FontStyle.italic, color: AppTheme.leaf900.withValues(alpha: 0.4))),
                       ],
                     ),
                   ),

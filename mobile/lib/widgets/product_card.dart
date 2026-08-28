@@ -23,7 +23,7 @@ class ProductCard extends StatelessWidget {
           border: Border.all(color: AppTheme.leaf100),
           boxShadow: [
             BoxShadow(
-              color: AppTheme.leaf900.withOpacity(0.04),
+              color: AppTheme.leaf900.withValues(alpha: 0.04),
               blurRadius: 12,
               offset: const Offset(0, 4),
             ),
@@ -85,7 +85,7 @@ class ProductCard extends StatelessWidget {
                         '${product.soldCount} terjual',
                         style: GoogleFonts.poppins(
                           fontSize: 10,
-                          color: AppTheme.leaf900.withOpacity(0.4),
+                          color: AppTheme.leaf900.withValues(alpha: 0.4),
                         ),
                       ),
                     ],

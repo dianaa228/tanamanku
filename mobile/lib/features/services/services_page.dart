@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import '../../core/theme/app_theme.dart';
@@ -63,7 +62,7 @@ class _ServicesPageState extends State<ServicesPage> {
                 final cat = _categories[i];
                 final selected = _filterCategory == cat['value'];
                 return GestureDetector(
-                  onTap: () { setState(() => _filterCategory = cat['value'] as String?); _load(); },
+                  onTap: () { setState(() => _filterCategory = cat['value']); _load(); },
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 14),
                     decoration: BoxDecoration(
@@ -91,7 +90,7 @@ class _ServicesPageState extends State<ServicesPage> {
             child: _loading
                 ? const LoadingWidget()
                 : _services.isEmpty
-                    ? Center(child: Text('Belum ada layanan', style: GoogleFonts.poppins(color: AppTheme.leaf900.withOpacity(0.5))))
+                    ? Center(child: Text('Belum ada layanan', style: GoogleFonts.poppins(color: AppTheme.leaf900.withValues(alpha: 0.5))))
                     : RefreshIndicator(
                         onRefresh: _load,
                         child: ListView.builder(
@@ -132,7 +131,7 @@ class _ServiceCard extends StatelessWidget {
               children: [
                 Text(service.name, style: GoogleFonts.poppins(fontWeight: FontWeight.w600, fontSize: 14)),
                 const SizedBox(height: 2),
-                Text(service.categoryLabel, style: GoogleFonts.poppins(fontSize: 11, color: AppTheme.leaf900.withOpacity(0.5))),
+                Text(service.categoryLabel, style: GoogleFonts.poppins(fontSize: 11, color: AppTheme.leaf900.withValues(alpha: 0.5))),
                 if (service.pricePerVisit != null) ...[
                   const SizedBox(height: 4),
                   Text(fmt.format(service.pricePerVisit), style: GoogleFonts.poppins(fontWeight: FontWeight.w700, color: AppTheme.leaf700, fontSize: 13)),

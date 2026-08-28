@@ -20,7 +20,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final _emailCtrl = TextEditingController();
   final _passCtrl = TextEditingController();
   final _confirmCtrl = TextEditingController();
-  bool _obscure = true;
+  final bool _obscure = true;
 
   @override
   void dispose() {
@@ -60,7 +60,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   'Gratis selamanya. Tanpa kartu kredit.',
                   style: GoogleFonts.poppins(
                     fontSize: 14,
-                    color: AppTheme.leaf900.withOpacity(0.6),
+                    color: AppTheme.leaf900.withValues(alpha: 0.6),
                   ),
                 ),
 
@@ -157,7 +157,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     textAlign: TextAlign.center,
                     style: GoogleFonts.poppins(
                       fontSize: 11,
-                      color: AppTheme.leaf900.withOpacity(0.5),
+                      color: AppTheme.leaf900.withValues(alpha: 0.5),
                     ),
                   ),
                 ),
@@ -170,7 +170,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     child: Text.rich(
                       TextSpan(
                         text: 'Sudah punya akun? ',
-                        style: GoogleFonts.poppins(fontSize: 14, color: AppTheme.leaf900.withOpacity(0.6)),
+                        style: GoogleFonts.poppins(fontSize: 14, color: AppTheme.leaf900.withValues(alpha: 0.6)),
                         children: [
                           TextSpan(
                             text: 'Masuk',

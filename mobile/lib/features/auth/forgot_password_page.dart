@@ -56,7 +56,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 'Masukkan email Anda. Kami akan mengirimkan link untuk mereset password.',
                 style: GoogleFonts.poppins(
                   fontSize: 14,
-                  color: AppTheme.leaf900.withOpacity(0.6),
+                  color: AppTheme.leaf900.withValues(alpha: 0.6),
                 ),
               ),
 

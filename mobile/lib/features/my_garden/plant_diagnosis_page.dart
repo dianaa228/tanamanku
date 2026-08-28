@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../core/theme/app_theme.dart';
 import '../../services/garden_service.dart';
 import '../../widgets/app_button.dart';
-import '../../widgets/loading_widget.dart';
 
 class PlantDiagnosisPage extends StatefulWidget {
   const PlantDiagnosisPage({super.key});
@@ -76,7 +75,7 @@ class _PlantDiagnosisPageState extends State<PlantDiagnosisPage> {
           const SizedBox(height: 8),
           Text(
             'Pilih gejala yang terlihat pada tanamanmu',
-            style: GoogleFonts.poppins(fontSize: 13, color: AppTheme.leaf900.withOpacity(0.5)),
+            style: GoogleFonts.poppins(fontSize: 13, color: AppTheme.leaf900.withValues(alpha: 0.5)),
             textAlign: TextAlign.center,
           ),
 
@@ -119,7 +118,7 @@ class _PlantDiagnosisPageState extends State<PlantDiagnosisPage> {
                           style: GoogleFonts.poppins(
                             fontSize: 10,
                             fontWeight: FontWeight.w600,
-                            color: active ? AppTheme.leaf800 : AppTheme.leaf900.withOpacity(0.6),
+                            color: active ? AppTheme.leaf800 : AppTheme.leaf900.withValues(alpha: 0.6),
                           ),
                         ),
                       ],
@@ -132,7 +131,7 @@ class _PlantDiagnosisPageState extends State<PlantDiagnosisPage> {
 
           // Tombol diagnosa
           if (_selected.isNotEmpty)
-            Text('${_selected.length} gejala dipilih', style: GoogleFonts.poppins(fontSize: 11, color: AppTheme.leaf900.withOpacity(0.5))),
+            Text('${_selected.length} gejala dipilih', style: GoogleFonts.poppins(fontSize: 11, color: AppTheme.leaf900.withValues(alpha: 0.5))),
           const SizedBox(height: 8),
           AppButton(
             label: '🔍 Diagnosa tanaman',
@@ -165,7 +164,7 @@ class _PlantDiagnosisPageState extends State<PlantDiagnosisPage> {
             width: double.infinity,
             padding: const EdgeInsets.all(24),
             decoration: BoxDecoration(
-              color: severityColor.withOpacity(0.08),
+              color: severityColor.withValues(alpha: 0.08),
               borderRadius: BorderRadius.circular(20),
             ),
             child: Column(
@@ -176,7 +175,7 @@ class _PlantDiagnosisPageState extends State<PlantDiagnosisPage> {
                 const SizedBox(height: 8),
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                  decoration: BoxDecoration(color: severityColor.withOpacity(0.15), borderRadius: BorderRadius.circular(12)),
+                  decoration: BoxDecoration(color: severityColor.withValues(alpha: 0.15), borderRadius: BorderRadius.circular(12)),
                   child: Text(
                     'Tingkat: $severity',
                     style: GoogleFonts.poppins(fontSize: 11, fontWeight: FontWeight.w700, color: severityColor),
@@ -198,17 +197,17 @@ class _PlantDiagnosisPageState extends State<PlantDiagnosisPage> {
               return Container(
                 margin: const EdgeInsets.only(bottom: 8),
                 padding: const EdgeInsets.all(14),
-                decoration: BoxDecoration(color: AppTheme.leaf50.withOpacity(0.7), borderRadius: BorderRadius.circular(14)),
+                decoration: BoxDecoration(color: AppTheme.leaf50.withValues(alpha: 0.7), borderRadius: BorderRadius.circular(14)),
                 child: Row(
                   children: [
                     Container(
                       width: 28,
                       height: 28,
-                      decoration: BoxDecoration(color: AppTheme.leaf600, shape: BoxShape.circle),
+                      decoration: const BoxDecoration(color: AppTheme.leaf600, shape: BoxShape.circle),
                       child: Center(child: Text('${i + 1}', style: GoogleFonts.poppins(fontSize: 12, fontWeight: FontWeight.w700, color: Colors.white))),
                     ),
                     const SizedBox(width: 12),
-                    Expanded(child: Text(a, style: GoogleFonts.poppins(fontSize: 13, color: AppTheme.leaf900.withOpacity(0.8)))),
+                    Expanded(child: Text(a, style: GoogleFonts.poppins(fontSize: 13, color: AppTheme.leaf900.withValues(alpha: 0.8)))),
                   ],
                 ),
               );
@@ -239,7 +238,7 @@ class _PlantDiagnosisPageState extends State<PlantDiagnosisPage> {
 
           Text(
             '⚠️ Diagnosis ini bersifat awal. Untuk kepastian, konsultasikan dengan ahli tanaman.',
-            style: GoogleFonts.poppins(fontSize: 11, color: AppTheme.leaf900.withOpacity(0.4)),
+            style: GoogleFonts.poppins(fontSize: 11, color: AppTheme.leaf900.withValues(alpha: 0.4)),
             textAlign: TextAlign.center,
           ),
         ],
