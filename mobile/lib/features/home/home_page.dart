@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -7,6 +8,10 @@ import '../../features/auth/auth_provider.dart';
 import '../marketplace/marketplace_provider.dart';
 import '../../widgets/loading_widget.dart';
 import '../../widgets/product_card.dart';
+
+TextStyle _poppins({double size = 14, FontWeight weight = FontWeight.w400, Color? color, double? height}) {
+  return GoogleFonts.plusJakartaSans(fontSize: size, fontWeight: weight, color: color, height: height);
+}
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -41,12 +46,15 @@ class _HomePageState extends State<HomePage> {
     final auth = context.watch<AuthProvider>();
     final userName = auth.user?.name.split(' ').first ?? 'Pekebun';
 
-    return Scaffold(
-      backgroundColor: AppTheme.cream,
-      body: RefreshIndicator(
-        onRefresh: () => mp.loadInitial(),
-        child: CustomScrollView(
-          slivers: [
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: const SystemUiOverlayStyle(statusBarColor: Colors.transparent, statusBarIconBrightness: Brightness.dark),
+      child: Scaffold(
+        backgroundColor: AppTheme.cream,
+        body: RefreshIndicator(
+          onRefresh: () => mp.loadInitial(),
+          child: CustomScrollView(
+            physics: const BouncingScrollPhysics(),
+            slivers: [
             // ── Greeting + Hero ──
             SliverToBoxAdapter(child: _buildHero(userName)),
 
@@ -72,7 +80,8 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-    );
+    ),
+  );
   }
 
   // ═══════════════════════════════════════════════════════════
@@ -80,13 +89,17 @@ class _HomePageState extends State<HomePage> {
   // ═══════════════════════════════════════════════════════════
   Widget _buildHero(String userName) {
     return Container(
-      padding: const EdgeInsets.fromLTRB(24, 48, 24, 28),
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [AppTheme.leaf100, AppTheme.cream],
+      padding: const EdgeInsets.fromLTRB(20, 56, 20, 32),
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [Color(0xFF16A34A), Color(0xFF15803D), Color(0xFF166534)],
         ),
+        borderRadius: const BorderRadius.vertical(bottom: Radius.circular(32)),
+        boxShadow: [
+          BoxShadow(color: AppTheme.leaf600.withValues(alpha: 0.3), blurRadius: 24, offset: const Offset(0, 8)),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -95,41 +108,30 @@ class _HomePageState extends State<HomePage> {
           Row(
             children: [
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
-                  boxShadow: [
-                    BoxShadow(color: AppTheme.leaf900.withValues(alpha: 0.04), blurRadius: 8),
-                  ],
+                  color: Colors.white.withValues(alpha: 0.15),
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: Colors.white.withValues(alpha: 0.2)),
                 ),
                 child: Text(
                   '🌱 Untuk penghuni kota & pemula',
-                  style: GoogleFonts.poppins(fontSize: 10, fontWeight: FontWeight.w700, color: AppTheme.leaf700),
+                  style: _poppins(size: 10, weight: FontWeight.w700, color: Colors.white.withValues(alpha: 0.9)),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 20),
           Text(
             'Halo, $userName 👋',
-            style: GoogleFonts.poppins(
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-              color: AppTheme.leaf900.withValues(alpha: 0.6),
-            ),
+            style: _poppins(size: 15, weight: FontWeight.w500, color: Colors.white.withValues(alpha: 0.8)),
           ),
           const SizedBox(height: 4),
           Text(
             'Tumbuhkan kebun\nkecilmu di tengah kota.',
-            style: GoogleFonts.poppins(
-              fontSize: 26,
-              fontWeight: FontWeight.w800,
-              color: AppTheme.leaf950,
-              height: 1.2,
-            ),
+            style: _poppins(size: 28, weight: FontWeight.w800, color: Colors.white, height: 1.15),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 24),
           Row(
             children: [
               Expanded(
@@ -137,6 +139,13 @@ class _HomePageState extends State<HomePage> {
                   onPressed: () => context.push('/explore'),
                   icon: const Icon(Icons.storefront_outlined, size: 18),
                   label: const Text('Mulai belanja'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    foregroundColor: AppTheme.leaf700,
+                    elevation: 0,
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                  ),
                 ),
               ),
               const SizedBox(width: 12),
@@ -145,18 +154,24 @@ class _HomePageState extends State<HomePage> {
                   onPressed: () => context.push('/plant-finder'),
                   icon: const Icon(Icons.lightbulb_outline, size: 18),
                   label: const Text('Cari tanaman'),
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    side: BorderSide(color: Colors.white.withValues(alpha: 0.4)),
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                  ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 24),
           // Stats
           Container(
-            padding: const EdgeInsets.symmetric(vertical: 14),
+            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
             decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: AppTheme.leaf100),
+              color: Colors.white.withValues(alpha: 0.12),
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(color: Colors.white.withValues(alpha: 0.2)),
             ),
             child: const Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -599,11 +614,11 @@ class _StatItem extends StatelessWidget {
       children: [
         Text(
           value,
-          style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.w800, color: AppTheme.leaf800),
+          style: GoogleFonts.plusJakartaSans(fontSize: 16, fontWeight: FontWeight.w800, color: Colors.white),
         ),
         Text(
           label,
-          style: GoogleFonts.poppins(fontSize: 10, color: AppTheme.leaf900.withValues(alpha: 0.5)),
+          style: GoogleFonts.plusJakartaSans(fontSize: 10, color: Colors.white.withValues(alpha: 0.7)),
         ),
       ],
     );
