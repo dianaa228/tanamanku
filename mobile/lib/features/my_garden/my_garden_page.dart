@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import '../../core/theme/app_theme.dart';
 import '../../core/constants/app_constants.dart';
-import '../../models/user_plant_model.dart';
-import '../../services/garden_service.dart';
+import 'garden_provider.dart';
 import '../../widgets/loading_widget.dart';
 import '../../widgets/plant_card.dart';
 
@@ -15,31 +15,18 @@ class MyGardenPage extends StatefulWidget {
 }
 
 class _MyGardenPageState extends State<MyGardenPage> {
-  final _service = GardenService();
-  List<UserPlantModel> _plants = [];
-  bool _loading = true;
-
   @override
   void initState() {
     super.initState();
-    _loadPlants();
-  }
-
-  Future<void> _loadPlants() async {
-    try {
-      final plants = await _service.getMyPlants();
-      if (mounted) setState(() { _plants = plants; _loading = false; });
-    } catch (_) {
-      if (mounted) setState(() => _loading = false);
-    }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<GardenProvider>().loadMyPlants();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    final todayReminders = _plants
-        .expand((p) => p.reminders.where((r) => r.isActive).map((r) => (reminder: r, plant: p)))
-        .toList()
-      ..sort((a, b) => (a.reminder.nextDueAt ?? DateTime.now()).compareTo(b.reminder.nextDueAt ?? DateTime.now()));
+    final garden = context.watch<GardenProvider>();
+    final todayReminders = garden.activeReminders;
 
     return Scaffold(
       backgroundColor: AppTheme.cream,
@@ -48,15 +35,15 @@ class _MyGardenPageState extends State<MyGardenPage> {
         actions: [
           IconButton(
             icon: const Icon(Icons.add_rounded),
-            onPressed: () => _showAddPlantSheet(),
+            onPressed: () => _showAddPlantSheet(garden),
           ),
         ],
       ),
       body: RefreshIndicator(
-        onRefresh: _loadPlants,
-        child: _loading
+        onRefresh: () => garden.loadMyPlants(),
+        child: garden.loading
             ? const LoadingWidget(label: 'Memuat kebunmu...')
-            : _plants.isEmpty
+            : garden.plants.isEmpty
                 ? Center(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -68,7 +55,7 @@ class _MyGardenPageState extends State<MyGardenPage> {
                         Text('Tambahkan tanaman untuk mulai merawat', style: GoogleFonts.poppins(fontSize: 13, color: AppTheme.leaf900.withValues(alpha: 0.5))),
                         const SizedBox(height: 20),
                         ElevatedButton.icon(
-                          onPressed: () => _showAddPlantSheet(),
+                          onPressed: () => _showAddPlantSheet(garden),
                           icon: const Icon(Icons.add, size: 18),
                           label: const Text('Tambah tanaman'),
                         ),
@@ -83,11 +70,11 @@ class _MyGardenPageState extends State<MyGardenPage> {
                           padding: const EdgeInsets.fromLTRB(20, 8, 20, 0),
                           child: Row(
                             children: [
-                              _healthChip('😊', 'Sehat', _count(AppConstants.plantHealthy), AppTheme.leaf600),
+                              _healthChip('😊', 'Sehat', garden.countByStatus(AppConstants.plantHealthy), AppTheme.leaf600),
                               const SizedBox(width: 8),
-                              _healthChip('💧', 'Perlu air', _count(AppConstants.plantNeedsWater), const Color(0xFF0EA5E9)),
+                              _healthChip('💧', 'Perlu air', garden.countByStatus(AppConstants.plantNeedsWater), const Color(0xFF0EA5E9)),
                               const SizedBox(width: 8),
-                              _healthChip('⚠️', 'Perhatian', _count(AppConstants.plantNeedsAttention), const Color(0xFFF59E0B)),
+                              _healthChip('⚠️', 'Perhatian', garden.countByStatus(AppConstants.plantNeedsAttention), const Color(0xFFF59E0B)),
                             ],
                           ),
                         ),
@@ -104,8 +91,8 @@ class _MyGardenPageState extends State<MyGardenPage> {
                             childAspectRatio: 0.72,
                           ),
                           delegate: SliverChildBuilderDelegate(
-                            (context, i) => PlantCard(plant: _plants[i]),
-                            childCount: _plants.length,
+                            (context, i) => PlantCard(plant: garden.plants[i]),
+                            childCount: garden.plants.length,
                           ),
                         ),
                       ),
@@ -188,8 +175,7 @@ class _MyGardenPageState extends State<MyGardenPage> {
                                           ),
                                           TextButton(
                                             onPressed: () async {
-                                              await _service.markReminderDone(item.reminder.id);
-                                              _loadPlants();
+                                              await garden.markReminderDone(item.reminder.id);
                                               if (!context.mounted) return;
                                               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Selesai dicatat! 💚')));
                                             },
@@ -208,8 +194,6 @@ class _MyGardenPageState extends State<MyGardenPage> {
       ),
     );
   }
-
-  int _count(String status) => _plants.where((p) => p.status == status).length;
 
   Widget _healthChip(String icon, String label, int count, Color color) {
     return Expanded(
@@ -231,7 +215,7 @@ class _MyGardenPageState extends State<MyGardenPage> {
     );
   }
 
-  void _showAddPlantSheet() {
+  void _showAddPlantSheet(GardenProvider garden) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,

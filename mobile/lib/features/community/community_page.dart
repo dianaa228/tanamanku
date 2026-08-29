@@ -3,9 +3,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../../core/theme/app_theme.dart';
 import '../../core/utils/app_formatter.dart';
-import '../../models/post_model.dart';
-import '../../services/community_service.dart';
 import '../../features/auth/auth_provider.dart';
+import 'community_provider.dart';
+import '../../models/post_model.dart';
 import '../../widgets/loading_widget.dart';
 
 class CommunityPage extends StatefulWidget {
@@ -16,50 +16,21 @@ class CommunityPage extends StatefulWidget {
 }
 
 class _CommunityPageState extends State<CommunityPage> {
-  final _service = CommunityService();
-  List<PostModel> _posts = [];
-  bool _loading = true;
   final _composerCtrl = TextEditingController();
   bool _composerOpen = false;
-  bool _sending = false;
 
   @override
   void initState() {
     super.initState();
-    _loadPosts();
-  }
-
-  Future<void> _loadPosts() async {
-    try {
-      final posts = await _service.getPosts();
-      if (mounted) setState(() { _posts = posts; _loading = false; });
-    } catch (_) {
-      if (mounted) setState(() => _loading = false);
-    }
-  }
-
-  Future<void> _submitPost() async {
-    if (_composerCtrl.text.trim().isEmpty) return;
-    setState(() => _sending = true);
-    try {
-      await _service.createPost(_composerCtrl.text.trim());
-      _composerCtrl.clear();
-      setState(() { _composerOpen = false; _sending = false; });
-      _loadPosts();
-      if (mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Post berhasil dibagikan! 🌱')));
-    } catch (e) {
-      setState(() => _sending = false);
-    }
-  }
-
-  Future<void> _toggleLike(int postId) async {
-    await _service.toggleLike(postId);
-    _loadPosts();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<CommunityProvider>().loadPosts();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     final user = context.watch<AuthProvider>().user;
+    final community = context.watch<CommunityProvider>();
 
     return Scaffold(
       backgroundColor: AppTheme.cream,
@@ -73,7 +44,7 @@ class _CommunityPageState extends State<CommunityPage> {
         ],
       ),
       body: RefreshIndicator(
-        onRefresh: _loadPosts,
+        onRefresh: () => community.loadPosts(),
         child: Column(
           children: [
             // Composer
@@ -110,8 +81,16 @@ class _CommunityPageState extends State<CommunityPage> {
                         ),
                         const SizedBox(width: 8),
                         ElevatedButton(
-                          onPressed: _sending ? null : _submitPost,
-                          child: _sending
+                          onPressed: community.sending ? null : () async {
+                            if (_composerCtrl.text.trim().isEmpty) return;
+                            final success = await community.createPost(_composerCtrl.text.trim());
+                            _composerCtrl.clear();
+                            setState(() => _composerOpen = false);
+                            if (success && mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Post berhasil dibagikan! 🌱')));
+                            }
+                          },
+                          child: community.sending
                               ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
                               : const Text('Bagikan'),
                         ),
@@ -123,9 +102,9 @@ class _CommunityPageState extends State<CommunityPage> {
 
             // Posts
             Expanded(
-              child: _loading
+              child: community.loading
                   ? const LoadingWidget()
-                  : _posts.isEmpty
+                  : community.posts.isEmpty
                       ? Center(
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
@@ -138,9 +117,9 @@ class _CommunityPageState extends State<CommunityPage> {
                         )
                       : ListView.separated(
                           padding: const EdgeInsets.all(20),
-                          itemCount: _posts.length,
+                          itemCount: community.posts.length,
                           separatorBuilder: (_, __) => const SizedBox(height: 16),
-                          itemBuilder: (context, i) => _postCard(_posts[i], user?.name),
+                          itemBuilder: (context, i) => _postCard(community.posts[i], user?.name),
                         ),
             ),
           ],
@@ -196,7 +175,7 @@ class _CommunityPageState extends State<CommunityPage> {
             child: Row(
               children: [
                 GestureDetector(
-                  onTap: () => _toggleLike(post.id),
+                  onTap: () => context.read<CommunityProvider>().toggleLike(post.id),
                   child: Row(
                     children: [
                       const Text('🤍', style: TextStyle(fontSize: 16)),

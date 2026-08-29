@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import '../../core/theme/app_theme.dart';
-import '../../services/nursery_service.dart';
+import 'nursery_provider.dart';
 import '../../widgets/loading_widget.dart';
 
 /// Halaman Directory Nursery — browse local plant shops.
@@ -14,31 +15,24 @@ class NurseriesPage extends StatefulWidget {
 }
 
 class _NurseriesPageState extends State<NurseriesPage> {
-  final _service = NurseryService();
-  List<NurseryModel> _nurseries = [];
-  bool _loading = true;
-
   @override
   void initState() {
     super.initState();
-    _load();
-  }
-
-  Future<void> _load() async {
-    try {
-      _nurseries = await _service.getNurseries();
-    } catch (_) {}
-    if (mounted) setState(() => _loading = false);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<NurseryProvider>().loadNurseries();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    final nursery = context.watch<NurseryProvider>();
+
     return Scaffold(
       backgroundColor: AppTheme.cream,
       appBar: AppBar(title: Text('Nursery 🌿', style: GoogleFonts.poppins(fontWeight: FontWeight.w700))),
-      body: _loading
+      body: nursery.loading
           ? const LoadingWidget()
-          : _nurseries.isEmpty
+          : nursery.nurseries.isEmpty
               ? Center(
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -50,12 +44,12 @@ class _NurseriesPageState extends State<NurseriesPage> {
                   ),
                 )
               : RefreshIndicator(
-                  onRefresh: _load,
+                  onRefresh: () => nursery.loadNurseries(),
                   child: ListView.builder(
                     padding: const EdgeInsets.all(20),
-                    itemCount: _nurseries.length,
+                    itemCount: nursery.nurseries.length,
                     itemBuilder: (context, i) {
-                      final n = _nurseries[i];
+                      final n = nursery.nurseries[i];
                       return GestureDetector(
                         onTap: () => context.push('/nurseries/${n.id}'),
                         child: Container(

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Requests\Auth\ForgotPasswordRequest;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
+use App\Http\Requests\Auth\ResetPasswordRequest;
 use App\Http\Resources\UserResource;
 use App\Services\AuthService;
 use Illuminate\Http\JsonResponse;
@@ -47,5 +48,17 @@ class AuthController extends BaseController
         $this->authService->forgotPassword($request->validated()['email']);
 
         return $this->success(null, 'Link reset password telah dikirim ke email Anda');
+    }
+
+    public function resetPassword(ResetPasswordRequest $request): JsonResponse
+    {
+        $data = $request->validated();
+        $this->authService->resetPassword(
+            token: $data['token'],
+            email: $data['email'],
+            password: $data['password'],
+        );
+
+        return $this->success(null, 'Password berhasil diubah. Silakan login dengan password baru.');
     }
 }

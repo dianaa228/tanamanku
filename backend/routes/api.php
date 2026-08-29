@@ -51,6 +51,8 @@ Route::prefix('auth')->group(function () {
         ->middleware('throttle:5,1'); // 5 login per menit
     Route::post('/forgot-password', [AuthController::class, 'forgotPassword'])
         ->middleware('throttle:3,1'); // 3 reset per menit
+    Route::post('/reset-password', [AuthController::class, 'resetPassword'])
+        ->middleware('throttle:5,1'); // 5 percobaan per menit
     Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
     Route::get('/me', [AuthController::class, 'me'])->middleware('auth:sanctum');
 });

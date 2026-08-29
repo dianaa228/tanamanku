@@ -81,4 +81,19 @@ class AuthService {
   Future<void> forgotPassword(String email) async {
     await _api.post('/auth/forgot-password', data: {'email': email});
   }
+
+  /// Reset password: POST /auth/reset-password
+  Future<void> resetPassword({
+    required String token,
+    required String email,
+    required String password,
+    required String passwordConfirmation,
+  }) async {
+    await _api.post('/auth/reset-password', data: {
+      'token': token,
+      'email': email,
+      'password': password,
+      'password_confirmation': passwordConfirmation,
+    });
+  }
 }

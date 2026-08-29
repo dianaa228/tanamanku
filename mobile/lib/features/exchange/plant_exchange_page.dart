@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import '../../core/theme/app_theme.dart';
+import 'exchange_provider.dart';
 import '../../services/exchange_service.dart';
 import '../../widgets/loading_widget.dart';
 
@@ -14,27 +16,18 @@ class PlantExchangePage extends StatefulWidget {
 }
 
 class _PlantExchangePageState extends State<PlantExchangePage> {
-  final _service = ExchangeService();
-  List<PlantListingModel> _listings = [];
-  bool _loading = true;
-  String? _filterType;
-
   @override
   void initState() {
     super.initState();
-    _load();
-  }
-
-  Future<void> _load() async {
-    setState(() => _loading = true);
-    try {
-      _listings = await _service.getListings(type: _filterType);
-    } catch (_) {}
-    if (mounted) setState(() => _loading = false);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<ExchangeProvider>().loadListings();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    final exchange = context.watch<ExchangeProvider>();
+
     return Scaffold(
       backgroundColor: AppTheme.cream,
       appBar: AppBar(
@@ -53,19 +46,19 @@ class _PlantExchangePageState extends State<PlantExchangePage> {
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
             child: Row(
               children: [
-                _chip('Semua', null),
+                _chip('Semua', null, exchange),
                 const SizedBox(width: 8),
-                _chip('🏷️ Dijual', 'sell'),
+                _chip('🏷️ Dijual', 'sell', exchange),
                 const SizedBox(width: 8),
-                _chip('🔄 Tukar Tukar', 'exchange'),
+                _chip('🔄 Tukar Tukar', 'exchange', exchange),
               ],
             ),
           ),
           // Listings
           Expanded(
-            child: _loading
+            child: exchange.loading
                 ? const LoadingWidget()
-                : _listings.isEmpty
+                : exchange.listings.isEmpty
                     ? Center(
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
@@ -77,11 +70,11 @@ class _PlantExchangePageState extends State<PlantExchangePage> {
                         ),
                       )
                     : RefreshIndicator(
-                        onRefresh: _load,
+                        onRefresh: () => exchange.loadListings(),
                         child: ListView.builder(
                           padding: const EdgeInsets.all(20),
-                          itemCount: _listings.length,
-                          itemBuilder: (context, i) => _ListingCard(listing: _listings[i]),
+                          itemCount: exchange.listings.length,
+                          itemBuilder: (context, i) => _ListingCard(listing: exchange.listings[i]),
                         ),
                       ),
           ),
@@ -90,10 +83,10 @@ class _PlantExchangePageState extends State<PlantExchangePage> {
     );
   }
 
-  Widget _chip(String label, String? type) {
-    final selected = _filterType == type;
+  Widget _chip(String label, String? type, ExchangeProvider exchange) {
+    final selected = exchange.filterType == type;
     return GestureDetector(
-      onTap: () { setState(() => _filterType = type); _load(); },
+      onTap: () => exchange.setFilterType(type),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
         decoration: BoxDecoration(

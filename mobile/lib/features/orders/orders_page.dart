@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import '../../core/theme/app_theme.dart';
 import '../../core/utils/app_formatter.dart';
+import 'order_provider.dart';
 import '../../models/order_model.dart';
-import '../../services/order_service.dart';
 import '../../widgets/loading_widget.dart';
 
 class OrdersPage extends StatefulWidget {
@@ -15,24 +16,14 @@ class OrdersPage extends StatefulWidget {
 }
 
 class _OrdersPageState extends State<OrdersPage> {
-  final _service = OrderService();
-  List<OrderModel> _orders = [];
-  bool _loading = true;
   String _tab = 'semua';
 
   @override
   void initState() {
     super.initState();
-    _loadOrders();
-  }
-
-  Future<void> _loadOrders() async {
-    try {
-      final orders = await _service.getOrders();
-      if (mounted) setState(() { _orders = orders; _loading = false; });
-    } catch (_) {
-      if (mounted) setState(() => _loading = false);
-    }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<OrderProvider>().loadOrders();
+    });
   }
 
   @override
@@ -45,7 +36,8 @@ class _OrdersPageState extends State<OrdersPage> {
       {'value': 'cancelled', 'label': 'Batal'},
     ];
 
-    final filtered = _tab == 'semua' ? _orders : _orders.where((o) => o.status == _tab).toList();
+    final orderProv = context.watch<OrderProvider>();
+    final filtered = orderProv.ordersByStatus(_tab);
 
     return Scaffold(
       backgroundColor: AppTheme.cream,
@@ -81,7 +73,7 @@ class _OrdersPageState extends State<OrdersPage> {
 
           // Orders list
           Expanded(
-            child: _loading
+            child: orderProv.loading
                 ? const LoadingWidget()
                 : filtered.isEmpty
                     ? Center(
@@ -97,7 +89,7 @@ class _OrdersPageState extends State<OrdersPage> {
                         ),
                       )
                     : RefreshIndicator(
-                        onRefresh: _loadOrders,
+                        onRefresh: () => orderProv.loadOrders(),
                         child: ListView.separated(
                           padding: const EdgeInsets.all(20),
                           itemCount: filtered.length,

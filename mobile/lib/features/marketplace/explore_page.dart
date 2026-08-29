@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import '../../core/theme/app_theme.dart';
-import '../../models/product_model.dart';
-import '../../models/category_model.dart';
-import '../../services/product_service.dart';
+import 'marketplace_provider.dart';
 import '../../widgets/loading_widget.dart';
 import '../../widgets/product_card.dart';
 
@@ -16,19 +15,19 @@ class ExplorePage extends StatefulWidget {
 }
 
 class _ExplorePageState extends State<ExplorePage> {
-  final _service = ProductService();
   final _searchCtrl = TextEditingController();
-  List<ProductModel> _products = [];
-  List<CategoryModel> _categories = [];
-  bool _loading = true;
-  String _selectedCategory = '';
-  String _selectedSort = 'relevansi';
 
   @override
   void initState() {
     super.initState();
-    _selectedCategory = widget.initialCategory ?? '';
-    _loadData();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final mp = context.read<MarketplaceProvider>();
+      if (widget.initialCategory != null) {
+        mp.setCategory(widget.initialCategory!);
+      } else if (mp.products.isEmpty && !mp.loading) {
+        mp.loadProducts();
+      }
+    });
   }
 
   @override
@@ -37,29 +36,10 @@ class _ExplorePageState extends State<ExplorePage> {
     super.dispose();
   }
 
-  Future<void> _loadData() async {
-    setState(() => _loading = true);
-    try {
-      final products = await _service.getProducts(
-          search: _searchCtrl.text,
-          category: _selectedCategory,
-          sort: _selectedSort,
-        );
-        final categories = await _service.getCategories();
-        if (mounted) {
-          setState(() {
-            _products = products;
-            _categories = categories;
-            _loading = false;
-          });
-        }
-    } catch (_) {
-      if (mounted) setState(() => _loading = false);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
+    final mp = context.watch<MarketplaceProvider>();
+
     return Scaffold(
       backgroundColor: AppTheme.cream,
       body: SafeArea(
@@ -77,7 +57,7 @@ class _ExplorePageState extends State<ExplorePage> {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    _loading ? 'Mencari...' : '${_products.length} produk ditemukan',
+                    mp.loading ? 'Mencari...' : '${mp.products.length} produk ditemukan',
                     style: GoogleFonts.poppins(fontSize: 12, color: AppTheme.leaf900.withValues(alpha: 0.5)),
                   ),
                   const SizedBox(height: 12),
@@ -85,7 +65,7 @@ class _ExplorePageState extends State<ExplorePage> {
                   // Search bar
                   TextField(
                     controller: _searchCtrl,
-                    onSubmitted: (_) => _loadData(),
+                    onSubmitted: (v) => mp.setSearch(v),
                     decoration: InputDecoration(
                       hintText: 'Cari tanaman, pupuk, pot...',
                       prefixIcon: const Icon(Icons.search_rounded, size: 20),
@@ -94,7 +74,7 @@ class _ExplorePageState extends State<ExplorePage> {
                               icon: const Icon(Icons.close, size: 18),
                               onPressed: () {
                                 _searchCtrl.clear();
-                                _loadData();
+                                mp.resetFilters();
                               },
                             )
                           : null,
@@ -112,14 +92,11 @@ class _ExplorePageState extends State<ExplorePage> {
                       separatorBuilder: (_, __) => const SizedBox(width: 8),
                       itemBuilder: (context, i) {
                         final opt = _sortOptions[i];
-                        final selected = _selectedSort == opt['value'];
+                        final selected = mp.selectedSort == opt['value'];
                         return FilterChip(
                           label: Text(opt['label']!, style: GoogleFonts.poppins(fontSize: 11, fontWeight: FontWeight.w600)),
                           selected: selected,
-                          onSelected: (_) {
-                            setState(() => _selectedSort = opt['value']!);
-                            _loadData();
-                          },
+                          onSelected: (_) => mp.setSort(opt['value']!),
                           selectedColor: AppTheme.leaf600,
                           labelStyle: GoogleFonts.poppins(
                             fontSize: 11,
@@ -145,18 +122,15 @@ class _ExplorePageState extends State<ExplorePage> {
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                itemCount: _categories.length + 1,
+                itemCount: mp.categories.length + 1,
                 separatorBuilder: (_, __) => const SizedBox(width: 8),
                 itemBuilder: (context, i) {
                   if (i == 0) {
-                    final selected = _selectedCategory.isEmpty;
+                    final selected = mp.selectedCategory.isEmpty;
                     return FilterChip(
                       label: Text('Semua', style: GoogleFonts.poppins(fontSize: 11, fontWeight: FontWeight.w600)),
                       selected: selected,
-                      onSelected: (_) {
-                        setState(() => _selectedCategory = '');
-                        _loadData();
-                      },
+                      onSelected: (_) => mp.setCategory(''),
                       selectedColor: AppTheme.leaf600,
                       labelStyle: GoogleFonts.poppins(fontSize: 11, fontWeight: FontWeight.w600, color: selected ? Colors.white : AppTheme.leaf900),
                       checkmarkColor: Colors.white,
@@ -166,16 +140,13 @@ class _ExplorePageState extends State<ExplorePage> {
                       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     );
                   }
-                  final cat = _categories[i - 1];
-                  final selected = _selectedCategory == cat.slug;
+                  final cat = mp.categories[i - 1];
+                  final selected = mp.selectedCategory == cat.slug;
                   return FilterChip(
                     avatar: Text(cat.icon ?? '🪴', style: const TextStyle(fontSize: 14)),
                     label: Text(cat.name, style: GoogleFonts.poppins(fontSize: 11, fontWeight: FontWeight.w600)),
                     selected: selected,
-                    onSelected: (_) {
-                      setState(() => _selectedCategory = selected ? '' : cat.slug);
-                      _loadData();
-                    },
+                    onSelected: (_) => mp.setCategory(selected ? '' : cat.slug),
                     selectedColor: AppTheme.leaf600,
                     labelStyle: GoogleFonts.poppins(fontSize: 11, fontWeight: FontWeight.w600, color: selected ? Colors.white : AppTheme.leaf900),
                     checkmarkColor: Colors.white,
@@ -192,9 +163,9 @@ class _ExplorePageState extends State<ExplorePage> {
 
             // ── Produk grid ──
             Expanded(
-              child: _loading
+              child: mp.loading
                   ? const LoadingWidget(label: 'Menyiapkan produk terbaik...')
-                  : _products.isEmpty
+                  : mp.products.isEmpty
                       ? Center(
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
@@ -209,11 +180,7 @@ class _ExplorePageState extends State<ExplorePage> {
                               TextButton(
                                 onPressed: () {
                                   _searchCtrl.clear();
-                                  setState(() {
-                                    _selectedCategory = '';
-                                    _selectedSort = 'relevansi';
-                                  });
-                                  _loadData();
+                                  mp.resetFilters();
                                 },
                                 child: Text('Reset filter', style: GoogleFonts.poppins(color: AppTheme.leaf700)),
                               ),
@@ -221,7 +188,7 @@ class _ExplorePageState extends State<ExplorePage> {
                           ),
                         )
                       : RefreshIndicator(
-                          onRefresh: _loadData,
+                          onRefresh: () => mp.loadProducts(),
                           child: GridView.builder(
                             padding: const EdgeInsets.fromLTRB(20, 0, 20, 100),
                             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -230,8 +197,8 @@ class _ExplorePageState extends State<ExplorePage> {
                               crossAxisSpacing: 12,
                               childAspectRatio: 0.62,
                             ),
-                            itemCount: _products.length,
-                            itemBuilder: (context, i) => ProductCard(product: _products[i]),
+                            itemCount: mp.products.length,
+                            itemBuilder: (context, i) => ProductCard(product: mp.products[i]),
                           ),
                         ),
             ),

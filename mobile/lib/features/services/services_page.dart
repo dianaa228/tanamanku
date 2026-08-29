@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import '../../core/theme/app_theme.dart';
+import 'gardening_service_provider.dart';
 import '../../services/service_service.dart';
 import '../../widgets/loading_widget.dart';
 
@@ -14,11 +16,6 @@ class ServicesPage extends StatefulWidget {
 }
 
 class _ServicesPageState extends State<ServicesPage> {
-  final _service = GardeningApiService();
-  List<GardeningServiceModel> _services = [];
-  bool _loading = true;
-  String? _filterCategory;
-
   static const _categories = [
     {'value': null, 'label': 'Semua', 'icon': '🌿'},
     {'value': 'landscaping', 'label': 'Landscaping', 'icon': '🌳'},
@@ -32,19 +29,15 @@ class _ServicesPageState extends State<ServicesPage> {
   @override
   void initState() {
     super.initState();
-    _load();
-  }
-
-  Future<void> _load() async {
-    setState(() => _loading = true);
-    try {
-      _services = await _service.getServices(category: _filterCategory);
-    } catch (_) {}
-    if (mounted) setState(() => _loading = false);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<GardeningServiceProvider>().loadServices();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    final svc = context.watch<GardeningServiceProvider>();
+
     return Scaffold(
       backgroundColor: AppTheme.cream,
       appBar: AppBar(title: Text('Jasa Berkebun 🔧', style: GoogleFonts.poppins(fontWeight: FontWeight.w700))),
@@ -60,9 +53,9 @@ class _ServicesPageState extends State<ServicesPage> {
               separatorBuilder: (_, __) => const SizedBox(width: 8),
               itemBuilder: (context, i) {
                 final cat = _categories[i];
-                final selected = _filterCategory == cat['value'];
+                final selected = svc.filterCategory == cat['value'];
                 return GestureDetector(
-                  onTap: () { setState(() => _filterCategory = cat['value']); _load(); },
+                  onTap: () => svc.setCategory(cat['value']),
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 14),
                     decoration: BoxDecoration(
@@ -87,16 +80,16 @@ class _ServicesPageState extends State<ServicesPage> {
           ),
           // Services list
           Expanded(
-            child: _loading
+            child: svc.loading
                 ? const LoadingWidget()
-                : _services.isEmpty
+                : svc.services.isEmpty
                     ? Center(child: Text('Belum ada layanan', style: GoogleFonts.poppins(color: AppTheme.leaf900.withValues(alpha: 0.5))))
                     : RefreshIndicator(
-                        onRefresh: _load,
+                        onRefresh: () => svc.loadServices(),
                         child: ListView.builder(
                           padding: const EdgeInsets.all(20),
-                          itemCount: _services.length,
-                          itemBuilder: (context, i) => _ServiceCard(service: _services[i]),
+                          itemCount: svc.services.length,
+                          itemBuilder: (context, i) => _ServiceCard(service: svc.services[i]),
                         ),
                       ),
           ),

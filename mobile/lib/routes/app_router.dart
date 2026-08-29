@@ -4,6 +4,7 @@ import '../features/auth/auth_provider.dart';
 import '../features/auth/login_page.dart';
 import '../features/auth/register_page.dart';
 import '../features/auth/forgot_password_page.dart';
+import '../features/auth/reset_password_page.dart';
 import '../features/home/home_page.dart';
 import '../features/marketplace/explore_page.dart';
 import '../features/marketplace/product_detail_page.dart';
@@ -38,7 +39,8 @@ class AppRouter {
         final loggedIn = auth.isAuthenticated;
         final isAuthRoute = state.matchedLocation == '/login' ||
             state.matchedLocation == '/register' ||
-            state.matchedLocation == '/forgot-password';
+            state.matchedLocation == '/forgot-password' ||
+            state.matchedLocation.startsWith('/reset-password');
 
         // Jika belum login dan bukan halaman auth, arahkan ke login
         // (Halaman publik seperti /, /explore, /product tetap bisa diakses)
@@ -77,6 +79,15 @@ class AppRouter {
           path: '/forgot-password',
           parentNavigatorKey: _rootNavigatorKey,
           builder: (_, __) => const ForgotPasswordPage(),
+        ),
+        GoRoute(
+          path: '/reset-password',
+          parentNavigatorKey: _rootNavigatorKey,
+          builder: (_, state) {
+            final token = state.uri.queryParameters['token'];
+            final email = state.uri.queryParameters['email'];
+            return ResetPasswordPage(token: token, email: email);
+          },
         ),
         GoRoute(
           path: '/product/:slug',

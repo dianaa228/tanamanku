@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import '../../core/theme/app_theme.dart';
-import '../../services/loyalty_service.dart';
+import 'loyalty_provider.dart';
 import '../../widgets/loading_widget.dart';
 
 /// Halaman Loyalty Dashboard — poin balance, tier progress, cara earn.
@@ -14,28 +15,18 @@ class LoyaltyPage extends StatefulWidget {
 }
 
 class _LoyaltyPageState extends State<LoyaltyPage> {
-  final _service = LoyaltyService();
-  LoyaltyProfileModel? _profile;
-  List<Map<String, dynamic>> _tiers = [];
-  bool _loading = true;
-
   @override
   void initState() {
     super.initState();
-    _load();
-  }
-
-  Future<void> _load() async {
-    try {
-      final results = await Future.wait([_service.getProfile(), _service.getTiers()]);
-      _profile = results[0] as LoyaltyProfileModel;
-      _tiers = results[1] as List<Map<String, dynamic>>;
-    } catch (_) {}
-    if (mounted) setState(() => _loading = false);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<LoyaltyProvider>().loadProfile();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    final loyalty = context.watch<LoyaltyProvider>();
+
     return Scaffold(
       backgroundColor: AppTheme.cream,
       appBar: AppBar(
@@ -47,12 +38,12 @@ class _LoyaltyPageState extends State<LoyaltyPage> {
           ),
         ],
       ),
-      body: _loading
+      body: loyalty.loading
           ? const LoadingWidget()
-          : _profile == null
+          : loyalty.profile == null
               ? const Center(child: Text('Gagal memuat profil'))
               : RefreshIndicator(
-                  onRefresh: _load,
+                  onRefresh: () => loyalty.loadProfile(),
                   child: ListView(
                     padding: const EdgeInsets.all(20),
                     children: [
@@ -66,11 +57,11 @@ class _LoyaltyPageState extends State<LoyaltyPage> {
                         ),
                         child: Column(
                           children: [
-                            Text(_profile!.tierIcon, style: const TextStyle(fontSize: 48)),
+                            Text(loyalty.profile!.tierIcon, style: const TextStyle(fontSize: 48)),
                             const SizedBox(height: 8),
-                            Text(_profile!.tierLabel, style: GoogleFonts.poppins(color: Colors.white.withValues(alpha: 0.8), fontWeight: FontWeight.w600)),
+                            Text(loyalty.profile!.tierLabel, style: GoogleFonts.poppins(color: Colors.white.withValues(alpha: 0.8), fontWeight: FontWeight.w600)),
                             const SizedBox(height: 4),
-                            Text('${_profile!.points}', style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.w800, fontSize: 36)),
+                            Text('${loyalty.points}', style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.w800, fontSize: 36)),
                             Text('poin tersedia', style: GoogleFonts.poppins(color: Colors.white.withValues(alpha: 0.7), fontSize: 13)),
                           ],
                         ),
@@ -80,13 +71,13 @@ class _LoyaltyPageState extends State<LoyaltyPage> {
                       // Tier progress
                       Text('Level Kamu', style: GoogleFonts.poppins(fontWeight: FontWeight.w700, fontSize: 16)),
                       const SizedBox(height: 12),
-                      ..._tiers.map((tier) => Container(
+                      ...loyalty.tiers.map((tier) => Container(
                         margin: const EdgeInsets.only(bottom: 8),
                         padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
-                          color: tier['id'] == _profile!.tier ? AppTheme.leaf50 : Colors.white,
+                          color: tier['id'] == loyalty.tier ? AppTheme.leaf50 : Colors.white,
                           borderRadius: BorderRadius.circular(12),
-                          border: Border.all(color: tier['id'] == _profile!.tier ? AppTheme.leaf300 : AppTheme.leaf100),
+                          border: Border.all(color: tier['id'] == loyalty.tier ? AppTheme.leaf300 : AppTheme.leaf100),
                         ),
                         child: Row(
                           children: [
@@ -99,7 +90,7 @@ class _LoyaltyPageState extends State<LoyaltyPage> {
                                 Text('${tier['min_points'] ?? 0}+ poin', style: GoogleFonts.poppins(fontSize: 11, color: AppTheme.leaf900.withValues(alpha: 0.5))),
                               ],
                             )),
-                            if (tier['id'] == _profile!.tier)
+                            if (tier['id'] == loyalty.tier)
                               Container(
                                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                                 decoration: BoxDecoration(color: AppTheme.leaf600, borderRadius: BorderRadius.circular(12)),

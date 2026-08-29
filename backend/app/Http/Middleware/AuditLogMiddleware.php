@@ -118,7 +118,7 @@ class AuditLogMiddleware
 
     /**
      * Cocokkan URL path dengan pattern sederhana.
-     * Contoh: 'admin/users/5/role' matches 'users/*/role'
+     * Contoh URL admin users role.
      */
     private function matchesPattern(string $path, string $pattern): bool
     {

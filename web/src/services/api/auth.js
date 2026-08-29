@@ -92,13 +92,26 @@ const mockImpl = {
 
 export const authApi = {
   login: async (payload) => {
-    if (apiMode() === 'api') {
-      const res = await api.post('/auth/login', payload)
-      persistSession(res.data.user, res.data.token)
-      return { success: true, message: res.message, data: { user: mapUser(res.data.user), token: res.data.token } }
+  if (apiMode() === 'api') {
+    const res = await api.post('/auth/login', payload)
+
+    const user = res.data
+    const token = res.data.token
+
+    persistSession(user, token)
+
+    return {
+      success: true,
+      message: res.message,
+      data: {
+        user: mapUser(user),
+        token,
+      },
     }
-    return mockImpl.login(payload)
-  },
+  }
+
+  return mockImpl.login(payload)
+},
 
   register: async (payload) => {
     if (apiMode() === 'api') {

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import '../../core/theme/app_theme.dart';
 import '../../core/utils/app_formatter.dart';
-import '../../services/cart_service.dart';
-import '../../models/cart_model.dart';
+import 'cart_provider.dart';
 import '../../widgets/loading_widget.dart';
 import '../../widgets/app_button.dart';
 
@@ -16,72 +16,66 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
-  final _service = CartService();
-  CartModel? _cart;
-  bool _loading = true;
-
   @override
   void initState() {
     super.initState();
-    _loadCart();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<CartProvider>().fetchCart();
+    });
   }
 
-  Future<void> _loadCart() async {
-    try {
-      final cart = await _service.fetchCart();
-      if (mounted) setState(() { _cart = cart; _loading = false; });
-    } catch (_) {
-      if (mounted) setState(() => _loading = false);
+  Future<void> _updateQty(CartProvider cart, int itemId, int qty) async {
+    if (qty < 1) return _removeItem(cart, itemId);
+    final success = await cart.updateItem(itemId, qty);
+    if (!success && mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(cart.error ?? 'Gagal update'), backgroundColor: Colors.red),
+      );
     }
   }
 
-  Future<void> _updateQty(int itemId, int qty) async {
-    if (qty < 1) return _removeItem(itemId);
-    try {
-      await _service.updateItem(itemId, qty);
-      _loadCart();
-    } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Gagal update: $e'), backgroundColor: Colors.red),
-        );
-      }
+  Future<void> _removeItem(CartProvider cart, int itemId) async {
+    final success = await cart.removeItem(itemId);
+    if (success && mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Item dihapus')));
     }
-  }
-
-  Future<void> _removeItem(int itemId) async {
-    try {
-      await _service.removeItem(itemId);
-      _loadCart();
-      if (mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Item dihapus')));
-    } catch (_) {}
-  }
-
-  Future<void> _clearCart() async {
-    try {
-      await _service.clear();
-      _loadCart();
-      if (mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Keranjang dikosongkan')));
-    } catch (_) {}
   }
 
   @override
   Widget build(BuildContext context) {
+    final cart = context.watch<CartProvider>();
+
     return Scaffold(
       backgroundColor: AppTheme.cream,
       appBar: AppBar(
         title: const Text('Keranjang 🛒'),
         actions: [
-          if (_cart != null && _cart!.items.isNotEmpty)
+          if (!cart.isEmpty)
             TextButton(
-              onPressed: _clearCart,
+              onPressed: () async {
+                final confirmed = await showDialog<bool>(
+                  context: context,
+                  builder: (_) => AlertDialog(
+                    title: const Text('Kosongkan keranjang?'),
+                    content: const Text('Semua item akan dihapus.'),
+                    actions: [
+                      TextButton(onPressed: () => Navigator.pop(context, false), child: const Text('Batal')),
+                      TextButton(onPressed: () => Navigator.pop(context, true), child: const Text('Kosongkan', style: TextStyle(color: Color(0xFFEF4444)))),
+                    ],
+                  ),
+                );
+                if (confirmed == true) {
+                  await cart.clearCart();
+                  if (mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Keranjang dikosongkan')));
+                }
+              },
               child: Text('Kosongkan', style: GoogleFonts.poppins(fontSize: 12, color: const Color(0xFFEF4444))),
             ),
         ],
       ),
-      body: _loading
+      body: cart.loading
           ? const LoadingWidget()
-          : _cart == null || _cart!.items.isEmpty
+          : cart.isEmpty
               ? Center(
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -99,13 +93,13 @@ class _CartPageState extends State<CartPage> {
                     // ── Item list ──
                     Expanded(
                       child: RefreshIndicator(
-                        onRefresh: _loadCart,
+                        onRefresh: () => cart.fetchCart(),
                         child: ListView.separated(
                           padding: const EdgeInsets.all(20),
-                          itemCount: _cart!.items.length,
+                          itemCount: cart.cart!.items.length,
                           separatorBuilder: (_, __) => const SizedBox(height: 12),
                           itemBuilder: (context, i) {
-                            final item = _cart!.items[i];
+                            final item = cart.cart!.items[i];
                             return Container(
                               padding: const EdgeInsets.all(12),
                               decoration: BoxDecoration(
@@ -146,13 +140,13 @@ class _CartPageState extends State<CartPage> {
                                                 children: [
                                                   IconButton(
                                                     icon: const Icon(Icons.remove, size: 16),
-                                                    onPressed: () => _updateQty(item.id, item.quantity - 1),
+                                                    onPressed: () => _updateQty(cart, item.id, item.quantity - 1),
                                                     constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
                                                   ),
                                                   Text('${item.quantity}', style: GoogleFonts.poppins(fontSize: 13, fontWeight: FontWeight.w700)),
                                                   IconButton(
                                                     icon: const Icon(Icons.add, size: 16),
-                                                    onPressed: () => _updateQty(item.id, item.quantity + 1),
+                                                    onPressed: () => _updateQty(cart, item.id, item.quantity + 1),
                                                     constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
                                                   ),
                                                 ],
@@ -170,7 +164,7 @@ class _CartPageState extends State<CartPage> {
                                     children: [
                                       IconButton(
                                         icon: const Icon(Icons.delete_outline, size: 18, color: Color(0xFFEF4444)),
-                                        onPressed: () => _removeItem(item.id),
+                                        onPressed: () => _removeItem(cart, item.id),
                                         constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
                                       ),
                                       Text(
@@ -201,8 +195,8 @@ class _CartPageState extends State<CartPage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('Subtotal (${_cart!.itemCount} item)', style: GoogleFonts.poppins(fontSize: 13, color: AppTheme.leaf900.withValues(alpha: 0.6))),
-                              Text(AppFormatter.rupiah(_cart!.subtotal), style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w700)),
+                              Text('Subtotal (${cart.itemCount} item)', style: GoogleFonts.poppins(fontSize: 13, color: AppTheme.leaf900.withValues(alpha: 0.6))),
+                              Text(AppFormatter.rupiah(cart.subtotal), style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w700)),
                             ],
                           ),
                           const SizedBox(height: 4),
@@ -219,7 +213,7 @@ class _CartPageState extends State<CartPage> {
                             children: [
                               Text('Total', style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w700)),
                               Text(
-                                AppFormatter.rupiah(_cart!.subtotal + 15000),
+                                AppFormatter.rupiah(cart.subtotal + 15000),
                                 style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.w800, color: AppTheme.leaf700),
                               ),
                             ],
