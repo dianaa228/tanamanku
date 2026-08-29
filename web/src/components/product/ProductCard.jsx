@@ -15,8 +15,8 @@ export default function ProductCard({ product, compact = false }) {
         <ProductVisual
           emoji={product.emoji}
           gradient={product.gradient}
-          className={cx('w-full transition-transform duration-500 group-hover:scale-[1.05]', compact ? 'h-36' : 'h-48')}
-          emojiClassName={compact ? 'text-5xl' : 'text-7xl'}
+          className={cx('w-full transition-transform duration-500 group-hover:scale-[1.05]', compact ? 'h-40' : 'h-52')}
+          emojiClassName={compact ? 'text-6xl' : 'text-8xl'}
         />
         {product.originalPrice && (
           <span className="absolute left-3 top-3 rounded-xl bg-gradient-to-r from-rose-500 to-red-500 px-2.5 py-1 text-xs font-extrabold text-white shadow-md shadow-rose-500/30">

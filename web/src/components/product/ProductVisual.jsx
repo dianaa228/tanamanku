@@ -11,16 +11,17 @@ export default function ProductVisual({ emoji, gradient, className, emojiClassNa
       )}
       {...props}
     >
-      {/* Bokeh light orbs */}
-      <span className="absolute -left-8 -top-8 h-32 w-32 rounded-full bg-white/20 blur-xl" />
-      <span className="absolute -bottom-10 -right-6 h-36 w-36 rounded-full bg-black/10 blur-xl" />
-      <span className="absolute right-8 top-6 h-16 w-16 rounded-full bg-white/15 blur-lg" />
-      {/* Center glow */}
-      <span className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-white/10" />
-      {/* Emoji */}
+      {/* Premium bokeh orbs */}
+      <span className="absolute -left-10 -top-10 h-40 w-40 rounded-full bg-white/20 blur-2xl" />
+      <span className="absolute -bottom-12 -right-8 h-44 w-44 rounded-full bg-black/8 blur-2xl" />
+      <span className="absolute right-10 top-8 h-20 w-20 rounded-full bg-white/15 blur-xl" />
+      <span className="absolute bottom-8 left-12 h-16 w-16 rounded-full bg-white/10 blur-lg" />
+      {/* Subtle overlay gradient */}
+      <span className="absolute inset-0 bg-gradient-to-t from-black/8 via-transparent to-white/12" />
+      {/* Emoji with shadow */}
       <span
         className={cx(
-          'relative select-none drop-shadow-lg transition-transform duration-500 group-hover:scale-110',
+          'relative select-none drop-shadow-xl transition-transform duration-500 group-hover:scale-110',
           emojiClassName,
         )}
         role="img"

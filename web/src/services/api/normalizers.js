@@ -5,22 +5,26 @@
  */
 
 const VISUAL_RULES = [
-  { re: /monstera/i, emoji: '🌿', gradient: 'from-leaf-400 to-emerald-700' },
-  { re: /sirih|pothos/i, emoji: '🍃', gradient: 'from-lime-300 to-green-600' },
-  { re: /aglonema/i, emoji: '🪴', gradient: 'from-rose-300 to-red-500' },
-  { re: /lidah mertua|sansevieria/i, emoji: '🌵', gradient: 'from-emerald-400 to-teal-600' },
-  { re: /cabai|chili/i, emoji: '🌶️', gradient: 'from-red-500 to-rose-700' },
+  { re: /monstera/i, emoji: '🪴', gradient: 'from-emerald-400 to-green-700' },
+  { re: /sirih|pothos/i, emoji: '🍃', gradient: 'from-lime-400 to-green-600' },
+  { re: /aglonema/i, emoji: '🌺', gradient: 'from-rose-400 to-pink-600' },
+  { re: /lidah mertua|sansevieria/i, emoji: '🌵', gradient: 'from-teal-400 to-emerald-700' },
+  { re: /cabai|chili/i, emoji: '🌶️', gradient: 'from-red-400 to-rose-700' },
   { re: /tomat|tomato/i, emoji: '🍅', gradient: 'from-orange-400 to-red-600' },
-  { re: /kemangi|basil/i, emoji: '🌿', gradient: 'from-lime-400 to-green-500' },
-  { re: /aloe|lidah buaya/i, emoji: '🌵', gradient: 'from-green-400 to-emerald-600' },
-  { re: /pakcoy|selada|bayam|sayur/i, emoji: '🥬', gradient: 'from-green-400 to-emerald-600' },
-  { re: /cocopeat/i, emoji: '🥥', gradient: 'from-amber-200 to-soil-400' },
-  { re: /humus|sekam|tanah/i, emoji: '🪨', gradient: 'from-soil-300 to-soil-600' },
-  { re: /pupuk|npk|nutrisi|ab mix|kompos/i, emoji: '🧪', gradient: 'from-sky-300 to-blue-500' },
-  { re: /sprayer|penyiram/i, emoji: '🚿', gradient: 'from-emerald-300 to-green-600' },
-  { re: /terakota/i, emoji: '🏺', gradient: 'from-orange-300 to-soil-600' },
-  { re: /rotan|gantung|boho/i, emoji: '🧺', gradient: 'from-amber-300 to-soil-500' },
-  { re: /kaktus/i, emoji: '🌵', gradient: 'from-teal-300 to-emerald-600' },
+  { re: /kemangi|basil/i, emoji: '🌿', gradient: 'from-lime-400 to-emerald-500' },
+  { re: /aloe|lidah buaya/i, emoji: '🌱', gradient: 'from-green-400 to-emerald-600' },
+  { re: /pakcoy|selada|bayam|sayur/i, emoji: '🥬', gradient: 'from-green-400 to-teal-600' },
+  { re: /cocopeat/i, emoji: '🥥', gradient: 'from-amber-300 to-soil-500' },
+  { re: /humus|sekam|tanah/i, emoji: '🪨', gradient: 'from-soil-400 to-soil-700' },
+  { re: /pupuk|npk|nutrisi|ab mix|kompos/i, emoji: '🧪', gradient: 'from-sky-400 to-blue-600' },
+  { re: /sprayer|penyiram/i, emoji: '💧', gradient: 'from-cyan-300 to-sky-600' },
+  { re: /terakota/i, emoji: '🏺', gradient: 'from-orange-400 to-soil-600' },
+  { re: /rotan|gantung|boho/i, emoji: '🧺', gradient: 'from-amber-400 to-soil-500' },
+  { re: /kaktus/i, emoji: '🌵', gradient: 'from-emerald-400 to-teal-600' },
+  { re: /bibit|seed/i, emoji: '🌱', gradient: 'from-leaf-300 to-leaf-600' },
+  { re: /philodendron/i, emoji: '🌿', gradient: 'from-emerald-300 to-green-600' },
+  { re: /pot|vas/i, emoji: '🏺', gradient: 'from-amber-300 to-orange-500' },
+  { re: /ceramic|keramik/i, emoji: '🏺', gradient: 'from-stone-300 to-stone-600' },
 ]
 
 export const visualFor = (p) => {
@@ -61,13 +65,13 @@ export const mapProduct = (p) => {
 export const mapProducts = (list) => (Array.isArray(list) ? list.map(mapProduct) : [])
 
 const CATEGORY_GRADIENTS = [
-  'from-leaf-300 to-emerald-500',
-  'from-emerald-200 to-teal-500',
-  'from-rose-200 to-red-400',
-  'from-amber-200 to-yellow-500',
-  'from-violet-200 to-purple-400',
-  'from-sky-200 to-blue-400',
-  'from-orange-200 to-amber-400',
+  'from-emerald-400 to-green-600',
+  'from-teal-400 to-cyan-600',
+  'from-rose-400 to-pink-600',
+  'from-amber-400 to-orange-500',
+  'from-violet-400 to-purple-600',
+  'from-sky-400 to-blue-600',
+  'from-orange-400 to-red-500',
 ]
 
 export const mapCategory = (c, index = 0) => ({

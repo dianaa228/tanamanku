@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { apiMode, onModeChange } from '../../services/api/client'
 import { cx } from '../../utils/format'
 
-/** Indikator kecil: mode 'api' (backend Laravel) atau 'mock' (demo lokal). */
+/** Tiny badge: 'api' (Laravel backend) or 'mock' (local demo). */
 export default function ApiModeBadge() {
   const [mode, setMode] = useState(apiMode())
 
@@ -12,19 +12,19 @@ export default function ApiModeBadge() {
     <div
       title="Sumber data web"
       className={cx(
-        'fixed bottom-[4.5rem] left-3 z-30 flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[11px] font-bold shadow-soft backdrop-blur md:bottom-4',
+        'fixed bottom-3 left-3 z-30 flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-semibold shadow-sm backdrop-blur-md md:bottom-3',
         mode === 'api'
-          ? 'bg-leaf-700/95 text-white'
-          : 'bg-sun-300/95 text-soil-900',
+          ? 'bg-emerald-600/90 text-white/90'
+          : 'bg-amber-400/90 text-amber-900',
       )}
     >
       <span
         className={cx(
-          'h-2 w-2 rounded-full',
-          mode === 'api' ? 'animate-pulse bg-lime-300' : 'bg-soil-700',
+          'h-1.5 w-1.5 rounded-full',
+          mode === 'api' ? 'animate-pulse bg-emerald-300' : 'bg-amber-700',
         )}
       />
-      {mode === 'api' ? 'Terhubung ke API' : 'Mode demo (mock)'}
+      {mode === 'api' ? 'API ✓' : 'Demo'}
     </div>
   )
 }
