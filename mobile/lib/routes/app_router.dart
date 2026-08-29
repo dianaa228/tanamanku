@@ -30,6 +30,12 @@ import '../features/seller/seller_products_page.dart';
 import '../features/seller/seller_orders_page.dart';
 import '../features/seller/seller_inventory_page.dart';
 import '../features/seller/seller_sales_page.dart';
+import '../features/seller/seller_create_product_page.dart';
+import '../features/seller/seller_edit_product_page.dart';
+import '../features/nursery/nursery_detail_page.dart';
+import '../features/services/service_detail_page.dart';
+import '../features/exchange/create_listing_page.dart';
+import '../features/subscription/subscription_manage_page.dart';
 import '../features/admin/admin_dashboard_page.dart';
 import '../features/admin/admin_users_page.dart';
 import '../features/admin/admin_stores_page.dart';
@@ -152,6 +158,11 @@ class AppRouter {
           builder: (_, __) => const PlantExchangePage(),
         ),
         GoRoute(
+          path: '/plant-exchange/create',
+          parentNavigatorKey: _rootNavigatorKey,
+          builder: (_, __) => const CreateListingPage(),
+        ),
+        GoRoute(
           path: '/plant-exchange/:id',
           parentNavigatorKey: _rootNavigatorKey,
           builder: (_, state) => ListingDetailPage(listingId: int.parse(state.pathParameters['id']!)),
@@ -160,6 +171,11 @@ class AppRouter {
           path: '/services',
           parentNavigatorKey: _rootNavigatorKey,
           builder: (_, __) => const ServicesPage(),
+        ),
+        GoRoute(
+          path: '/services/:id',
+          parentNavigatorKey: _rootNavigatorKey,
+          builder: (_, state) => ServiceDetailPage(serviceId: int.parse(state.pathParameters['id']!)),
         ),
         GoRoute(
           path: '/loyalty',
@@ -182,6 +198,11 @@ class AppRouter {
           builder: (_, __) => const NurseriesPage(),
         ),
         GoRoute(
+          path: '/nurseries/:slug',
+          parentNavigatorKey: _rootNavigatorKey,
+          builder: (_, state) => NurseryDetailPage(slug: state.pathParameters['slug']!),
+        ),
+        GoRoute(
           path: '/profile',
           parentNavigatorKey: _rootNavigatorKey,
           builder: (_, __) => const ProfilePage(),
@@ -190,6 +211,7 @@ class AppRouter {
         GoRoute(path: '/notifications', parentNavigatorKey: _rootNavigatorKey, builder: (_, __) => const NotificationPage()),
         // ── Subscription ──
         GoRoute(path: '/subscription', parentNavigatorKey: _rootNavigatorKey, builder: (_, __) => const SubscriptionPage()),
+        GoRoute(path: '/subscription/manage', parentNavigatorKey: _rootNavigatorKey, builder: (_, __) => const SubscriptionManagePage()),
         // ── My Bookings ──
         GoRoute(path: '/my-bookings', parentNavigatorKey: _rootNavigatorKey, builder: (_, __) => const MyBookingsPage()),
         // ── My Listings / Exchanges ──
@@ -201,6 +223,8 @@ class AppRouter {
         GoRoute(path: '/seller/orders', parentNavigatorKey: _rootNavigatorKey, builder: (_, __) => const SellerOrdersPage()),
         GoRoute(path: '/seller/inventory', parentNavigatorKey: _rootNavigatorKey, builder: (_, __) => const SellerInventoryPage()),
         GoRoute(path: '/seller/sales', parentNavigatorKey: _rootNavigatorKey, builder: (_, __) => const SellerSalesPage()),
+        GoRoute(path: '/seller/products/create', parentNavigatorKey: _rootNavigatorKey, builder: (_, __) => const SellerCreateProductPage()),
+        GoRoute(path: '/seller/products/:id/edit', parentNavigatorKey: _rootNavigatorKey, builder: (_, state) => SellerEditProductPage(productId: int.parse(state.pathParameters['id']!))),
         // ── Admin ──
         GoRoute(path: '/admin', parentNavigatorKey: _rootNavigatorKey, builder: (_, __) => const AdminDashboardPage()),
         GoRoute(path: '/admin/users', parentNavigatorKey: _rootNavigatorKey, builder: (_, __) => const AdminUsersPage()),
