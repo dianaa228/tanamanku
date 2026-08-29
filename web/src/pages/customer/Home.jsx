@@ -53,6 +53,23 @@ export default function Home() {
       setFeatured(productsRes.data.slice(0, 8))
       setCategories(catsRes.data)
       setCommunityPosts(postsRes.data.slice(0, 3))
+      // Map API categories to include gradient colors
+      const gradients = [
+        'from-leaf-200 to-leaf-400',
+        'from-emerald-100 to-emerald-300',
+        'from-rose-100 to-rose-300',
+        'from-amber-100 to-amber-300',
+        'from-violet-100 to-violet-300',
+        'from-sky-100 to-sky-300',
+        'from-orange-100 to-orange-300',
+      ]
+      const mappedCategories = catsRes.data.map((c, i) => ({
+        ...c,
+        count: c.products_count || 0,
+        gradient: gradients[i % gradients.length],
+      }))
+      setCategories(mappedCategories)
+      setCommunityPosts(postsRes.data.slice(0, 3))
       setLoading(false)
     })
   }, [])
@@ -83,7 +100,7 @@ export default function Home() {
               pengingat perawatan cerdas — semua dalam satu aplikasi.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Button to="/explore" size="lg">
+              <Button to="/explore" size="lg" className="btn-shine">
                 Mulai belanja 🌿
               </Button>
               <Button to="/plant-finder" size="lg" variant="secondary">

@@ -60,17 +60,27 @@ export const mapProduct = (p) => {
 
 export const mapProducts = (list) => (Array.isArray(list) ? list.map(mapProduct) : [])
 
-export const mapCategory = (c) => ({
+const CATEGORY_GRADIENTS = [
+  'from-leaf-300 to-emerald-500',
+  'from-emerald-200 to-teal-500',
+  'from-rose-200 to-red-400',
+  'from-amber-200 to-yellow-500',
+  'from-violet-200 to-purple-400',
+  'from-sky-200 to-blue-400',
+  'from-orange-200 to-amber-400',
+]
+
+export const mapCategory = (c, index = 0) => ({
   id: c.slug,
   slug: c.slug,
   name: c.name,
   icon: c.icon || '🪴',
   count: c.products_count ?? c.count ?? 0,
-  gradient: 'from-leaf-400 to-emerald-600',
+  gradient: CATEGORY_GRADIENTS[index % CATEGORY_GRADIENTS.length],
   tagline: '',
 })
 
-export const mapCategories = (list) => (Array.isArray(list) ? list.map(mapCategory) : [])
+export const mapCategories = (list) => (Array.isArray(list) ? list.map((c, i) => mapCategory(c, i)) : [])
 
 export const mapSpecies = (s) => {
   if (!s) return null
