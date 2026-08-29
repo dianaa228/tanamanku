@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen, waitFor } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 
 const mockGetOrders = vi.fn()
@@ -169,6 +170,7 @@ describe('Seller Orders Page', () => {
   })
 
   it('filters orders when clicking tabs', async () => {
+    const user = userEvent.setup()
     mockGetOrders.mockResolvedValue({ data: mockOrders })
     renderOrders()
 
@@ -178,7 +180,7 @@ describe('Seller Orders Page', () => {
 
     // Click "Baru" tab to filter pending orders
     const baruTab = screen.getByRole('button', { name: /baru/i })
-    baruTab.click()
+    await user.click(baruTab)
 
     await waitFor(() => {
       expect(screen.getByText('ORD-001')).toBeInTheDocument()

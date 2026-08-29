@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen, waitFor, act } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 
 const mockCreateProduct = vi.fn()
@@ -42,42 +42,56 @@ describe('Seller CreateProduct Page', () => {
     mockGetCategories.mockResolvedValue({ data: mockCategories })
   })
 
-  it('renders page title', () => {
-    renderCreateProduct()
+  it('renders page title', async () => {
+    await act(async () => {
+      renderCreateProduct()
+    })
     expect(screen.getByText(/tambah produk baru/i)).toBeInTheDocument()
   })
 
-  it('renders form fields', () => {
-    renderCreateProduct()
+  it('renders form fields', async () => {
+    await act(async () => {
+      renderCreateProduct()
+    })
     expect(screen.getByPlaceholderText(/monstera deliciosa/i)).toBeInTheDocument()
     expect(screen.getByPlaceholderText(/deskripsi produk/i)).toBeInTheDocument()
   })
 
-  it('shows price input', () => {
-    renderCreateProduct()
+  it('shows price input', async () => {
+    await act(async () => {
+      renderCreateProduct()
+    })
     const priceInputs = screen.getAllByRole('spinbutton')
     expect(priceInputs.length).toBeGreaterThan(0)
   })
 
   it('shows category select', async () => {
-    renderCreateProduct()
+    await act(async () => {
+      renderCreateProduct()
+    })
     await waitFor(() => {
       expect(screen.getByDisplayValue(/pilih kategori/i)).toBeInTheDocument()
     })
   })
 
-  it('shows care level select', () => {
-    renderCreateProduct()
+  it('shows care level select', async () => {
+    await act(async () => {
+      renderCreateProduct()
+    })
     expect(screen.getByDisplayValue(/mudah/i)).toBeInTheDocument()
   })
 
-  it('shows submit button', () => {
-    renderCreateProduct()
+  it('shows submit button', async () => {
+    await act(async () => {
+      renderCreateProduct()
+    })
     expect(screen.getByText(/simpan produk/i)).toBeInTheDocument()
   })
 
-  it('shows cancel link', () => {
-    renderCreateProduct()
+  it('shows cancel link', async () => {
+    await act(async () => {
+      renderCreateProduct()
+    })
     const cancelLink = screen.getByText(/batal/i)
     expect(cancelLink).toHaveAttribute('href', '/seller/products')
   })
