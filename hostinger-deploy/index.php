@@ -12,13 +12,17 @@ $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $possiblePaths = [
     dirname(__DIR__) . '/tanamanku',
     dirname(dirname(__DIR__)) . '/tanamanku',
-    getenv('HOME') . '/tanamanku',
+    dirname(dirname(dirname(__DIR__))) . '/tanamanku',
+    $_SERVER['DOCUMENT_ROOT'] . '/../tanamanku',
+    (getenv('HOME') ?: '/home/' . get_current_user()) . '/tanamanku',
+    '/home/' . get_current_user() . '/tanamanku',
 ];
 
 $basePath = null;
 foreach ($possiblePaths as $path) {
-    if (file_exists($path . '/artisan')) {
-        $basePath = $path;
+    $resolved = realpath($path) ?: $path;
+    if (file_exists($resolved . '/artisan')) {
+        $basePath = $resolved;
         break;
     }
 }
@@ -28,7 +32,15 @@ if (str_starts_with($uri, '/api/')) {
     if (!$basePath) {
         http_response_code(500);
         header('Content-Type: application/json');
-        echo json_encode(['success' => false, 'message' => 'Backend application not found']);
+        echo json_encode([
+            'success' => false,
+            'message' => 'Backend application not found',
+            'debug' => [
+                'tried_paths' => array_map(fn($p) => realpath($p) ?: $p, $possiblePaths),
+                'doc_root' => $_SERVER['DOCUMENT_ROOT'] ?? 'N/A',
+                'dir' => __DIR__,
+            ],
+        ]);
         exit;
     }
 
