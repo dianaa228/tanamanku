@@ -1,20 +1,42 @@
 <?php
+// ========================================
+// Tanamanku — API Entry Point (Hostinger)
+// ========================================
+// Upload ke: ~/public_html/api.php
+// ========================================
 
 use Illuminate\Http\Request;
 
 define('LARAVEL_START', microtime(true));
 
-// ── Path ke Laravel app (di luar public_html) ──
-$basePath = dirname(__DIR__) . '/tanamanku';
+// ── Auto-detect backend path ──
+$possiblePaths = [
+    dirname(__DIR__) . '/tanamanku',
+    dirname(dirname(__DIR__)) . '/tanamanku',
+    getenv('HOME') . '/tanamanku',
+];
 
-// Determine if the application is in maintenance mode...
+$basePath = null;
+foreach ($possiblePaths as $path) {
+    if (file_exists($path . '/artisan')) {
+        $basePath = $path;
+        break;
+    }
+}
+
+if (!$basePath) {
+    http_response_code(500);
+    echo json_encode(['success' => false, 'message' => 'Backend application not found']);
+    exit;
+}
+
+// ── Maintenance mode ──
 if (file_exists($maintenance = $basePath . '/storage/framework/maintenance.php')) {
     require $maintenance;
 }
 
-// Register the Composer autoloader...
+// ── Bootstrap Laravel ─~
 require $basePath . '/vendor/autoload.php';
 
-// Bootstrap Laravel and handle the request...
-(require_once $basePath . '/bootstrap/app.php')
-    ->handleRequest(Request::capture());
+$app = require_once $basePath . '/bootstrap/app.php';
+$app->handleRequest(Request::capture());

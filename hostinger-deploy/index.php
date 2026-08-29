@@ -1,16 +1,37 @@
 <?php
 // ========================================
-// Tanamanku — Combined Entry Point
+// Tanamanku — Combined Entry Point (Hostinger)
 // ========================================
 // Handles both API (Laravel) and SPA (React) routing
 // Upload ke: ~/public_html/index.php
 // ========================================
 
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-$basePath = dirname(__DIR__) . '/tanamanku';
+
+// ── Auto-detect backend path ──
+$possiblePaths = [
+    dirname(__DIR__) . '/tanamanku',
+    dirname(dirname(__DIR__)) . '/tanamanku',
+    getenv('HOME') . '/tanamanku',
+];
+
+$basePath = null;
+foreach ($possiblePaths as $path) {
+    if (file_exists($path . '/artisan')) {
+        $basePath = $path;
+        break;
+    }
+}
 
 // ── API routes → Laravel ──
 if (str_starts_with($uri, '/api/')) {
+    if (!$basePath) {
+        http_response_code(500);
+        header('Content-Type: application/json');
+        echo json_encode(['success' => false, 'message' => 'Backend application not found']);
+        exit;
+    }
+
     // Maintenance mode check
     if (file_exists($maintenance = $basePath . '/storage/framework/maintenance.php')) {
         require $maintenance;
@@ -18,15 +39,14 @@ if (str_starts_with($uri, '/api/')) {
 
     // Bootstrap Laravel
     require $basePath . '/vendor/autoload.php';
-    (require_once $basePath . '/bootstrap/app.php')
-        ->handleRequest(\Illuminate\Http\Request::capture());
-    return;
+    $app = require_once $basePath . '/bootstrap/app.php';
+    $app->handleRequest(\Illuminate\Http\Request::capture());
+    exit;
 }
 
 // ── Static files → serve directly ──
 $filePath = __DIR__ . $uri;
 if ($uri !== '/' && file_exists($filePath) && !is_dir($filePath)) {
-    // Set proper MIME types
     $ext = pathinfo($filePath, PATHINFO_EXTENSION);
     $mimeTypes = [
         'js'   => 'application/javascript',
@@ -47,7 +67,7 @@ if ($uri !== '/' && file_exists($filePath) && !is_dir($filePath)) {
         header('Content-Type: ' . $mimeTypes[$ext]);
     }
     readfile($filePath);
-    return;
+    exit;
 }
 
 // ── Everything else → React SPA (index.html) ──
@@ -55,7 +75,7 @@ $indexFile = __DIR__ . '/index.html';
 if (file_exists($indexFile)) {
     header('Content-Type: text/html; charset=utf-8');
     readfile($indexFile);
-    return;
+    exit;
 }
 
 // ── Fallback ──
