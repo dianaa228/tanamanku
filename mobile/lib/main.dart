@@ -11,6 +11,10 @@ import 'features/exchange/exchange_provider.dart';
 import 'features/loyalty/loyalty_provider.dart';
 import 'features/nursery/nursery_provider.dart';
 import 'features/services/gardening_service_provider.dart';
+import 'features/seller/seller_provider.dart';
+import 'features/admin/admin_provider.dart';
+import 'features/subscription/subscription_provider.dart';
+import 'features/notification/notification_provider.dart';
 import 'routes/app_router.dart';
 
 void main() {
@@ -35,6 +39,10 @@ class TanamankuApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => LoyaltyProvider()),
         ChangeNotifierProvider(create: (_) => NurseryProvider()),
         ChangeNotifierProvider(create: (_) => GardeningServiceProvider()),
+        ChangeNotifierProvider(create: (_) => SellerProvider()),
+        ChangeNotifierProvider(create: (_) => AdminProvider()),
+        ChangeNotifierProvider(create: (_) => SubscriptionProvider()),
+        ChangeNotifierProvider(create: (_) => NotificationProvider()),
       ],
       child: Consumer<AuthProvider>(
         builder: (context, auth, _) {

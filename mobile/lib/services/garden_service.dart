@@ -96,6 +96,16 @@ class GardenService {
     await _api.post('/my-garden/reminders/$reminderId/done');
   }
 
+  // ── Plant Species ─────────────────────────────────────
+
+  /// Ambil daftar spesies: GET /plant-species
+  Future<List<PlantSpeciesModel>> getSpecies() async {
+    final res = await _api.get('/plant-species');
+    final data = res.data['data'];
+    final list = data is List ? data : [];
+    return list.map((e) => PlantSpeciesModel.fromJson(e)).toList();
+  }
+
   // ── Plant Finder ──────────────────────────────────────
 
   /// Ambil pertanyaan: GET /plant-finder/questions

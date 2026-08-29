@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../../core/theme/app_theme.dart';
 import '../../core/constants/app_constants.dart';
+import '../../services/garden_service.dart';
 import 'garden_provider.dart';
 import '../../widgets/loading_widget.dart';
 import '../../widgets/plant_card.dart';
@@ -247,22 +248,44 @@ class _MyGardenPageState extends State<MyGardenPage> {
                 style: GoogleFonts.poppins(fontSize: 13, color: AppTheme.leaf900.withValues(alpha: 0.6)),
               ),
               const SizedBox(height: 20),
-              // Placeholder — nanti diisi dengan species list dari API
-              ...List.generate(8, (i) {
-                final species = ['Monstera Deliciosa', 'Sirih Gading', 'Aglonema', 'Lidah Mertua', 'Cabai Rawit', 'Tomat Cherry', 'Kemangi', 'Lidah Buaya'];
-                final emoji = ['🌿', '🍃', '🪴', '🌵', '🌶️', '🍅', '🌿', '🌵'];
-                return ListTile(
-                  leading: Text(emoji[i], style: const TextStyle(fontSize: 28)),
-                  title: Text(species[i], style: GoogleFonts.poppins(fontWeight: FontWeight.w600)),
-                  subtitle: Text('Ketuk untuk menambah', style: GoogleFonts.poppins(fontSize: 11, color: AppTheme.leaf900.withValues(alpha: 0.5))),
-                  onTap: () {
-                    Navigator.pop(context);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('$species[i] ditambahkan! 🌱')),
-                    );
-                  },
-                );
-              }),
+              FutureBuilder(
+                future: GardenService().getSpecies(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Padding(padding: EdgeInsets.all(20), child: Center(child: CircularProgressIndicator()));
+                  }
+                  final species = snapshot.data ?? [];
+                  if (species.isEmpty) {
+                    return Center(child: Text('Tidak ada spesies tersedia', style: GoogleFonts.poppins(color: AppTheme.leaf900.withValues(alpha: 0.5))));
+                  }
+                  return Column(
+                    children: species.map((s) => ListTile(
+                      leading: Text(s.icon ?? '🌿', style: const TextStyle(fontSize: 28)),
+                      title: Text(s.name, style: GoogleFonts.poppins(fontWeight: FontWeight.w600)),
+                      subtitle: Text(s.careLevel, style: GoogleFonts.poppins(fontSize: 11, color: AppTheme.leaf900.withValues(alpha: 0.5))),
+                      onTap: () async {
+                        Navigator.pop(context);
+                        final nicknameCtrl = TextEditingController(text: s.name);
+                        final nickname = await showDialog<String>(
+                          context: context,
+                          builder: (ctx) => AlertDialog(
+                            title: const Text('Nama tanaman'),
+                            content: TextField(controller: nicknameCtrl, decoration: const InputDecoration(hintText: 'Nama panggilan')),
+                            actions: [
+                              TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Batal')),
+                              TextButton(onPressed: () => Navigator.pop(ctx, nicknameCtrl.text), child: const Text('Tambah')),
+                            ],
+                          ),
+                        );
+                        if (nickname != null && nickname.isNotEmpty && context.mounted) {
+                          final ok = await garden.addPlant(plantSpeciesId: s.id, nickname: nickname);
+                          if (ok && context.mounted) ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('$nickname ditambahkan! 🌱')));
+                        }
+                      },
+                    )).toList(),
+                  );
+                },
+              ),
             ],
           ),
         ),

@@ -25,6 +25,26 @@ import '../features/loyalty/loyalty_page.dart';
 import '../features/loyalty/loyalty_redeem_page.dart';
 import '../features/loyalty/loyalty_history_page.dart';
 import '../features/nursery/nurseries_page.dart';
+import '../features/seller/seller_dashboard_page.dart';
+import '../features/seller/seller_products_page.dart';
+import '../features/seller/seller_orders_page.dart';
+import '../features/seller/seller_inventory_page.dart';
+import '../features/seller/seller_sales_page.dart';
+import '../features/admin/admin_dashboard_page.dart';
+import '../features/admin/admin_users_page.dart';
+import '../features/admin/admin_stores_page.dart';
+import '../features/admin/admin_categories_page.dart';
+import '../features/admin/admin_orders_page.dart';
+import '../features/admin/admin_payments_page.dart';
+import '../features/admin/admin_community_page.dart';
+import '../features/admin/admin_reports_page.dart';
+import '../features/admin/admin_settings_page.dart';
+import '../features/admin/admin_analytics_page.dart';
+import '../features/subscription/subscription_page.dart';
+import '../features/services/my_bookings_page.dart';
+import '../features/exchange/my_listings_page.dart';
+import '../features/exchange/my_exchanges_page.dart';
+import '../features/notification/notification_page.dart';
 
 /// Router utama Tanamanku — menggunakan GoRouter.
 class AppRouter {
@@ -166,6 +186,32 @@ class AppRouter {
           parentNavigatorKey: _rootNavigatorKey,
           builder: (_, __) => const ProfilePage(),
         ),
+        // ── Notifications ──
+        GoRoute(path: '/notifications', parentNavigatorKey: _rootNavigatorKey, builder: (_, __) => const NotificationPage()),
+        // ── Subscription ──
+        GoRoute(path: '/subscription', parentNavigatorKey: _rootNavigatorKey, builder: (_, __) => const SubscriptionPage()),
+        // ── My Bookings ──
+        GoRoute(path: '/my-bookings', parentNavigatorKey: _rootNavigatorKey, builder: (_, __) => const MyBookingsPage()),
+        // ── My Listings / Exchanges ──
+        GoRoute(path: '/my-listings', parentNavigatorKey: _rootNavigatorKey, builder: (_, __) => const MyListingsPage()),
+        GoRoute(path: '/my-exchanges', parentNavigatorKey: _rootNavigatorKey, builder: (_, __) => const MyExchangesPage()),
+        // ── Seller ──
+        GoRoute(path: '/seller', parentNavigatorKey: _rootNavigatorKey, builder: (_, __) => const SellerDashboardPage()),
+        GoRoute(path: '/seller/products', parentNavigatorKey: _rootNavigatorKey, builder: (_, __) => const SellerProductsPage()),
+        GoRoute(path: '/seller/orders', parentNavigatorKey: _rootNavigatorKey, builder: (_, __) => const SellerOrdersPage()),
+        GoRoute(path: '/seller/inventory', parentNavigatorKey: _rootNavigatorKey, builder: (_, __) => const SellerInventoryPage()),
+        GoRoute(path: '/seller/sales', parentNavigatorKey: _rootNavigatorKey, builder: (_, __) => const SellerSalesPage()),
+        // ── Admin ──
+        GoRoute(path: '/admin', parentNavigatorKey: _rootNavigatorKey, builder: (_, __) => const AdminDashboardPage()),
+        GoRoute(path: '/admin/users', parentNavigatorKey: _rootNavigatorKey, builder: (_, __) => const AdminUsersPage()),
+        GoRoute(path: '/admin/stores', parentNavigatorKey: _rootNavigatorKey, builder: (_, __) => const AdminStoresPage()),
+        GoRoute(path: '/admin/categories', parentNavigatorKey: _rootNavigatorKey, builder: (_, __) => const AdminCategoriesPage()),
+        GoRoute(path: '/admin/orders', parentNavigatorKey: _rootNavigatorKey, builder: (_, __) => const AdminOrdersPage()),
+        GoRoute(path: '/admin/payments', parentNavigatorKey: _rootNavigatorKey, builder: (_, __) => const AdminPaymentsPage()),
+        GoRoute(path: '/admin/community', parentNavigatorKey: _rootNavigatorKey, builder: (_, __) => const AdminCommunityPage()),
+        GoRoute(path: '/admin/reports', parentNavigatorKey: _rootNavigatorKey, builder: (_, __) => const AdminReportsPage()),
+        GoRoute(path: '/admin/settings', parentNavigatorKey: _rootNavigatorKey, builder: (_, __) => const AdminSettingsPage()),
+        GoRoute(path: '/admin/analytics', parentNavigatorKey: _rootNavigatorKey, builder: (_, __) => const AdminAnalyticsPage()),
       ],
     );
   }

@@ -94,19 +94,82 @@ class ProfilePage extends StatelessWidget {
               ),
             ),
 
-            // ── Menu ──
+            // ── Menu Utama ──
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Text('🗂️ Menu Utama', style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w700, color: AppTheme.leaf900.withValues(alpha: 0.6))),
+                  const SizedBox(height: 8),
                   _menuItem(context, '📦', 'Pesanan saya', '/orders', 'Pantau status pesanan'),
                   _menuItem(context, '🪴', 'My Garden', '/my-garden', 'Kelola tanaman'),
-                  _menuItem(context, '💡', 'Plant Finder', '/plant-finder', 'Cari tanaman ideal'),
-                  _menuItem(context, '🩺', 'Plant Diagnosis', '/plant-diagnosis', 'Cek kesehatan'),
+                  _menuItem(context, '🔔', 'Notifikasi', '/notifications', 'Lihat notifikasi'),
+                  _menuItem(context, '⭐', 'Langganan', '/subscription', 'Kelola paket langganan'),
                   _menuItem(context, '💬', 'Komunitas', '/community', 'Berbagi cerita'),
                 ],
               ),
             ),
+
+            // ── Fitur Lainnya ──
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('🌿 Fitur Lainnya', style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w700, color: AppTheme.leaf900.withValues(alpha: 0.6))),
+                  const SizedBox(height: 8),
+                  _menuItem(context, '💡', 'Plant Finder', '/plant-finder', 'Cari tanaman ideal'),
+                  _menuItem(context, '🩺', 'Plant Diagnosis', '/plant-diagnosis', 'Cek kesehatan'),
+                  _menuItem(context, '🔄', 'Plant Exchange', '/plant-exchange', 'Tukar tanaman'),
+                  _menuItem(context, '📦', 'Listing Saya', '/my-listings', 'Kelola listing'),
+                  _menuItem(context, '🔄', 'Pertukaran Saya', '/my-exchanges', 'Riwayat tukar'),
+                  _menuItem(context, '🔧', 'Jasa Berkebun', '/services', 'Lihat jasa'),
+                  _menuItem(context, '📋', 'Booking Saya', '/my-bookings', 'Riwayat booking'),
+                ],
+              ),
+            ),
+
+            // ── Seller Panel (jika role seller) ──
+            if (user.role == 'seller' || user.role == 'admin')
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('🏪 Seller Panel', style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w700, color: AppTheme.leaf900.withValues(alpha: 0.6))),
+                    const SizedBox(height: 8),
+                    _menuItem(context, '📊', 'Dashboard Seller', '/seller', 'Kelola toko'),
+                    _menuItem(context, '📦', 'Kelola Produk', '/seller/products', 'Tambah & edit produk'),
+                    _menuItem(context, '🧾', 'Pesanan Toko', '/seller/orders', 'Proses pesanan'),
+                    _menuItem(context, '📋', 'Inventaris', '/seller/inventory', 'Cek stok'),
+                    _menuItem(context, '💰', 'Penjualan', '/seller/sales', 'Laporan keuangan'),
+                  ],
+                ),
+              ),
+
+            // ── Admin Panel (jika role admin) ──
+            if (user.role == 'admin')
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('🛡️ Admin Panel', style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w700, color: AppTheme.leaf900.withValues(alpha: 0.6))),
+                    const SizedBox(height: 8),
+                    _menuItem(context, '📊', 'Dashboard Admin', '/admin', 'Pusat kontrol'),
+                    _menuItem(context, '👥', 'Pengguna', '/admin/users', 'Kelola pengguna'),
+                    _menuItem(context, '🏪', 'Toko', '/admin/stores', 'Verifikasi toko'),
+                    _menuItem(context, '🏷️', 'Kategori', '/admin/categories', 'Atur kategori'),
+                    _menuItem(context, '🧾', 'Pesanan', '/admin/orders', 'Monitor pesanan'),
+                    _menuItem(context, '💳', 'Pembayaran', '/admin/payments', 'Review pembayaran'),
+                    _menuItem(context, '💬', 'Komunitas', '/admin/community', 'Moderasi konten'),
+                    _menuItem(context, '📈', 'Laporan', '/admin/reports', 'Analisis performa'),
+                    _menuItem(context, '📊', 'Analytics', '/admin/analytics', 'Data analytics'),
+                    _menuItem(context, '⚙️', 'Pengaturan', '/admin/settings', 'Konfigurasi'),
+                  ],
+                ),
+              ),
 
             // ── Logout ──
             Padding(
