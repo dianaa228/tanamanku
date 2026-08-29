@@ -1,5 +1,4 @@
 import '../core/network/api_client.dart';
-import '../core/config/app_config.dart';
 
 class SellerService {
   final _api = ApiClient();
