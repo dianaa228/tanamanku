@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -15,186 +16,166 @@ class ProfilePage extends StatelessWidget {
     final user = auth.user;
 
     if (user == null) {
-      return Scaffold(
-        backgroundColor: AppTheme.cream,
-        body: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Text('🔐', style: TextStyle(fontSize: 56)),
-              const SizedBox(height: 16),
-              Text('Masuk dulu yuk', style: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.w800)),
-              const SizedBox(height: 8),
-              Text('Masuk untuk mengakses profil & kebunmu', style: GoogleFonts.poppins(fontSize: 13, color: AppTheme.leaf900.withValues(alpha: 0.5))),
-              const SizedBox(height: 24),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ElevatedButton(onPressed: () => context.push('/login'), child: const Text('Masuk')),
-                  const SizedBox(width: 12),
-                  OutlinedButton(onPressed: () => context.push('/register'), child: const Text('Daftar')),
-                ],
-              ),
-            ],
+      return AnnotatedRegion<SystemUiOverlayStyle>(
+        value: const SystemUiOverlayStyle(statusBarColor: Colors.transparent, statusBarIconBrightness: Brightness.dark),
+        child: Scaffold(
+          backgroundColor: AppTheme.cream,
+          body: Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 80, height: 80,
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(colors: [AppTheme.leaf400, AppTheme.leaf600]),
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                  child: const Center(child: Text('🔐', style: TextStyle(fontSize: 36))),
+                ),
+                const SizedBox(height: 20),
+                Text('Masuk dulu yuk', style: GoogleFonts.plusJakartaSans(fontSize: 22, fontWeight: FontWeight.w800, color: AppTheme.leaf950)),
+                const SizedBox(height: 8),
+                Text('Masuk untuk mengakses profil & kebunmu', style: GoogleFonts.plusJakartaSans(fontSize: 14, color: AppTheme.leaf400)),
+                const SizedBox(height: 28),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(onPressed: () => context.push('/login'), child: const Text('Masuk')),
+                    const SizedBox(width: 12),
+                    OutlinedButton(onPressed: () => context.push('/register'), child: const Text('Daftar')),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       );
     }
 
-    return Scaffold(
-      backgroundColor: AppTheme.cream,
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            // ── Profil card ──
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.fromLTRB(20, 48, 20, 24),
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [AppTheme.leaf600, AppTheme.leaf800],
-                ),
-              ),
-              child: Column(
-                children: [
-                  CircleAvatar(
-                    radius: 40,
-                    backgroundColor: Colors.white.withValues(alpha: 0.15),
-                    child: Text(user.avatar ?? '🧑‍🌾', style: const TextStyle(fontSize: 36)),
-                  ),
-                  const SizedBox(height: 12),
-                  Text(user.name, style: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.w800, color: Colors.white)),
-                  const SizedBox(height: 4),
-                  Text(
-                    '${user.email} · ${user.phone ?? ''}',
-                    style: GoogleFonts.poppins(fontSize: 12, color: Colors.white.withValues(alpha: 0.7)),
-                  ),
-                  if (user.memberSince != null)
-                    Text(
-                      'Bergabung ${AppFormatter.date(AppFormatter.parseDate(user.memberSince))}',
-                      style: GoogleFonts.poppins(fontSize: 11, color: Colors.white.withValues(alpha: 0.5)),
-                    ),
-                ],
-              ),
-            ),
-
-            // ── Statistik ──
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, -16, 20, 0),
-              child: Row(
-                children: [
-                  _statCard('🪴', '${user.stats?['plants'] ?? 0}', 'Tanaman'),
-                  const SizedBox(width: 10),
-                  _statCard('📦', '${user.stats?['orders'] ?? 0}', 'Pesanan'),
-                  const SizedBox(width: 10),
-                  _statCard('💬', '${user.stats?['posts'] ?? 0}', 'Post'),
-                ],
-              ),
-            ),
-
-            // ── Menu Utama ──
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('🗂️ Menu Utama', style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w700, color: AppTheme.leaf900.withValues(alpha: 0.6))),
-                  const SizedBox(height: 8),
-                  _menuItem(context, '📦', 'Pesanan saya', '/orders', 'Pantau status pesanan'),
-                  _menuItem(context, '🪴', 'My Garden', '/my-garden', 'Kelola tanaman'),
-                  _menuItem(context, '🔔', 'Notifikasi', '/notifications', 'Lihat notifikasi'),
-                  _menuItem(context, '⭐', 'Langganan', '/subscription', 'Kelola paket langganan'),
-                  _menuItem(context, '💬', 'Komunitas', '/community', 'Berbagi cerita'),
-                ],
-              ),
-            ),
-
-            // ── Fitur Lainnya ──
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('🌿 Fitur Lainnya', style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w700, color: AppTheme.leaf900.withValues(alpha: 0.6))),
-                  const SizedBox(height: 8),
-                  _menuItem(context, '💡', 'Plant Finder', '/plant-finder', 'Cari tanaman ideal'),
-                  _menuItem(context, '🩺', 'Plant Diagnosis', '/plant-diagnosis', 'Cek kesehatan'),
-                  _menuItem(context, '🔄', 'Plant Exchange', '/plant-exchange', 'Tukar tanaman'),
-                  _menuItem(context, '📦', 'Listing Saya', '/my-listings', 'Kelola listing'),
-                  _menuItem(context, '🔄', 'Pertukaran Saya', '/my-exchanges', 'Riwayat tukar'),
-                  _menuItem(context, '🔧', 'Jasa Berkebun', '/services', 'Lihat jasa'),
-                  _menuItem(context, '📋', 'Booking Saya', '/my-bookings', 'Riwayat booking'),
-                ],
-              ),
-            ),
-
-            // ── Seller Panel (jika role seller) ──
-            if (user.role == 'seller' || user.role == 'admin')
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('🏪 Seller Panel', style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w700, color: AppTheme.leaf900.withValues(alpha: 0.6))),
-                    const SizedBox(height: 8),
-                    _menuItem(context, '📊', 'Dashboard Seller', '/seller', 'Kelola toko'),
-                    _menuItem(context, '📦', 'Kelola Produk', '/seller/products', 'Tambah & edit produk'),
-                    _menuItem(context, '🧾', 'Pesanan Toko', '/seller/orders', 'Proses pesanan'),
-                    _menuItem(context, '📋', 'Inventaris', '/seller/inventory', 'Cek stok'),
-                    _menuItem(context, '💰', 'Penjualan', '/seller/sales', 'Laporan keuangan'),
-                  ],
-                ),
-              ),
-
-            // ── Admin Panel (jika role admin) ──
-            if (user.role == 'admin')
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('🛡️ Admin Panel', style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w700, color: AppTheme.leaf900.withValues(alpha: 0.6))),
-                    const SizedBox(height: 8),
-                    _menuItem(context, '📊', 'Dashboard Admin', '/admin', 'Pusat kontrol'),
-                    _menuItem(context, '👥', 'Pengguna', '/admin/users', 'Kelola pengguna'),
-                    _menuItem(context, '🏪', 'Toko', '/admin/stores', 'Verifikasi toko'),
-                    _menuItem(context, '🏷️', 'Kategori', '/admin/categories', 'Atur kategori'),
-                    _menuItem(context, '🧾', 'Pesanan', '/admin/orders', 'Monitor pesanan'),
-                    _menuItem(context, '💳', 'Pembayaran', '/admin/payments', 'Review pembayaran'),
-                    _menuItem(context, '💬', 'Komunitas', '/admin/community', 'Moderasi konten'),
-                    _menuItem(context, '📈', 'Laporan', '/admin/reports', 'Analisis performa'),
-                    _menuItem(context, '📊', 'Analytics', '/admin/analytics', 'Data analytics'),
-                    _menuItem(context, '⚙️', 'Pengaturan', '/admin/settings', 'Konfigurasi'),
-                  ],
-                ),
-              ),
-
-            // ── Logout ──
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 24, 20, 40),
-              child: SizedBox(
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: const SystemUiOverlayStyle(statusBarColor: Colors.transparent, statusBarIconBrightness: Brightness.light),
+      child: Scaffold(
+        backgroundColor: AppTheme.cream,
+        body: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Column(
+            children: [
+              // ── Profil card ──
+              Container(
                 width: double.infinity,
-                child: OutlinedButton.icon(
-                  onPressed: () async {
-                    await auth.logout();
-                    if (context.mounted) {
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Sampai jumpa! 👋')));
-                      context.go('/');
-                    }
-                  },
-                  icon: const Icon(Icons.logout_rounded, size: 18, color: Color(0xFFEF4444)),
-                  label: Text('Keluar dari akun', style: GoogleFonts.poppins(fontSize: 13, fontWeight: FontWeight.w600, color: const Color(0xFFEF4444))),
-                  style: OutlinedButton.styleFrom(
-                    side: const BorderSide(color: Color(0xFFEF4444)),
-                    padding: const EdgeInsets.symmetric(vertical: 14),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                padding: const EdgeInsets.fromLTRB(20, 56, 20, 32),
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [Color(0xFF16A34A), Color(0xFF15803D), Color(0xFF166534)],
+                  ),
+                  borderRadius: BorderRadius.vertical(bottom: Radius.circular(32)),
+                ),
+                child: Column(
+                  children: [
+                    Container(
+                      width: 80, height: 80,
+                      decoration: BoxDecoration(
+                        color: Colors.white.withValues(alpha: 0.2),
+                        borderRadius: BorderRadius.circular(24),
+                        border: Border.all(color: Colors.white.withValues(alpha: 0.3)),
+                      ),
+                      child: Center(child: Text(user.avatar ?? '🧑‍🌾', style: const TextStyle(fontSize: 40))),
+                    ),
+                    const SizedBox(height: 16),
+                    Text(user.name, style: GoogleFonts.plusJakartaSans(fontSize: 22, fontWeight: FontWeight.w800, color: Colors.white)),
+                    const SizedBox(height: 4),
+                    Text(
+                      '${user.email} · ${user.phone ?? ''}',
+                      style: GoogleFonts.plusJakartaSans(fontSize: 12, color: Colors.white.withValues(alpha: 0.7)),
+                    ),
+                    if (user.memberSince != null)
+                      Text(
+                        'Bergabung ${AppFormatter.date(AppFormatter.parseDate(user.memberSince))}',
+                        style: GoogleFonts.plusJakartaSans(fontSize: 11, color: Colors.white.withValues(alpha: 0.5)),
+                      ),
+                  ],
+                ),
+              ),
+
+              // ── Statistik ──
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, -20, 20, 0),
+                child: Row(
+                  children: [
+                    _statCard('🪴', '${user.stats?['plants'] ?? 0}', 'Tanaman'),
+                    const SizedBox(width: 10),
+                    _statCard('📦', '${user.stats?['orders'] ?? 0}', 'Pesanan'),
+                    const SizedBox(width: 10),
+                    _statCard('💬', '${user.stats?['posts'] ?? 0}', 'Post'),
+                  ],
+                ),
+              ),
+
+              // ── Menu Utama ──
+              _menuSection('🗂️ Menu Utama', [
+                _menuItem(context, '📦', 'Pesanan saya', '/orders', 'Pantau status pesanan'),
+                _menuItem(context, '🪴', 'My Garden', '/my-garden', 'Kelola tanaman'),
+                _menuItem(context, '🔔', 'Notifikasi', '/notifications', 'Lihat notifikasi'),
+                _menuItem(context, '⭐', 'Langganan', '/subscription', 'Kelola paket langganan'),
+                _menuItem(context, '💬', 'Komunitas', '/community', 'Berbagi cerita'),
+              ]),
+
+              // ── Fitur Lainnya ──
+              _menuSection('🌿 Fitur Lainnya', [
+                _menuItem(context, '💡', 'Plant Finder', '/plant-finder', 'Cari tanaman ideal'),
+                _menuItem(context, '🩺', 'Plant Diagnosis', '/plant-diagnosis', 'Cek kesehatan'),
+                _menuItem(context, '🔄', 'Plant Exchange', '/plant-exchange', 'Tukar tanaman'),
+                _menuItem(context, '📦', 'Listing Saya', '/my-listings', 'Kelola listing'),
+                _menuItem(context, '🔧', 'Jasa Berkebun', '/services', 'Lihat jasa'),
+                _menuItem(context, '📋', 'Booking Saya', '/my-bookings', 'Riwayat booking'),
+              ]),
+
+              // ── Seller Panel ──
+              if (user.role == 'seller' || user.role == 'admin')
+                _menuSection('🏪 Seller Panel', [
+                  _menuItem(context, '📊', 'Dashboard Seller', '/seller', 'Kelola toko'),
+                  _menuItem(context, '📦', 'Kelola Produk', '/seller/products', 'Tambah & edit produk'),
+                  _menuItem(context, '🧾', 'Pesanan Toko', '/seller/orders', 'Proses pesanan'),
+                  _menuItem(context, '💰', 'Penjualan', '/seller/sales', 'Laporan keuangan'),
+                ]),
+
+              // ── Admin Panel ──
+              if (user.role == 'admin')
+                _menuSection('🛡️ Admin Panel', [
+                  _menuItem(context, '📊', 'Dashboard Admin', '/admin', 'Pusat kontrol'),
+                  _menuItem(context, '👥', 'Pengguna', '/admin/users', 'Kelola pengguna'),
+                  _menuItem(context, '🏪', 'Toko', '/admin/stores', 'Verifikasi toko'),
+                  _menuItem(context, '📈', 'Analytics', '/admin/analytics', 'Data analytics'),
+                  _menuItem(context, '⚙️', 'Pengaturan', '/admin/settings', 'Konfigurasi'),
+                ]),
+
+              // ── Logout ──
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 24, 20, 40),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: OutlinedButton.icon(
+                    onPressed: () async {
+                      await auth.logout();
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Sampai jumpa! 👋')));
+                        context.go('/');
+                      }
+                    },
+                    icon: const Icon(Icons.logout_rounded, size: 18, color: Color(0xFFEF4444)),
+                    label: Text('Keluar dari akun', style: GoogleFonts.plusJakartaSans(fontSize: 13, fontWeight: FontWeight.w600, color: const Color(0xFFEF4444))),
+                    style: OutlinedButton.styleFrom(
+                      side: const BorderSide(color: Color(0xFFEF4444)),
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -203,41 +184,64 @@ class ProfilePage extends StatelessWidget {
   Widget _statCard(String icon, String value, String label) {
     return Expanded(
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 14),
+        padding: const EdgeInsets.symmetric(vertical: 16),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: AppTheme.leaf100),
+          boxShadow: [
+            BoxShadow(color: AppTheme.leaf900.withValues(alpha: 0.04), blurRadius: 12, offset: const Offset(0, 4)),
+          ],
         ),
         child: Column(
           children: [
             Text(icon, style: const TextStyle(fontSize: 20)),
             const SizedBox(height: 4),
-            Text(value, style: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.w800)),
-            Text(label, style: GoogleFonts.poppins(fontSize: 10, color: AppTheme.leaf900.withValues(alpha: 0.5))),
+            Text(value, style: GoogleFonts.plusJakartaSans(fontSize: 20, fontWeight: FontWeight.w800, color: AppTheme.leaf950)),
+            Text(label, style: GoogleFonts.plusJakartaSans(fontSize: 10, color: AppTheme.leaf400)),
           ],
         ),
       ),
     );
   }
 
-  Widget _menuItem(BuildContext context, String icon, String label, String route, String desc) {
+  Widget _menuSection(String title, List<Widget> children) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
-      child: ListTile(
-        leading: Container(
-          width: 44,
-          height: 44,
-          decoration: BoxDecoration(color: AppTheme.leaf100, borderRadius: BorderRadius.circular(14)),
-          child: Center(child: Text(icon, style: const TextStyle(fontSize: 22))),
-        ),
-        title: Text(label, style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w600)),
-        subtitle: Text(desc, style: GoogleFonts.poppins(fontSize: 11, color: AppTheme.leaf900.withValues(alpha: 0.5))),
-        trailing: Icon(Icons.chevron_right_rounded, color: AppTheme.leaf900.withValues(alpha: 0.3)),
-        onTap: () => context.push(route),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-        tileColor: Colors.white,
+      padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(title, style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.w700, color: AppTheme.leaf400)),
+          const SizedBox(height: 8),
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: [
+                BoxShadow(color: AppTheme.leaf900.withValues(alpha: 0.03), blurRadius: 8, offset: const Offset(0, 2)),
+              ],
+            ),
+            child: Column(children: children),
+          ),
+        ],
       ),
+    );
+  }
+
+  Widget _menuItem(BuildContext context, String icon, String label, String route, String desc) {
+    return ListTile(
+      leading: Container(
+        width: 40, height: 40,
+        decoration: BoxDecoration(
+          color: AppTheme.leaf50,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Center(child: Text(icon, style: const TextStyle(fontSize: 20))),
+      ),
+      title: Text(label, style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.w600, color: AppTheme.leaf950)),
+      subtitle: Text(desc, style: GoogleFonts.plusJakartaSans(fontSize: 11, color: AppTheme.leaf400)),
+      trailing: Icon(Icons.chevron_right_rounded, color: AppTheme.leaf300, size: 20),
+      onTap: () => context.push(route),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
     );
   }
 }
