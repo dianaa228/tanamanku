@@ -1,22 +1,14 @@
 # ========================================
-# Tanamanku — .htaccess untuk Hostinger
-# Document root: public_html/
+# Tanamanku — .htaccess (simplified)
+# Routes everything to index.php
 # ========================================
 
 RewriteEngine On
 RewriteBase /
 
-# --- Mencegah direktori listing ---
-Options -Indexes
+# Don't rewrite existing files
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
 
-# --- Handle API routes → Laravel (api.php) ---
-RewriteCond %{REQUEST_URI} ^/api/
-RewriteRule ^api/(.*)$ api.php/$1 [L,QSA]
-
-# --- Serve existing files & directories langsung ---
-RewriteCond %{REQUEST_FILENAME} -f [OR]
-RewriteCond %{REQUEST_FILENAME} -d
-RewriteRule ^ - [L]
-
-# --- Fallback: React SPA (index.html) ---
-RewriteRule ^ index.html [L]
+# Route everything to index.php
+RewriteRule ^ index.php [L,QSA]
