@@ -36,27 +36,39 @@ export default function Footer() {
   const [email, setEmail] = useState('')
 
   return (
-    <footer className="mt-16 bg-leaf-950 pb-24 text-leaf-100 md:pb-10">
-      <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6">
+    <footer className="relative mt-16 overflow-hidden bg-leaf-950 pb-24 text-leaf-100 md:pb-10">
+      {/* Background glow */}
+      <div className="pointer-events-none absolute -left-32 top-0 h-64 w-64 rounded-full bg-leaf-800/20 blur-3xl" />
+      <div className="pointer-events-none absolute -right-32 bottom-20 h-72 w-72 rounded-full bg-leaf-700/10 blur-3xl" />
+
+      <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6">
         <div className="grid gap-10 md:grid-cols-4">
           {/* Brand */}
           <div className="md:col-span-1">
-            <Link to="/" className="flex items-center gap-2">
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-leaf-400 to-leaf-600 text-xl">
+            <Link to="/" className="group inline-flex items-center gap-2.5">
+              <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-leaf-400 to-leaf-600 text-xl shadow-lg shadow-leaf-500/20 transition group-hover:scale-105">
                 🌿
               </span>
-              <span className="text-xl font-extrabold text-white">Tanamanku</span>
+              <span className="text-xl font-extrabold text-white">
+                Tana<span className="text-leaf-400">manku</span>
+              </span>
             </Link>
-            <p className="mt-4 max-w-xs text-sm leading-relaxed text-leaf-100/60">
+            <p className="mt-4 max-w-xs text-sm leading-relaxed text-leaf-200/50">
               Belanja, rawat, dan tumbuhkan kebun perkotaanmu dalam satu aplikasi. 🌱
             </p>
             <div className="mt-5 flex gap-3">
-              {['📷', '🐦', '▶️', '🎵'].map((icon, i) => (
+              {[
+                { icon: '📷', label: 'Instagram' },
+                { icon: '🐦', label: 'Twitter' },
+                { icon: '▶️', label: 'YouTube' },
+                { icon: '🎵', label: 'TikTok' },
+              ].map((s, i) => (
                 <span
                   key={i}
-                  className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-leaf-900 text-sm transition hover:bg-leaf-800"
+                  className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-xl bg-leaf-900/80 text-sm ring-1 ring-white/5 transition hover:bg-leaf-800 hover:ring-white/10 hover:scale-105"
+                  title={s.label}
                 >
-                  {icon}
+                  {s.icon}
                 </span>
               ))}
             </div>
@@ -65,11 +77,11 @@ export default function Footer() {
           {/* Links */}
           {columns.map((col) => (
             <div key={col.title}>
-              <h4 className="text-sm font-bold uppercase tracking-wider text-leaf-300">{col.title}</h4>
-              <ul className="mt-4 space-y-2.5">
+              <h4 className="text-xs font-bold uppercase tracking-widest text-leaf-400">{col.title}</h4>
+              <ul className="mt-4 space-y-3">
                 {col.links.map((l) => (
                   <li key={l.label}>
-                    <Link to={l.to} className="text-sm text-leaf-100/60 transition hover:text-white">
+                    <Link to={l.to} className="text-sm text-leaf-200/50 transition hover:text-white hover:translate-x-1 inline-block">
                       {l.label}
                     </Link>
                   </li>
@@ -80,11 +92,11 @@ export default function Footer() {
         </div>
 
         {/* Newsletter */}
-        <div className="mt-12 rounded-3xl bg-leaf-900/60 p-6 sm:p-8">
+        <div className="mt-14 rounded-3xl bg-white/5 p-6 ring-1 ring-white/10 backdrop-blur-sm sm:p-8">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <h4 className="text-lg font-bold text-white">Dapatkan tips berkebun mingguan 🌻</h4>
-              <p className="mt-1 text-sm text-leaf-100/60">Trik merawat tanaman langsung ke inbox Anda. Gratis, tanpa spam.</p>
+              <p className="mt-1 text-sm text-leaf-200/50">Trik merawat tanaman langsung ke inbox Anda. Gratis, tanpa spam.</p>
             </div>
             <form
               className="flex w-full max-w-md gap-2"
@@ -101,18 +113,18 @@ export default function Footer() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Alamat email Anda"
-                className="flex-1 rounded-xl border border-leaf-800 bg-leaf-950/50 px-4 py-3 text-sm text-white placeholder:text-leaf-100/40 focus:border-leaf-400 focus:outline-none focus:ring-2 focus:ring-leaf-500/30"
+                className="flex-1 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-leaf-200/30 focus:border-leaf-400/50 focus:outline-none focus:ring-2 focus:ring-leaf-500/30"
               />
-              <button className="rounded-xl bg-sun-400 px-5 py-3 text-sm font-bold text-soil-950 transition hover:bg-sun-300">
+              <button className="rounded-xl bg-gradient-to-r from-sun-400 to-sun-500 px-6 py-3 text-sm font-bold text-soil-950 shadow-lg shadow-sun-400/20 transition hover:from-sun-300 hover:to-sun-400 hover:shadow-xl hover:shadow-sun-400/30">
                 Langganan
               </button>
             </form>
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-leaf-900 pt-6 text-xs text-leaf-100/40 sm:flex-row">
+        <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-white/10 pt-6 text-xs text-leaf-200/30 sm:flex-row">
           <p>© 2026 Tanamanku. Dibuat dengan 🧡 untuk kebun perkotaan Indonesia.</p>
-          <p>🌱 Belanja · 🌿 Rawat · 🪴 Tumbuh</p>
+          <p className="flex items-center gap-1">🌱 Belanja · 🌿 Rawat · 🪴 Tumbuh</p>
         </div>
       </div>
     </footer>

@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  /* Palet hijau daun (primary) */
+  /* ─── Premium Green Palette ─── */
   --color-leaf-50: #f0fdf4;
   --color-leaf-100: #dcfce7;
   --color-leaf-200: #bbf7d0;
@@ -14,7 +14,7 @@
   --color-leaf-900: #14532d;
   --color-leaf-950: #052e16;
 
-  /* Palet tanah (warm) */
+  /* ─── Warm Soil Palette ─── */
   --color-soil-50: #faf6f0;
   --color-soil-100: #f3eadd;
   --color-soil-200: #e6d3ba;
@@ -27,7 +27,7 @@
   --color-soil-900: #57362b;
   --color-soil-950: #2f1b15;
 
-  /* Aksen matahari */
+  /* ─── Sun Accent ─── */
   --color-sun-100: #fff7d6;
   --color-sun-200: #ffeaa0;
   --color-sun-300: #ffd866;
@@ -35,26 +35,29 @@
   --color-sun-500: #f5a714;
   --color-sun-600: #d98509;
 
-  /* Latar */
+  /* ─── Background ─── */
   --color-cream: #fafaf9;
   --color-cream-dark: #f5f5f4;
 
   --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-display: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
 
-  /* Modern shadows */
+  /* ─── Modern Shadows ─── */
   --shadow-soft: 0 1px 3px rgb(0 0 0 / 0.04), 0 4px 12px -1px rgb(0 0 0 / 0.06);
   --shadow-lift: 0 4px 6px -1px rgb(0 0 0 / 0.07), 0 10px 25px -3px rgb(0 0 0 / 0.1);
   --shadow-glow: 0 0 20px rgb(22 163 74 / 0.15);
   --shadow-glass: 0 8px 32px rgb(0 0 0 / 0.08);
+  --shadow-card: 0 2px 8px rgb(0 0 0 / 0.04), 0 8px 24px -4px rgb(0 0 0 / 0.08);
+  --shadow-elevated: 0 8px 16px -4px rgb(0 0 0 / 0.08), 0 20px 40px -8px rgb(0 0 0 / 0.12);
 
-  /* Modern animations */
+  /* ─── Modern Animations ─── */
   --animate-fade-up: fade-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
   --animate-fade-in: fade-in 0.5s ease-out both;
   --animate-float: float 6s ease-in-out infinite;
   --animate-pop: pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
   --animate-slide-up: slide-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
   --animate-scale-in: scale-in 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  --animate-shimmer: shimmer 2s linear infinite;
 
   @keyframes fade-up {
     from { opacity: 0; transform: translateY(20px); }
@@ -80,6 +83,14 @@
     from { opacity: 0; transform: scale(0.95); }
     to { opacity: 1; transform: scale(1); }
   }
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+  @keyframes pulse-soft {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+  }
 }
 
 /* ── Base ── */
@@ -97,65 +108,47 @@ body {
   @apply bg-leaf-300/60 text-leaf-950;
 }
 
-/* ── Glassmorphism utility ── */
+/* ── Glassmorphism ── */
 .glass {
-  background: rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.7);
 }
 
 .glass-dark {
-  background: rgba(5, 46, 22, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(5, 46, 22, 0.88);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* ── Modern card hover ── */
+/* ── Card hover ── */
 .card-hover {
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .card-hover:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 40px -8px rgb(22 163 74 / 0.18);
+  transform: translateY(-6px);
+  box-shadow: 0 16px 48px -12px rgb(22 163 74 / 0.2);
 }
 
 /* ── Gradient text ── */
 .gradient-text {
-  background: linear-gradient(135deg, #16a34a, #22c55e);
+  background: linear-gradient(135deg, #16a34a 0%, #4ade80 50%, #f5a714 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* ── Modern scrollbar ── */
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
+/* ── Scrollbar ── */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-*::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-*::-webkit-scrollbar-thumb {
-  background: #c2e5cf;
-  border-radius: 8px;
-}
-*::-webkit-scrollbar-track {
-  background: transparent;
-}
+*::-webkit-scrollbar { width: 6px; height: 6px; }
+*::-webkit-scrollbar-thumb { background: #c2e5cf; border-radius: 8px; }
+*::-webkit-scrollbar-track { background: transparent; }
 
-/* ── Smooth transitions ── */
-.transition-smooth {
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* ── Button shine effect ── */
+/* ── Button shine ── */
 .btn-shine {
   position: relative;
   overflow: hidden;
@@ -178,4 +171,54 @@ body {
 }
 .btn-shine:hover::after {
   left: 120%;
+}
+
+/* ── Smooth transitions ── */
+.transition-smooth {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ── Mesh gradient backgrounds ── */
+.mesh-hero {
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(74, 222, 128, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(255, 193, 51, 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 40% 80%, rgba(187, 247, 208, 0.2) 0%, transparent 50%),
+    linear-gradient(180deg, #f0fdf4 0%, #fafaf9 100%);
+}
+
+/* ── Noise texture overlay ── */
+.noise::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+/* ── Premium badge ── */
+.premium-badge {
+  background: linear-gradient(135deg, #ffc133, #f5a714, #d98509);
+  box-shadow: 0 2px 8px rgb(245 167 20 / 0.3);
+}
+
+/* ── Gradient border ── */
+.gradient-border {
+  position: relative;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, #4ade80, #22c55e, #f5a714);
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.gradient-border:hover::before {
+  opacity: 1;
 }

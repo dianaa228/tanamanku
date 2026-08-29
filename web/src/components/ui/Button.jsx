@@ -3,22 +3,22 @@ import { Link } from 'react-router-dom'
 import { cx } from '../../utils/format'
 
 const variants = {
-  primary: 'bg-leaf-600 text-white hover:bg-leaf-700 shadow-soft hover:shadow-lift',
-  secondary: 'bg-white text-leaf-800 ring-1 ring-leaf-200 hover:bg-leaf-50',
-  outline: 'bg-transparent text-leaf-700 ring-1 ring-leaf-300 hover:bg-leaf-50',
-  soft: 'bg-leaf-100 text-leaf-800 hover:bg-leaf-200',
-  danger: 'bg-rose-600 text-white hover:bg-rose-700',
-  ghost: 'bg-transparent text-leaf-700 hover:bg-leaf-50',
-  soil: 'bg-soil-600 text-white hover:bg-soil-700',
-  sun: 'bg-sun-400 text-soil-950 hover:bg-sun-300',
+  primary: 'bg-gradient-to-r from-leaf-600 to-leaf-500 text-white hover:from-leaf-700 hover:to-leaf-600 shadow-lg shadow-leaf-600/25 hover:shadow-xl hover:shadow-leaf-600/30',
+  secondary: 'bg-white text-leaf-800 ring-1 ring-leaf-200/80 hover:bg-leaf-50 hover:ring-leaf-300 shadow-sm hover:shadow-md',
+  outline: 'bg-transparent text-leaf-700 ring-1 ring-leaf-300 hover:bg-leaf-50 hover:ring-leaf-400',
+  soft: 'bg-leaf-100 text-leaf-800 hover:bg-leaf-200 shadow-sm',
+  danger: 'bg-gradient-to-r from-rose-600 to-rose-500 text-white hover:from-rose-700 hover:to-rose-600 shadow-lg shadow-rose-600/25',
+  ghost: 'bg-transparent text-leaf-700 hover:bg-leaf-100 hover:text-leaf-800',
+  soil: 'bg-gradient-to-r from-soil-600 to-soil-500 text-white hover:from-soil-700 hover:to-soil-600 shadow-lg shadow-soil-600/25',
+  sun: 'bg-gradient-to-r from-sun-400 to-sun-500 text-soil-950 hover:from-sun-300 hover:to-sun-400 shadow-lg shadow-sun-400/30',
 }
 
 const sizes = {
-  xs: 'px-3 py-1.5 text-xs',
-  sm: 'px-4 py-2 text-sm',
-  md: 'px-5 py-2.5 text-sm',
-  lg: 'px-7 py-3.5 text-base',
-  icon: 'p-2.5 text-base',
+  xs: 'px-3 py-1.5 text-xs rounded-lg',
+  sm: 'px-4 py-2 text-sm rounded-xl',
+  md: 'px-5 py-2.5 text-sm rounded-xl',
+  lg: 'px-7 py-3.5 text-base rounded-2xl',
+  icon: 'p-2.5 text-base rounded-xl',
 }
 
 const Button = forwardRef(function Button(
@@ -26,7 +26,7 @@ const Button = forwardRef(function Button(
   ref,
 ) {
   const classes = cx(
-    'inline-flex items-center justify-center gap-2 rounded-xl font-semibold transition-all duration-200 active:scale-[0.97] disabled:pointer-events-none disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-leaf-400 focus-visible:ring-offset-2',
+    'inline-flex items-center justify-center gap-2 font-semibold transition-all duration-200 active:scale-[0.97] disabled:pointer-events-none disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-leaf-400 focus-visible:ring-offset-2',
     variants[variant],
     sizes[size],
     className,
