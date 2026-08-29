@@ -1,8 +1,9 @@
 #!/bin/bash
 # ========================================
-# Tanamanku — Server Fix Script
+# Tanamanku — Server Fix Script (No sshpass)
 # ========================================
 # Diagnose & fix 500 error di Hostinger
+# Tanpa sshpass — password diminta interaktif
 # Jalankan dari root project: bash hostinger-deploy/fix-server.sh
 # ========================================
 
@@ -29,173 +30,90 @@ error() { echo -e "${RED}[✗]${NC} $1"; }
 info()  { echo -e "${BLUE}[i]${NC} $1"; }
 step()  { echo -e "\n${CYAN}═══ STEP $1 ═══${NC} $2"; }
 
-# ── Ask Password ──
 echo ""
 echo "========================================="
 echo "  🔧 TANAMANKU — Server Fix Script"
 echo "========================================="
 echo ""
-read -sp "Masukkan SSH password: " SSH_PASS
+echo "Server: $SSH_USER@$SSH_HOST:$SSH_PORT"
+echo "Remote: $REMOTE_APP"
 echo ""
+
+# ── SSH Config ──
+SSH_OPTS="-o StrictHostKeyChecking=no -o ConnectTimeout=10 -p $SSH_PORT"
+
+# ── Test connection ──
+step "0" "🔌 Testing SSH connection..."
+echo "Ketika diminta password, masukkan: Tanamanku1\""
 echo ""
+ssh $SSH_OPTS "$SSH_USER@$SSH_HOST" "echo 'Connection OK'" || { error "Gagal koneksi!"; exit 1; }
 
-# ── SSH Command Helper ──
-run_ssh() {
-    sshpass -p "$SSH_PASS" ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 -p "$SSH_PORT" "$SSH_USER@$SSH_HOST" "$1"
-}
+# ── Step 1: Fix web.php ──
+step "1" "🔧 Fixing web.php (remove garbage text)..."
+ssh $SSH_OPTS "$SSH_USER@$SSH_HOST" "cd $REMOTE_APP && sed -i 's/^angg mrkii //' routes/web.php 2>/dev/null; echo '✓ web.php fixed'" || warn "Fix web.php manual"
 
-# ── Check sshpass ──
-if ! command -v sshpass &> /dev/null; then
-    warn "sshpass tidak ditemukan!"
-    echo "  Install via brew: brew install hudochenkov/sshpass/sshpass"
-    echo "  Atau: sudo apt install sshpass"
-    exit 1
-fi
+# ── Step 2: Fix SESSION_DOMAIN ──
+step "2" "🔧 Fixing SESSION_DOMAIN in .env..."
+ssh $SSH_OPTS "$SSH_USER@$SSH_HOST" "cd $REMOTE_APP && sed -i 's/SESSION_DOMAIN=.hostingersite.com/SESSION_DOMAIN=hostingersite.com/' .env 2>/dev/null; echo '✓ SESSION_DOMAIN fixed'" || warn "Fix .env manual"
 
-# ========================================
-step "1" "🔍 Checking server connectivity..."
-# ========================================
-if run_ssh "echo 'connected'" 2>/dev/null | grep -q "connected"; then
-    log "Server connected!"
-else
-    error "Cannot connect to server. Check SSH credentials."
-    exit 1
-fi
-
-# ========================================
-step "2" "📁 Checking directory structure..."
-# ========================================
-run_ssh "ls -la $REMOTE_APP/ 2>/dev/null | head -5" || warn "Backend directory missing!"
-run_ssh "ls -la $REMOTE_PUBLIC/ 2>/dev/null | head -5" || warn "Public directory missing!"
-
-# Check key files
-echo ""
-info "Checking key files..."
-run_ssh "test -f $REMOTE_APP/artisan && echo '✓ artisan' || echo '✗ artisan MISSING'"
-run_ssh "test -f $REMOTE_APP/.env && echo '✓ .env' || echo '✗ .env MISSING'"
-run_ssh "test -f $REMOTE_PUBLIC/api.php && echo '✓ api.php' || echo '✗ api.php MISSING'"
-run_ssh "test -f $REMOTE_PUBLIC/.htaccess && echo '✓ .htaccess' || echo '✗ .htaccess MISSING'"
-run_ssh "test -d $REMOTE_APP/vendor && echo '✓ vendor/' || echo '✗ vendor/ MISSING'"
-run_ssh "test -d $REMOTE_APP/app && echo '✓ app/' || echo '✗ app/ MISSING'"
-
-# ========================================
+# ── Step 3: Generate APP_KEY ──
 step "3" "🔑 Checking APP_KEY..."
-# ========================================
-HAS_KEY=$(run_ssh "grep -c 'APP_KEY=base64:' $REMOTE_APP/.env 2>/dev/null" || echo "0")
+HAS_KEY=$(ssh $SSH_OPTS "$SSH_USER@$SSH_HOST" "grep -c 'APP_KEY=base64:' $REMOTE_APP/.env 2>/dev/null" || echo "0")
 if [ "$HAS_KEY" = "0" ]; then
-    warn "APP_KEY is EMPTY! Generating..."
-    run_ssh "cd $REMOTE_APP && php artisan key:generate --force" 2>/dev/null
-    if [ $? -eq 0 ]; then
-        log "APP_KEY generated successfully!"
-    else
-        error "Failed to generate APP_KEY"
-    fi
+    warn "APP_KEY kosong! Generating..."
+    ssh $SSH_OPTS "$SSH_USER@$SSH_HOST" "cd $REMOTE_APP && php artisan key:generate --force" && log "APP_KEY generated!" || warn "Gagal generate key"
 else
-    log "APP_KEY already set"
+    log "APP_KEY sudah ada"
 fi
 
-# ========================================
+# ── Step 4: Check DB config ──
 step "4" "🗄️ Checking database config..."
-# ========================================
 echo ""
-info "Database configuration in .env:"
-run_ssh "grep '^DB_' $REMOTE_APP/.env 2>/dev/null"
+info "Database config:"
+ssh $SSH_OPTS "$SSH_USER@$SSH_HOST" "grep '^DB_' $REMOTE_APP/.env 2>/dev/null"
 echo ""
 
-# Test DB connection
-info "Testing database connection..."
-DB_TEST=$(run_ssh "cd $REMOTE_APP && php artisan tinker --execute=\"echo 'DB_OK';\" 2>&1" || echo "DB_FAIL")
-if echo "$DB_TEST" | grep -q "DB_OK"; then
-    log "Database connection OK!"
-else
-    warn "Database connection FAILED!"
-    echo ""
-    warn "Common fixes:"
-    echo "  1. Pastikan database sudah dibuat di hPanel → Databases"
-    echo "  2. Update DB_PASSWORD di .env"
-    echo "  3. Pastikan DB_HOST=127.0.0.1 (bukan localhost)"
-fi
+# ── Step 5: Fix permissions ──
+step "5" "🔧 Setting permissions..."
+ssh $SSH_OPTS "$SSH_USER@$SSH_HOST" "chmod -R 775 $REMOTE_APP/storage 2>/dev/null && echo '✓ storage/'" || warn "Gagal set storage permissions"
+ssh $SSH_OPTS "$SSH_USER@$SSH_HOST" "chmod -R 775 $REMOTE_APP/bootstrap/cache 2>/dev/null && echo '✓ bootstrap/cache/'" || warn "Gagal set cache permissions"
 
-# ========================================
-step "5" "🔧 Fixing permissions..."
-# ========================================
-info "Setting permissions..."
-run_ssh "chmod -R 775 $REMOTE_APP/storage 2>/dev/null && echo '✓ storage/ permissions'"
-run_ssh "chmod -R 775 $REMOTE_APP/bootstrap/cache 2>/dev/null && echo '✓ bootstrap/cache/ permissions'"
-run_ssh "chmod 755 $REMOTE_PUBLIC 2>/dev/null && echo '✓ public_html/ permissions'"
-run_ssh "chmod 644 $REMOTE_PUBLIC/.htaccess 2>/dev/null && echo '✓ .htaccess permissions'"
-run_ssh "chmod 644 $REMOTE_PUBLIC/api.php 2>/dev/null && echo '✓ api.php permissions'"
+# ── Step 6: Test DB connection ──
+step "6" "🗄️ Testing database connection..."
+ssh $SSH_OPTS "$SSH_USER@$SSH_HOST" "cd $REMOTE_APP && php artisan tinker --execute=\"try { \\Illuminate\\Support\\Facades\\DB::connection()->getPdo(); echo 'DB Connected!'; } catch (\\Exception \$e) { echo 'DB Error: ' . \$e->getMessage(); }\" 2>&1" || warn "DB test failed"
 
-# ========================================
-step "6" "🗄️ Running migrations..."
-# ========================================
-read -p "Jalankan database migrations? (y/n): " RUN_MIGRATE
-if [ "$RUN_MIGRATE" = "y" ] || [ "$RUN_MIGRATE" = "Y" ]; then
-    info "Running migrations..."
-    MIGRATE_OUTPUT=$(run_ssh "cd $REMOTE_APP && php artisan migrate --force 2>&1" || echo "MIGRATE_FAILED")
-    echo "$MIGRATE_OUTPUT"
-    
-    if echo "$MIGRATE_OUTPUT" | grep -q "MIGRATE_FAILED"; then
-        warn "Migration failed! Checking table structure..."
-        
-        # Check if tables exist
-        TABLES=$(run_ssh "cd $REMOTE_APP && php artisan tinker --execute=\"echo implode(', ', \\Illuminate\\Support\\Facades\\Schema::getTableListing());\" 2>&1" || echo "")
-        if [ -n "$TABLES" ]; then
-            info "Existing tables: $TABLES"
-        fi
-    else
-        log "Migrations completed!"
-    fi
-fi
+# ── Step 7: Run migrations ──
+step "7" "🗄️ Running migrations..."
+ssh $SSH_OPTS "$SSH_USER@$SSH_HOST" "cd $REMOTE_APP && php artisan migrate --force 2>&1" || warn "Migration failed — cek database"
 
-# ========================================
-step "7" "🌱 Running seeders (optional)..."
-# ========================================
-read -p "Jalankan database seeders? (y/n): " RUN_SEED
-if [ "$RUN_SEED" = "y" ] || [ "$RUN_SEED" = "Y" ]; then
-    info "Seeding database..."
-    run_ssh "cd $REMOTE_APP && php artisan db:seed --force 2>&1" || warn "Seeder failed"
-    log "Seeding completed!"
-fi
-
-# ========================================
+# ── Step 8: Cache config ──
 step "8" "⚡ Caching config..."
-# ========================================
-info "Caching config..."
-run_ssh "cd $REMOTE_APP && php artisan config:cache 2>/dev/null && echo '✓ config cached'"
-run_ssh "cd $REMOTE_APP && php artisan route:cache 2>/dev/null && echo '✓ routes cached'"
-run_ssh "cd $REMOTE_APP && php artisan view:cache 2>/dev/null && echo '✓ views cached'"
+ssh $SSH_OPTS "$SSH_USER@$SSH_HOST" "cd $REMOTE_APP && php artisan config:cache 2>/dev/null && echo '✓ config cached'"
+ssh $SSH_OPTS "$SSH_USER@$SSH_HOST" "cd $REMOTE_APP && php artisan route:cache 2>/dev/null && echo '✓ routes cached'" || warn "Route cache failed (mungkin karena web.php route)"
 
-# ========================================
-step "9" "🏥 Testing API endpoints..."
-# ========================================
-echo ""
-info "Testing API..."
-API_RESULT=$(run_ssh "curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1/api/v1/categories 2>/dev/null" || echo "000")
+# ── Step 9: Test API from server ──
+step "9" "🏥 Testing API from server..."
+API_RESULT=$(ssh $SSH_OPTS "$SSH_USER@$SSH_HOST" "curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1/api/v1/categories 2>/dev/null" || echo "000")
 if [ "$API_RESULT" = "200" ]; then
     log "API /categories → 200 OK!"
 else
     warn "API /categories → HTTP $API_RESULT"
 fi
 
-API_RESULT2=$(run_ssh "curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1/api/v1/plant-species 2>/dev/null" || echo "000")
+API_RESULT2=$(ssh $SSH_OPTS "$SSH_USER@$SSH_HOST" "curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1/api/v1/plant-species 2>/dev/null" || echo "000")
 if [ "$API_RESULT2" = "200" ]; then
     log "API /plant-species → 200 OK!"
 else
     warn "API /plant-species → HTTP $API_RESULT2"
 fi
 
-# ========================================
-step "10" "📋 Checking error logs..."
-# ========================================
+# ── Step 10: Check error logs ──
+step "10" "📋 Last 20 lines of Laravel log:"
 echo ""
-info "Last 20 lines of Laravel log:"
-run_ssh "tail -20 $REMOTE_APP/storage/logs/laravel.log 2>/dev/null" || warn "Log file not found"
+ssh $SSH_OPTS "$SSH_USER@$SSH_HOST" "tail -20 $REMOTE_APP/storage/logs/laravel.log 2>/dev/null" || warn "Log not found"
 echo ""
 
-# ========================================
-# DONE
-# ========================================
+# ── Done ──
 echo ""
 echo "========================================="
 echo "  ✅ FIX COMPLETE!"
@@ -204,9 +122,8 @@ echo ""
 log "Website: https://powderblue-moose-368537.hostingersite.com/"
 log "API:     https://powderblue-moose-368537.hostingersite.com/api/v1/categories"
 echo ""
-warn "If still 500 error, check:"
-echo "  1. hPanel → Databases → MySQL → verify DB exists"
-echo "  2. hPanel → Advanced → PHP → verify version ≥ 8.1"
-echo "  3. hPanel → Metrics → Errors → check PHP error log"
-echo "  4. SSH: nano ~/tanamanku/.env → verify DB_PASSWORD"
+warn "Jika masih error, cek:"
+echo "  1. hPanel → Databases → pastikan DB u519141514_tanamanku ada"
+echo "  2. SSH: nano ~/tanamanku/.env → pastikan DB_PASSWORD benar"
+echo "  3. hPanel → Metrics → Errors → cek PHP error log"
 echo ""
