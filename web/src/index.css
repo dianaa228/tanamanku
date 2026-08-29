@@ -1,66 +1,90 @@
 @import "tailwindcss";
 
 @theme {
-  /* ─── Premium Green Palette ─── */
-  --color-leaf-50: #f0fdf4;
-  --color-leaf-100: #dcfce7;
-  --color-leaf-200: #bbf7d0;
-  --color-leaf-300: #86efac;
-  --color-leaf-400: #4ade80;
-  --color-leaf-500: #22c55e;
-  --color-leaf-600: #16a34a;
-  --color-leaf-700: #15803d;
-  --color-leaf-800: #166534;
-  --color-leaf-900: #14532d;
-  --color-leaf-950: #052e16;
+  /* ═══════════════════════════════════════════════════════════
+     TANAMANKU DESIGN SYSTEM — Botanical Identity
+     Fresh • Botanical • Natural • Friendly • Modern • Clean
+     ═══════════════════════════════════════════════════════════ */
 
-  /* ─── Warm Soil Palette ─── */
-  --color-soil-50: #faf6f0;
-  --color-soil-100: #f3eadd;
-  --color-soil-200: #e6d3ba;
-  --color-soil-300: #d6b690;
-  --color-soil-400: #c49468;
-  --color-soil-500: #b47c4d;
-  --color-soil-600: #9c6540;
-  --color-soil-700: #7f4e36;
-  --color-soil-800: #684031;
-  --color-soil-900: #57362b;
-  --color-soil-950: #2f1b15;
+  /* ─── Primary: Botanical Green ─── */
+  --color-leaf-50: #f4f9f4;
+  --color-leaf-100: #e4f0e4;
+  --color-leaf-200: #c8e2c8;
+  --color-leaf-300: #9dcf9d;
+  --color-leaf-400: #6bb86b;
+  --color-leaf-500: #4a9d4a;
+  --color-leaf-600: #3a8a3a;
+  --color-leaf-700: #2f6f2f;
+  --color-leaf-800: #2a5a2a;
+  --color-leaf-900: #234a23;
+  --color-leaf-950: #0f2d0f;
 
-  /* ─── Sun Accent ─── */
-  --color-sun-100: #fff7d6;
-  --color-sun-200: #ffeaa0;
-  --color-sun-300: #ffd866;
-  --color-sun-400: #ffc133;
-  --color-sun-500: #f5a714;
-  --color-sun-600: #d98509;
+  /* ─── Secondary: Sage ─── */
+  --color-sage-50: #f6f8f5;
+  --color-sage-100: #e8ede6;
+  --color-sage-200: #d1dbcd;
+  --color-sage-300: #b3c4ad;
+  --color-sage-400: #93a88c;
+  --color-sage-500: #768d6f;
+  --color-sage-600: #5e7358;
+  --color-sage-700: #4b5c47;
+  --color-sage-800: #3f4c3c;
+  --color-sage-900: #364034;
+  --color-sage-950: #1b221a;
 
-  /* ─── Background ─── */
-  --color-cream: #fafaf9;
-  --color-cream-dark: #f5f5f4;
+  /* ─── Accent: Warm Terracotta ─── */
+  --color-terra-50: #fdf5f0;
+  --color-terra-100: #fae8dc;
+  --color-terra-200: #f5ceb8;
+  --color-terra-300: #edad88;
+  --color-terra-400: #e0926a;
+  --color-terra-500: #d47844;
+  --color-terra-600: #c5653a;
+  --color-terra-700: #a45032;
+  --color-terra-800: #85432e;
+  --color-terra-900: #6c3929;
+  --color-terra-950: #3a1c14;
+
+  /* ─── Accent: Muted Yellow / Sun ─── */
+  --color-sun-50: #fefce8;
+  --color-sun-100: #fef9c3;
+  --color-sun-200: #fef08a;
+  --color-sun-300: #fde047;
+  --color-sun-400: #facc15;
+  --color-sun-500: #eab308;
+  --color-sun-600: #ca8a04;
+
+  /* ─── Background & Surface ─── */
+  --color-cream: #faf8f5;
+  --color-cream-dark: #f2f0eb;
+  --color-warm-white: #fdfcfa;
+
+  /* ─── Text ─── */
+  --color-forest: #1a2e1a;
+  --color-forest-light: #2d4a2d;
+  --color-muted: #6b7c6b;
+  --color-muted-light: #8fa08f;
 
   --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-display: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
 
-  /* ─── Modern Shadows ─── */
-  --shadow-soft: 0 1px 3px rgb(0 0 0 / 0.04), 0 4px 12px -1px rgb(0 0 0 / 0.06);
-  --shadow-lift: 0 4px 6px -1px rgb(0 0 0 / 0.07), 0 10px 25px -3px rgb(0 0 0 / 0.1);
-  --shadow-glow: 0 0 20px rgb(22 163 74 / 0.15);
-  --shadow-glass: 0 8px 32px rgb(0 0 0 / 0.08);
-  --shadow-card: 0 2px 8px rgb(0 0 0 / 0.04), 0 8px 24px -4px rgb(0 0 0 / 0.08);
-  --shadow-elevated: 0 8px 16px -4px rgb(0 0 0 / 0.08), 0 20px 40px -8px rgb(0 0 0 / 0.12);
+  /* ─── Shadows ─── */
+  --shadow-soft: 0 1px 2px rgb(15 45 15 / 0.03), 0 4px 12px -1px rgb(15 45 15 / 0.05);
+  --shadow-card: 0 1px 3px rgb(15 45 15 / 0.04), 0 6px 16px -2px rgb(15 45 15 / 0.06);
+  --shadow-lift: 0 4px 8px -2px rgb(15 45 15 / 0.06), 0 12px 28px -4px rgb(15 45 15 / 0.08);
+  --shadow-elevated: 0 8px 16px -4px rgb(15 45 15 / 0.06), 0 20px 40px -8px rgb(15 45 15 / 0.1);
+  --shadow-glow: 0 0 24px rgb(74 157 74 / 0.12);
 
-  /* ─── Modern Animations ─── */
-  --animate-fade-up: fade-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
-  --animate-fade-in: fade-in 0.5s ease-out both;
+  /* ─── Animations ─── */
+  --animate-fade-up: fade-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-fade-in: fade-in 0.4s ease-out both;
   --animate-float: float 6s ease-in-out infinite;
-  --animate-pop: pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-  --animate-slide-up: slide-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
-  --animate-scale-in: scale-in 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-  --animate-shimmer: shimmer 2s linear infinite;
+  --animate-pop: pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  --animate-slide-up: slide-up 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-scale-in: scale-in 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 
   @keyframes fade-up {
-    from { opacity: 0; transform: translateY(20px); }
+    from { opacity: 0; transform: translateY(16px); }
     to { opacity: 1; transform: translateY(0); }
   }
   @keyframes fade-in {
@@ -69,27 +93,19 @@
   }
   @keyframes float {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-12px); }
+    50% { transform: translateY(-10px); }
   }
   @keyframes pop {
-    from { opacity: 0; transform: scale(0.9); }
+    from { opacity: 0; transform: scale(0.92); }
     to { opacity: 1; transform: scale(1); }
   }
   @keyframes slide-up {
-    from { opacity: 0; transform: translateY(30px); }
+    from { opacity: 0; transform: translateY(24px); }
     to { opacity: 1; transform: translateY(0); }
   }
   @keyframes scale-in {
-    from { opacity: 0; transform: scale(0.95); }
+    from { opacity: 0; transform: scale(0.96); }
     to { opacity: 1; transform: scale(1); }
-  }
-  @keyframes shimmer {
-    0% { background-position: -200% 0; }
-    100% { background-position: 200% 0; }
-  }
-  @keyframes pulse-soft {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.7; }
   }
 }
 
@@ -99,56 +115,31 @@ html {
 }
 
 body {
-  @apply bg-cream text-leaf-950 font-sans antialiased;
+  @apply bg-cream text-forest font-sans antialiased;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 ::selection {
-  @apply bg-leaf-300/60 text-leaf-950;
-}
-
-/* ── Glassmorphism ── */
-.glass {
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.7);
-}
-
-.glass-dark {
-  background: rgba(5, 46, 22, 0.88);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-/* ── Card hover ── */
-.card-hover {
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.card-hover:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 16px 48px -12px rgb(22 163 74 / 0.2);
-}
-
-/* ── Gradient text ── */
-.gradient-text {
-  background: linear-gradient(135deg, #16a34a 0%, #4ade80 50%, #f5a714 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  @apply bg-leaf-200 text-leaf-950;
 }
 
 /* ── Scrollbar ── */
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-*::-webkit-scrollbar { width: 6px; height: 6px; }
-*::-webkit-scrollbar-thumb { background: #c2e5cf; border-radius: 8px; }
+*::-webkit-scrollbar { width: 5px; height: 5px; }
+*::-webkit-scrollbar-thumb { background: #c8e2c8; border-radius: 8px; }
 *::-webkit-scrollbar-track { background: transparent; }
 
-/* ── Button shine ── */
+/* ── Glass ── */
+.glass {
+  background: rgba(253, 252, 250, 0.82);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid rgba(200, 226, 200, 0.3);
+}
+
+/* ── Button Shine ── */
 .btn-shine {
   position: relative;
   overflow: hidden;
@@ -160,65 +151,19 @@ body {
   left: -60%;
   width: 40%;
   height: 200%;
-  background: linear-gradient(
-    to right,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.3) 50%,
-    rgba(255, 255, 255, 0) 100%
-  );
+  background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.25) 50%, rgba(255,255,255,0) 100%);
   transform: rotate(30deg);
-  transition: all 0.6s ease;
+  transition: all 0.5s ease;
 }
 .btn-shine:hover::after {
   left: 120%;
 }
 
-/* ── Smooth transitions ── */
-.transition-smooth {
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+/* ── Card Hover ── */
+.card-hover {
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
-
-/* ── Mesh gradient backgrounds ── */
-.mesh-hero {
-  background:
-    radial-gradient(ellipse at 20% 50%, rgba(74, 222, 128, 0.15) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 20%, rgba(255, 193, 51, 0.12) 0%, transparent 50%),
-    radial-gradient(ellipse at 40% 80%, rgba(187, 247, 208, 0.2) 0%, transparent 50%),
-    linear-gradient(180deg, #f0fdf4 0%, #fafaf9 100%);
-}
-
-/* ── Noise texture overlay ── */
-.noise::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  opacity: 0.03;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-  pointer-events: none;
-}
-
-/* ── Premium badge ── */
-.premium-badge {
-  background: linear-gradient(135deg, #ffc133, #f5a714, #d98509);
-  box-shadow: 0 2px 8px rgb(245 167 20 / 0.3);
-}
-
-/* ── Gradient border ── */
-.gradient-border {
-  position: relative;
-  border: 2px solid transparent;
-  background-clip: padding-box;
-}
-.gradient-border::before {
-  content: '';
-  position: absolute;
-  inset: -2px;
-  border-radius: inherit;
-  background: linear-gradient(135deg, #4ade80, #22c55e, #f5a714);
-  z-index: -1;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-.gradient-border:hover::before {
-  opacity: 1;
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-elevated);
 }

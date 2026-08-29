@@ -2,49 +2,88 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-/// Tema aplikasi Tanamanku — Modern glassmorphism design
+/// Tema Tanamanku — Botanical Identity
+/// Fresh • Botanical • Natural • Friendly • Modern • Clean
 class AppTheme {
   AppTheme._();
 
-  // ── Warna ──────────────────────────────────────────────
-  static const Color leaf50 = Color(0xFFF0FDF4);
-  static const Color leaf100 = Color(0xFFDCFCE7);
-  static const Color leaf200 = Color(0xFFBBF7D0);
-  static const Color leaf300 = Color(0xFF86EFAC);
-  static const Color leaf400 = Color(0xFF4ADE80);
-  static const Color leaf500 = Color(0xFF22C55E);
-  static const Color leaf600 = Color(0xFF16A34A);
-  static const Color leaf700 = Color(0xFF15803D);
-  static const Color leaf800 = Color(0xFF166534);
-  static const Color leaf900 = Color(0xFF14532D);
-  static const Color leaf950 = Color(0xFF052E16);
+  // ═══════════════════════════════════════════════════════════
+  // TANAMANKU DESIGN SYSTEM — Botanical Colors
+  // ═══════════════════════════════════════════════════════════
 
-  static const Color cream = Color(0xFFFAFAF9);
-  static const Color creamDark = Color(0xFFF5F5F4);
+  // ── Primary: Botanical Green ──
+  static const Color leaf50 = Color(0xFFF4F9F4);
+  static const Color leaf100 = Color(0xFFE4F0E4);
+  static const Color leaf200 = Color(0xFFC8E2C8);
+  static const Color leaf300 = Color(0xFF9DCF9D);
+  static const Color leaf400 = Color(0xFF6BB86B);
+  static const Color leaf500 = Color(0xFF4A9D4A);
+  static const Color leaf600 = Color(0xFF3A8A3A);
+  static const Color leaf700 = Color(0xFF2F6F2F);
+  static const Color leaf800 = Color(0xFF2A5A2A);
+  static const Color leaf900 = Color(0xFF234A23);
+  static const Color leaf950 = Color(0xFF0F2D0F);
+
+  // ── Secondary: Sage ──
+  static const Color sage50 = Color(0xFFF6F8F5);
+  static const Color sage100 = Color(0xFFE8EDE6);
+  static const Color sage200 = Color(0xFFD1DBCD);
+  static const Color sage300 = Color(0xFFB3C4AD);
+
+  // ── Accent: Warm Terracotta ──
+  static const Color terra50 = Color(0xFFFDF5F0);
+  static const Color terra100 = Color(0xFFFAE8DC);
+  static const Color terra400 = Color(0xFFE0926A);
+  static const Color terra500 = Color(0xFFD47844);
+  static const Color terra600 = Color(0xFFC5653A);
+
+  // ── Accent: Muted Yellow / Sun ──
+  static const Color sun50 = Color(0xFFFEFCE8);
+  static const Color sun100 = Color(0xFFFEF9C3);
   static const Color sun300 = Color(0xFFFDE047);
   static const Color sun400 = Color(0xFFFACC15);
-  static const Color sun500 = Color(0xFFEAB308);
 
-  // ── Modern Shadows ──────────────────────────────────────
+  // ── Background ──
+  static const Color cream = Color(0xFFFAF8F5);
+  static const Color warmWhite = Color(0xFFFDFCFA);
+
+  // ── Text ──
+  static const Color forest = Color(0xFF1A2E1A);
+  static const Color forestLight = Color(0xFF2D4A2D);
+  static const Color muted = Color(0xFF6B7C6B);
+  static const Color mutedLight = Color(0xFF8FA08F);
+
+  // ═══════════════════════════════════════════════════════════
+  // SHADOWS
+  // ═══════════════════════════════════════════════════════════
   static List<BoxShadow> get softShadow => [
-    BoxShadow(color: leaf900.withValues(alpha: 0.04), blurRadius: 12, offset: const Offset(0, 4)),
+    BoxShadow(color: leaf900.withValues(alpha: 0.03), blurRadius: 12, offset: const Offset(0, 4)),
     BoxShadow(color: leaf900.withValues(alpha: 0.02), blurRadius: 24, offset: const Offset(0, 8)),
   ];
 
-  static List<BoxShadow> get liftShadow => [
-    BoxShadow(color: leaf600.withValues(alpha: 0.12), blurRadius: 24, offset: const Offset(0, 8)),
-    BoxShadow(color: leaf900.withValues(alpha: 0.06), blurRadius: 48, offset: const Offset(0, 16)),
+  static List<BoxShadow> get cardShadow => [
+    BoxShadow(color: leaf900.withValues(alpha: 0.04), blurRadius: 8, offset: const Offset(0, 2)),
+    BoxShadow(color: leaf900.withValues(alpha: 0.03), blurRadius: 16, offset: const Offset(0, 6)),
   ];
 
-  // ── Glass Effect ──────────────────────────────────────
+  static List<BoxShadow> get liftShadow => [
+    BoxShadow(color: leaf600.withValues(alpha: 0.1), blurRadius: 20, offset: const Offset(0, 6)),
+    BoxShadow(color: leaf900.withValues(alpha: 0.05), blurRadius: 40, offset: const Offset(0, 12)),
+  ];
+
+  // ═══════════════════════════════════════════════════════════
+  // DECORATIONS
+  // ═══════════════════════════════════════════════════════════
   static BoxDecoration get glassDecoration => BoxDecoration(
-    color: Colors.white.withValues(alpha: 0.85),
-    borderRadius: BorderRadius.circular(24),
-    border: Border.all(color: Colors.white.withValues(alpha: 0.6)),
+    color: Colors.white.withValues(alpha: 0.82),
+    borderRadius: BorderRadius.circular(20),
+    border: Border.all(color: sage200.withValues(alpha: 0.3)),
     boxShadow: softShadow,
   );
 
-  // ── Tema Terang ──────────────────────────────────────
+  // ═══════════════════════════════════════════════════════════
+  // LIGHT THEME
+  // ═══════════════════════════════════════════════════════════
   static ThemeData get light {
     final colorScheme = ColorScheme.fromSeed(
       seedColor: leaf600,
@@ -54,15 +93,20 @@ class AppTheme {
       primaryContainer: leaf100,
       onPrimaryContainer: leaf900,
       secondary: sun400,
-      onSecondary: leaf950,
-      surface: Colors.white,
-      onSurface: leaf950,
+      onSecondary: forest,
+      tertiary: terra500,
+      onTertiary: Colors.white,
+      surface: warmWhite,
+      onSurface: forest,
       error: const Color(0xFFEF4444),
       onError: Colors.white,
       surfaceContainerHighest: leaf50,
     );
 
-    final textTheme = GoogleFonts.plusJakartaSansTextTheme();
+    final textTheme = GoogleFonts.plusJakartaSansTextTheme().apply(
+      bodyColor: forest,
+      displayColor: forest,
+    );
 
     return ThemeData(
       useMaterial3: true,
@@ -72,15 +116,15 @@ class AppTheme {
 
       // ── AppBar ──
       appBarTheme: AppBarTheme(
-        backgroundColor: Colors.white.withValues(alpha: 0.8),
-        foregroundColor: leaf950,
+        backgroundColor: Colors.white.withValues(alpha: 0.82),
+        foregroundColor: forest,
         elevation: 0,
         scrolledUnderElevation: 0,
         centerTitle: true,
         titleTextStyle: GoogleFonts.plusJakartaSans(
-          fontSize: 18,
+          fontSize: 17,
           fontWeight: FontWeight.w700,
-          color: leaf950,
+          color: forest,
         ),
         systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
@@ -93,10 +137,11 @@ class AppTheme {
         color: Colors.white,
         elevation: 0,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-          side: BorderSide(color: leaf100.withValues(alpha: 0.8)),
+          borderRadius: BorderRadius.circular(18),
+          side: BorderSide(color: sage200.withValues(alpha: 0.5)),
         ),
-        shadowColor: leaf900.withValues(alpha: 0.05),
+        shadowColor: leaf900.withValues(alpha: 0.04),
+        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
       ),
 
       // ── Elevated Button ──
@@ -105,10 +150,10 @@ class AppTheme {
           backgroundColor: leaf600,
           foregroundColor: Colors.white,
           elevation: 0,
-          shadowColor: leaf600.withValues(alpha: 0.3),
-          padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 16),
+          shadowColor: leaf600.withValues(alpha: 0.25),
+          padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 15),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(14),
           ),
           textStyle: GoogleFonts.plusJakartaSans(
             fontWeight: FontWeight.w700,
@@ -121,10 +166,10 @@ class AppTheme {
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
           foregroundColor: leaf700,
-          side: BorderSide(color: leaf200),
-          padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 16),
+          side: const BorderSide(color: sage200),
+          padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 15),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(14),
           ),
           textStyle: GoogleFonts.plusJakartaSans(
             fontWeight: FontWeight.w700,
@@ -147,37 +192,37 @@ class AppTheme {
       // ── Input ──
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: leaf50.withValues(alpha: 0.5),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
+        fillColor: sage50,
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(14),
-          borderSide: BorderSide(color: leaf200),
+          borderSide: const BorderSide(color: sage200),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(14),
-          borderSide: BorderSide(color: leaf200),
+          borderSide: const BorderSide(color: sage200),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(14),
-          borderSide: const BorderSide(color: leaf500, width: 2),
+          borderSide: const BorderSide(color: leaf500, width: 1.5),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(14),
           borderSide: const BorderSide(color: Color(0xFFEF4444)),
         ),
-        hintStyle: GoogleFonts.plusJakartaSans(color: leaf300, fontSize: 14),
-        labelStyle: GoogleFonts.plusJakartaSans(color: leaf700, fontSize: 14),
+        hintStyle: GoogleFonts.plusJakartaSans(color: mutedLight, fontSize: 14),
+        labelStyle: GoogleFonts.plusJakartaSans(color: muted, fontSize: 14),
       ),
 
       // ── Bottom Navigation ──
-      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: Colors.white,
         selectedItemColor: leaf600,
-        unselectedItemColor: leaf400,
+        unselectedItemColor: mutedLight,
         type: BottomNavigationBarType.fixed,
         elevation: 0,
-        selectedLabelStyle: TextStyle(fontSize: 11, fontWeight: FontWeight.w700),
-        unselectedLabelStyle: TextStyle(fontSize: 11, fontWeight: FontWeight.w500),
+        selectedLabelStyle: const TextStyle(fontSize: 11, fontWeight: FontWeight.w700),
+        unselectedLabelStyle: const TextStyle(fontSize: 11, fontWeight: FontWeight.w500),
       ),
 
       // ── Chip ──
@@ -185,35 +230,35 @@ class AppTheme {
         backgroundColor: leaf50,
         selectedColor: leaf600,
         labelStyle: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.w600),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        side: BorderSide(color: leaf200),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        side: const BorderSide(color: sage200),
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       ),
 
       // ── Dialog ──
       dialogTheme: DialogThemeData(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(22)),
         backgroundColor: Colors.white,
         elevation: 0,
-        titleTextStyle: GoogleFonts.plusJakartaSans(fontSize: 18, fontWeight: FontWeight.w700, color: leaf950),
-        contentTextStyle: GoogleFonts.plusJakartaSans(fontSize: 14, color: leaf900),
+        titleTextStyle: GoogleFonts.plusJakartaSans(fontSize: 18, fontWeight: FontWeight.w700, color: forest),
+        contentTextStyle: GoogleFonts.plusJakartaSans(fontSize: 14, color: forestLight),
       ),
 
       // ── Bottom Sheet ──
       bottomSheetTheme: const BottomSheetThemeData(
         backgroundColor: Colors.white,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+          borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
         ),
         showDragHandle: true,
-        dragHandleColor: leaf200,
+        dragHandleColor: sage200,
       ),
 
       // ── Snackbar ──
       snackBarTheme: SnackBarThemeData(
-        backgroundColor: leaf950,
+        backgroundColor: forest,
         contentTextStyle: GoogleFonts.plusJakartaSans(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w500),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         behavior: SnackBarBehavior.floating,
       ),
     );
