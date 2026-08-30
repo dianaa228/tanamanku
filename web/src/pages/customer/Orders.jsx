@@ -34,9 +34,10 @@ export default function Orders() {
   const sorted = [...filtered].sort((a, b) => statusOrder[a.status] - statusOrder[b.status])
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-10 sm:px-6">
-      <h1 className="text-3xl font-extrabold text-leaf-950">Pesanan Saya 📦</h1>
-      <p className="mt-1 text-sm text-leaf-900/50">Pantau status belanja tanamanmu</p>
+    <div className="page-container max-w-4xl">
+      <span className="page-eyebrow">Riwayat belanja</span>
+      <h1 className="page-title">Pesanan Saya</h1>
+      <p className="page-subtitle">Pantau status belanja tanamanmu</p>
 
       {/* Tabs */}
       <div className="no-scrollbar mt-6 flex gap-2 overflow-x-auto">

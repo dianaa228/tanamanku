@@ -37,7 +37,7 @@ export default function AuthLayout() {
             </div>
           </div>
 
-          <p className="text-xs text-leaf-100/50">© 2026 Tanamanku — Urban Gardening Marketplace</p>
+          <p className="text-xs text-leaf-100/50">© {new Date().getFullYear()} Tanamanku — Urban Gardening Marketplace</p>
         </div>
       </div>
 

@@ -116,7 +116,7 @@ export default function Checkout() {
       <div className="mx-auto max-w-lg px-4 py-20 sm:px-6">
         <div className="animate-pop rounded-[2rem] border border-leaf-100 bg-white p-10 text-center shadow-lift">
           <div className="animate-float text-7xl">🎉</div>
-          <h1 className="mt-6 text-3xl font-extrabold text-leaf-950">Pesanan berhasil dibuat!</h1>
+          <h1 className="display mt-6 text-3xl font-semibold text-forest">Pesanan berhasil dibuat!</h1>
           <p className="mt-3 text-sm leading-relaxed text-leaf-900/60">
             Pesanan <strong>{createdOrder.id}</strong> sedang diproses. 
             Pembayaran akan diproses oleh Midtrans secara otomatis.
@@ -141,9 +141,9 @@ export default function Checkout() {
   }
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
-      <h1 className="text-3xl font-extrabold text-leaf-950">Checkout 🧾</h1>
-      <p className="mt-1 text-sm text-leaf-900/50">Total transaksi dihitung aman di server kami.</p>
+    <div className="page-container">
+      <h1 className="page-title">Checkout</h1>
+      <p className="page-subtitle">Total transaksi dihitung aman di server kami.</p>
 
       <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_22rem]">
         <div className="space-y-6">

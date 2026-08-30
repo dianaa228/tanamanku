@@ -53,10 +53,11 @@ export default function MyExchanges() {
   if (loading) return <Loading label="Memuat tawaran..." />
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
+    <div className="page-container max-w-3xl">
       <div className="animate-fade-up">
-        <h1 className="text-3xl font-extrabold text-leaf-950">💬 Tawaran Saya</h1>
-        <p className="mt-1 text-sm text-leaf-900/50">{exchanges.length} total tawaran</p>
+        <span className="page-eyebrow">Negosiasi antar pekebun</span>
+        <h1 className="page-title">Tawaran Saya</h1>
+        <p className="page-subtitle">{exchanges.length} total tawaran</p>
       </div>
 
       {/* Tabs */}

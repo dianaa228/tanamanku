@@ -31,15 +31,15 @@ export default function OrderDetail() {
   const cancelled = order.status === 'cancelled'
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-10 sm:px-6">
-      <Link to="/orders" className="text-sm font-semibold text-leaf-900/50 hover:text-leaf-700">
+    <div className="page-container max-w-4xl">
+      <Link to="/orders" className="text-sm font-semibold text-muted hover:text-leaf-700">
         ← Kembali ke pesanan
       </Link>
 
       <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-extrabold text-leaf-950">{order.id}</h1>
-          <p className="mt-0.5 text-sm text-leaf-900/50">{formatDateTime(order.date)}</p>
+          <h1 className="display text-2xl font-semibold text-forest">{order.id}</h1>
+          <p className="mt-0.5 text-sm text-muted">{formatDateTime(order.date)}</p>
         </div>
         <Badge className={meta.badge}>{meta.icon} {meta.label}</Badge>
       </div>

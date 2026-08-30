@@ -11,6 +11,7 @@ vi.mock('../../../utils/format', () => ({
     if (!iso) return '—'
     return new Date(iso).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })
   }),
+  cx: (...args) => args.filter(Boolean).join(' '),
 }))
 
 vi.mock('../../../types/constants', () => ({

@@ -64,18 +64,19 @@ export default function Community() {
   }
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
-      <div className="flex items-center justify-between">
+    <div className="page-container max-w-3xl">
+      <div className="page-hero flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-extrabold text-leaf-950">Komunitas Tanamanku 💬</h1>
-          <p className="mt-1 text-sm text-leaf-900/50">Berbagi, belajar, dan saling mendukung sesama pekebun.</p>
+          <span className="page-eyebrow">Berkebun bersama</span>
+          <h1 className="page-title">Komunitas Tanamanku</h1>
+          <p className="page-subtitle">Berbagi, belajar, dan saling mendukung sesama pekebun.</p>
         </div>
         <Button onClick={() => setComposer(true)} className="hidden sm:inline-flex">✍️ Tulis post</Button>
       </div>
 
       {/* Composer */}
       {composer && (
-        <div className="mt-6 animate-pop rounded-3xl border border-leaf-100 bg-white p-5 shadow-soft">
+        <div className="card-v2 mt-6 animate-pop rounded-2xl p-5 hover:-translate-y-0">
           <div className="flex items-center gap-3">
             <span className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-leaf-400 to-leaf-600 text-xl">
               {user?.avatar || '🧑‍🌾'}
@@ -86,7 +87,7 @@ export default function Community() {
               onChange={(e) => setContent(e.target.value)}
               placeholder="Bagikan cerita, hasil panen, atau tips berkebunmu..."
               rows={3}
-              className="flex-1 resize-none rounded-2xl border border-leaf-200 bg-leaf-50/50 p-3.5 text-sm focus:border-leaf-400 focus:outline-none focus:ring-2 focus:ring-leaf-200"
+              className="flex-1 resize-none rounded-2xl border border-sage-200 bg-cream/60 p-3.5 text-sm focus:border-leaf-400 focus:outline-none focus:ring-2 focus:ring-leaf-200"
             />
           </div>
           <div className="mt-4 flex flex-wrap items-center justify-between gap-3">

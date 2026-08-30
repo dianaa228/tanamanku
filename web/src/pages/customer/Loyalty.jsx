@@ -40,10 +40,11 @@ export default function Loyalty() {
   const colors = tierColors[profile?.tier] || tierColors.bronze
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
+    <div className="page-container max-w-3xl">
       <div className="animate-fade-up">
-        <h1 className="text-3xl font-extrabold text-leaf-950">⭐ Tanamanku Rewards</h1>
-        <p className="mt-1 text-sm text-leaf-900/50">Kumpulkan poin, naik tier, tukar hadiah</p>
+        <span className="page-eyebrow">Apresiasi untukmu</span>
+        <h1 className="page-title">Tanamanku Rewards</h1>
+        <p className="page-subtitle">Kumpulkan poin, naik tier, tukar hadiah</p>
       </div>
 
       {/* Points Card */}

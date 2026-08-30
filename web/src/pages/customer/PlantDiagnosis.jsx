@@ -47,13 +47,13 @@ export default function PlantDiagnosis() {
   }
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
+    <div className="page-container max-w-3xl">
       <div className="text-center">
-        <span className="inline-flex items-center gap-2 rounded-full bg-rose-100 px-4 py-1.5 text-xs font-bold text-rose-700">
+        <span className="inline-flex items-center gap-2 rounded-full border border-rose-200 bg-rose-100/60 px-4 py-1.5 text-xs font-bold text-rose-700">
           🩺 Plant Diagnosis — Cek Kesehatan
         </span>
-        <h1 className="mt-4 text-3xl font-extrabold text-leaf-950 sm:text-4xl">Tanamanmu kenapa?</h1>
-        <p className="mx-auto mt-2 max-w-md text-sm text-leaf-900/50">
+        <h1 className="display mt-4 text-3xl font-semibold text-forest sm:text-4xl">Tanamanmu kenapa?</h1>
+        <p className="mx-auto mt-2 max-w-md text-sm text-muted">
           Pilih gejala yang terlihat pada tanamanmu — kami berikan diagnosis awal dan langkah penanganannya.
         </p>
       </div>

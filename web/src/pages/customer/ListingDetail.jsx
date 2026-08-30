@@ -88,8 +88,8 @@ export default function ListingDetail() {
               )}>
                 {typeInfo?.icon} {typeInfo?.label}
               </Badge>
-              <h1 className="mt-3 text-2xl sm:text-3xl font-extrabold text-leaf-950">{listing.title}</h1>
-              <p className="mt-1 text-sm text-leaf-900/50 italic">{listing.species?.name || 'Tanaman hias'}</p>
+              <h1 className="display mt-3 text-2xl font-semibold text-forest sm:text-3xl">{listing.title}</h1>
+              <p className="mt-1 text-sm italic text-muted">{listing.species?.name || 'Tanaman hias'}</p>
             </div>
             {listing.price != null && (
               <div className="text-right">

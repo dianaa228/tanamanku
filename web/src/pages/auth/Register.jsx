@@ -32,8 +32,8 @@ export default function Register() {
 
   return (
     <div>
-      <h1 className="text-3xl font-extrabold text-leaf-950">Mulai berkebun 🪴</h1>
-      <p className="mt-2 text-sm text-leaf-900/60">Gratis selamanya. Tanpa kartu kredit.</p>
+      <h1 className="display text-3xl font-semibold text-forest">Mulai berkebun 🪴</h1>
+      <p className="mt-2 text-sm text-muted">Gratis selamanya. Tanpa kartu kredit.</p>
 
       <form onSubmit={submit} className="mt-8 space-y-4">
         {errors.general && (

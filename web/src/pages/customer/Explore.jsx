@@ -59,29 +59,30 @@ export default function Explore() {
   const activeCategory = categories.find((c) => c.slug === filters.category)
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
-      {/* Header */}
-      <div className="animate-fade-up">
-        <h1 className="text-3xl font-extrabold text-leaf-950">
+    <div className="page-container">
+      {/* Header editorial */}
+      <div className="page-hero animate-fade-up">
+        <span className="page-eyebrow">Katalog Tanamanku</span>
+        <h1 className="page-title">
           {activeCategory ? (
             <>
               {activeCategory.icon} {activeCategory.name}
             </>
           ) : (
-            'Jelajahi Katalog 🌿'
+            'Jelajahi Katalog'
           )}
         </h1>
-        <p className="mt-1 text-sm text-leaf-900/50">
+        <p className="page-subtitle">
           {loading ? 'Mencari produk...' : `${products.length} produk ditemukan`}
           {filters.search && ` untuk "${filters.search}"`}
         </p>
       </div>
 
       {/* Mobile Filter Toggle */}
-      <div className="mt-4 lg:hidden">
+      <div className="mt-5 lg:hidden">
         <button
           onClick={() => setFilterOpen(!filterOpen)}
-          className="flex w-full items-center justify-center gap-2 rounded-2xl border border-leaf-200 bg-white px-4 py-3 text-sm font-semibold text-leaf-900 shadow-sm transition hover:bg-leaf-50"
+          className="flex w-full items-center justify-center gap-2 rounded-2xl border border-sage-200 bg-white px-4 py-3 text-sm font-semibold text-forest shadow-sm transition hover:bg-leaf-50"
         >
           🔎 Filter & Urutkan {filterOpen ? '▲' : '▼'}
         </button>
@@ -90,8 +91,8 @@ export default function Explore() {
       <div className="mt-6 lg:grid lg:grid-cols-[16rem_1fr] lg:gap-8">
         {/* Filter sidebar */}
         <div className={`mb-6 lg:mb-0 ${filterOpen ? 'block' : 'hidden lg:block'}`}>
-          <div className="sticky top-20 rounded-3xl border border-leaf-100 bg-white p-5 shadow-soft">
-            <h2 className="mb-4 text-base font-bold text-leaf-950">🔎 Filter</h2>
+          <div className="card-v2 sticky top-20 rounded-2xl p-5 pb-4 hover:-translate-y-0">
+            <h2 className="mb-4 flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-muted">🔎 Filter</h2>
             <ProductFilter categories={categories} active={filters} onChange={update} />
           </div>
         </div>
@@ -103,11 +104,11 @@ export default function Explore() {
               <ProductSearch value={filters.search} onChange={(v) => update({ ...filters, search: v })} />
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-sm font-medium text-leaf-900/50">Urutkan</span>
+              <span className="text-sm font-medium text-muted">Urutkan</span>
               <select
                 value={filters.sort}
                 onChange={(e) => update({ ...filters, sort: e.target.value })}
-                className="rounded-xl border border-leaf-200 bg-white px-3 py-2.5 text-sm font-medium text-leaf-900 shadow-sm focus:border-leaf-400 focus:outline-none"
+                className="rounded-xl border border-sage-200 bg-white px-3 py-2.5 text-sm font-medium text-forest shadow-sm focus:border-leaf-400 focus:outline-none"
               >
                 {[
                   { value: 'relevansi', label: 'Paling relevan' },

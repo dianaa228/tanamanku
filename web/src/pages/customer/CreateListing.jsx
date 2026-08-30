@@ -53,15 +53,16 @@ export default function CreateListing() {
   }
 
   return (
-    <div className="mx-auto max-w-2xl px-4 py-10 sm:px-6">
+    <div className="page-container max-w-2xl">
       {/* Back link */}
       <Link to="/plant-exchange" className="mb-6 inline-flex items-center gap-1 text-sm font-semibold text-leaf-700 hover:text-leaf-800 transition">
         ← Kembali ke Plant Exchange
       </Link>
 
-      <div className="rounded-3xl border border-leaf-100 bg-white shadow-soft p-6 sm:p-8">
-        <h1 className="text-2xl font-extrabold text-leaf-950">➕ Buat Listing Baru</h1>
-        <p className="mt-1 text-sm text-leaf-900/50">Jual atau tawarkan tanaman untuk ditukar</p>
+      <div className="card-v2 rounded-2xl p-6 hover:-translate-y-0 sm:p-8">
+        <span className="page-eyebrow">Jual atau tukar</span>
+        <h1 className="page-title">Buat Listing Baru</h1>
+        <p className="page-subtitle">Jual atau tawarkan tanaman untuk ditukar</p>
 
         <form onSubmit={handleSubmit} className="mt-6 space-y-5">
           {/* Type selection */}

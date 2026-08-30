@@ -146,6 +146,39 @@ body {
   text-wrap: balance;
 }
 
+/* ── Page language v2 (editorial) ── */
+.page-container {
+  @apply mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 sm:py-12;
+}
+
+.page-eyebrow {
+  @apply mb-2 inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-terra-600;
+}
+
+.page-title {
+  @apply font-display tracking-[-0.02em] text-3xl font-semibold text-forest sm:text-4xl;
+}
+
+.page-subtitle {
+  @apply mt-1.5 text-sm text-muted;
+}
+
+.page-hero {
+  @apply relative overflow-hidden rounded-[2rem] border border-leaf-200/60 bg-white/70 p-6 shadow-soft sm:p-8;
+}
+
+.section-title {
+  @apply font-display tracking-[-0.02em] text-2xl font-semibold text-forest sm:text-3xl;
+}
+
+.card-v2 {
+  @apply rounded-3xl border border-leaf-200/60 bg-white shadow-soft transition-all duration-300;
+}
+.card-v2:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lift);
+}
+
 /* ── Scrollbar ── */
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }

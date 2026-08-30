@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { productsApi } from '../../services/api/products'
 import { communityApi } from '../../services/api/community'
+import { nurseryApi } from '../../services/api/nursery'
 import ProductCard from '../../components/product/ProductCard'
 import Button from '../../components/ui/Button'
 import ProductVisual from '../../components/product/ProductVisual'
@@ -34,15 +35,35 @@ function useReveal() {
   return ref
 }
 
-/* ── Data ─────────────────────────────────────────────── */
-const categories = [
-  { slug: 'tanaman-hias', name: 'Tanaman Hias', emoji: '🪴', tagline: 'Hijaukan ruangan' },
-  { slug: 'sayuran-herbal', name: 'Sayuran & Herbal', emoji: '🥬', tagline: 'Pangan dari rumah' },
-  { slug: 'buah', name: 'Buah', emoji: '🍓', tagline: 'Panen di balkon' },
-  { slug: 'media-tanam', name: 'Media Tanam', emoji: '🌱', tagline: 'Fondasi subur' },
-  { slug: 'pupuk-nutrisi', name: 'Pupuk & Nutrisi', emoji: '💧', tagline: 'Asupan terbaik' },
-  { slug: 'pot-dekorasi', name: 'Pot & Dekorasi', emoji: '🫙', tagline: 'Tampil cantik' },
+/* ── Data fallback (dipakai hanya saat API kosong/gagal) ── */
+const FALLBACK_CATEGORIES = [
+  { slug: 'tanaman-hias', name: 'Tanaman Hias', emoji: '🪴', tagline: 'Hijaukan ruangan', count: 0 },
+  { slug: 'sayuran-herbal', name: 'Sayuran & Herbal', emoji: '🥬', tagline: 'Pangan dari rumah', count: 0 },
+  { slug: 'buah', name: 'Buah', emoji: '🍓', tagline: 'Panen di balkon', count: 0 },
+  { slug: 'media-tanam', name: 'Media Tanam', emoji: '🪨', tagline: 'Fondasi subur', count: 0 },
+  { slug: 'pupuk-nutrisi', name: 'Pupuk & Nutrisi', emoji: '💧', tagline: 'Asupan terbaik', count: 0 },
+  { slug: 'peralatan', name: 'Peralatan Berkebun', emoji: '🛠️', tagline: 'Berkebun jadi mudah', count: 0 },
+  { slug: 'pot-dekorasi', name: 'Pot & Dekorasi', emoji: '🫙', tagline: 'Tampil cantik', count: 0 },
 ]
+
+const TAGLINE_BY_SLUG = Object.fromEntries(FALLBACK_CATEGORIES.map((c) => [c.slug, c.tagline]))
+
+/* API kategori → bentuk kartu home (icon API + tagline brand) */
+const toHomeCategory = (c) => ({
+  slug: c.slug,
+  name: c.name,
+  emoji: c.icon || '🍃',
+  tagline: TAGLINE_BY_SLUG[c.slug] || 'Jelajahi koleksi',
+  count: c.count ?? c.products_count ?? 0,
+})
+
+/* 1000+ → "1rb+", 1200000 → "1jt+" */
+const formatStat = (n) => {
+  if (!n || n <= 0) return null
+  if (n >= 1000000) return `${Math.floor(n / 1000000)}jt+`
+  if (n >= 1000) return `${Math.floor(n / 1000)}rb+`
+  return `${n}+`
+}
 
 const careFeatures = [
   { icon: '🪴', title: 'My Garden', desc: 'Catat setiap tanaman, pantau tinggi & kesehatan, simpan riwayat perawatan.', to: '/my-garden' },
@@ -61,19 +82,34 @@ const steps = [
 export default function Home() {
   const [featured, setFeatured] = useState([])
   const [communityPosts, setCommunityPosts] = useState([])
+  const [categories, setCategories] = useState(FALLBACK_CATEGORIES)
+  const [nurseryCount, setNurseryCount] = useState(null)
   const [loading, setLoading] = useState(true)
   const revealRef = useReveal()
 
   useEffect(() => {
-    Promise.all([
+    Promise.allSettled([
       productsApi.getProducts({ sort: 'terlaris' }),
+      productsApi.getCategories(),
       communityApi.getPosts(),
-    ]).then(([productsRes, postsRes]) => {
-      setFeatured(productsRes.data.slice(0, 8))
-      setCommunityPosts(postsRes.data.slice(0, 3))
+      nurseryApi.getNurseries(),
+    ]).then(([productsRes, catsRes, postsRes, nurseriesRes]) => {
+      if (productsRes.status === 'fulfilled') setFeatured(productsRes.value.data.slice(0, 8))
+      if (catsRes.status === 'fulfilled' && catsRes.value.data?.length) {
+        setCategories(catsRes.value.data.map(toHomeCategory))
+      }
+      if (postsRes.status === 'fulfilled') setCommunityPosts(postsRes.value.data.slice(0, 3))
+      if (nurseriesRes.status === 'fulfilled') setNurseryCount(nurseriesRes.value.data.length)
       setLoading(false)
     })
   }, [])
+
+  const productCount = categories.reduce((sum, c) => sum + (c.count || 0), 0)
+  const stats = [
+    { value: formatStat(productCount) || '500+', label: 'Produk pilihan' },
+    { value: formatStat(nurseryCount) || '120+', label: 'Nursery lokal' },
+    { value: '10rb+', label: 'Kebun aktif' },
+  ]
 
   return (
     <div ref={revealRef}>
@@ -113,11 +149,7 @@ export default function Home() {
 
             {/* stats */}
             <dl className="mt-10 grid grid-cols-3 gap-6 border-t border-sage-200/70 pt-7">
-              {[
-                { value: '500+', label: 'Produk pilihan' },
-                { value: '120+', label: 'Nursery lokal' },
-                { value: '10rb+', label: 'Kebun aktif' },
-              ].map((s) => (
+              {stats.map((s) => (
                 <div key={s.label}>
                   <dt className="sr-only">{s.label}</dt>
                   <dd className="display text-2xl font-semibold text-forest sm:text-3xl">{s.value}</dd>

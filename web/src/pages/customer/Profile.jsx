@@ -44,8 +44,9 @@ export default function Profile() {
   ]
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
-      <h1 className="text-3xl font-extrabold text-leaf-950">Profil Saya 👤</h1>
+    <div className="page-container max-w-3xl">
+      <span className="page-eyebrow">Akun & pengaturan</span>
+      <h1 className="page-title">Profil Saya</h1>
 
       {/* Kartu profil */}
       <div className="mt-6 flex flex-col items-center gap-5 rounded-[2rem] bg-gradient-to-br from-leaf-600 to-leaf-800 p-8 text-center shadow-lift sm:flex-row sm:text-left">

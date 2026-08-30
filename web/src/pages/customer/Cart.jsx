@@ -48,11 +48,11 @@ export default function Cart() {
   }
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
+    <div className="page-container">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-extrabold text-leaf-950">Keranjang Belanja 🛒</h1>
-          <p className="mt-1 text-sm text-leaf-900/50">{count} item dalam keranjang</p>
+          <h1 className="display text-3xl font-semibold text-forest">Keranjang Belanja 🛒</h1>
+          <p className="mt-1 text-sm text-muted">{count} item dalam keranjang</p>
         </div>
         <button
           onClick={onClear}

@@ -34,7 +34,7 @@ export default function NurseryDetail() {
   }
 
   return (
-    <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
+    <div className="page-container max-w-5xl">
       {/* Back link */}
       <Link to="/nurseries" className="mb-6 inline-flex items-center gap-1 text-sm font-semibold text-leaf-700 hover:text-leaf-800 transition">
         ← Kembali ke Nursery
@@ -51,17 +51,17 @@ export default function NurseryDetail() {
           <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
             <div>
               <div className="flex items-center gap-3">
-                <h1 className="text-2xl sm:text-3xl font-extrabold text-leaf-950">{nursery.name}</h1>
+                <h1 className="display text-2xl font-semibold text-forest sm:text-3xl">{nursery.name}</h1>
                 <Badge className={nursery.isOpen ? 'bg-leaf-100 text-leaf-700' : 'bg-gray-100 text-gray-500'}>
                   {nursery.isOpen ? '🟢 Buka' : '🔴 Tutup'}
                 </Badge>
               </div>
-              <p className="mt-1 text-sm text-leaf-900/50">Berdiri sejak {nursery.foundedYear} · Dimiliki oleh {nursery.owner?.name}</p>
+              <p className="mt-1 text-sm text-muted">Berdiri sejak {nursery.foundedYear} · Dimiliki oleh {nursery.owner?.name}</p>
             </div>
             <div className="flex items-center gap-2">
               <span className="text-sun-400 text-xl">⭐</span>
-              <span className="text-2xl font-extrabold text-leaf-950">{nursery.ratingAvg}</span>
-              <span className="text-sm text-leaf-900/50">({nursery.reviewsCount} ulasan)</span>
+              <span className="display text-2xl font-semibold text-forest">{nursery.ratingAvg}</span>
+              <span className="text-sm text-muted">({nursery.reviewsCount} ulasan)</span>
             </div>
           </div>
 

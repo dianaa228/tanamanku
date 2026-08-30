@@ -31,11 +31,12 @@ export default function MyListings() {
   if (loading) return <Loading label="Memuat listing saya..." />
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
+    <div className="page-container max-w-3xl">
       <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 animate-fade-up">
         <div>
-          <h1 className="text-3xl font-extrabold text-leaf-950">📋 Listing Saya</h1>
-          <p className="mt-1 text-sm text-leaf-900/50">{listings.length} listing</p>
+          <span className="page-eyebrow">Katalog pribadi</span>
+          <h1 className="page-title">Listing Saya</h1>
+          <p className="page-subtitle">{listings.length} listing</p>
         </div>
         <Link
           to="/plant-exchange/create"

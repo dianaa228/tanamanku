@@ -67,14 +67,14 @@ export default function ProductDetail() {
   }
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
+    <div className="page-container">
       {/* Breadcrumb */}
-      <nav className="mb-6 flex items-center gap-1.5 text-sm text-leaf-900/50">
+      <nav className="mb-6 flex items-center gap-1.5 text-sm text-muted">
         <Link to="/" className="hover:text-leaf-700">Beranda</Link>
         <span>/</span>
         <Link to="/explore" className="hover:text-leaf-700">Jelajahi</Link>
         <span>/</span>
-        <span className="font-semibold text-leaf-900">{product.name}</span>
+        <span className="font-semibold text-forest">{product.name}</span>
       </nav>
 
       <div className="grid gap-10 lg:grid-cols-2">
@@ -92,9 +92,9 @@ export default function ProductDetail() {
             {care && <Badge className={care.chip}>{care.icon} Perawatan {care.label}</Badge>}
           </div>
 
-          <h1 className="mt-4 text-3xl font-extrabold leading-tight text-leaf-950">{product.name}</h1>
-          <p className="mt-2 text-sm text-leaf-900/50">
-            Dijual oleh <span className="font-semibold text-leaf-800">🏪 {product.storeName}</span> · {product.sold}+ terjual
+          <h1 className="display mt-4 text-3xl font-semibold leading-tight text-forest">{product.name}</h1>
+          <p className="mt-2 text-sm text-muted">
+            Dijual oleh <span className="font-semibold text-leaf-700">🏪 {product.storeName}</span> · {product.sold}+ terjual
           </p>
 
           <div className="mt-3 flex items-center gap-2">
@@ -174,18 +174,19 @@ export default function ProductDetail() {
 
       {/* Deskripsi */}
       <section className="mt-14">
-        <h2 className="text-2xl font-extrabold text-leaf-950">Deskripsi Produk</h2>
-        <p className="mt-4 max-w-3xl leading-relaxed text-leaf-900/70">{product.description}</p>
+        <span className="page-eyebrow">Detail</span>
+        <h2 className="section-title">Deskripsi Produk</h2>
+        <p className="mt-4 max-w-3xl leading-relaxed text-muted">{product.description}</p>
         <div className="mt-6 grid gap-4 sm:grid-cols-3">
           {[
             { icon: '🚚', title: 'Pengiriman aman', desc: 'Tanaman dikemas khusus anti benturan & layu' },
             { icon: '🔄', title: 'Garansi 7 hari', desc: 'Layu di perjalanan? Bisa tukar atau refund' },
             { icon: '💬', title: 'Chat seller', desc: 'Tanya perawatan langsung ke nursery' },
           ].map((s) => (
-            <div key={s.title} className="rounded-3xl bg-leaf-50/60 p-5">
+            <div key={s.title} className="card-v2 rounded-2xl bg-leaf-50/60 p-5 hover:-translate-y-0">
               <span className="text-2xl">{s.icon}</span>
-              <p className="mt-2 font-bold text-leaf-950">{s.title}</p>
-              <p className="mt-1 text-sm text-leaf-900/55">{s.desc}</p>
+              <p className="mt-2 font-bold text-forest">{s.title}</p>
+              <p className="mt-1 text-sm text-muted">{s.desc}</p>
             </div>
           ))}
         </div>
@@ -193,19 +194,20 @@ export default function ProductDetail() {
 
       {/* Ulasan */}
       <section className="mt-14">
-        <h2 className="text-2xl font-extrabold text-leaf-950">Ulasan Pembeli</h2>
+        <span className="page-eyebrow">Testimoni</span>
+        <h2 className="section-title">Ulasan Pembeli</h2>
         <div className="mt-6 grid gap-4 md:grid-cols-3">
           {reviews.map((r) => (
-            <div key={r.author} className="rounded-3xl border border-leaf-100 bg-white p-5 shadow-soft">
+            <div key={r.author} className="card-v2 rounded-2xl p-5">
               <div className="flex items-center gap-3">
                 <span className="flex h-10 w-10 items-center justify-center rounded-full bg-leaf-100 text-xl">{r.avatar}</span>
                 <div>
-                  <p className="text-sm font-bold text-leaf-950">{r.author}</p>
+                  <p className="text-sm font-bold text-forest">{r.author}</p>
                   <Rating value={r.rating} />
                 </div>
               </div>
-              <p className="mt-3 text-sm leading-relaxed text-leaf-900/70">{r.text}</p>
-              <p className="mt-2 text-xs text-leaf-900/40">{r.time} · ✓ Pembelian terverifikasi</p>
+              <p className="mt-3 text-sm leading-relaxed text-muted">{r.text}</p>
+              <p className="mt-2 text-xs text-muted-light">{r.time} · ✓ Pembelian terverifikasi</p>
             </div>
           ))}
         </div>
@@ -213,7 +215,8 @@ export default function ProductDetail() {
 
       {/* Produk terkait */}
       <section className="mt-14">
-        <h2 className="text-2xl font-extrabold text-leaf-950">Produk terkait</h2>
+        <span className="page-eyebrow">Jangan lewatkan</span>
+        <h2 className="section-title">Produk terkait</h2>
         <div className="mt-6 grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-4">
           {product.related.map((p) => (
             <ProductCard key={p.id} product={p} compact />

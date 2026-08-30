@@ -26,8 +26,8 @@ export default function ForgotPassword() {
 
   return (
     <div>
-      <h1 className="text-3xl font-extrabold text-leaf-950">Lupa password? 🔑</h1>
-      <p className="mt-2 text-sm text-leaf-900/60">
+      <h1 className="display text-3xl font-semibold text-forest">Lupa password? 🔑</h1>
+      <p className="mt-2 text-sm text-muted">
         Masukkan email terdaftar Anda — kami kirim link reset password.
       </p>
 

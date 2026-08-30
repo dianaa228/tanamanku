@@ -120,7 +120,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-white/10 pt-7 text-xs text-leaf-200/30 sm:flex-row">
-          <p>© 2026 Tanamanku. Dibuat untuk kebun perkotaan Indonesia.</p>
+          <p>© {new Date().getFullYear()} Tanamanku. Dibuat untuk kebun perkotaan Indonesia.</p>
           <p className="flex items-center gap-2">
             <span>Belanja</span><span className="text-leaf-400">·</span>
             <span>Rawat</span><span className="text-leaf-400">·</span>

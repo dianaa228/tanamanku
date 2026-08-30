@@ -36,13 +36,12 @@ export default function Nurseries() {
   }
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
+    <div className="page-container">
       {/* Header */}
       <div className="animate-fade-up">
-        <h1 className="text-3xl font-extrabold text-leaf-950">🏪 Nursery Terdekat</h1>
-        <p className="mt-1 text-sm text-leaf-900/50">
-          Temukan toko tanaman terbaik di sekitarmu
-        </p>
+        <span className="page-eyebrow">Belanja offline & online</span>
+        <h1 className="page-title">Nursery Terdekat</h1>
+        <p className="page-subtitle">Temukan toko tanaman terbaik di sekitarmu</p>
       </div>
 
       {/* Search */}

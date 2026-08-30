@@ -3,17 +3,26 @@ import { render, screen, waitFor } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 
 const mockGetProducts = vi.fn()
+const mockGetCategories = vi.fn()
 const mockGetPosts = vi.fn()
+const mockGetNurseries = vi.fn()
 
 vi.mock('../../../services/api/products', () => ({
   productsApi: {
     getProducts: (...args) => mockGetProducts(...args),
+    getCategories: (...args) => mockGetCategories(...args),
   },
 }))
 
 vi.mock('../../../services/api/community', () => ({
   communityApi: {
     getPosts: (...args) => mockGetPosts(...args),
+  },
+}))
+
+vi.mock('../../../services/api/nursery', () => ({
+  nurseryApi: {
+    getNurseries: (...args) => mockGetNurseries(...args),
   },
 }))
 
@@ -40,6 +49,13 @@ const mockProducts = [
   { id: 2, name: 'Aloe Vera', slug: 'aloe-vera', price: 25000, emoji: '🌵', gradient: 'from-green-300' },
 ]
 
+const mockCategories = [
+  { slug: 'tanaman-hias', name: 'Tanaman Hias', icon: '🪴', count: 5 },
+  { slug: 'sayuran-herbal', name: 'Sayuran & Herbal', icon: '🥬', count: 3 },
+  { slug: 'buah', name: 'Buah', icon: '🍓', count: 4 },
+  { slug: 'kaktus-premium', name: 'Kaktus Premium', icon: '🌵', count: 6 },
+]
+
 const mockPosts = [
   {
     id: 1,
@@ -64,18 +80,19 @@ function renderHome() {
 describe('Home Page', () => {
   beforeEach(() => {
     vi.clearAllMocks()
+    mockGetProducts.mockResolvedValue({ data: mockProducts })
+    mockGetCategories.mockResolvedValue({ data: mockCategories })
+    mockGetPosts.mockResolvedValue({ data: mockPosts })
+    mockGetNurseries.mockResolvedValue({ data: [{ id: 1 }, { id: 2 }, { id: 3 }] })
   })
 
   it('shows skeleton while featured products load', () => {
     mockGetProducts.mockReturnValue(new Promise(() => {}))
-    mockGetPosts.mockReturnValue(new Promise(() => {}))
     renderHome()
     expect(document.querySelector('.skeleton')).toBeInTheDocument()
   })
 
   it('renders hero section after loading', async () => {
-    mockGetProducts.mockResolvedValue({ data: mockProducts })
-    mockGetPosts.mockResolvedValue({ data: mockPosts })
     renderHome()
 
     await waitFor(() => {
@@ -86,22 +103,18 @@ describe('Home Page', () => {
     expect(screen.getByText(/kebiasaan baik/i)).toBeInTheDocument()
   })
 
-  it('shows stats in hero section', async () => {
-    mockGetProducts.mockResolvedValue({ data: mockProducts })
-    mockGetPosts.mockResolvedValue({ data: mockPosts })
+  it('shows stats derived from live data', async () => {
     renderHome()
 
+    // categories count = 5+3+4+6 = 18  → "18+", nurseries = 3 → "3+"
     await waitFor(() => {
-      expect(screen.getByText('500+')).toBeInTheDocument()
+      expect(screen.getByText('18+')).toBeInTheDocument()
     })
 
-    expect(screen.getByText('120+')).toBeInTheDocument()
-    expect(screen.getAllByText('10rb+').length).toBeGreaterThanOrEqual(1)
+    expect(screen.getByText('3+')).toBeInTheDocument()
   })
 
   it('renders featured products', async () => {
-    mockGetProducts.mockResolvedValue({ data: mockProducts })
-    mockGetPosts.mockResolvedValue({ data: mockPosts })
     renderHome()
 
     await waitFor(() => {
@@ -111,22 +124,28 @@ describe('Home Page', () => {
     expect(screen.getByText('Aloe Vera')).toBeInTheDocument()
   })
 
-  it('renders categories', async () => {
-    mockGetProducts.mockResolvedValue({ data: mockProducts })
-    mockGetPosts.mockResolvedValue({ data: mockPosts })
+  it('renders categories from API', async () => {
+    renderHome()
+
+    await waitFor(() => {
+      expect(screen.getByText('Kaktus Premium')).toBeInTheDocument()
+    })
+
+    expect(screen.getByText('Sayuran & Herbal')).toBeInTheDocument()
+  })
+
+  it('falls back to curated categories when API is empty', async () => {
+    mockGetCategories.mockResolvedValue({ data: [] })
     renderHome()
 
     await waitFor(() => {
       expect(screen.getByText('Tanaman Hias')).toBeInTheDocument()
     })
 
-    expect(screen.getByText('Sayuran & Herbal')).toBeInTheDocument()
-    expect(screen.getByText('Media Tanam')).toBeInTheDocument()
+    expect(screen.getByText('Peralatan Berkebun')).toBeInTheDocument()
   })
 
   it('shows smart features section', async () => {
-    mockGetProducts.mockResolvedValue({ data: mockProducts })
-    mockGetPosts.mockResolvedValue({ data: mockPosts })
     renderHome()
 
     await waitFor(() => {
@@ -138,8 +157,6 @@ describe('Home Page', () => {
   })
 
   it('renders community posts preview', async () => {
-    mockGetProducts.mockResolvedValue({ data: mockProducts })
-    mockGetPosts.mockResolvedValue({ data: mockPosts })
     renderHome()
 
     await waitFor(() => {
@@ -150,8 +167,6 @@ describe('Home Page', () => {
   })
 
   it('shows CTA section', async () => {
-    mockGetProducts.mockResolvedValue({ data: mockProducts })
-    mockGetPosts.mockResolvedValue({ data: mockPosts })
     renderHome()
 
     await waitFor(() => {

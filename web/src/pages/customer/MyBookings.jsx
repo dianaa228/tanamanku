@@ -36,10 +36,11 @@ export default function MyBookings() {
   if (loading) return <Loading label="Memuat pesanan jasa..." />
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
+    <div className="page-container max-w-3xl">
       <div className="animate-fade-up">
-        <h1 className="text-3xl font-extrabold text-leaf-950">🔧 Pesanan Jasa Saya</h1>
-        <p className="mt-1 text-sm text-leaf-900/50">
+        <span className="page-eyebrow">Jasa berkebun</span>
+        <h1 className="page-title">Pesanan Jasa Saya</h1>
+        <p className="page-subtitle">
           {loading ? 'Memuat...' : `${bookings.length} pesanan`}
         </p>
       </div>

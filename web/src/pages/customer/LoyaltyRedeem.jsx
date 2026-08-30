@@ -51,12 +51,13 @@ export default function LoyaltyRedeem() {
   if (loading) return <Loading label="Memuat rewards..." />
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
+    <div className="page-container max-w-3xl">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 animate-fade-up">
         <div>
-          <h1 className="text-3xl font-extrabold text-leaf-950">🎁 Tukar Poin</h1>
-          <p className="mt-1 text-sm text-leaf-900/50">Tukar poin Anda dengan voucher dan hadiah menarik</p>
+          <span className="page-eyebrow">Hadiah dari poinmu</span>
+          <h1 className="page-title">Tukar Poin</h1>
+          <p className="page-subtitle">Tukar poin Anda dengan voucher dan hadiah menarik</p>
         </div>
         <div className="shrink-0 rounded-2xl bg-leaf-100 px-5 py-3 text-center">
           <p className="text-xs text-leaf-900/50">Poin tersedia</p>

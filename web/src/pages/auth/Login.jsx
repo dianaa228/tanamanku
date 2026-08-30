@@ -38,8 +38,8 @@ export default function Login() {
 
   return (
     <div>
-      <h1 className="text-3xl font-extrabold text-leaf-950">Selamat datang kembali 👋</h1>
-      <p className="mt-2 text-sm text-leaf-900/60">Masuk untuk lanjut merawat kebunmu.</p>
+      <h1 className="display text-3xl font-semibold text-forest">Selamat datang kembali 👋</h1>
+      <p className="mt-2 text-sm text-muted">Masuk untuk lanjut merawat kebunmu.</p>
 
       <form onSubmit={submit} className="mt-8 space-y-4">
         {error && (

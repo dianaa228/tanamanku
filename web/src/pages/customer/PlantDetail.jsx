@@ -68,15 +68,15 @@ export default function PlantDetail() {
             />
             <div className="p-5">
               <div className="flex items-center justify-between">
-                <h1 className="text-2xl font-extrabold text-leaf-950">{plant.nickname}</h1>
+                <h1 className="display text-2xl font-semibold text-forest">{plant.nickname}</h1>
                 <PlantStatus status={plant.status} />
               </div>
-              <p className="mt-0.5 text-sm italic text-leaf-900/50">{species.scientificName}</p>
+              <p className="mt-0.5 text-sm italic text-muted">{species.scientificName}</p>
               <div className="mt-4 space-y-2.5 text-sm">
-                <p className="flex items-center gap-2 text-leaf-900/70">📍 {plant.location} · Pot {plant.pot}</p>
-                <p className="flex items-center gap-2 text-leaf-900/70">📅 Ditanam {formatDate(plant.plantedAt)}</p>
-                <p className="flex items-center gap-2 text-leaf-900/70">📏 Tinggi {plant.height} cm</p>
-                <p className="flex items-center gap-2 text-leaf-900/70">💧 Terakhir disiram {formatDate(plant.lastWatered)}</p>
+                <p className="flex items-center gap-2 text-forest/70">📍 {plant.location} · Pot {plant.pot}</p>
+                <p className="flex items-center gap-2 text-forest/70">📅 Ditanam {formatDate(plant.plantedAt)}</p>
+                <p className="flex items-center gap-2 text-forest/70">📏 Tinggi {plant.height} cm</p>
+                <p className="flex items-center gap-2 text-forest/70">💧 Terakhir disiram {formatDate(plant.lastWatered)}</p>
               </div>
               <Button className="mt-5 w-full" onClick={handleWater}>
                 💧 Siram sekarang

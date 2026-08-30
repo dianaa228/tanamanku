@@ -97,8 +97,8 @@ export default function ServiceDetail() {
           <Badge className="bg-white/80 text-leaf-700">
             {cat?.icon} {cat?.label || service.category}
           </Badge>
-          <h1 className="mt-4 text-2xl sm:text-3xl font-extrabold text-leaf-950">{service.name}</h1>
-          <p className="mt-1 text-sm text-leaf-900/60">oleh <span className="font-semibold text-leaf-900">{service.provider?.name}</span></p>
+          <h1 className="display mt-4 text-2xl font-semibold text-forest sm:text-3xl">{service.name}</h1>
+          <p className="mt-1 text-sm text-muted">oleh <span className="font-semibold text-leaf-700">{service.provider?.name}</span></p>
         </div>
 
         {/* Body */}

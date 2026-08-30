@@ -32,12 +32,13 @@ export default function PlantExchange() {
   }
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
+    <div className="page-container">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 animate-fade-up">
         <div>
-          <h1 className="text-3xl font-extrabold text-leaf-950">🌿 Plant Exchange</h1>
-          <p className="mt-1 text-sm text-leaf-900/50">
+          <span className="page-eyebrow">Tukar & jual antar pekebun</span>
+          <h1 className="page-title">Plant Exchange</h1>
+          <p className="page-subtitle">
             Jual atau tukar tanaman dengan sesama penghobi kebun
           </p>
         </div>

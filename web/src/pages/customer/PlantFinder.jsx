@@ -69,14 +69,14 @@ export default function PlantFinder() {
   }
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
+    <div className="page-container max-w-3xl">
       {/* Header */}
       <div className="text-center">
-        <span className="inline-flex items-center gap-2 rounded-full bg-leaf-100 px-4 py-1.5 text-xs font-bold text-leaf-700">
+        <span className="inline-flex items-center gap-2 rounded-full border border-leaf-200 bg-leaf-100/60 px-4 py-1.5 text-xs font-bold text-leaf-700">
           💡 Plant Finder — Rekomendasi Cerdas
         </span>
-        <h1 className="mt-4 text-3xl font-extrabold text-leaf-950 sm:text-4xl">Tanaman apa yang cocok untukmu?</h1>
-        <p className="mx-auto mt-2 max-w-md text-sm text-leaf-900/50">
+        <h1 className="display mt-4 text-3xl font-semibold text-forest sm:text-4xl">Tanaman apa yang cocok untukmu?</h1>
+        <p className="mx-auto mt-2 max-w-md text-sm text-muted">
           Jawab 4 pertanyaan singkat — mesin rekomendasi kami akan menemukan tanaman ideal untuk rumahmu.
         </p>
       </div>

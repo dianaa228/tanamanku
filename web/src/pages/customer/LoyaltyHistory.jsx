@@ -29,12 +29,13 @@ export default function LoyaltyHistory() {
   const totalRedeemed = history.filter((h) => h.points < 0).reduce((sum, h) => sum + Math.abs(h.points), 0)
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
+    <div className="page-container max-w-3xl">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 animate-fade-up">
         <div>
-          <h1 className="text-3xl font-extrabold text-leaf-950">📊 Riwayat Poin</h1>
-          <p className="mt-1 text-sm text-leaf-900/50">{history.length} transaksi</p>
+          <span className="page-eyebrow">Lacak poinmu</span>
+          <h1 className="page-title">Riwayat Poin</h1>
+          <p className="page-subtitle">{history.length} transaksi</p>
         </div>
         <Link
           to="/loyalty"
