@@ -62,7 +62,11 @@ class _SubscriptionManagePageState extends State<SubscriptionManagePage> {
                       content: const Text('Langganan akan berakhir di akhir periode.'),
                       actions: [TextButton(onPressed: () => Navigator.pop(context, false), child: const Text('Tidak')), TextButton(onPressed: () => Navigator.pop(context, true), child: const Text('Ya, Batalkan'))],
                     ));
-                    if (confirm == true) { sp.cancel(); if (mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Langganan dibatalkan'))); }
+                    if (!mounted) return;
+                    if (confirm != true) return;
+                    sp.cancel();
+                    if (!mounted) return;
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Langganan dibatalkan'))); // ignore: use_build_context_synchronously
                   }),
                 ],
                 const SizedBox(height: 24),

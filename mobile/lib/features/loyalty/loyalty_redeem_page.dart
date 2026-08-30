@@ -64,8 +64,9 @@ class _LoyaltyRedeemPageState extends State<LoyaltyRedeemPage> {
                           ])),
                           if (canRedeem)
                             ElevatedButton(onPressed: () async {
-                              final success = await loyalty.redeemReward(r.id);
-                              if (success && mounted) ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('${r.name} berhasil ditukar! 🎉')));
+                              await loyalty.redeemReward(r.id);
+                              if (!mounted) return;
+                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('${r.name} berhasil ditukar! 🎉'))); // ignore: use_build_context_synchronously
                             }, style: ElevatedButton.styleFrom(backgroundColor: AppTheme.leaf600, padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8)),
                               child: Text('Tukar', style: GoogleFonts.poppins(fontSize: 12, fontWeight: FontWeight.w600, color: Colors.white)))
                           else

@@ -63,7 +63,7 @@ class _AdminStoresPageState extends State<AdminStoresPage> {
                           Padding(
                             padding: const EdgeInsets.only(top: 8),
                             child: ElevatedButton(
-                              onPressed: () async { await AdminService().verifyStore(s['id']); ap.loadStores(); if (mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Toko diverifikasi!'))); },
+                              onPressed: () async { await AdminService().verifyStore(s['id']); if (!mounted) return; ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Toko diverifikasi!'))); ap.loadStores(); }, // ignore: use_build_context_synchronously
                               style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
                               child: const Text('✅ Verifikasi'),
                             ),

@@ -2,8 +2,12 @@
 class CartModel {
   final int id;
   final List<CartItemModel> items;
+  final int _apiCount;
+  final double _apiSubtotal;
 
-  CartModel({required this.id, this.items = const []});
+  CartModel({this.id = 0, this.items = const [], int apiCount = 0, double apiSubtotal = 0})
+      : _apiCount = apiCount,
+        _apiSubtotal = apiSubtotal;
 
   factory CartModel.fromJson(Map<String, dynamic> json) {
     return CartModel(
@@ -11,11 +15,13 @@ class CartModel {
       items: (json['items'] as List<dynamic>?)
           ?.map((e) => CartItemModel.fromJson(e))
           .toList() ?? [],
+      apiCount: json['count'] ?? 0,
+      apiSubtotal: (json['subtotal'] ?? 0).toDouble(),
     );
   }
 
-  int get itemCount => items.fold(0, (sum, item) => sum + item.quantity);
-  double get subtotal => items.fold(0, (sum, item) => sum + item.quantity * item.unitPrice);
+  int get itemCount => _apiCount > 0 ? _apiCount : items.fold(0, (sum, item) => sum + item.quantity);
+  double get subtotal => _apiSubtotal > 0 ? _apiSubtotal : items.fold(0, (sum, item) => sum + item.quantity * item.unitPrice);
 }
 
 class CartItemModel {

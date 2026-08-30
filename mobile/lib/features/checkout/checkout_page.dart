@@ -96,11 +96,12 @@ class _CheckoutPageState extends State<CheckoutPage> {
             return;
           }
           final order = await orderProv.createOrder(paymentMethod: _payment, address: user!.address!.toJson(), courier: _courier);
-          if (order != null && mounted) {
-            await cart.clearCart();
-            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Pesanan berhasil dibuat! 🎉')));
-            context.go('/orders');
-          }
+          if (!mounted) return;
+          if (order == null) return;
+          await cart.clearCart();
+          if (!mounted) return;
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Pesanan berhasil dibuat! 🎉'))); // ignore: use_build_context_synchronously
+          context.go('/orders'); // ignore: use_build_context_synchronously
         }),
         const SizedBox(height: 12),
         Center(child: Text('🔒 Transaksi diproses aman dengan enkripsi.', style: GoogleFonts.poppins(fontSize: 11, color: AppTheme.leaf900.withValues(alpha: 0.4)))),

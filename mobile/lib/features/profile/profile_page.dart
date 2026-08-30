@@ -239,7 +239,7 @@ class ProfilePage extends StatelessWidget {
       ),
       title: Text(label, style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.w600, color: AppTheme.leaf950)),
       subtitle: Text(desc, style: GoogleFonts.plusJakartaSans(fontSize: 11, color: AppTheme.leaf400)),
-      trailing: Icon(Icons.chevron_right_rounded, color: AppTheme.leaf300, size: 20),
+      trailing: const Icon(Icons.chevron_right_rounded, color: AppTheme.leaf300, size: 20),
       onTap: () => context.push(route),
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
     );

@@ -77,7 +77,7 @@ void main() {
     });
 
     test('toJson returns correct map', () {
-      final user = UserModel(
+      const user = UserModel(
         id: 1,
         name: 'Budi',
         email: 'budi@example.com',
@@ -94,19 +94,19 @@ void main() {
     });
 
     test('isAdmin returns true for admin role', () {
-      final admin = UserModel(id: 1, name: 'Admin', email: 'admin@example.com', role: 'admin');
+      const admin = UserModel(id: 1, name: 'Admin', email: 'admin@example.com', role: 'admin');
       expect(admin.isAdmin, true);
       expect(admin.isSeller, false);
     });
 
     test('isSeller returns true for seller role', () {
-      final seller = UserModel(id: 1, name: 'Seller', email: 'seller@example.com', role: 'seller');
+      const seller = UserModel(id: 1, name: 'Seller', email: 'seller@example.com', role: 'seller');
       expect(seller.isSeller, true);
       expect(seller.isAdmin, false);
     });
 
     test('customer is neither admin nor seller', () {
-      final customer = UserModel(id: 1, name: 'Customer', email: 'cust@example.com', role: 'customer');
+      const customer = UserModel(id: 1, name: 'Customer', email: 'cust@example.com', role: 'customer');
       expect(customer.isAdmin, false);
       expect(customer.isSeller, false);
     });

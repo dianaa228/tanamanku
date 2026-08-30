@@ -42,6 +42,16 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Muat ulang profil (mis. setelah alamat berubah).
+  Future<void> refresh() async {
+    if (_user == null) return;
+    final serverUser = await _service.me();
+    if (serverUser != null) {
+      _user = serverUser;
+      notifyListeners();
+    }
+  }
+
   /// Login.
   Future<bool> login(String email, String password) async {
     _loading = true;

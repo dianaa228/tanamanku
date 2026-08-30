@@ -3,7 +3,7 @@ class AppConfig {
   // Base URL backend Laravel — sesuaikan dengan environment
   static const String apiBaseUrl = String.fromEnvironment(
     'API_BASE_URL',
-    defaultValue: 'http://localhost:8000/api/v1',
+    defaultValue: 'https://powderblue-moose-368537.hostingersite.com/api/v1',
   );
 
   static const String appName = 'Tanamanku';

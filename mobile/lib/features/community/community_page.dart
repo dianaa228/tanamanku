@@ -84,11 +84,12 @@ class _CommunityPageState extends State<CommunityPage> {
                           onPressed: community.sending ? null : () async {
                             if (_composerCtrl.text.trim().isEmpty) return;
                             final success = await community.createPost(_composerCtrl.text.trim());
+                            if (!mounted) return;
+                            if (success) {
+                              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Post berhasil dibagikan! 🌱'))); // ignore: use_build_context_synchronously
+                            }
                             _composerCtrl.clear();
                             setState(() => _composerOpen = false);
-                            if (success && mounted) {
-                              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Post berhasil dibagikan! 🌱')));
-                            }
                           },
                           child: community.sending
                               ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))

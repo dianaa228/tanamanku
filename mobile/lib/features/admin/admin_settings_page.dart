@@ -49,7 +49,7 @@ class AdminSettingsPage extends StatelessWidget {
       leading: Text(icon, style: const TextStyle(fontSize: 22)),
       title: Text(label, style: GoogleFonts.plusJakartaSans(fontSize: 13, fontWeight: FontWeight.w600, color: AppTheme.leaf950)),
       subtitle: Text(value, style: GoogleFonts.plusJakartaSans(fontSize: 12, color: AppTheme.leaf400)),
-      trailing: Icon(Icons.chevron_right_rounded, color: AppTheme.leaf300, size: 20),
+      trailing: const Icon(Icons.chevron_right_rounded, color: AppTheme.leaf300, size: 20),
     );
   }
 }

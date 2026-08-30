@@ -1,4 +1,5 @@
 class AddressModel {
+  final int? id;
   final String label;
   final String recipient;
   final String phone;
@@ -10,6 +11,7 @@ class AddressModel {
   final bool isDefault;
 
   AddressModel({
+    this.id,
     required this.label,
     required this.recipient,
     required this.phone,
@@ -23,6 +25,7 @@ class AddressModel {
 
   factory AddressModel.fromJson(Map<String, dynamic> json) {
     return AddressModel(
+      id: json['id'],
       label: json['label'] ?? '',
       recipient: json['recipient'] ?? '',
       phone: json['phone'] ?? '',
@@ -36,6 +39,7 @@ class AddressModel {
   }
 
   Map<String, dynamic> toJson() => {
+    if (id != null) 'id': id,
     'label': label,
     'recipient': recipient,
     'phone': phone,
@@ -46,4 +50,29 @@ class AddressModel {
     'postal_code': postalCode,
     'is_default': isDefault,
   };
+
+  AddressModel copyWith({
+    String? label,
+    String? recipient,
+    String? phone,
+    String? province,
+    String? city,
+    String? district,
+    String? street,
+    String? postalCode,
+    bool? isDefault,
+  }) {
+    return AddressModel(
+      id: id,
+      label: label ?? this.label,
+      recipient: recipient ?? this.recipient,
+      phone: phone ?? this.phone,
+      province: province ?? this.province,
+      city: city ?? this.city,
+      district: district ?? this.district,
+      street: street ?? this.street,
+      postalCode: postalCode ?? this.postalCode,
+      isDefault: isDefault ?? this.isDefault,
+    );
+  }
 }

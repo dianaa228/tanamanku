@@ -18,6 +18,7 @@ import '../features/my_garden/plant_finder_page.dart';
 import '../features/my_garden/plant_diagnosis_page.dart';
 import '../features/community/community_page.dart';
 import '../features/profile/profile_page.dart';
+import '../features/profile/address_page.dart';
 import '../features/exchange/plant_exchange_page.dart';
 import '../features/exchange/listing_detail_page.dart';
 import '../features/services/services_page.dart';
@@ -87,6 +88,7 @@ class AppRouter {
             GoRoute(path: '/cart', builder: (_, __) => const CartPage()),
             GoRoute(path: '/orders', builder: (_, __) => const OrdersPage()),
             GoRoute(path: '/my-garden', builder: (_, __) => const MyGardenPage()),
+            GoRoute(path: '/profile', builder: (_, __) => const ProfilePage()),
           ],
         ),
 
@@ -203,9 +205,9 @@ class AppRouter {
           builder: (_, state) => NurseryDetailPage(slug: state.pathParameters['slug']!),
         ),
         GoRoute(
-          path: '/profile',
+          path: '/alamat',
           parentNavigatorKey: _rootNavigatorKey,
-          builder: (_, __) => const ProfilePage(),
+          builder: (_, __) => const AddressPage(),
         ),
         // ── Notifications ──
         GoRoute(path: '/notifications', parentNavigatorKey: _rootNavigatorKey, builder: (_, __) => const NotificationPage()),

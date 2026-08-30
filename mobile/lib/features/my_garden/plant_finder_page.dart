@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../../core/theme/app_theme.dart';
+import '../../core/utils/plant_emoji.dart';
 import 'garden_provider.dart';
 import '../../widgets/loading_widget.dart';
 
@@ -106,7 +107,7 @@ class _PlantFinderPageState extends State<PlantFinderPage> {
         final i = entry.key; final s = entry.value;
         return Container(margin: const EdgeInsets.only(bottom: 12), padding: const EdgeInsets.all(16), decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16), border: Border.all(color: i == 0 ? AppTheme.leaf400 : AppTheme.leaf100, width: i == 0 ? 2 : 1)),
           child: Row(children: [
-            Text(_speciesEmoji(s.slug), style: const TextStyle(fontSize: 36)), const SizedBox(width: 16),
+            Text(plantEmoji(name: s.name, slug: s.slug), style: const TextStyle(fontSize: 36)), const SizedBox(width: 16),
             Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               if (i == 0) Text('🥇 Paling cocok', style: GoogleFonts.poppins(fontSize: 10, fontWeight: FontWeight.w700, color: AppTheme.sun500)),
               Text(s.name, style: GoogleFonts.poppins(fontSize: 15, fontWeight: FontWeight.w700)),
@@ -121,16 +122,6 @@ class _PlantFinderPageState extends State<PlantFinderPage> {
         Expanded(child: ElevatedButton(onPressed: () => context.push('/explore'), child: const Text('Jelajahi'))),
       ]),
     ]));
-  }
-
-  String _speciesEmoji(String? slug) {
-    switch (slug) {
-      case 'monstera-deliciosa': return '🌿'; case 'sirih-gading': return '🍃';
-      case 'aglonema': return '🪴'; case 'lidah-mertua': return '🌵';
-      case 'cabai-rawit': return '🌶️'; case 'tomat-cherry': return '🍅';
-      case 'kemangi': return '🌿'; case 'aloe-vera': return '🌵';
-      default: return '🪴';
-    }
   }
 
   static const _defaultQuestions = [

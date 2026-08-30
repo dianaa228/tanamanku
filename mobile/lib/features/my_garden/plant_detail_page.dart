@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../../core/theme/app_theme.dart';
 import '../../core/constants/app_constants.dart';
 import '../../core/utils/app_formatter.dart';
+import '../../core/utils/plant_emoji.dart';
 import 'garden_provider.dart';
 import '../../widgets/loading_widget.dart';
 
@@ -46,7 +47,7 @@ class _PlantDetailPageState extends State<PlantDetailPage> {
             flexibleSpace: FlexibleSpaceBar(
               title: Text(plant.nickname, style: GoogleFonts.poppins(fontWeight: FontWeight.w700, fontSize: 16)),
               background: Container(decoration: const BoxDecoration(gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [AppTheme.leaf200, AppTheme.leaf100])),
-                child: Center(child: Text(_plantEmoji(species?.slug), style: const TextStyle(fontSize: 64)))),
+                child: Center(child: Text(_plantEmoji(species?.name, species?.slug), style: const TextStyle(fontSize: 64)))),
             ),
           ),
           SliverToBoxAdapter(child: Padding(padding: const EdgeInsets.all(20), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -147,19 +148,7 @@ class _PlantDetailPageState extends State<PlantDetailPage> {
     }
   }
 
-  String _plantEmoji(String? slug) {
-    switch (slug) {
-      case 'monstera-deliciosa': return '🌿';
-      case 'sirih-gading': return '🍃';
-      case 'aglonema': return '🪴';
-      case 'lidah-mertua': return '🌵';
-      case 'cabai-rawit': return '🌶️';
-      case 'tomat-cherry': return '🍅';
-      case 'kemangi': return '🌿';
-      case 'aloe-vera': return '🌵';
-      default: return '🪴';
-    }
-  }
+  String _plantEmoji(String? name, String? slug) => plantEmoji(name: name, slug: slug);
 
   String _careEmoji(String type) {
     switch (type) {

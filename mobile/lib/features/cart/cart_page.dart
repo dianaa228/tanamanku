@@ -27,7 +27,8 @@ class _CartPageState extends State<CartPage> {
   Future<void> _updateQty(CartProvider cart, int itemId, int qty) async {
     if (qty < 1) return _removeItem(cart, itemId);
     final success = await cart.updateItem(itemId, qty);
-    if (!success && mounted) {
+    if (!mounted) return;
+    if (!success) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(cart.error ?? 'Gagal update'), backgroundColor: Colors.red),
       );
@@ -36,9 +37,9 @@ class _CartPageState extends State<CartPage> {
 
   Future<void> _removeItem(CartProvider cart, int itemId) async {
     final success = await cart.removeItem(itemId);
-    if (success && mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Item dihapus')));
-    }
+    if (!mounted) return;
+    if (!success) return;
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Item dihapus')));
   }
 
   @override
@@ -66,7 +67,8 @@ class _CartPageState extends State<CartPage> {
                 );
                 if (confirmed == true) {
                   await cart.clearCart();
-                  if (mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Keranjang dikosongkan')));
+                  if (!mounted) return;
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Keranjang dikosongkan'))); // ignore: use_build_context_synchronously
                 }
               },
               child: Text('Kosongkan', style: GoogleFonts.poppins(fontSize: 12, color: const Color(0xFFEF4444))),

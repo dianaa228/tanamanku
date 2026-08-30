@@ -11,37 +11,38 @@ class AppTheme {
   // TANAMANKU DESIGN SYSTEM — Botanical Colors
   // ═══════════════════════════════════════════════════════════
 
-  // ── Primary: Botanical Green ──
-  static const Color leaf50 = Color(0xFFF4F9F4);
-  static const Color leaf100 = Color(0xFFE4F0E4);
-  static const Color leaf200 = Color(0xFFC8E2C8);
-  static const Color leaf300 = Color(0xFF9DCF9D);
-  static const Color leaf400 = Color(0xFF6BB86B);
-  static const Color leaf500 = Color(0xFF4A9D4A);
-  static const Color leaf600 = Color(0xFF3A8A3A);
-  static const Color leaf700 = Color(0xFF2F6F2F);
-  static const Color leaf800 = Color(0xFF2A5A2A);
-  static const Color leaf900 = Color(0xFF234A23);
-  static const Color leaf950 = Color(0xFF0F2D0F);
+  // Primary: Botanical Green
+static const Color leaf50 = Color(0xFFF4F9F4);
+static const Color leaf100 = Color(0xFFE4F0E4);
+static const Color leaf200 = Color(0xFFC8E2C8);
+static const Color leaf300 = Color(0xFF9DCF9D);
+static const Color leaf400 = Color(0xFF6BB86B);
+static const Color leaf500 = Color(0xFF4A9D4A);
+static const Color leaf600 = Color(0xFF3F8A3F);
+static const Color leaf700 = Color(0xFF327232);
+static const Color leaf800 = Color(0xFF285C28);
+static const Color leaf900 = Color(0xFF1F4A1F);
+static const Color leaf950 = Color(0xFF143314);
 
-  // ── Secondary: Sage ──
-  static const Color sage50 = Color(0xFFF6F8F5);
-  static const Color sage100 = Color(0xFFE8EDE6);
-  static const Color sage200 = Color(0xFFD1DBCD);
-  static const Color sage300 = Color(0xFFB3C4AD);
+ // Secondary: Sage
+static const Color sage50 = Color(0xFFF6F8F5);
+static const Color sage100 = Color(0xFFE8EDE6);
+static const Color sage200 = Color(0xFFD1DBCD);
+static const Color sage300 = Color(0xFFB3C4AD);
 
-  // ── Accent: Warm Terracotta ──
-  static const Color terra50 = Color(0xFFFDF5F0);
-  static const Color terra100 = Color(0xFFFAE8DC);
-  static const Color terra400 = Color(0xFFE0926A);
-  static const Color terra500 = Color(0xFFD47844);
-  static const Color terra600 = Color(0xFFC5653A);
+ // Accent: Warm Terracotta
+static const Color terra50 = Color(0xFFFDF5F0);
+static const Color terra100 = Color(0xFFFAE8DC);
+static const Color terra400 = Color(0xFFE0926A);
+static const Color terra500 = Color(0xFFD47844);
+static const Color terra600 = Color(0xFFC5653A);
 
-  // ── Accent: Muted Yellow / Sun ──
-  static const Color sun50 = Color(0xFFFEFCE8);
-  static const Color sun100 = Color(0xFFFEF9C3);
-  static const Color sun300 = Color(0xFFFDE047);
-  static const Color sun400 = Color(0xFFFACC15);
+  // Accent: Muted Yellow / Sun
+static const Color sun50 = Color(0xFFFEFCE8);
+static const Color sun100 = Color(0xFFFEF9C3);
+static const Color sun300 = Color(0xFFFDE047);
+static const Color sun400 = Color(0xFFFACC15);
+static const Color sun500 = Color(0xFFEAB308);
 
   // ── Background ──
   static const Color cream = Color(0xFFFAF8F5);
@@ -215,14 +216,14 @@ class AppTheme {
       ),
 
       // ── Bottom Navigation ──
-      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         backgroundColor: Colors.white,
         selectedItemColor: leaf600,
         unselectedItemColor: mutedLight,
         type: BottomNavigationBarType.fixed,
         elevation: 0,
-        selectedLabelStyle: const TextStyle(fontSize: 11, fontWeight: FontWeight.w700),
-        unselectedLabelStyle: const TextStyle(fontSize: 11, fontWeight: FontWeight.w500),
+        selectedLabelStyle: TextStyle(fontSize: 11, fontWeight: FontWeight.w700),
+        unselectedLabelStyle: TextStyle(fontSize: 11, fontWeight: FontWeight.w500),
       ),
 
       // ── Chip ──
