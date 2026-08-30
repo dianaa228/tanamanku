@@ -9,7 +9,6 @@ import ProductVisual from '../../components/product/ProductVisual'
 import CountUp from '../../components/ui/CountUp'
 import { mockProducts, communityPosts as mockPosts } from '../../services/api/mock-data'
 
-/* ── Scroll reveal hook ─────────────────────────────────── */
 function useReveal() {
   const ref = useRef(null)
   useEffect(() => {
@@ -37,7 +36,6 @@ function useReveal() {
   return ref
 }
 
-/* ── Data fallback (dipakai hanya saat API kosong/gagal) ── */
 const FALLBACK_CATEGORIES = [
   { slug: 'tanaman-hias', name: 'Tanaman Hias', emoji: '🪴', tagline: 'Hijaukan ruangan', count: 0 },
   { slug: 'sayuran-herbal', name: 'Sayuran & Herbal', emoji: '🥬', tagline: 'Pangan dari rumah', count: 0 },
@@ -50,7 +48,6 @@ const FALLBACK_CATEGORIES = [
 
 const TAGLINE_BY_SLUG = Object.fromEntries(FALLBACK_CATEGORIES.map((c) => [c.slug, c.tagline]))
 
-/* API kategori → bentuk kartu home (icon API + tagline brand) */
 const toHomeCategory = (c) => ({
   slug: c.slug,
   name: c.name,
@@ -88,16 +85,13 @@ export default function Home() {
       communityApi.getPosts(),
       statsApi.getStats(),
     ]).then(([productsRes, catsRes, postsRes, statsRes]) => {
-      // Products: fallback to mock if API returns empty
       const apiProducts = productsRes.status === 'fulfilled' ? productsRes.value.data : []
       setFeatured(apiProducts.length > 0 ? apiProducts.slice(0, 8) : mockProducts.slice(0, 8))
 
-      // Categories: fallback to default if API returns empty
       if (catsRes.status === 'fulfilled' && catsRes.value.data?.length) {
         setCategories(catsRes.value.data.map(toHomeCategory))
       }
 
-      // Community posts: fallback to mock if API returns empty
       const apiPosts = postsRes.status === 'fulfilled' ? postsRes.value.data : []
       setCommunityPosts(apiPosts.length > 0 ? apiPosts.slice(0, 3) : mockPosts.slice(0, 3))
 
@@ -115,29 +109,24 @@ export default function Home() {
   return (
     <div ref={revealRef}>
       {/* ═══ HERO ═══ */}
-      <section className="relative overflow-hidden bg-[#e8f0e6]">
-        {/* decorative botanical orbs */}
-        <div className="pointer-events-none absolute -right-28 -top-24 h-[420px] w-[420px] rounded-full bg-[#9abba0]/20 blur-3xl" />
-        <div className="pointer-events-none absolute -left-24 bottom-6 h-80 w-80 rounded-full bg-[#d2a74e]/15 blur-3xl" />
-
-        <div className="relative mx-auto grid max-w-7xl items-center gap-14 px-4 pb-16 pt-10 sm:px-6 lg:grid-cols-2 lg:pb-24 lg:pt-16">
-          {/* Copy */}
-          <div className="relative z-10">
-            <span className="inline-flex items-center gap-2 rounded-full border border-[var(--border-primary)] bg-[var(--bg-card)] px-4 py-1.5 text-xs font-semibold text-leaf-400 shadow-soft backdrop-blur-sm">
-              <span className="h-2 w-2 rounded-full bg-leaf-500" />
+      <section className="bg-[#e8f0e6] py-12 sm:py-16 lg:py-20">
+        <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:gap-14">
+          <div>
+            <span className="inline-flex items-center gap-2 rounded-full border border-[#c3d7c4] bg-white px-4 py-1.5 text-xs font-semibold text-[#345240] shadow-sm">
+              <span className="h-2 w-2 rounded-full bg-[#537d60]" />
               Kebun perkotaan dalam genggaman
             </span>
 
-            <h1 className="display mt-6 text-balance text-[2.6rem] font-semibold leading-[1.02] tracking-tight text-[#1c2b22] sm:text-6xl lg:text-[4.2rem]">
+            <h1 className="mt-6 text-balance text-[2.5rem] font-semibold leading-[1.05] tracking-tight text-[#1c2b22] sm:text-5xl lg:text-6xl">
               Rawat tanamanmu.{' '}
-              <span className="text-gradient-botanical">Tumbuhkan</span> kebiasaan baik.
+              <span className="text-[#345240]">Tumbuhkan</span> kebiasaan baik.
             </h1>
 
-            <p className="mt-6 max-w-lg text-base leading-relaxed text-[#3f654c] sm:text-lg">
+            <p className="mt-5 max-w-lg text-base leading-relaxed text-[#3f654c] sm:text-lg">
               Tanamanku menyatukan belanja tanaman dari nursery tepercaya, kebun pribadi yang mudah dicatat, dan pengingat perawatan cerdas — jadi berkebun terasa ringan, tidak rumit.
             </p>
 
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="mt-7 flex flex-wrap gap-3">
               <Button to="/explore" size="lg" className="btn-shine">
                 Mulai berkebun
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
@@ -147,12 +136,11 @@ export default function Home() {
               </Button>
             </div>
 
-            {/* stats */}
             <dl className="mt-10 grid grid-cols-3 gap-6 border-t border-[#c3d7c4] pt-7">
               {stats.map((s) => (
                 <div key={s.label}>
                   <dt className="sr-only">{s.label}</dt>
-                  <dd className="display text-2xl font-semibold text-[#1c2b22] sm:text-3xl">
+                  <dd className="text-2xl font-semibold text-[#1c2b22] sm:text-3xl">
                     <CountUp end={s.end} suffix={s.suffix} label={s.label} />
                   </dd>
                   <dd className="mt-1 text-xs font-medium text-[#3f654c]">{s.label}</dd>
@@ -163,24 +151,20 @@ export default function Home() {
 
           {/* Visual composition */}
           <div className="relative mx-auto hidden w-full max-w-xl lg:block">
-            {/* main card */}
-            <div className="relative overflow-hidden rounded-[2rem] border border-[#c3d7c4] bg-white shadow-elevated">
-              <div className="relative overflow-hidden bg-gradient-to-br from-leaf-100 via-cream to-sun-50">
-                <div className="flex h-80 items-center justify-center">
-                  <span className="animate-float text-[9rem] drop-shadow-xl">🪴</span>
-                </div>
+            <div className="relative overflow-hidden rounded-3xl border border-[#c3d7c4] bg-white shadow-lg">
+              <div className="flex h-80 items-center justify-center bg-[#d4e4d1]">
+                <span className="animate-float text-[8rem] drop-shadow-lg">🪴</span>
               </div>
               <div className="flex items-center justify-between px-6 py-5">
                 <div>
-                  <p className="display text-lg font-semibold text-[#1c2b22]">Momo · Monstera</p>
+                  <p className="text-lg font-semibold text-[#1c2b22]">Momo · Monstera</p>
                   <p className="text-sm text-[#3f654c]">Disiram 2 jam lalu · 68 cm · Sehat</p>
                 </div>
                 <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#e8f0e6] text-xl">😊</span>
               </div>
             </div>
 
-            {/* floating chip: watering */}
-            <div className="absolute -left-10 top-8 animate-float rounded-2xl border border-[#c3d7c4] bg-white px-4 py-3 shadow-card [animation-delay:1s]">
+            <div className="absolute -left-10 top-8 animate-float rounded-2xl border border-[#c3d7c4] bg-white px-4 py-3 shadow-md" style={{ animationDelay: '1s' }}>
               <div className="flex items-center gap-3">
                 <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#e0f2fe] text-lg">💧</span>
                 <div>
@@ -190,8 +174,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* floating chip: order */}
-            <div className="absolute -right-6 bottom-20 animate-float rounded-2xl border border-[#c3d7c4] bg-white px-4 py-3 shadow-card [animation-delay:2s]">
+            <div className="absolute -right-6 bottom-20 animate-float rounded-2xl border border-[#c3d7c4] bg-white px-4 py-3 shadow-md" style={{ animationDelay: '2s' }}>
               <div className="flex items-center gap-3">
                 <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#f0fdf4] text-lg">🌿</span>
                 <div>
@@ -200,80 +183,65 @@ export default function Home() {
                 </div>
               </div>
             </div>
-
-            {/* decorative leaves */}
-            <span className="absolute -right-16 -top-10 text-7xl opacity-20" style={{ transform: 'rotate(22deg)' }}>🍃</span>
-            <span className="absolute -bottom-8 -left-8 text-6xl opacity-20" style={{ transform: 'rotate(-30deg)' }}>🌿</span>
           </div>
         </div>
       </section>
 
       {/* ═══ KATEGORI ═══ */}
-      <section className="section-cream mx-auto max-w-7xl px-4 py-16 sm:px-6">
-        <div className="reveal flex items-end justify-between">
-          <div>
-            <p className="text-xs font-bold uppercase tracking-[0.16em] text-terra-400">Belanja</p>
-            <h2 className="display mt-2 text-3xl font-semibold text-[var(--text-primary)] sm:text-4xl">Temukan per kategori</h2>
-          </div>
-          <Link to="/explore" className="hidden text-sm font-semibold text-leaf-400 transition hover:text-leaf-300 sm:block">
-            Lihat semua →
-          </Link>
-        </div>
-        <div className="no-scrollbar -mx-4 mt-8 flex gap-4 overflow-x-auto px-4 pb-2 sm:grid sm:grid-cols-3 sm:overflow-visible lg:grid-cols-6">
-          {categories.map((c, i) => (
-            <Link
-              key={c.slug}
-              to={`/explore?category=${c.slug}`}
-              className="reveal group min-w-[9.5rem] shrink-0 sm:min-w-0"
-              style={{ transitionDelay: `${i * 60}ms` }}
-            >
-              <div className="flex aspect-[4/5] flex-col items-center justify-center gap-3 rounded-3xl border border-[var(--border-primary)] bg-[var(--bg-card)] shadow-soft backdrop-blur-sm transition-all duration-300 group-hover:-translate-y-1.5 group-hover:border-leaf-400/50 group-hover:shadow-card">
-                <span className="text-5xl transition-transform duration-300 group-hover:scale-110">{c.emoji}</span>
-                <div className="text-center">
-                  <p className="text-sm font-bold text-[var(--text-primary)]">{c.name}</p>
-                  <p className="text-xs text-[var(--text-secondary)]">{c.tagline}</p>
-                </div>
-              </div>
+      <section className="bg-[#f5f2eb] py-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+          <div className="flex items-end justify-between">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-widest text-[#b56545]">Belanja</p>
+              <h2 className="mt-2 text-3xl font-semibold text-[#1c2b22] sm:text-4xl">Temukan per kategori</h2>
+            </div>
+            <Link to="/explore" className="hidden text-sm font-semibold text-[#3f654c] hover:text-[#345240] sm:block">
+              Lihat semua →
             </Link>
-          ))}
+          </div>
+          <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
+            {categories.map((c) => (
+              <Link
+                key={c.slug}
+                to={`/explore?category=${c.slug}`}
+                className="group"
+              >
+                <div className="flex aspect-[4/5] flex-col items-center justify-center gap-3 rounded-3xl border border-[#c3d7c4] bg-white shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-md">
+                  <span className="text-5xl transition-transform duration-300 group-hover:scale-110">{c.emoji}</span>
+                  <div className="text-center">
+                    <p className="text-sm font-bold text-[#1c2b22]">{c.name}</p>
+                    <p className="text-xs text-[#3f654c]">{c.tagline}</p>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* ═══ PRODUK PILIHAN ═══ */}
-      <section className="section-gradient py-16 sm:py-20">
+      <section className="bg-[#e8f0e6] py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
-          <div className="reveal flex items-end justify-between">
+          <div className="flex items-end justify-between">
             <div>
-              <p className="text-xs font-bold uppercase tracking-[0.16em] text-terra-400">Paling diminati</p>
-              <h2 className="display mt-2 text-3xl font-semibold text-[var(--text-primary)] sm:text-4xl">Favorit minggu ini</h2>
-              <p className="mt-2 text-sm text-[var(--text-secondary)]">Pilihan komunitas Tanamanku yang laris manis.</p>
+              <p className="text-xs font-bold uppercase tracking-widest text-[#b56545]">Paling diminati</p>
+              <h2 className="mt-2 text-3xl font-semibold text-[#1c2b22] sm:text-4xl">Favorit minggu ini</h2>
+              <p className="mt-2 text-sm text-[#3f654c]">Pilihan komunitas Tanamanku yang laris manis.</p>
             </div>
             <Button to="/explore" variant="ghost" className="hidden sm:inline-flex">
               Jelajahi semua
             </Button>
           </div>
           {loading ? (
-            <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-4">
+            <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
               {Array.from({ length: 4 }).map((_, i) => (
                 <div key={i} className="skeleton h-72 rounded-3xl" />
               ))}
             </div>
           ) : (
-            <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-4">
-              {featured.length === 0 && (
-                <div className="col-span-full">
-                  <div className="flex flex-col items-center justify-center gap-4 rounded-[2rem] border border-dashed border-[var(--border-primary)] bg-[var(--bg-card)] px-6 py-16 text-center backdrop-blur-sm">
-                    <span className="flex h-20 w-20 items-center justify-center rounded-full bg-[var(--bg-card)] text-5xl shadow-card ring-1 ring-[var(--border-primary)]">🛍️</span>
-                    <h3 className="text-2xl font-semibold text-[var(--text-primary)]">Koleksi sedang disiapkan</h3>
-                    <p className="max-w-sm text-sm leading-relaxed text-[var(--text-secondary)]">
-                      Toko-toko kami sedang merapikan koleksi terbaru. Coba lihat lagi sebentar lagi ya!
-                    </p>
-                    <Button to="/explore" variant="primary">Jelajahi katalog</Button>
-                  </div>
-                </div>
-              )}
+            <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
               {featured.map((p, i) => (
-                <div key={p.id} className="reveal" style={{ transitionDelay: `${i * 50}ms` }}>
+                <div key={p.id}>
                   <ProductCard product={p} compact />
                 </div>
               ))}
@@ -282,107 +250,107 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══ WHY / EDITORIAL SPLIT ═══ */}
-      <section className="section-cream mx-auto max-w-7xl px-4 py-20 sm:px-6">
-        <div className="grid items-center gap-12 lg:grid-cols-2">
-          <div className="reveal">
-            <p className="text-xs font-bold uppercase tracking-[0.16em] text-terra-400">Kenapa Tanamanku</p>
-            <h2 className="display mt-2 text-balance text-3xl font-semibold text-[var(--text-primary)] sm:text-4xl">
-              Berbeda dari marketplace biasa — dibuat untuk pekebun sungguhan.
-            </h2>
-            <p className="mt-4 max-w-lg text-base leading-relaxed text-[var(--text-secondary)]">
-              Tanamanku bukan sekadar tempat belanja. Ini rumah digital tempat setiap tanaman punya riwayat, setiap perawatan punya jadwal, dan setiap pekebun punya komunitas.
-            </p>
-            <ul className="mt-8 space-y-5">
-              {[
-                { icon: '📖', title: 'Riwayat per tanaman', desc: 'Semua yang kamu lakukan tercatat — tinggi, penyiraman, hama, hingga panen.' },
-                { icon: '🔄', title: 'Cari & tukar tanaman', desc: 'Temukan tanaman langka atau tawarkan hasil stekmu ke sesama anggota.' },
-                { icon: '🤝', title: 'Nursery terverifikasi', desc: 'Jual beli bersama penjual lokal terpercaya dengan ulasan asli.' },
-              ].map((f) => (
-                <li key={f.title} className="flex gap-4">
-                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-leaf-800/20 text-2xl ring-1 ring-[var(--border-primary)]">{f.icon}</span>
-                  <div>
-                    <p className="font-bold text-[var(--text-primary)]">{f.title}</p>
-                    <p className="text-sm leading-relaxed text-[var(--text-secondary)]">{f.desc}</p>
-                  </div>
-                </li>
-              ))}
-            </ul>
-            <div className="mt-8">
-              <Button to="/register" size="lg" variant="primary">Mulai gratis</Button>
+      {/* ═══ KENAPA TANAMANKU ═══ */}
+      <section className="bg-[#f5f2eb] py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+          <div className="grid items-center gap-12 lg:grid-cols-2">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-widest text-[#b56545]">Kenapa Tanamanku</p>
+              <h2 className="mt-2 text-balance text-3xl font-semibold text-[#1c2b22] sm:text-4xl">
+                Berbeda dari marketplace biasa — dibuat untuk pekebun sungguhan.
+              </h2>
+              <p className="mt-4 max-w-lg text-base leading-relaxed text-[#3f654c]">
+                Tanamanku bukan sekadar tempat belanja. Ini rumah digital tempat setiap tanaman punya riwayat, setiap perawatan punya jadwal, dan setiap pekebun punya komunitas.
+              </p>
+              <ul className="mt-8 space-y-5">
+                {[
+                  { icon: '📖', title: 'Riwayat per tanaman', desc: 'Semua yang kamu lakukan tercatat — tinggi, penyiraman, hama, hingga panen.' },
+                  { icon: '🔄', title: 'Cari & tukar tanaman', desc: 'Temukan tanaman langka atau tawarkan hasil stekmu ke sesama anggota.' },
+                  { icon: '🤝', title: 'Nursery terverifikasi', desc: 'Jual beli bersama penjual lokal terpercaya dengan ulasan asli.' },
+                ].map((f) => (
+                  <li key={f.title} className="flex gap-4">
+                    <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#e8f0e6] text-2xl ring-1 ring-[#c3d7c4]">{f.icon}</span>
+                    <div>
+                      <p className="font-bold text-[#1c2b22]">{f.title}</p>
+                      <p className="text-sm leading-relaxed text-[#3f654c]">{f.desc}</p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-8">
+                <Button to="/register" size="lg" variant="primary">Mulai gratis</Button>
+              </div>
             </div>
-          </div>
 
-          <div className="reveal relative">
-            <div className="grid gap-5 sm:grid-cols-2">
-              <div className="rounded-[2rem] bg-leaf-700 p-7 text-white shadow-elevated">
-                <span className="text-4xl">🌱</span>
-                <p className="display mt-4 text-4xl font-semibold">4 langkah</p>
-                <p className="mt-2 text-sm text-leaf-100/80">Dari bibit hingga kebun yang tumbuh, kami menemani.</p>
-              </div>
-              <div className="mt-6 rounded-[2rem] border border-[var(--border-primary)] bg-[var(--bg-card)] p-7 shadow-card backdrop-blur-sm">
-                <span className="text-4xl">🪴</span>
-                <p className="display mt-4 text-4xl font-semibold text-[var(--text-primary)]">
-                  <CountUp end={siteStats.gardens || 10000} suffix="+" label="Kebun aktif" />
-                </p>
-                <p className="mt-2 text-sm text-[var(--text-secondary)]">kebun aktif tumbuh bersama setiap hari.</p>
+            <div className="relative">
+              <div className="grid gap-5 sm:grid-cols-2">
+                <div className="rounded-3xl bg-[#1a3328] p-7 text-white shadow-lg">
+                  <span className="text-4xl">🌱</span>
+                  <p className="mt-4 text-4xl font-semibold">4 langkah</p>
+                  <p className="mt-2 text-sm text-white/70">Dari bibit hingga kebun yang tumbuh, kami menemani.</p>
+                </div>
+                <div className="mt-6 rounded-3xl border border-[#c3d7c4] bg-white p-7 shadow-md">
+                  <span className="text-4xl">🪴</span>
+                  <p className="mt-4 text-4xl font-semibold text-[#1c2b22]">
+                    <CountUp end={siteStats.gardens || 10000} suffix="+" label="Kebun aktif" />
+                  </p>
+                  <p className="mt-2 text-sm text-[#3f654c]">kebun aktif tumbuh bersama setiap hari.</p>
+                </div>
               </div>
             </div>
-            <span className="absolute -right-8 -top-8 text-6xl opacity-15" style={{ transform: 'rotate(18deg)' }}>🪴</span>
           </div>
         </div>
       </section>
 
       {/* ═══ CARA KERJA ═══ */}
-      <section className="section-cream mx-auto max-w-7xl px-4 pb-20 sm:px-6">
-        <div className="reveal text-center">
-          <p className="text-xs font-bold uppercase tracking-[0.16em] text-terra-400">Cara kerja</p>
-          <h2 className="display mt-2 text-3xl font-semibold text-[var(--text-primary)] sm:text-4xl">Mulai dalam 4 langkah</h2>
-        </div>
-        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {steps.map((s, i) => (
-            <div
-              key={s.title}
-              className="reveal relative rounded-3xl border border-[var(--border-primary)] bg-[var(--bg-card)] p-7 shadow-soft backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-card"
-              style={{ transitionDelay: `${i * 80}ms` }}
-            >
-              <span className="absolute right-5 top-4 display text-5xl font-semibold text-[var(--border-primary)]">{i + 1}</span>
-              <span className="flex h-13 w-13 items-center justify-center rounded-2xl bg-leaf-800/20 text-3xl ring-1 ring-[var(--border-primary)]" style={{ height: '3.25rem', width: '3.25rem' }}>{s.icon}</span>
-              <h3 className="display mt-4 text-lg font-semibold text-[var(--text-primary)]">{s.title}</h3>
-              <p className="mt-1.5 text-sm leading-relaxed text-[var(--text-secondary)]">{s.desc}</p>
-            </div>
-          ))}
+      <section className="bg-[#e8f0e6] py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+          <div className="text-center">
+            <p className="text-xs font-bold uppercase tracking-widest text-[#b56545]">Cara kerja</p>
+            <h2 className="mt-2 text-3xl font-semibold text-[#1c2b22] sm:text-4xl">Mulai dalam 4 langkah</h2>
+          </div>
+          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {steps.map((s, i) => (
+              <div
+                key={s.title}
+                className="relative rounded-3xl border border-[#c3d7c4] bg-white p-7 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
+              >
+                <span className="absolute right-5 top-4 text-5xl font-semibold text-[#e0ebe0]">{i + 1}</span>
+                <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#e8f0e6] text-3xl ring-1 ring-[#c3d7c4]">{s.icon}</span>
+                <h3 className="mt-4 text-lg font-semibold text-[#1c2b22]">{s.title}</h3>
+                <p className="mt-1.5 text-sm leading-relaxed text-[#3f654c]">{s.desc}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* ═══ FITUR CERDAS (dark) ═══ */}
-      <section className="section-dark py-20">
+      {/* ═══ FITUR CERDAS ═══ */}
+      <section className="bg-[#1a3328] py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
-          <div className="reveal mx-auto max-w-2xl text-center">
-            <p className="text-xs font-bold uppercase tracking-[0.16em] text-sun-300">Berkebun lebih cerdas</p>
-            <h2 className="display mt-2 text-balance text-3xl font-semibold text-white sm:text-4xl">
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="text-xs font-bold uppercase tracking-widest text-[#d2a74e]">Berkebun lebih cerdas</p>
+            <h2 className="mt-2 text-balance text-3xl font-semibold text-white sm:text-4xl">
               Fitur yang tak ada di marketplace biasa
             </h2>
-            <p className="mt-3 text-sm text-leaf-200/60">
+            <p className="mt-3 text-sm text-white/50">
               Semua yang kamu butuhkan untuk merawat tanaman jadi satu, tanpa pindah-pindah aplikasi.
             </p>
           </div>
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {careFeatures.map((f, i) => (
+            {careFeatures.map((f) => (
               <Link
                 key={f.title}
                 to={f.to}
-                className="reveal group rounded-3xl bg-white/5 p-6 ring-1 ring-white/10 transition-all duration-300 hover:-translate-y-1.5 hover:bg-white/[0.08] hover:ring-white/20"
-                style={{ transitionDelay: `${i * 70}ms` }}
+                className="group rounded-3xl bg-white/10 p-6 ring-1 ring-white/10 transition-all duration-300 hover:-translate-y-1 hover:bg-white/[0.15] hover:ring-white/20"
               >
                 <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10 text-3xl ring-1 ring-white/10 transition-transform duration-300 group-hover:scale-105">
                   {f.icon}
                 </div>
-                <h3 className="display mt-5 text-lg font-semibold text-white">{f.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-leaf-200/50">{f.desc}</p>
-                <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-sun-300 transition group-hover:gap-2.5">
-                  Coba sekarang
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+                <h3 className="mt-5 text-lg font-semibold text-white">{f.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-white/50">{f.desc}</p>
+                <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-[#d2a74e] transition group-hover:gap-2.5">
+                  Coba sekarang →
                 </span>
               </Link>
             ))}
@@ -391,76 +359,61 @@ export default function Home() {
       </section>
 
       {/* ═══ KOMUNITAS ═══ */}
-      <section className="section-cream mx-auto max-w-7xl px-4 py-20 sm:px-6">
-        <div className="reveal flex items-end justify-between">
-          <div>
-            <p className="text-xs font-bold uppercase tracking-[0.16em] text-terra-400">Komunitas</p>
-            <h2 className="display mt-2 text-3xl font-semibold text-[var(--text-primary)] sm:text-4xl">Cerita dari para pekebun</h2>
-            <p className="mt-2 text-sm text-[var(--text-secondary)]">Hasil kebun para anggota Tanamanku.</p>
-          </div>
-          <Button to="/community" variant="ghost" className="hidden sm:inline-flex">
-            Buka komunitas
-          </Button>
-        </div>
-        <div className="mt-8 grid gap-5 md:grid-cols-3">
-          {communityPosts.length === 0 && (
-            <div className="md:col-span-3">
-              <div className="flex flex-col items-center justify-center gap-4 rounded-[2rem] border border-dashed border-[var(--border-primary)] bg-[var(--bg-card)] px-6 py-16 text-center backdrop-blur-sm">
-                <span className="flex h-20 w-20 items-center justify-center rounded-full bg-[var(--bg-card)] text-5xl shadow-card ring-1 ring-[var(--border-primary)]">💬</span>
-                <h3 className="text-2xl font-semibold text-[var(--text-primary)]">Belum ada cerita</h3>
-                <p className="max-w-sm text-sm leading-relaxed text-[var(--text-secondary)]">
-                  Jadilah pekebun pertama yang berbagi hasil kebun. Ceritamu bisa menginspirasi komunitas!
-                </p>
-                <Button to="/community" variant="primary">Mulai cerita</Button>
-              </div>
+      <section className="bg-[#f5f2eb] py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+          <div className="flex items-end justify-between">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-widest text-[#b56545]">Komunitas</p>
+              <h2 className="mt-2 text-3xl font-semibold text-[#1c2b22] sm:text-4xl">Cerita dari para pekebun</h2>
+              <p className="mt-2 text-sm text-[#3f654c]">Hasil kebun para anggota Tanamanku.</p>
             </div>
-          )}
-          {communityPosts.slice(0, 3).map((post, i) => (
-            <div key={post.id} className="reveal group overflow-hidden rounded-3xl border border-[var(--border-primary)] bg-[var(--bg-card)] shadow-soft backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-card" style={{ transitionDelay: `${i * 70}ms` }}>
-              <Link to="/community" className="block">
-                <ProductVisual emoji={post.emoji} gradient={post.gradient} className="h-44" emojiClassName="text-6xl" />
-              </Link>
-              <div className="p-6">
-                <div className="flex items-center gap-3">
-                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-leaf-800/20 text-lg ring-1 ring-[var(--border-primary)]">{post.avatar}</span>
-                  <div>
-                    <p className="text-sm font-bold text-[var(--text-primary)]">{post.author}</p>
-                    <p className="text-xs text-[var(--text-muted)]">Anggota komunitas</p>
+            <Button to="/community" variant="ghost" className="hidden sm:inline-flex">
+              Buka komunitas
+            </Button>
+          </div>
+          <div className="mt-8 grid gap-5 md:grid-cols-3">
+            {communityPosts.slice(0, 3).map((post) => (
+              <div key={post.id} className="group overflow-hidden rounded-3xl border border-[#c3d7c4] bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
+                <Link to="/community" className="block">
+                  <ProductVisual emoji={post.emoji} gradient={post.gradient} className="h-44" emojiClassName="text-6xl" />
+                </Link>
+                <div className="p-6">
+                  <div className="flex items-center gap-3">
+                    <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#e8f0e6] text-lg ring-1 ring-[#c3d7c4]">{post.avatar}</span>
+                    <div>
+                      <p className="text-sm font-bold text-[#1c2b22]">{post.author}</p>
+                      <p className="text-xs text-[#68756c]">Anggota komunitas</p>
+                    </div>
+                  </div>
+                  <p className="mt-4 line-clamp-2 text-sm leading-relaxed text-[#3f654c]">{post.content}</p>
+                  <div className="mt-5 flex items-center gap-4 border-t border-[#e0ebe0] pt-4 text-xs font-semibold text-[#68756c]">
+                    <span className="flex items-center gap-1.5">❤️ {post.likes}</span>
+                    <span className="flex items-center gap-1.5">💬 {post.comments?.length || 0}</span>
                   </div>
                 </div>
-                <p className="mt-4 line-clamp-2 text-sm leading-relaxed text-[var(--text-secondary)]">{post.content}</p>
-                <div className="mt-5 flex items-center gap-4 border-t border-[var(--border-primary)] pt-4 text-xs font-semibold text-[var(--text-muted)]">
-                  <span className="flex items-center gap-1.5">❤️ {post.likes}</span>
-                  <span className="flex items-center gap-1.5">💬 {post.comments?.length || 0}</span>
-                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </section>
 
       {/* ═══ CTA ═══ */}
-      <section className="section-dark mx-auto max-w-7xl px-4 pb-6 sm:px-6">
-        <div className="reveal relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-leaf-700 via-leaf-800 to-leaf-900 px-6 py-16 text-center shadow-elevated sm:px-12">
-          <div className="pointer-events-none absolute -left-16 -top-16 h-56 w-56 rounded-full bg-white/10 blur-3xl" />
-          <div className="pointer-events-none absolute -bottom-16 -right-10 h-60 w-60 rounded-full bg-sun-300/15 blur-3xl" />
-          <span className="pointer-events-none absolute right-8 top-8 text-5xl opacity-20" style={{ transform: 'rotate(14deg)' }}>🍃</span>
-          <div className="relative">
-            <div className="animate-float mx-auto w-fit text-6xl">🌻</div>
-            <h2 className="display mx-auto mt-5 max-w-2xl text-balance text-3xl font-semibold text-white sm:text-5xl">
-              Siap mengubah sudut rumahmu jadi kebun hijau?
-            </h2>
-            <p className="mx-auto mt-4 max-w-md text-sm text-leaf-100/80">
-              Bergabung dengan ribuan pekebun perkotaan lainnya. Gratis dan mudah.
-            </p>
-            <div className="mt-8 flex flex-wrap justify-center gap-3">
-              <Button to="/register" size="lg" variant="sun">
-                Daftar gratis
-              </Button>
-              <Button to="/explore" size="lg" variant="secondary">
-                Lihat koleksi
-              </Button>
-            </div>
+      <section className="bg-[#f5f2eb] px-4 pb-10">
+        <div className="mx-auto max-w-5xl overflow-hidden rounded-3xl bg-[#1a3328] px-6 py-16 text-center shadow-xl sm:px-12">
+          <div className="animate-float mx-auto w-fit text-6xl">🌻</div>
+          <h2 className="mx-auto mt-5 max-w-2xl text-balance text-3xl font-semibold text-white sm:text-5xl">
+            Siap mengubah sudut rumahmu jadi kebun hijau?
+          </h2>
+          <p className="mx-auto mt-4 max-w-md text-sm text-white/60">
+            Bergabung dengan ribuan pekebun perkotaan lainnya. Gratis dan mudah.
+          </p>
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <Button to="/register" size="lg" variant="sun">
+              Daftar gratis
+            </Button>
+            <Button to="/explore" size="lg" variant="secondary">
+              Lihat koleksi
+            </Button>
           </div>
         </div>
       </section>
