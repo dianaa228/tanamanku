@@ -126,7 +126,7 @@ export default function Community() {
               <div className="flex items-center gap-3 p-5 pb-0">
                 <span className="flex h-11 w-11 items-center justify-center rounded-full bg-leaf-100 text-xl">{post.avatar}</span>
                 <div>
-                  <p className="font-bold text-leaf-950">{post.author}</p>
+                  <p className="font-semibold text-forest">{post.author}</p>
                   <p className="text-xs text-leaf-900/40">{timeAgo(post.time)}</p>
                 </div>
               </div>

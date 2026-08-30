@@ -94,7 +94,7 @@ export default function Loyalty() {
           className="rounded-2xl border border-leaf-100 bg-white p-5 shadow-soft transition-all hover:shadow-lift hover:-translate-y-0.5 text-center"
         >
           <span className="text-3xl">🎁</span>
-          <p className="mt-2 font-bold text-leaf-950">Tukar Poin</p>
+          <p className="mt-2 font-semibold text-forest">Tukar Poin</p>
           <p className="text-xs text-leaf-900/50">Tukar dengan voucher & hadiah</p>
         </Link>
         <Link
@@ -102,14 +102,14 @@ export default function Loyalty() {
           className="rounded-2xl border border-leaf-100 bg-white p-5 shadow-soft transition-all hover:shadow-lift hover:-translate-y-0.5 text-center"
         >
           <span className="text-3xl">📊</span>
-          <p className="mt-2 font-bold text-leaf-950">Riwayat Poin</p>
+          <p className="mt-2 font-semibold text-forest">Riwayat Poin</p>
           <p className="text-xs text-leaf-900/50">Lihat transaksi poin</p>
         </Link>
       </div>
 
       {/* How to Earn */}
       <div className="mt-8">
-        <h2 className="text-lg font-bold text-leaf-950">💰 Cara Mendapatkan Poin</h2>
+        <h2 className="section-title">💰 Cara Mendapatkan Poin</h2>
         <div className="mt-4 space-y-3">
           {[
             { icon: '🛒', action: 'Belanja produk', points: '1 poin / Rp1.000', color: 'bg-leaf-50' },
@@ -121,7 +121,7 @@ export default function Loyalty() {
             <div key={i} className={cx('flex items-center gap-4 rounded-xl px-4 py-3', item.color)}>
               <span className="text-2xl">{item.icon}</span>
               <div className="flex-1">
-                <p className="text-sm font-semibold text-leaf-950">{item.action}</p>
+                <p className="text-sm font-semibold text-forest">{item.action}</p>
               </div>
               <p className="text-sm font-bold text-leaf-700">{item.points}</p>
             </div>
@@ -131,7 +131,7 @@ export default function Loyalty() {
 
       {/* Tier Benefits */}
       <div className="mt-8">
-        <h2 className="text-lg font-bold text-leaf-950">🎯 Tier Benefits</h2>
+        <h2 className="section-title">🎯 Tier Benefits</h2>
         <div className="mt-4 space-y-4">
           {tiers.map((tier) => {
             const tc = tierColors[tier.id] || tierColors.bronze
@@ -147,7 +147,7 @@ export default function Loyalty() {
                 <div className="flex items-center gap-3">
                   <span className="text-3xl">{tier.icon}</span>
                   <div>
-                    <p className={cx('font-bold', isActive ? tc.text : 'text-leaf-950')}>{tier.name}</p>
+                    <p className={cx('font-bold', isActive ? tc.text : 'text-forest')}>{tier.name}</p>
                     <p className="text-xs text-leaf-900/50">≥ {tier.minPoints.toLocaleString('id-ID')} poin</p>
                   </div>
                   {isActive && (
@@ -173,7 +173,7 @@ export default function Loyalty() {
       {/* Recent History */}
       <div className="mt-8">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-bold text-leaf-950">📋 Aktivitas Terakhir</h2>
+          <h2 className="section-title">📋 Aktivitas Terakhir</h2>
           <Link to="/loyalty/history" className="text-sm font-semibold text-leaf-700 hover:text-leaf-800">
             Lihat semua →
           </Link>

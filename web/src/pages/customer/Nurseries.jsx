@@ -119,7 +119,7 @@ export default function Nurseries() {
                   {/* Header */}
                   <div className="flex items-start justify-between gap-2">
                     <div className="flex-1 min-w-0">
-                      <h3 className="text-lg font-bold text-leaf-950 group-hover:text-leaf-700 transition-colors truncate">
+                      <h3 className="text-lg font-semibold text-forest group-hover:text-leaf-700 transition-colors truncate">
                         {n.name}
                       </h3>
                       <p className="mt-0.5 text-xs text-leaf-900/50">📍 {n.city}</p>
@@ -146,7 +146,7 @@ export default function Nurseries() {
                     <div className="flex items-center gap-3">
                       <span className="flex items-center gap-1">
                         <span className="text-sun-400">⭐</span>
-                        <span className="font-bold text-leaf-950">{n.ratingAvg}</span>
+                        <span className="font-bold text-forest">{n.ratingAvg}</span>
                         <span>({n.reviewsCount})</span>
                       </span>
                       <span>📦 {n.productsCount} produk</span>

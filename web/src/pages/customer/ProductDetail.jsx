@@ -112,7 +112,7 @@ export default function ProductDetail() {
           {/* Varian */}
           {product.variants && product.variants.length > 1 && (
             <div className="mt-6">
-              <p className="mb-2 text-sm font-bold text-leaf-950">Pilih varian</p>
+              <p className="mb-2 text-sm font-semibold text-forest">Pilih varian</p>
               <div className="flex flex-wrap gap-2">
                 {product.variants.map((v) => (
                   <button

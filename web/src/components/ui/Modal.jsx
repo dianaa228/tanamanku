@@ -29,7 +29,7 @@ export default function Modal({ open, onClose, title, children, footer, classNam
       >
         {title && (
           <div className="flex items-center justify-between border-b border-leaf-100 px-6 py-4">
-            <h3 className="text-lg font-bold text-leaf-950">{title}</h3>
+            <h3 className="text-lg font-semibold text-forest">{title}</h3>
             <button
               onClick={onClose}
               className="rounded-full p-2 text-leaf-900/50 transition hover:bg-leaf-50 hover:text-leaf-900"

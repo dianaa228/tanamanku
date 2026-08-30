@@ -149,14 +149,14 @@ export default function Checkout() {
         <div className="space-y-6">
           {/* Alamat */}
           <section className="rounded-3xl border border-leaf-100 bg-white p-6 shadow-soft">
-            <h2 className="flex items-center gap-2 text-lg font-bold text-leaf-950">
+            <h2 className="section-title flex items-center gap-3">
               <span className="flex h-8 w-8 items-center justify-center rounded-full bg-leaf-100 text-sm text-leaf-700">1</span>
               Alamat Pengiriman
             </h2>
             {user?.address ? (
               <div className="mt-4 rounded-2xl bg-leaf-50 p-4">
                 <div className="flex items-center justify-between">
-                  <p className="font-bold text-leaf-950">
+                  <p className="font-semibold text-forest">
                     {user.address.label} · {user.address.recipient} <span className="font-normal text-leaf-900/50">({user.address.phone})</span>
                   </p>
                   <span className="rounded-full bg-leaf-600 px-2.5 py-1 text-[11px] font-bold text-white">Default</span>
@@ -172,7 +172,7 @@ export default function Checkout() {
 
           {/* Pengiriman */}
           <section className="rounded-3xl border border-leaf-100 bg-white p-6 shadow-soft">
-            <h2 className="flex items-center gap-2 text-lg font-bold text-leaf-950">
+            <h2 className="section-title flex items-center gap-3">
               <span className="flex h-8 w-8 items-center justify-center rounded-full bg-leaf-100 text-sm text-leaf-700">2</span>
               Metode Pengiriman
             </h2>
@@ -187,7 +187,7 @@ export default function Checkout() {
                   )}
                 >
                   <div>
-                    <p className="font-bold text-leaf-950">🚚 {s.label}</p>
+                    <p className="font-semibold text-forest">🚚 {s.label}</p>
                     <p className="text-xs text-leaf-900/50">Estimasi {s.eta}</p>
                   </div>
                   <div className="flex items-center gap-3">
@@ -203,7 +203,7 @@ export default function Checkout() {
 
           {/* Pembayaran via Midtrans */}
           <section className="rounded-3xl border border-leaf-100 bg-white p-6 shadow-soft">
-            <h2 className="flex items-center gap-2 text-lg font-bold text-leaf-950">
+            <h2 className="section-title flex items-center gap-3">
               <span className="flex h-8 w-8 items-center justify-center rounded-full bg-leaf-100 text-sm text-leaf-700">3</span>
               Metode Pembayaran
             </h2>
@@ -223,7 +223,7 @@ export default function Checkout() {
                 >
                   <span className="text-2xl">{m.icon}</span>
                   <div className="min-w-0">
-                    <p className="font-bold text-leaf-950">{m.name}</p>
+                    <p className="font-semibold text-forest">{m.name}</p>
                     <p className="text-xs text-leaf-900/50">{m.desc}</p>
                   </div>
                 </button>
@@ -240,7 +240,7 @@ export default function Checkout() {
 
         {/* Ringkasan */}
         <div className="sticky top-20 h-fit rounded-3xl border border-leaf-100 bg-white p-6 shadow-soft">
-          <h2 className="text-lg font-bold text-leaf-950">Ringkasan Pesanan</h2>
+          <h2 className="section-title">Ringkasan Pesanan</h2>
           <div className="mt-4 space-y-3">
             {items.map((item) => (
               <div key={item.lineId} className="flex items-center gap-3">
@@ -263,7 +263,7 @@ export default function Checkout() {
               <dd className="font-semibold">{formatRupiah(ship.price)}</dd>
             </div>
             <div className="flex justify-between border-t border-leaf-100 pt-3">
-              <dt className="font-bold text-leaf-950">Total</dt>
+              <dt className="font-bold text-forest">Total</dt>
               <dd className="text-2xl font-extrabold text-leaf-700">{formatRupiah(total)}</dd>
             </div>
           </dl>

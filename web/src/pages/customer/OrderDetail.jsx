@@ -84,13 +84,13 @@ export default function OrderDetail() {
       <div className="mt-8 grid gap-6 lg:grid-cols-[1fr_18rem]">
         {/* Items */}
         <div className="rounded-3xl border border-leaf-100 bg-white p-6 shadow-soft">
-          <h2 className="text-lg font-bold text-leaf-950">Item Pesanan</h2>
+          <h2 className="section-title">Item Pesanan</h2>
           <div className="mt-4 space-y-4">
             {order.items.map((item, i) => (
               <div key={i} className="flex items-center gap-4">
                 <ProductVisual emoji={item.emoji} gradient={item.gradient} className="h-16 w-16 rounded-2xl" emojiClassName="text-3xl" />
                 <div className="min-w-0 flex-1">
-                  <Link to={`/product/${item.slug || item.productId}`} className="block truncate font-semibold text-leaf-950 hover:text-leaf-700">
+                  <Link to={`/product/${item.slug || item.productId}`} className="block truncate font-semibold text-forest hover:text-leaf-700">
                     {item.name}
                   </Link>
                   <p className="text-xs text-leaf-900/50">Varian: {item.variant} · {item.qty}x</p>
@@ -102,7 +102,7 @@ export default function OrderDetail() {
 
           {/* Pembayaran */}
           <div className="mt-6 rounded-2xl bg-leaf-50 p-4">
-            <h3 className="text-sm font-bold text-leaf-950">Pembayaran</h3>
+            <h3 className="text-sm font-semibold text-forest">Pembayaran</h3>
             <p className="mt-1 text-sm text-leaf-900/60">{order.payment.method}</p>
             <p className="text-sm text-leaf-900/60">Referensi: {order.payment.reference}</p>
           </div>
@@ -111,14 +111,14 @@ export default function OrderDetail() {
         {/* Info pengiriman & total */}
         <div className="space-y-6">
           <div className="rounded-3xl border border-leaf-100 bg-white p-6 shadow-soft">
-            <h2 className="text-lg font-bold text-leaf-950">Pengiriman</h2>
+            <h2 className="section-title">Pengiriman</h2>
             <div className="mt-3 space-y-2 text-sm">
               <p className="flex justify-between"><span className="text-leaf-900/50">Kurir</span><span className="font-semibold">🚚 {order.shipment.courier}</span></p>
               <p className="flex justify-between"><span className="text-leaf-900/50">Resi</span><span className="font-semibold">{order.shipment.tracking}</span></p>
               <p className="flex justify-between"><span className="text-leaf-900/50">Estimasi</span><span className="font-semibold">{order.shipment.eta}</span></p>
             </div>
             <div className="mt-4 border-t border-leaf-100 pt-3">
-              <p className="text-sm font-bold text-leaf-950">{order.address.label} · {order.address.recipient}</p>
+              <p className="text-sm font-semibold text-forest">{order.address.label} · {order.address.recipient}</p>
               <p className="mt-1 text-xs leading-relaxed text-leaf-900/55">
                 {order.address.street}, {order.address.district}, {order.address.city}, {order.address.province} {order.address.postalCode}
               </p>
@@ -126,7 +126,7 @@ export default function OrderDetail() {
           </div>
 
           <div className="rounded-3xl border border-leaf-100 bg-white p-6 shadow-soft">
-            <h2 className="text-lg font-bold text-leaf-950">Rincian Biaya</h2>
+            <h2 className="section-title">Rincian Biaya</h2>
             <dl className="mt-3 space-y-2 text-sm">
               <div className="flex justify-between"><dt className="text-leaf-900/60">Subtotal</dt><dd className="font-semibold">{formatRupiah(order.subtotal)}</dd></div>
               <div className="flex justify-between"><dt className="text-leaf-900/60">Ongkir</dt><dd className="font-semibold">{formatRupiah(order.shippingCost)}</dd></div>
@@ -134,7 +134,7 @@ export default function OrderDetail() {
                 <div className="flex justify-between text-leaf-700"><dt>Diskon</dt><dd className="font-semibold">−{formatRupiah(order.discount)}</dd></div>
               )}
               <div className="flex justify-between border-t border-leaf-100 pt-3">
-                <dt className="font-bold text-leaf-950">Total</dt>
+                <dt className="font-bold text-forest">Total</dt>
                 <dd className="text-xl font-extrabold text-leaf-700">{formatRupiah(order.total)}</dd>
               </div>
             </dl>

@@ -37,7 +37,7 @@ export default function DashboardLayout({ role = 'seller', navItems = [] }) {
         <div className="flex items-center gap-3 px-5 py-5 border-b border-leaf-100">
           <span className="text-2xl">🌿</span>
           <div>
-            <p className="font-extrabold text-leaf-950">Tanamanku</p>
+            <p className="font-extrabold text-forest">Tanamanku</p>
             <p className="text-[10px] font-semibold text-leaf-900/50 uppercase tracking-wider">
               {role === 'admin' ? 'Admin Panel' : 'Seller Panel'}
             </p>
@@ -110,7 +110,7 @@ export default function DashboardLayout({ role = 'seller', navItems = [] }) {
 
           {/* Breadcrumb */}
           <div className="flex-1">
-            <h1 className="text-lg font-bold text-leaf-950">
+            <h1 className="text-lg font-bold text-forest">
               {activeItem?.label || 'Dashboard'}
             </h1>
           </div>
@@ -118,7 +118,7 @@ export default function DashboardLayout({ role = 'seller', navItems = [] }) {
           {/* User menu */}
           <div className="flex items-center gap-3">
             <div className="hidden sm:block text-right">
-              <p className="text-sm font-semibold text-leaf-950">{user.name}</p>
+              <p className="text-sm font-semibold text-forest">{user.name}</p>
               <p className="text-[11px] text-leaf-900/50 capitalize">{user.role}</p>
             </div>
             <div className="flex h-9 w-9 items-center justify-center rounded-full bg-leaf-100 text-lg">

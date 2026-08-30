@@ -129,7 +129,7 @@ export default function PlantExchange() {
                     </div>
 
                     {/* Title */}
-                    <h3 className="mt-3 text-lg font-bold text-leaf-950 group-hover:text-leaf-700 transition-colors line-clamp-1">
+                    <h3 className="mt-3 text-lg font-semibold text-forest group-hover:text-leaf-700 transition-colors line-clamp-1">
                       {l.title}
                     </h3>
 

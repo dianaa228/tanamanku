@@ -76,7 +76,7 @@ export default function Cart() {
               <div className="flex min-w-0 flex-1 flex-col">
                 <div className="flex items-start justify-between gap-2">
                   <div className="min-w-0">
-                    <Link to={`/product/${item.slug}`} className="block truncate font-bold text-leaf-950 hover:text-leaf-700">
+                    <Link to={`/product/${item.slug}`} className="block truncate font-semibold text-forest hover:text-leaf-700">
                       {item.name}
                     </Link>
                     <p className="mt-0.5 text-xs text-leaf-900/50">Varian: {item.variant}</p>
@@ -106,7 +106,7 @@ export default function Cart() {
 
         {/* Ringkasan */}
         <div className="sticky top-20 h-fit rounded-3xl border border-leaf-100 bg-white p-6 shadow-soft">
-          <h2 className="text-lg font-bold text-leaf-950">Ringkasan Belanja</h2>
+          <h2 className="section-title">Ringkasan Belanja</h2>
           <dl className="mt-4 space-y-3 text-sm">
             <div className="flex justify-between">
               <dt className="text-leaf-900/60">Subtotal ({count} item)</dt>
@@ -117,7 +117,7 @@ export default function Cart() {
               <dd className="font-semibold text-leaf-950">{formatRupiah(shipping)}</dd>
             </div>
             <div className="flex justify-between border-t border-leaf-100 pt-3">
-              <dt className="font-bold text-leaf-950">Total</dt>
+              <dt className="font-bold text-forest">Total</dt>
               <dd className="text-xl font-extrabold text-leaf-700">{formatRupiah(total)}</dd>
             </div>
           </dl>

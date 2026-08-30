@@ -89,13 +89,13 @@ export default function Services() {
                     </span>
                     <div className="flex items-center gap-1 text-sm">
                       <span className="text-sun-400">⭐</span>
-                      <span className="font-bold text-leaf-950">{s.ratingAvg}</span>
+                      <span className="font-bold text-forest">{s.ratingAvg}</span>
                       <span className="text-leaf-900/40">({s.reviewsCount})</span>
                     </div>
                   </div>
 
                   {/* Title */}
-                  <h3 className="mt-3 text-lg font-bold text-leaf-950 group-hover:text-leaf-700 transition-colors">
+                  <h3 className="mt-3 text-lg font-semibold text-forest group-hover:text-leaf-700 transition-colors">
                     {s.name}
                   </h3>
 

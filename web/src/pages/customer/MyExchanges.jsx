@@ -97,7 +97,7 @@ export default function MyExchanges() {
                 {/* Header */}
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div>
-                    <Link to={`/plant-exchange/${e.listingId}`} className="font-bold text-leaf-950 hover:text-leaf-700 transition">
+                    <Link to={`/plant-exchange/${e.listingId}`} className="font-semibold text-forest hover:text-leaf-700 transition">
                       {e.listing?.title || 'Listing'}
                     </Link>
                     <p className="text-xs text-leaf-900/50">

@@ -86,7 +86,7 @@ export default function PlantDetail() {
 
           {/* Panduan spesies */}
           <div className="rounded-3xl border border-leaf-100 bg-white p-5 shadow-soft">
-            <h2 className="font-bold text-leaf-950">Panduan {species.name}</h2>
+            <h2 className="text-lg font-semibold text-forest">Panduan {species.name}</h2>
             <div className="mt-3 space-y-2.5">
               {infoRows.map((r) => (
                 <div key={r.label} className="flex items-start gap-3 text-sm">
@@ -105,7 +105,7 @@ export default function PlantDetail() {
         <div className="space-y-6">
           <div className="rounded-3xl border border-leaf-100 bg-white p-6 shadow-soft">
             <div className="flex items-center justify-between">
-              <h2 className="text-lg font-bold text-leaf-950">📈 Riwayat Pertumbuhan</h2>
+              <h2 className="section-title">📈 Riwayat Pertumbuhan</h2>
               <span className="rounded-full bg-leaf-100 px-3 py-1 text-xs font-bold text-leaf-700">+{plant.height - plant.growthLogs[0].height} cm total</span>
             </div>
             <div className="mt-4">
@@ -114,7 +114,7 @@ export default function PlantDetail() {
           </div>
 
           <div className="rounded-3xl border border-leaf-100 bg-white p-6 shadow-soft">
-            <h2 className="text-lg font-bold text-leaf-950">🔔 Jadwal Perawatan</h2>
+            <h2 className="section-title">🔔 Jadwal Perawatan</h2>
             <div className="mt-4 space-y-3">
               {plant.reminders.map((r) => (
                 <CareReminder key={r.id} reminder={r} onDone={handleDone} />
@@ -136,7 +136,7 @@ export default function PlantDetail() {
 
           {/* Catatan perawatan */}
           <div className="rounded-3xl border border-leaf-100 bg-white p-6 shadow-soft">
-            <h2 className="text-lg font-bold text-leaf-950">📒 Catatan Perawatan</h2>
+            <h2 className="section-title">📒 Catatan Perawatan</h2>
             <div className="mt-4 space-y-3">
               {plant.careLogs.map((log, i) => {
                 const care = CARE_TYPES[log.type]
@@ -144,7 +144,7 @@ export default function PlantDetail() {
                   <div key={i} className="flex items-center gap-3 rounded-2xl bg-leaf-50/70 px-4 py-3">
                     <span className={cx('flex h-9 w-9 items-center justify-center rounded-xl text-lg', care?.chip)}>{care?.icon}</span>
                     <div>
-                      <p className="text-sm font-bold text-leaf-950">{care?.label}</p>
+                      <p className="text-sm font-semibold text-forest">{care?.label}</p>
                       <p className="text-xs text-leaf-900/50">{formatDate(log.date)}</p>
                     </div>
                   </div>

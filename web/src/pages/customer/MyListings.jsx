@@ -88,7 +88,7 @@ export default function MyListings() {
                       {l.species?.scientific_name?.[0]?.toUpperCase() || '🌱'}
                     </span>
                     <div>
-                      <p className="font-bold text-leaf-950">{l.title}</p>
+                      <p className="font-semibold text-forest">{l.title}</p>
                       <p className="text-xs text-leaf-900/50">
                         {l.species?.name || 'Tanaman hias'} · {typeInfo?.label}
                       </p>

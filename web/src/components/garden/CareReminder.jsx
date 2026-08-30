@@ -25,7 +25,7 @@ export default function CareReminder({ reminder, onDone, onToggle }) {
       </span>
       <div className="min-w-0 flex-1">
         <div className="flex items-center gap-2">
-          <p className="truncate text-sm font-bold text-leaf-950">{care.label}</p>
+          <p className="truncate text-sm font-semibold text-forest">{care.label}</p>
           <span className={cx('rounded-full px-2 py-0.5 text-[10px] font-bold', care.chip)}>
             tiap {reminder.frequency} hari
           </span>

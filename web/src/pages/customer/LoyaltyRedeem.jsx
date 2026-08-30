@@ -117,7 +117,7 @@ export default function LoyaltyRedeem() {
                     </Badge>
                   </div>
 
-                  <h3 className="mt-3 text-lg font-bold text-leaf-950">{r.name}</h3>
+                  <h3 className="mt-3 text-lg font-semibold text-forest">{r.name}</h3>
                   <p className="mt-1 text-sm text-leaf-900/60 line-clamp-2">{r.description}</p>
 
                   <div className="mt-4 flex items-center justify-between">
@@ -152,7 +152,7 @@ export default function LoyaltyRedeem() {
           <div className="space-y-4">
             <div className="rounded-xl bg-leaf-50 px-4 py-4 text-center">
               <span className="text-4xl">{confirmModal.icon}</span>
-              <p className="mt-2 font-bold text-leaf-950">{confirmModal.name}</p>
+              <p className="mt-2 font-semibold text-forest">{confirmModal.name}</p>
               <p className="text-sm text-leaf-900/60">{confirmModal.description}</p>
             </div>
 
@@ -183,7 +183,7 @@ export default function LoyaltyRedeem() {
         {successModal && (
           <div className="space-y-4 text-center">
             <span className="text-6xl">{successModal.icon}</span>
-            <p className="text-lg font-bold text-leaf-950">{successModal.name}</p>
+            <p className="text-lg font-semibold text-forest">{successModal.name}</p>
             {successModal.code && (
               <div className="rounded-xl bg-leaf-50 px-4 py-4">
                 <p className="text-xs text-leaf-900/40">Kode voucher Anda:</p>

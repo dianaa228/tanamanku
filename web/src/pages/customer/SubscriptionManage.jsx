@@ -52,11 +52,11 @@ export default function SubscriptionManage() {
   const isFree = subscription?.plan_id === 'free'
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
+    <div className="page-container max-w-3xl">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 animate-fade-up">
         <div>
-          <h1 className="text-3xl font-extrabold text-leaf-950">⚙️ Kelola Langganan</h1>
+          <h1 className="page-title">⚙️ Kelola Langganan</h1>
           <p className="mt-1 text-sm text-leaf-900/50">Atur paket dan pembayaran Anda</p>
         </div>
         <Link to="/subscription" className="shrink-0 text-sm font-semibold text-leaf-700 hover:text-leaf-800">
@@ -74,7 +74,7 @@ export default function SubscriptionManage() {
             <span className="text-5xl">{currentPlan?.badge}</span>
             <div>
               <div className="flex items-center gap-2">
-                <h2 className="text-xl font-extrabold text-leaf-950">{currentPlan?.name}</h2>
+                <h2 className="text-xl font-semibold text-forest">{currentPlan?.name}</h2>
                 <Badge className={isActive ? 'bg-leaf-100 text-leaf-700' : 'bg-gray-100 text-gray-500'}>
                   {isActive ? '✓ Aktif' : 'Nonaktif'}
                 </Badge>
@@ -139,7 +139,7 @@ export default function SubscriptionManage() {
       {/* Current Features */}
       {!isFree && currentPlan && (
         <div className="mt-8">
-          <h2 className="text-lg font-bold text-leaf-950">✨ Fitur Aktif Anda</h2>
+          <h2 className="section-title">✨ Fitur Aktif Anda</h2>
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
             {currentPlan.features.filter((f) => f.included).map((f, i) => (
               <div key={i} className="flex items-center gap-2 rounded-xl bg-leaf-50 px-4 py-2.5">
@@ -153,7 +153,7 @@ export default function SubscriptionManage() {
 
       {/* Billing History */}
       <div className="mt-8">
-        <h2 className="text-lg font-bold text-leaf-950">🧾 Riwayat Pembayaran</h2>
+        <h2 className="section-title">🧾 Riwayat Pembayaran</h2>
         {billing.length === 0 ? (
           <div className="mt-4 rounded-2xl border border-dashed border-leaf-200 bg-leaf-50/50 p-8 text-center">
             <p className="text-4xl">📋</p>

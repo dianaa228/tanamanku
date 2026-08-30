@@ -105,21 +105,21 @@ export default function ListingDetail() {
               <span className="text-xl">👤</span>
               <div>
                 <p className="text-[11px] text-leaf-900/40">Pemilik</p>
-                <p className="text-sm font-semibold text-leaf-950">{listing.user?.name}</p>
+                <p className="text-sm font-semibold text-forest">{listing.user?.name}</p>
               </div>
             </div>
             <div className="flex items-center gap-3 rounded-xl bg-leaf-50 px-4 py-3">
               <span className="text-xl">💬</span>
               <div>
                 <p className="text-[11px] text-leaf-900/40">Tawaran</p>
-                <p className="text-sm font-semibold text-leaf-950">{listing.offersCount} tawaran</p>
+                <p className="text-sm font-semibold text-forest">{listing.offersCount} tawaran</p>
               </div>
             </div>
           </div>
 
           {/* Description */}
           <div>
-            <h2 className="text-base font-bold text-leaf-950">Deskripsi</h2>
+            <h2 className="text-base font-semibold text-forest">Deskripsi</h2>
             <p className="mt-2 text-sm leading-relaxed text-leaf-900/70 whitespace-pre-line">{listing.description}</p>
           </div>
 
@@ -147,7 +147,7 @@ export default function ListingDetail() {
         <form onSubmit={handleOffer} className="space-y-4">
           {/* Listing summary */}
           <div className="rounded-xl bg-leaf-50 px-4 py-3">
-            <p className="text-sm font-bold text-leaf-950">{listing.title}</p>
+            <p className="text-sm font-semibold text-forest">{listing.title}</p>
             <p className="text-xs text-leaf-900/50">
               {listing.price != null ? formatRupiah(listing.price) : 'Tukar Tukar'} · {listing.user?.name}
             </p>

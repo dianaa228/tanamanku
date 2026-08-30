@@ -134,7 +134,7 @@ export default function NurseryDetail() {
       {/* Products */}
       <div className="mt-10">
         <div className="flex items-center justify-between">
-          <h2 className="text-xl font-bold text-leaf-950">📦 Produk ({products.length})</h2>
+          <h2 className="section-title">📦 Produk ({products.length})</h2>
         </div>
 
         {products.length === 0 ? (
@@ -151,7 +151,7 @@ export default function NurseryDetail() {
                     🌱
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-bold text-leaf-950 truncate">{p.name}</p>
+                    <p className="text-sm font-semibold text-forest truncate">{p.name}</p>
                     <p className="text-xs text-leaf-900/50">{p.category}</p>
                     <div className="mt-1 flex items-center justify-between">
                       <p className="text-base font-extrabold text-leaf-700">{formatRupiah(p.price)}</p>

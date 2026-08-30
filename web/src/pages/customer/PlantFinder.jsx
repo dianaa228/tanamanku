@@ -96,7 +96,7 @@ export default function PlantFinder() {
         <div className="mt-8 animate-fade-up">
           <div className="rounded-3xl bg-leaf-50 p-6 text-center">
             <div className="animate-float text-5xl">🎯</div>
-            <h2 className="mt-3 text-2xl font-extrabold text-leaf-950">Tanaman terbaik untukmu</h2>
+            <h2 className="mt-3 text-2xl font-semibold text-forest">Tanaman terbaik untukmu</h2>
             <p className="mt-1 text-sm text-leaf-900/55">Berdasarkan jawabanmu: {Object.values(answers).map((a) => a.label).join(' · ')}</p>
           </div>
           <div className="mt-6 space-y-4">
@@ -116,7 +116,7 @@ export default function PlantFinder() {
                       {i === 0 && <span className="rounded-full bg-sun-400 px-2.5 py-0.5 text-[11px] font-extrabold text-soil-950">🥇 Paling cocok</span>}
                       {care && <span className={cx('rounded-full px-2.5 py-0.5 text-[11px] font-bold', care.chip)}>{care.icon} Perawatan {care.label}</span>}
                     </div>
-                    <h3 className="mt-2 text-xl font-extrabold text-leaf-950">{species.name}</h3>
+                    <h3 className="mt-2 text-xl font-semibold text-forest">{species.name}</h3>
                     <p className="text-xs italic text-leaf-900/45">{species.scientificName}</p>
                     <div className="mt-3 grid grid-cols-2 gap-x-4 gap-y-1.5 text-xs text-leaf-900/70">
                       <p>☀️ {species.light}</p>
@@ -153,7 +153,7 @@ export default function PlantFinder() {
         <div key={step} className="mt-8 animate-fade-up">
           <div className="text-center">
             <div className="animate-float text-6xl">{question.icon}</div>
-            <h2 className="mt-4 text-2xl font-extrabold text-leaf-950">{question.question}</h2>
+            <h2 className="mt-4 text-2xl font-semibold text-forest">{question.question}</h2>
           </div>
           <div className="mt-8 grid gap-3 sm:grid-cols-2">
             {question.options.map((opt) => {
@@ -169,7 +169,7 @@ export default function PlantFinder() {
                 >
                   <span className="text-3xl transition-transform group-hover:scale-110">{opt.icon}</span>
                   <span>
-                    <span className="block font-bold text-leaf-950">{opt.label}</span>
+                    <span className="block font-semibold text-forest">{opt.label}</span>
                     <span className="mt-0.5 block text-xs leading-relaxed text-leaf-900/50">{opt.desc}</span>
                   </span>
                 </button>

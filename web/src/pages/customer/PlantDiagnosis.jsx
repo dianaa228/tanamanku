@@ -63,14 +63,14 @@ export default function PlantDiagnosis() {
           <div className={cx('overflow-hidden rounded-[2rem] border-2 bg-white shadow-lift', result.severity === 'berat' ? 'border-rose-200' : 'border-leaf-200')}>
             <div className={cx('p-8 text-center', result.severity === 'berat' ? 'bg-rose-50' : 'bg-leaf-50')}>
               <div className="animate-float text-6xl">{result.emoji}</div>
-              <h2 className="mt-3 text-2xl font-extrabold text-leaf-950">{result.title}</h2>
+              <h2 className="mt-3 text-2xl font-semibold text-forest">{result.title}</h2>
               <span className={cx('mt-3 inline-block rounded-full px-3 py-1 text-xs font-bold capitalize', severityChip[result.severity])}>
                 Tingkat keparahan: {result.severity}
               </span>
             </div>
             <div className="p-8">
               <p className="leading-relaxed text-leaf-900/75">{result.description}</p>
-              <h3 className="mt-6 text-lg font-bold text-leaf-950">✅ Langkah penanganan</h3>
+              <h3 className="mt-6 text-lg font-semibold text-forest">✅ Langkah penanganan</h3>
               <ol className="mt-3 space-y-3">
                 {(result.advice || []).map((a, i) => (
                   <li key={i} className="flex items-start gap-3 rounded-2xl bg-leaf-50/70 p-4">

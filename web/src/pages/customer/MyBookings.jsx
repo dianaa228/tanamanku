@@ -84,7 +84,7 @@ export default function MyBookings() {
                       {cat?.icon || '🔧'}
                     </span>
                     <div>
-                      <p className="font-bold text-leaf-950">{b.service?.name}</p>
+                      <p className="font-semibold text-forest">{b.service?.name}</p>
                       <p className="text-xs text-leaf-900/50">
                         {cat?.label || b.service?.category} · ID #{b.id}
                       </p>

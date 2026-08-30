@@ -19,7 +19,7 @@ export default function Profile() {
     return (
       <div className="mx-auto max-w-md px-4 py-24 text-center">
         <div className="animate-float text-6xl">🔐</div>
-        <h1 className="mt-4 text-2xl font-extrabold text-leaf-950">Masuk dulu yuk</h1>
+        <h1 className="mt-4 text-2xl font-semibold text-forest">Masuk dulu yuk</h1>
         <p className="mt-2 text-sm text-leaf-900/50">Masuk untuk mengakses profil, pesanan, dan kebunmu.</p>
         <div className="mt-6 flex justify-center gap-3">
           <Button to="/login">Masuk</Button>
@@ -92,7 +92,7 @@ export default function Profile() {
         ].map((s) => (
           <div key={s.label} className="rounded-3xl border border-leaf-100 bg-white p-5 text-center shadow-soft">
             <p className="text-2xl">{s.icon}</p>
-            <p className="mt-1 text-2xl font-extrabold text-leaf-950">{s.value}</p>
+            <p className="mt-1 text-2xl font-extrabold text-forest">{s.value}</p>
             <p className="text-xs font-medium text-leaf-900/50">{s.label}</p>
           </div>
         ))}
@@ -109,7 +109,7 @@ export default function Profile() {
           >
             <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-leaf-100 text-2xl transition group-hover:bg-leaf-200">{m.icon}</span>
             <div className="flex-1">
-              <p className="font-bold text-leaf-950">{m.label}</p>
+              <p className="font-semibold text-forest">{m.label}</p>
               <p className="text-xs text-leaf-900/50">{m.desc}</p>
             </div>
             <span className="text-leaf-900/30 transition group-hover:translate-x-1 group-hover:text-leaf-700">→</span>

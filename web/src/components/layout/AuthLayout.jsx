@@ -46,7 +46,7 @@ export default function AuthLayout() {
         <div className="w-full max-w-md animate-fade-up">
           <Link to="/" className="mb-8 flex items-center justify-center gap-2.5 lg:hidden">
             <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-leaf-600 to-leaf-800 text-2xl text-cream">🌿</span>
-            <span className="display text-2xl font-semibold text-leaf-950">Tanamanku</span>
+            <span className="display text-2xl font-semibold text-forest">Tanamanku</span>
           </Link>
           <Outlet />
         </div>

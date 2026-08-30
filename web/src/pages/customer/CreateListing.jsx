@@ -82,7 +82,7 @@ export default function CreateListing() {
                   )}
                 >
                   <span className="text-2xl">{t.icon}</span>
-                  <p className="mt-1 text-sm font-bold text-leaf-950">{t.label}</p>
+                  <p className="mt-1 text-sm font-semibold text-forest">{t.label}</p>
                   <p className="text-xs text-leaf-900/50">{t.desc}</p>
                 </button>
               ))}

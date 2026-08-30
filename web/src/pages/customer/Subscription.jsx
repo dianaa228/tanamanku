@@ -67,10 +67,10 @@ export default function Subscription() {
   }
 
   return (
-    <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
+    <div className="page-container max-w-5xl">
       {/* Header */}
       <div className="text-center animate-fade-up">
-        <h1 className="text-3xl font-extrabold text-leaf-950">⭐ Pilih Paket Langganan</h1>
+        <h1 className="page-title">⭐ Pilih Paket Langganan</h1>
         <p className="mt-2 text-sm text-leaf-900/50 max-w-lg mx-auto">
           Tingkatkan pengalaman berkebunmu dengan fitur premium. Mulai dari gratis!
         </p>
@@ -120,17 +120,17 @@ export default function Subscription() {
               {/* Plan Header */}
               <div className="text-center">
                 <span className="text-5xl">{plan.badge}</span>
-                <h2 className="mt-3 text-xl font-extrabold text-leaf-950">{plan.name}</h2>
+                <h2 className="mt-3 text-xl font-semibold text-forest">{plan.name}</h2>
                 <p className="mt-1 text-sm text-leaf-900/60">{plan.description}</p>
               </div>
 
               {/* Price */}
               <div className="mt-6 text-center">
                 {plan.price === 0 ? (
-                  <p className="text-4xl font-extrabold text-leaf-950">Gratis</p>
+                  <p className="text-4xl font-extrabold text-forest">Gratis</p>
                 ) : (
                   <div>
-                    <span className="text-4xl font-extrabold text-leaf-950">{formatRupiah(plan.price)}</span>
+                    <span className="text-4xl font-extrabold text-forest">{formatRupiah(plan.price)}</span>
                     <span className="text-sm text-leaf-900/50">/{plan.period === 'month' ? 'bulan' : 'selamanya'}</span>
                   </div>
                 )}
@@ -178,14 +178,14 @@ export default function Subscription() {
 
       {/* Feature Comparison Table */}
       <div className="mt-16">
-        <h2 className="text-xl font-bold text-leaf-950 text-center">📋 Perbandingan Fitur Lengkap</h2>
+        <h2 className="section-title text-center">📋 Perbandingan Fitur Lengkap</h2>
         <div className="mt-6 overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-leaf-200">
-                <th className="py-3 px-4 text-left font-semibold text-leaf-950">Fitur</th>
+                <th className="py-3 px-4 text-left font-semibold text-forest">Fitur</th>
                 {plans.map((p) => (
-                  <th key={p.id} className="py-3 px-4 text-center font-semibold text-leaf-950">
+                  <th key={p.id} className="py-3 px-4 text-center font-semibold text-forest">
                     {p.badge} {p.name}
                   </th>
                 ))}
@@ -205,7 +205,7 @@ export default function Subscription() {
                 { feature: 'Komisi', free: '5%', pro: '5%', seller: '3%' },
               ].map((row, i) => (
                 <tr key={i} className={cx('border-b border-leaf-100', i % 2 === 0 ? 'bg-leaf-50/50' : 'bg-white')}>
-                  <td className="py-3 px-4 font-semibold text-leaf-950">{row.feature}</td>
+                  <td className="py-3 px-4 font-semibold text-forest">{row.feature}</td>
                   <td className="py-3 px-4 text-center text-leaf-900/60">{row.free}</td>
                   <td className="py-3 px-4 text-center text-leaf-900/60">{row.pro}</td>
                   <td className="py-3 px-4 text-center text-leaf-900/60">{row.seller}</td>
@@ -218,7 +218,7 @@ export default function Subscription() {
 
       {/* FAQ */}
       <div className="mt-16 max-w-2xl mx-auto">
-        <h2 className="text-xl font-bold text-leaf-950 text-center">❓ Pertanyaan Umum</h2>
+        <h2 className="section-title text-center">❓ Pertanyaan Umum</h2>
         <div className="mt-6 space-y-4">
           {[
             { q: 'Bisa berubah paket kapan saja?', a: 'Ya! Anda bisa upgrade atau downgrade kapan saja. Perubahan berlaku di cycle berikutnya.' },
@@ -227,7 +227,7 @@ export default function Subscription() {
             { q: 'Bisa berhenti berlangganan?', a: 'Ya, Anda bisa membatalkan langganan kapan saja. Akses premium berakhir hingga akhir periode yang dibayar.' },
           ].map((faq, i) => (
             <div key={i} className="rounded-2xl border border-leaf-100 bg-white p-5 shadow-soft">
-              <p className="font-bold text-leaf-950">{faq.q}</p>
+              <p className="font-semibold text-forest">{faq.q}</p>
               <p className="mt-2 text-sm text-leaf-900/60">{faq.a}</p>
             </div>
           ))}
@@ -241,7 +241,7 @@ export default function Subscription() {
             {/* Plan Summary */}
             <div className="rounded-xl bg-leaf-50 px-4 py-4 text-center">
               <span className="text-4xl">{selectedPlan.badge}</span>
-              <p className="mt-2 text-lg font-bold text-leaf-950">{selectedPlan.name}</p>
+              <p className="mt-2 text-lg font-semibold text-forest">{selectedPlan.name}</p>
               <p className="text-xl font-extrabold text-leaf-700">
                 {formatRupiah(selectedPlan.price)}<span className="text-sm font-normal text-leaf-900/50">/bulan</span>
               </p>
@@ -295,7 +295,7 @@ export default function Subscription() {
       <Modal open={successModal} onClose={() => setSuccessModal(false)} title="🎉 Berhasil!">
         <div className="space-y-4 text-center">
           <div className="text-6xl">🎉</div>
-          <p className="text-lg font-bold text-leaf-950">Selamat Datang di Premium!</p>
+          <p className="text-lg font-semibold text-forest">Selamat Datang di Premium!</p>
           <p className="text-sm text-leaf-900/60">
             Langganan Anda sudah aktif. Nikmati semua fitur premium sekarang!
           </p>

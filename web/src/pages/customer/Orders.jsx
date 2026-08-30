@@ -72,7 +72,7 @@ export default function Orders() {
               >
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <div>
-                    <p className="font-bold text-leaf-950">{order.id}</p>
+                    <p className="font-semibold text-forest">{order.id}</p>
                     <p className="text-xs text-leaf-900/50">{formatDateTime(order.date)}</p>
                   </div>
                   <Badge className={meta.badge}>

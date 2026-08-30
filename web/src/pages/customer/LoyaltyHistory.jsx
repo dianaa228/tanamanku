@@ -100,7 +100,7 @@ export default function LoyaltyHistory() {
               </span>
 
               <div className="flex-1 min-w-0">
-                <p className="font-semibold text-leaf-950">{h.description}</p>
+                <p className="font-semibold text-forest">{h.description}</p>
                 <p className="text-xs text-leaf-900/40">{formatDateTime(h.createdAt)}</p>
               </div>
 
