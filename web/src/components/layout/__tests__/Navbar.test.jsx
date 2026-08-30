@@ -43,19 +43,16 @@ describe('Navbar', () => {
 
   it('renders the logo and brand name', () => {
     renderNavbar()
-    expect(screen.getByText('Tanamanku')).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /tanamanku/i })).toBeInTheDocument()
   })
 
   it('renders navigation links', () => {
     renderNavbar()
     expect(screen.getByText('Beranda')).toBeInTheDocument()
-    expect(screen.getByText('Jelajahi')).toBeInTheDocument()
-    expect(screen.getByText('Nursery')).toBeInTheDocument()
-    expect(screen.getByText('Jasa')).toBeInTheDocument()
-    expect(screen.getByText('Exchange')).toBeInTheDocument()
+    expect(screen.getByText('Toko')).toBeInTheDocument()
     expect(screen.getByText('Kebunku')).toBeInTheDocument()
-    expect(screen.getByText('Plant Finder')).toBeInTheDocument()
     expect(screen.getByText('Komunitas')).toBeInTheDocument()
+    expect(screen.getByText('Lainnya')).toBeInTheDocument()
   })
 
   it('renders search input', () => {

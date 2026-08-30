@@ -2,89 +2,97 @@
 
 @theme {
   /* ═══════════════════════════════════════════════════════════
-     TANAMANKU DESIGN SYSTEM — Botanical Identity
-     Fresh • Botanical • Natural • Friendly • Modern • Clean
+     TANAMANKU DESIGN SYSTEM — Botanical Identity v2
+     A distinct, editorial botanical identity:
+       • Deep forest greens • warm cream & stone •
+       • muted terracotta accents • soft sage •
+     Premium but friendly. Organic but precise.
      ═══════════════════════════════════════════════════════════ */
 
-  /* ─── Primary: Botanical Green ─── */
-  --color-leaf-50: #f4f9f4;
-  --color-leaf-100: #e4f0e4;
-  --color-leaf-200: #c8e2c8;
-  --color-leaf-300: #9dcf9d;
-  --color-leaf-400: #6bb86b;
-  --color-leaf-500: #4a9d4a;
-  --color-leaf-600: #3a8a3a;
-  --color-leaf-700: #2f6f2f;
-  --color-leaf-800: #2a5a2a;
-  --color-leaf-900: #234a23;
-  --color-leaf-950: #0f2d0f;
+  /* ─── Primary: Deep Botanical Green ─── */
+  --color-leaf-50: #f2f6f1;
+  --color-leaf-100: #e0ebe0;
+  --color-leaf-200: #c3d7c4;
+  --color-leaf-300: #9abba0;
+  --color-leaf-400: #6f9a7a;
+  --color-leaf-500: #537d60;
+  --color-leaf-600: #3f654c;
+  --color-leaf-700: #345240;
+  --color-leaf-800: #2b4235;
+  --color-leaf-900: #22352b;
+  --color-leaf-950: #102019;
 
-  /* ─── Secondary: Sage ─── */
-  --color-sage-50: #f6f8f5;
-  --color-sage-100: #e8ede6;
-  --color-sage-200: #d1dbcd;
-  --color-sage-300: #b3c4ad;
-  --color-sage-400: #93a88c;
-  --color-sage-500: #768d6f;
-  --color-sage-600: #5e7358;
-  --color-sage-700: #4b5c47;
-  --color-sage-800: #3f4c3c;
-  --color-sage-900: #364034;
-  --color-sage-950: #1b221a;
+  /* ─── Secondary: Muted Sage ─── */
+  --color-sage-50: #f5f6f3;
+  --color-sage-100: #e6eae2;
+  --color-sage-200: #ccd5c6;
+  --color-sage-300: #aab8a2;
+  --color-sage-400: #879780;
+  --color-sage-500: #6a7a64;
+  --color-sage-600: #54604f;
+  --color-sage-700: #434d40;
+  --color-sage-800: #383f35;
+  --color-sage-900: #2e332c;
+  --color-sage-950: #181c16;
 
-  /* ─── Accent: Warm Terracotta ─── */
-  --color-terra-50: #fdf5f0;
-  --color-terra-100: #fae8dc;
-  --color-terra-200: #f5ceb8;
-  --color-terra-300: #edad88;
-  --color-terra-400: #e0926a;
-  --color-terra-500: #d47844;
-  --color-terra-600: #c5653a;
-  --color-terra-700: #a45032;
-  --color-terra-800: #85432e;
-  --color-terra-900: #6c3929;
-  --color-terra-950: #3a1c14;
+  /* ─── Accent: Muted Warm Terracotta ─── */
+  --color-terra-50: #faf4ef;
+  --color-terra-100: #f3e4d8;
+  --color-terra-200: #e5c5ad;
+  --color-terra-300: #d4a07f;
+  --color-terra-400: #c67f5c;
+  --color-terra-500: #b56545;
+  --color-terra-600: #9c5238;
+  --color-terra-700: #804230;
+  --color-terra-800: #69372b;
+  --color-terra-900: #572e26;
+  --color-terra-950: #2f1612;
 
-  /* ─── Accent: Muted Yellow / Sun ─── */
-  --color-sun-50: #fefce8;
-  --color-sun-100: #fef9c3;
-  --color-sun-200: #fef08a;
-  --color-sun-300: #fde047;
-  --color-sun-400: #facc15;
-  --color-sun-500: #eab308;
-  --color-sun-600: #ca8a04;
+  /* ─── Accent: Warm Sun / Buttered Yellow ─── */
+  --color-sun-50: #fbf7ea;
+  --color-sun-100: #f6ecce;
+  --color-sun-200: #ecd7a1;
+  --color-sun-300: #dfbe6f;
+  --color-sun-400: #d2a74e;
+  --color-sun-500: #c28d3a;
+  --color-sun-600: #a6712f;
+  --color-sun-700: #85562a;
+  --color-sun-800: #6e4728;
+  --color-sun-900: #5d3b24;
 
   /* ─── Background & Surface ─── */
-  --color-cream: #faf8f5;
-  --color-cream-dark: #f2f0eb;
+  --color-cream: #f7f4ee;
+  --color-cream-dark: #efe9df;
   --color-warm-white: #fdfcfa;
+  --color-stone: #e9e3d8;
 
   /* ─── Text ─── */
-  --color-forest: #1a2e1a;
-  --color-forest-light: #2d4a2d;
-  --color-muted: #6b7c6b;
-  --color-muted-light: #8fa08f;
+  --color-forest: #1c2b22;
+  --color-forest-light: #31453a;
+  --color-muted: #68756c;
+  --color-muted-light: #97a29a;
 
   --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --font-display: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Fraunces", ui-serif, Georgia, "Times New Roman", serif;
 
-  /* ─── Shadows ─── */
-  --shadow-soft: 0 1px 2px rgb(15 45 15 / 0.03), 0 4px 12px -1px rgb(15 45 15 / 0.05);
-  --shadow-card: 0 1px 3px rgb(15 45 15 / 0.04), 0 6px 16px -2px rgb(15 45 15 / 0.06);
-  --shadow-lift: 0 4px 8px -2px rgb(15 45 15 / 0.06), 0 12px 28px -4px rgb(15 45 15 / 0.08);
-  --shadow-elevated: 0 8px 16px -4px rgb(15 45 15 / 0.06), 0 20px 40px -8px rgb(15 45 15 / 0.1);
-  --shadow-glow: 0 0 24px rgb(74 157 74 / 0.12);
+  /* ─── Shadows (warm, natural, layered) ─── */
+  --shadow-soft: 0 1px 2px rgb(28 43 34 / 0.04), 0 4px 12px -1px rgb(28 43 34 / 0.05);
+  --shadow-card: 0 1px 3px rgb(28 43 34 / 0.05), 0 8px 20px -3px rgb(28 43 34 / 0.08);
+  --shadow-lift: 0 4px 8px -2px rgb(28 43 34 / 0.08), 0 16px 32px -6px rgb(28 43 34 / 0.12);
+  --shadow-elevated: 0 12px 24px -6px rgb(28 43 34 / 0.1), 0 24px 48px -12px rgb(28 43 34 / 0.16);
+  --shadow-glow: 0 0 30px rgb(82 125 95 / 0.16);
 
   /* ─── Animations ─── */
-  --animate-fade-up: fade-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
-  --animate-fade-in: fade-in 0.4s ease-out both;
+  --animate-fade-up: fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-fade-in: fade-in 0.45s ease-out both;
   --animate-float: float 6s ease-in-out infinite;
   --animate-pop: pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-  --animate-slide-up: slide-up 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
-  --animate-scale-in: scale-in 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  --animate-slide-up: slide-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-scale-in: scale-in 0.28s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  --animate-drift: drift 14s ease-in-out infinite;
 
   @keyframes fade-up {
-    from { opacity: 0; transform: translateY(16px); }
+    from { opacity: 0; transform: translateY(18px); }
     to { opacity: 1; transform: translateY(0); }
   }
   @keyframes fade-in {
@@ -100,12 +108,16 @@
     to { opacity: 1; transform: scale(1); }
   }
   @keyframes slide-up {
-    from { opacity: 0; transform: translateY(24px); }
+    from { opacity: 0; transform: translateY(26px); }
     to { opacity: 1; transform: translateY(0); }
   }
   @keyframes scale-in {
     from { opacity: 0; transform: scale(0.96); }
     to { opacity: 1; transform: scale(1); }
+  }
+  @keyframes drift {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    50% { transform: translate(8px, -12px) rotate(3deg); }
   }
 }
 
@@ -118,25 +130,36 @@ body {
   @apply bg-cream text-forest font-sans antialiased;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "ss01";
 }
 
 ::selection {
   @apply bg-leaf-200 text-leaf-950;
 }
 
+/* ── Typography helpers ── */
+.display {
+  @apply font-display tracking-[-0.02em];
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
 /* ── Scrollbar ── */
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-*::-webkit-scrollbar { width: 5px; height: 5px; }
-*::-webkit-scrollbar-thumb { background: #c8e2c8; border-radius: 8px; }
+*::-webkit-scrollbar { width: 6px; height: 6px; }
+*::-webkit-scrollbar-thumb { background: #c3d7c4; border-radius: 8px; }
+*::-webkit-scrollbar-thumb:hover { background: #9abba0; }
 *::-webkit-scrollbar-track { background: transparent; }
 
 /* ── Glass ── */
 .glass {
-  background: rgba(253, 252, 250, 0.82);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border-bottom: 1px solid rgba(200, 226, 200, 0.3);
+  background: rgba(253, 252, 250, 0.78);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border-bottom: 1px solid rgba(195, 215, 196, 0.32);
 }
 
 /* ── Button Shine ── */
@@ -151,19 +174,70 @@ body {
   left: -60%;
   width: 40%;
   height: 200%;
-  background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.25) 50%, rgba(255,255,255,0) 100%);
+  background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.28) 50%, rgba(255,255,255,0) 100%);
   transform: rotate(30deg);
-  transition: all 0.5s ease;
+  transition: all 0.55s ease;
 }
 .btn-shine:hover::after {
-  left: 120%;
+  left: 130%;
 }
 
 /* ── Card Hover ── */
 .card-hover {
-  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: all 0.32s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .card-hover:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-elevated);
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lift);
+}
+
+/* ── Botanical ring texture for accent frames ── */
+.leaf-frame {
+  position: relative;
+}
+.leaf-frame::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-image: radial-gradient(rgba(63,101,76,0.08) 1px, transparent 1px);
+  background-size: 22px 22px;
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,0.9), rgba(0,0,0,0));
+}
+
+/* ── Gradient text ── */
+.text-gradient-botanical {
+  background: linear-gradient(120deg, #3f654c 0%, #537d60 45%, #b56545 130%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ── Skeleton shimmer ── */
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: #e9e3d8;
+}
+.skeleton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.65), transparent);
+  animation: shimmer 1.4s infinite;
+}
+@keyframes shimmer {
+  100% { transform: translateX(100%); }
+}
+
+/* ── Reveal on scroll (JS toggles .in-view) ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1);
+}
+.reveal.in-view {
+  opacity: 1;
+  transform: translateY(0);
 }

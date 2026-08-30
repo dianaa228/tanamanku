@@ -7,13 +7,17 @@ import { cx } from '../../utils/format'
 
 const links = [
   { to: '/', label: 'Beranda' },
-  { to: '/explore', label: 'Jelajahi' },
+  { to: '/explore', label: 'Toko' },
+  { to: '/my-garden', label: 'Kebunku' },
+  { to: '/community', label: 'Komunitas' },
+]
+
+const topLinks = [
   { to: '/nurseries', label: 'Nursery' },
   { to: '/services', label: 'Jasa' },
-  { to: '/plant-exchange', label: 'Exchange' },
-  { to: '/my-garden', label: 'Kebunku' },
+  { to: '/plant-exchange', label: 'Tukar Tanaman' },
   { to: '/plant-finder', label: 'Plant Finder' },
-  { to: '/community', label: 'Komunitas' },
+  { to: '/plant-diagnosis', label: 'Diagnosis' },
 ]
 
 const roleConfig = {
@@ -38,19 +42,20 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-40 glass">
-      <div className="mx-auto flex h-16 max-w-7xl items-center gap-3 px-4 sm:px-6 lg:gap-6">
+      <div className="mx-auto flex h-16 max-w-7xl items-center gap-3 px-4 sm:px-6 lg:gap-8">
         {/* Logo */}
-        <Link to="/" className="flex shrink-0 items-center gap-2.5 group">
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-leaf-600 text-lg text-white shadow-soft transition group-hover:bg-leaf-700 group-hover:shadow-lift">
+        <Link to="/" className="group flex shrink-0 items-center gap-2.5">
+          <span className="relative flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-leaf-600 to-leaf-800 text-lg text-cream shadow-soft transition group-hover:shadow-lift">
             🌿
           </span>
-          <span className="hidden text-lg font-extrabold tracking-tight sm:block">
-            <span className="text-forest">Tana</span><span className="text-leaf-600">manku</span>
+          <span className="hidden text-xl font-bold tracking-tight sm:block">
+            <span className="text-forest">Tana</span>
+            <span className="text-gradient-botanical display">manku</span>
           </span>
         </Link>
 
         {/* Search */}
-        <form onSubmit={submitSearch} className="hidden flex-1 max-w-md md:block">
+        <form onSubmit={submitSearch} className="hidden flex-1 max-w-md lg:block">
           <div className="relative group">
             <span className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-light transition group-focus-within:text-leaf-500">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
@@ -62,13 +67,13 @@ export default function Navbar() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Cari tanaman, pot, pupuk..."
-              className="w-full rounded-xl border border-sage-200 bg-white/80 py-2.5 pl-10 pr-4 text-sm text-forest shadow-soft backdrop-blur-sm transition placeholder:text-muted-light/60 focus:border-leaf-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-leaf-100"
+              className="w-full rounded-full border border-sage-200 bg-white/80 py-2.5 pl-11 pr-4 text-sm text-forest shadow-soft backdrop-blur-sm transition placeholder:text-muted-light/60 focus:border-leaf-400 focus:bg-white focus:outline-none focus:ring-4 focus:ring-leaf-100/70"
             />
           </div>
         </form>
 
-        {/* Nav links */}
-        <nav className="hidden items-center gap-0.5 lg:flex">
+        {/* Nav links (desktop) */}
+        <nav className="ml-auto hidden items-center gap-1 lg:flex">
           {links.map((l) => (
             <NavLink
               key={l.to}
@@ -76,9 +81,9 @@ export default function Navbar() {
               end={l.to === '/'}
               className={({ isActive }) =>
                 cx(
-                  'rounded-lg px-3 py-2 text-[13px] font-medium transition-all duration-200',
+                  'relative rounded-full px-4 py-2 text-sm font-semibold transition-all duration-200',
                   isActive
-                    ? 'bg-leaf-600 text-white shadow-soft'
+                    ? 'bg-leaf-700 text-cream shadow-soft'
                     : 'text-muted hover:bg-leaf-50 hover:text-forest',
                 )
               }
@@ -86,11 +91,29 @@ export default function Navbar() {
               {l.label}
             </NavLink>
           ))}
+
+          {/* Lainnya grouped dropdown */}
+          <Dropdown
+            trigger={
+              <button className="flex items-center gap-1 rounded-full px-4 py-2 text-sm font-semibold text-muted transition hover:bg-leaf-50 hover:text-forest">
+                Lainnya
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                  <path d="m6 9 6 6 6-6" />
+                </svg>
+              </button>
+            }
+          >
+            {topLinks.map((l) => (
+              <DropdownItem key={l.to} onClick={() => navigate(l.to)}>
+                {l.label}
+              </DropdownItem>
+            ))}
+          </Dropdown>
         </nav>
 
-        <div className="ml-auto flex items-center gap-2">
+        <div className="ml-auto flex items-center gap-1.5 lg:ml-0">
           {/* Cart */}
-          <Link to="/cart" className="relative rounded-lg p-2.5 text-muted transition hover:bg-leaf-50 hover:text-forest" aria-label="Keranjang">
+          <Link to="/cart" className="relative rounded-full p-2.5 text-muted transition hover:bg-leaf-50 hover:text-forest" aria-label="Keranjang">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="9" cy="21" r="1.5" />
               <circle cx="20" cy="21" r="1.5" />
@@ -107,14 +130,14 @@ export default function Navbar() {
           {user ? (
             <Dropdown
               trigger={
-                <div className="flex items-center gap-2 cursor-pointer">
+                <div className="flex cursor-pointer items-center gap-2">
                   {roleConfig[user.role] && (
                     <span className={`hidden items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-bold ring-1 ring-inset sm:flex ${roleConfig[user.role].color}`}>
                       <span>{roleConfig[user.role].icon}</span>
                       <span>{roleConfig[user.role].label}</span>
                     </span>
                   )}
-                  <span className="relative flex h-9 w-9 items-center justify-center rounded-full bg-leaf-600 text-lg text-white shadow-soft transition hover:bg-leaf-700">
+                  <span className="relative flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-leaf-600 to-leaf-800 text-lg text-cream shadow-soft transition hover:shadow-lift">
                     {user.avatar || '🧑‍🌾'}
                     <span className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border-2 border-white bg-leaf-400" />
                   </span>
@@ -123,7 +146,7 @@ export default function Navbar() {
             >
               <div className="border-b border-sage-100 px-4 py-3">
                 <div className="flex items-center gap-3">
-                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-leaf-600 text-lg text-white shadow-soft">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-leaf-600 to-leaf-800 text-lg text-cream shadow-soft">
                     {user.avatar || '🧑‍🌾'}
                   </span>
                   <div className="min-w-0 flex-1">
@@ -154,14 +177,14 @@ export default function Navbar() {
               <DropdownItem onClick={() => navigate('/subscription')}>💎 Langganan</DropdownItem>
               {user.role === 'admin' && (
                 <>
-                  <div className="mx-3 border-t border-sage-100 my-1" />
+                  <div className="mx-3 my-1 border-t border-sage-100" />
                   <DropdownItem onClick={() => navigate('/admin')}>🛡️ Admin Panel</DropdownItem>
                   <DropdownItem onClick={() => navigate('/seller')}>🏪 Seller Panel</DropdownItem>
                 </>
               )}
               {user.role === 'seller' && (
                 <>
-                  <div className="mx-3 border-t border-sage-100 my-1" />
+                  <div className="mx-3 my-1 border-t border-sage-100" />
                   <DropdownItem onClick={() => navigate('/seller')}>🏪 Seller Dashboard</DropdownItem>
                 </>
               )}
@@ -177,17 +200,17 @@ export default function Navbar() {
             </Dropdown>
           ) : (
             <div className="hidden items-center gap-2 sm:flex">
-              <Link to="/login" className="rounded-lg px-4 py-2 text-sm font-medium text-muted transition hover:bg-leaf-50 hover:text-forest">
+              <Link to="/login" className="rounded-full px-4 py-2 text-sm font-semibold text-muted transition hover:bg-leaf-50 hover:text-forest">
                 Masuk
               </Link>
-              <Link to="/register" className="btn-shine rounded-xl bg-leaf-600 px-5 py-2 text-sm font-bold text-white shadow-soft transition hover:bg-leaf-700 hover:shadow-lift">
+              <Link to="/register" className="btn-shine rounded-full bg-leaf-700 px-5 py-2 text-sm font-bold text-cream shadow-soft transition hover:bg-leaf-800 hover:shadow-lift">
                 Daftar
               </Link>
             </div>
           )}
 
           {/* Hamburger */}
-          <button onClick={() => setMenuOpen((o) => !o)} className="rounded-lg p-2.5 text-muted transition hover:bg-leaf-50 hover:text-forest md:hidden" aria-label="Menu">
+          <button onClick={() => setMenuOpen((o) => !o)} className="rounded-full p-2.5 text-muted transition hover:bg-leaf-50 hover:text-forest lg:hidden" aria-label="Menu">
             {menuOpen ? (
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
                 <path d="M18 6 6 18M6 6l12 12" />
@@ -203,7 +226,7 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className="animate-fade-in border-t border-sage-100 bg-white/95 backdrop-blur-xl px-4 py-4 md:hidden">
+        <div className="animate-fade-in border-t border-sage-100 bg-white/95 px-4 py-4 backdrop-blur-xl lg:hidden">
           <form onSubmit={submitSearch} className="mb-3">
             <div className="relative">
               <span className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-light">🔍</span>
@@ -216,7 +239,7 @@ export default function Navbar() {
             </div>
           </form>
           <nav className="flex flex-col gap-1">
-            {links.map((l) => (
+            {[...links, ...topLinks].map((l) => (
               <NavLink
                 key={l.to}
                 to={l.to}
@@ -225,7 +248,7 @@ export default function Navbar() {
                 className={({ isActive }) =>
                   cx(
                     'rounded-xl px-4 py-3 text-sm font-medium transition-all',
-                    isActive ? 'bg-leaf-600 text-white shadow-soft' : 'text-muted hover:bg-leaf-50 hover:text-forest',
+                    isActive ? 'bg-leaf-700 text-cream shadow-soft' : 'text-muted hover:bg-leaf-50 hover:text-forest',
                   )
                 }
               >
@@ -237,7 +260,7 @@ export default function Navbar() {
                 <Link to="/login" onClick={() => setMenuOpen(false)} className="flex-1 rounded-xl border border-sage-200 bg-white px-4 py-3 text-center text-sm font-semibold text-forest transition hover:bg-sage-50">
                   Masuk
                 </Link>
-                <Link to="/register" onClick={() => setMenuOpen(false)} className="flex-1 rounded-xl bg-leaf-600 px-4 py-3 text-center text-sm font-bold text-white shadow-soft">
+                <Link to="/register" onClick={() => setMenuOpen(false)} className="flex-1 rounded-xl bg-leaf-700 px-4 py-3 text-center text-sm font-bold text-cream shadow-soft">
                   Daftar
                 </Link>
               </div>

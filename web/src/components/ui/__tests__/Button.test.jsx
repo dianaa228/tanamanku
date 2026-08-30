@@ -22,7 +22,7 @@ describe('Button', () => {
   it('applies primary variant by default', () => {
     render(<Button>Test</Button>)
     const button = screen.getByRole('button')
-    expect(button.className).toContain('bg-leaf-600')
+    expect(button.className).toContain('bg-leaf-700')
   })
 
   it('applies secondary variant', () => {
@@ -34,7 +34,7 @@ describe('Button', () => {
   it('applies danger variant', () => {
     render(<Button variant="danger">Hapus</Button>)
     const button = screen.getByRole('button')
-    expect(button.className).toContain('bg-rose-600')
+    expect(button.className).toContain('bg-terra-600')
   })
 
   it('shows loading spinner when loading', () => {
@@ -62,7 +62,7 @@ describe('Button', () => {
   it('applies size classes', () => {
     render(<Button size="lg">Large</Button>)
     const button = screen.getByRole('button')
-    expect(button.className).toContain('px-7')
+    expect(button.className).toContain('px-6')
   })
 
   it('applies custom className', () => {

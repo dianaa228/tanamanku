@@ -41,7 +41,7 @@ function renderPublicLayout() {
 describe('PublicLayout', () => {
   it('renders the Navbar', () => {
     renderPublicLayout()
-    expect(screen.getAllByText('Tanamanku').length).toBeGreaterThanOrEqual(1)
+    expect(screen.getAllByRole('link', { name: /tanamanku/i }).length).toBeGreaterThanOrEqual(1)
   })
 
   it('renders the Footer', () => {
@@ -51,7 +51,7 @@ describe('PublicLayout', () => {
 
   it('renders the MobileNavigation', () => {
     renderPublicLayout()
-    expect(screen.getAllByText('Keranjang').length).toBeGreaterThanOrEqual(1)
+    expect(screen.getAllByText('Profil').length).toBeGreaterThanOrEqual(1)
   })
 
   it('renders child content via Outlet', () => {
@@ -67,6 +67,6 @@ describe('PublicLayout', () => {
   it('renders navigation links from Navbar', () => {
     renderPublicLayout()
     expect(screen.getAllByText('Beranda').length).toBeGreaterThanOrEqual(1)
-    expect(screen.getAllByText('Jelajahi').length).toBeGreaterThanOrEqual(1)
+    expect(screen.getAllByText('Toko').length).toBeGreaterThanOrEqual(1)
   })
 })

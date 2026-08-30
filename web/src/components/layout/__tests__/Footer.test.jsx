@@ -28,7 +28,7 @@ describe('Footer', () => {
 
   it('renders brand name and tagline', () => {
     renderFooter()
-    expect(screen.getByText('Tanamanku')).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /tanamanku/i })).toBeInTheDocument()
     expect(screen.getByText(/belanja, rawat, dan tumbuhkan/i)).toBeInTheDocument()
   })
 
@@ -39,7 +39,7 @@ describe('Footer', () => {
 
   it('renders shopping links column', () => {
     renderFooter()
-    expect(screen.getByText('Belanja')).toBeInTheDocument()
+    expect(screen.getAllByText('Belanja').length).toBeGreaterThanOrEqual(1)
     expect(screen.getByText('Tanaman Hias')).toBeInTheDocument()
     expect(screen.getByText('Sayuran & Herbal')).toBeInTheDocument()
     expect(screen.getByText('Pupuk & Nutrisi')).toBeInTheDocument()

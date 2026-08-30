@@ -36,25 +36,33 @@ export default function Footer() {
   const [email, setEmail] = useState('')
 
   return (
-    <footer className="mt-16 bg-forest pb-24 text-leaf-100 md:pb-10">
-      <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6">
-        <div className="grid gap-10 md:grid-cols-4">
+    <footer className="relative mt-20 overflow-hidden bg-leaf-950 pb-24 text-leaf-100 lg:pb-0">
+      {/* subtle botanical texture */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.35]"
+        style={{
+          backgroundImage: 'radial-gradient(rgba(195,215,196,0.10) 1px, transparent 1px)',
+          backgroundSize: '24px 24px',
+        }}
+      />
+      <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6">
+        <div className="grid gap-12 md:grid-cols-5">
           {/* Brand */}
-          <div className="md:col-span-1">
+          <div className="md:col-span-2">
             <Link to="/" className="inline-flex items-center gap-2.5">
-              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-leaf-500 text-lg text-white shadow-soft">
+              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-leaf-500 to-leaf-700 text-xl text-cream shadow-soft">
                 🌿
               </span>
-              <span className="text-lg font-extrabold text-white">
-                Tana<span className="text-leaf-400">manku</span>
+              <span className="display text-xl font-semibold text-white">
+                Tana<span className="text-leaf-300">manku</span>
               </span>
             </Link>
-            <p className="mt-4 max-w-xs text-sm leading-relaxed text-leaf-200/50">
-              Belanja, rawat, dan tumbuhkan kebun perkotaanmu dalam satu aplikasi. 🌱
+            <p className="mt-4 max-w-xs text-sm leading-relaxed text-leaf-200/60">
+              Belanja, rawat, dan tumbuhkan kebun perkotaanmu dalam satu aplikasi.
             </p>
-            <div className="mt-5 flex gap-2.5">
+            <div className="mt-6 flex gap-2.5">
               {['📷', '🐦', '▶️', '🎵'].map((icon, i) => (
-                <span key={i} className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-lg bg-leaf-800/60 text-sm transition hover:bg-leaf-700">
+                <span key={i} className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-white/5 text-base ring-1 ring-white/10 transition hover:bg-leaf-700 hover:ring-leaf-500/40">
                   {icon}
                 </span>
               ))}
@@ -64,11 +72,11 @@ export default function Footer() {
           {/* Links */}
           {columns.map((col) => (
             <div key={col.title}>
-              <h4 className="text-xs font-bold uppercase tracking-widest text-leaf-400/80">{col.title}</h4>
-              <ul className="mt-4 space-y-2.5">
+              <h4 className="text-xs font-bold uppercase tracking-[0.14em] text-leaf-300/90">{col.title}</h4>
+              <ul className="mt-4 space-y-3">
                 {col.links.map((l) => (
                   <li key={l.label}>
-                    <Link to={l.to} className="text-sm text-leaf-200/50 transition hover:text-white">
+                    <Link to={l.to} className="text-sm text-leaf-200/55 transition hover:text-white">
                       {l.label}
                     </Link>
                   </li>
@@ -79,11 +87,13 @@ export default function Footer() {
         </div>
 
         {/* Newsletter */}
-        <div className="mt-12 rounded-2xl bg-leaf-800/40 p-6 ring-1 ring-white/5 sm:p-8">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-14 rounded-3xl bg-white/5 p-6 ring-1 ring-white/10 sm:p-8">
+          <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <h4 className="text-lg font-bold text-white">Dapatkan tips berkebun mingguan 🌻</h4>
-              <p className="mt-1 text-sm text-leaf-200/40">Trik merawat tanaman langsung ke inbox Anda. Gratis, tanpa spam.</p>
+              <h4 className="display text-xl font-semibold text-white">Dapatkan tips berkebun mingguan</h4>
+              <p className="mt-1.5 max-w-md text-sm text-leaf-200/55">
+                Trik merawat tanaman langsung ke inbox Anda. Gratis, tanpa spam.
+              </p>
             </div>
             <form
               className="flex w-full max-w-md gap-2"
@@ -100,18 +110,22 @@ export default function Footer() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Alamat email Anda"
-                className="flex-1 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-leaf-200/30 focus:border-leaf-400/50 focus:outline-none focus:ring-2 focus:ring-leaf-500/20"
+                className="min-w-0 flex-1 rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm text-white placeholder:text-leaf-200/35 focus:border-leaf-400/50 focus:outline-none focus:ring-4 focus:ring-leaf-500/15"
               />
-              <button className="rounded-xl bg-terra-500 px-5 py-3 text-sm font-bold text-white transition hover:bg-terra-600">
+              <button className="btn-shine shrink-0 rounded-full bg-terra-500 px-6 py-3 text-sm font-bold text-white transition hover:bg-terra-600">
                 Langganan
               </button>
             </form>
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-white/10 pt-6 text-xs text-leaf-200/30 sm:flex-row">
-          <p>© 2026 Tanamanku. Dibuat dengan 🧡 untuk kebun perkotaan Indonesia.</p>
-          <p>🌱 Belanja · 🌿 Rawat · 🪴 Tumbuh</p>
+        <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-white/10 pt-7 text-xs text-leaf-200/30 sm:flex-row">
+          <p>© 2026 Tanamanku. Dibuat untuk kebun perkotaan Indonesia.</p>
+          <p className="flex items-center gap-2">
+            <span>Belanja</span><span className="text-leaf-400">·</span>
+            <span>Rawat</span><span className="text-leaf-400">·</span>
+            <span>Tumbuh</span>
+          </p>
         </div>
       </div>
     </footer>
