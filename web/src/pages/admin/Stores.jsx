@@ -72,8 +72,8 @@ export default function AdminStores() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-extrabold text-leaf-950">🏪 Kelola Toko</h1>
-        <p className="mt-1 text-sm text-leaf-900/50">Verifikasi dan kelola semua toko di platform</p>
+        <h1 className="text-2xl font-extrabold text-[var(--text-primary)]">🏪 Kelola Toko</h1>
+        <p className="mt-1 text-sm text-[var(--text-secondary)]">Verifikasi dan kelola semua toko di platform</p>
       </div>
 
       {/* Stats Cards */}
@@ -84,14 +84,14 @@ export default function AdminStores() {
           { label: 'Menunggu Verifikasi', value: pendingStores, icon: '⏳', color: 'from-amber-400 to-orange-600', bg: 'bg-amber-50' },
           { label: 'Total Produk', value: totalProducts, icon: '📦', color: 'from-sky-400 to-blue-600', bg: 'bg-sky-50' },
         ].map((s) => (
-          <div key={s.label} className={`rounded-2xl border border-leaf-100 ${s.bg} p-4 transition-all hover:-translate-y-0.5 hover:shadow-md`}>
+          <div key={s.label} className={`rounded-2xl border border-[var(--border-primary)] ${s.bg} p-4 transition-all hover:-translate-y-0.5 hover:shadow-md`}>
             <div className="flex items-center gap-3">
               <span className={`flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br ${s.color} text-xl text-white shadow-sm`}>
                 {s.icon}
               </span>
               <div>
-                <p className="text-xs text-leaf-900/50">{s.label}</p>
-                <p className="text-xl font-extrabold text-leaf-950">{s.value}</p>
+                <p className="text-xs text-[var(--text-muted)]">{s.label}</p>
+                <p className="text-xl font-extrabold text-[var(--text-primary)]">{s.value}</p>
               </div>
             </div>
           </div>
@@ -151,7 +151,7 @@ export default function AdminStores() {
         </div>
 
         {/* View Toggle */}
-        <div className="flex rounded-lg border border-leaf-200 bg-white p-0.5">
+        <div className="flex rounded-lg border border-[var(--border-primary)] bg-[var(--bg-card)] p-0.5">
           <button
             onClick={() => setView('table')}
             className={`rounded-md px-3 py-1.5 text-xs font-semibold transition ${view === 'table' ? 'bg-leaf-600 text-white' : 'text-leaf-900/60 hover:bg-leaf-50'}`}
@@ -168,15 +168,15 @@ export default function AdminStores() {
       </div>
 
       {/* Results count */}
-      <p className="text-sm text-leaf-900/50">
-        Menampilkan <span className="font-bold text-leaf-950">{filtered.length}</span> dari {totalStores} toko
+      <p className="text-sm text-[var(--text-muted)]">
+        Menampilkan <span className="font-bold text-[var(--text-primary)]">{filtered.length}</span> dari {totalStores} toko
       </p>
 
       {/* Card View */}
       {view === 'card' && (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.map((s, i) => (
-            <div key={s.id} className="group overflow-hidden rounded-2xl border border-leaf-100 bg-white shadow-soft transition-all hover:-translate-y-0.5 hover:shadow-md">
+            <div key={s.id} className="group overflow-hidden rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-card)] shadow-soft backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:shadow-md">
               {/* Store Header */}
               <div className={`relative bg-gradient-to-br ${storeGradient(i)} px-5 py-6`}>
                 <div className="flex items-center justify-between">
@@ -197,22 +197,22 @@ export default function AdminStores() {
                   <div className="flex items-center gap-2">
                     <span className="text-lg">👤</span>
                     <div>
-                      <p className="text-xs text-leaf-900/50">Pemilik</p>
-                      <p className="text-sm font-semibold text-leaf-950">{s.user?.name || '—'}</p>
+                      <p className="text-xs text-[var(--text-muted)]">Pemilik</p>
+                      <p className="text-sm font-semibold text-[var(--text-primary)]">{s.user?.name || '—'}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
                     <span className="text-lg">📦</span>
                     <div>
-                      <p className="text-xs text-leaf-900/50">Total Produk</p>
-                      <p className="text-sm font-semibold text-leaf-950">{s.products_count} produk</p>
+                      <p className="text-xs text-[var(--text-muted)]">Total Produk</p>
+                      <p className="text-sm font-semibold text-[var(--text-primary)]">{s.products_count} produk</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
                     <span className="text-lg">📅</span>
                     <div>
-                      <p className="text-xs text-leaf-900/50">Terdaftar</p>
-                      <p className="text-sm font-semibold text-leaf-950">
+                      <p className="text-xs text-[var(--text-muted)]">Terdaftar</p>
+                      <p className="text-sm font-semibold text-[var(--text-primary)]">
                         {new Date(s.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
                       </p>
                     </div>
@@ -220,7 +220,7 @@ export default function AdminStores() {
                 </div>
 
                 {/* Actions */}
-                <div className="mt-4 border-t border-leaf-100 pt-4">
+                <div className="mt-4 border-t border-[var(--border-primary)] pt-4">
                   {s.status === 'pending' ? (
                     <button
                       onClick={() => verifyStore(s.id)}
@@ -247,7 +247,7 @@ export default function AdminStores() {
             </div>
           ))}
           {filtered.length === 0 && (
-            <div className="col-span-full rounded-2xl border border-leaf-100 bg-white p-12 text-center shadow-soft">
+            <div className="col-span-full rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-card)] p-12 text-center shadow-soft">
               <span className="text-5xl">🔍</span>
               <p className="mt-3 text-lg font-bold text-leaf-900/50">Tidak ada toko ditemukan</p>
               <p className="mt-1 text-sm text-leaf-900/40">Coba ubah filter atau kata kunci pencarian</p>
@@ -258,7 +258,7 @@ export default function AdminStores() {
 
       {/* Table View */}
       {view === 'table' && (
-        <div className="rounded-2xl border border-leaf-100 bg-white shadow-soft overflow-hidden">
+        <div className="rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-card)] shadow-soft backdrop-blur-sm overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full min-w-[600px] text-sm">
               <thead>

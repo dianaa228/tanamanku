@@ -74,8 +74,8 @@ export default function AdminUsers() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-extrabold text-leaf-950">👥 Kelola Pengguna</h1>
-        <p className="mt-1 text-sm text-leaf-900/50">Kelola semua pengguna platform Tanamanku</p>
+        <h1 className="text-2xl font-extrabold text-[var(--text-primary)]">👥 Kelola Pengguna</h1>
+        <p className="mt-1 text-sm text-[var(--text-secondary)]">Kelola semua pengguna platform Tanamanku</p>
       </div>
 
       {/* Stats Cards */}
@@ -87,14 +87,14 @@ export default function AdminUsers() {
           { label: 'Seller', value: totalSellers, icon: '🏪', color: 'from-amber-400 to-orange-600', bg: 'bg-amber-50' },
           { label: 'Customer', value: totalCustomers, icon: '🧑‍🌾', color: 'from-sky-400 to-blue-600', bg: 'bg-sky-50' },
         ].map((s) => (
-          <div key={s.label} className={`rounded-2xl border border-leaf-100 ${s.bg} p-4 transition-all hover:-translate-y-0.5 hover:shadow-md`}>
+          <div key={s.label} className={`rounded-2xl border border-[var(--border-primary)] ${s.bg} p-4 transition-all hover:-translate-y-0.5 hover:shadow-md`}>
             <div className="flex items-center gap-3">
               <span className={`flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br ${s.color} text-xl text-white shadow-sm`}>
                 {s.icon}
               </span>
               <div>
-                <p className="text-xs text-leaf-900/50">{s.label}</p>
-                <p className="text-xl font-extrabold text-leaf-950">{s.value}</p>
+                <p className="text-xs text-[var(--text-muted)]">{s.label}</p>
+                <p className="text-xl font-extrabold text-[var(--text-primary)]">{s.value}</p>
               </div>
             </div>
           </div>
@@ -110,7 +110,7 @@ export default function AdminUsers() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Cari nama atau email..."
-            className="w-full rounded-xl border border-leaf-200 bg-white py-2.5 pl-10 pr-4 text-sm focus:border-leaf-400 focus:outline-none focus:ring-2 focus:ring-leaf-100"
+            className="w-full rounded-xl border border-[var(--border-primary)] bg-[var(--bg-input)] py-2.5 pl-10 pr-4 text-sm text-[var(--text-primary)] focus:border-leaf-400 focus:outline-none focus:ring-2 focus:ring-leaf-200"
           />
         </div>
 
@@ -128,7 +128,7 @@ export default function AdminUsers() {
               key={f.key}
               onClick={() => setFilter(f.key)}
               className={`rounded-full px-3 py-1.5 text-xs font-semibold transition ${
-                filter === f.key ? 'bg-leaf-600 text-white shadow-sm' : 'bg-white text-leaf-900/60 ring-1 ring-leaf-200 hover:bg-leaf-50'
+                filter === f.key ? 'bg-leaf-600 text-white shadow-sm' : 'bg-[var(--bg-card)] text-[var(--text-muted)] ring-1 ring-[var(--border-primary)] hover:bg-[var(--bg-card-hover)]'
               }`}
             >
               {f.label} <span className="ml-1 opacity-70">({f.count})</span>
@@ -137,7 +137,7 @@ export default function AdminUsers() {
         </div>
 
         {/* View Toggle */}
-        <div className="flex rounded-lg border border-leaf-200 bg-white p-0.5">
+        <div className="flex rounded-lg border border-[var(--border-primary)] bg-[var(--bg-card)] p-0.5">
           <button
             onClick={() => setView('table')}
             className={`rounded-md px-3 py-1.5 text-xs font-semibold transition ${view === 'table' ? 'bg-leaf-600 text-white' : 'text-leaf-900/60 hover:bg-leaf-50'}`}
@@ -154,46 +154,46 @@ export default function AdminUsers() {
       </div>
 
       {/* Results count */}
-      <p className="text-sm text-leaf-900/50">
-        Menampilkan <span className="font-bold text-leaf-950">{filtered.length}</span> dari {totalUsers} pengguna
+      <p className="text-sm text-[var(--text-muted)]">
+        Menampilkan <span className="font-bold text-[var(--text-primary)]">{filtered.length}</span> dari {totalUsers} pengguna
       </p>
 
       {/* Table View */}
       {view === 'table' && (
-        <div className="rounded-2xl border border-leaf-100 bg-white shadow-soft overflow-hidden">
+        <div className="rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-card)] shadow-soft backdrop-blur-sm overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full min-w-[700px] text-sm">
               <thead>
-                <tr className="border-b border-leaf-100 bg-leaf-50/50">
-                  <th className="px-4 py-3 text-left font-semibold text-leaf-900/70">Pengguna</th>
-                  <th className="px-4 py-3 text-left font-semibold text-leaf-900/70">Email</th>
-                  <th className="px-4 py-3 text-left font-semibold text-leaf-900/70">Telepon</th>
-                  <th className="px-4 py-3 text-center font-semibold text-leaf-900/70">Peran</th>
-                  <th className="px-4 py-3 text-center font-semibold text-leaf-900/70">Status</th>
-                  <th className="px-4 py-3 text-center font-semibold text-leaf-900/70">Aksi</th>
+                <tr className="border-b border-[var(--border-primary)] bg-[var(--bg-card)]">
+                  <th className="px-4 py-3 text-left font-semibold text-[var(--text-secondary)]">Pengguna</th>
+                  <th className="px-4 py-3 text-left font-semibold text-[var(--text-secondary)]">Email</th>
+                  <th className="px-4 py-3 text-left font-semibold text-[var(--text-secondary)]">Telepon</th>
+                  <th className="px-4 py-3 text-center font-semibold text-[var(--text-secondary)]">Peran</th>
+                  <th className="px-4 py-3 text-center font-semibold text-[var(--text-secondary)]">Status</th>
+                  <th className="px-4 py-3 text-center font-semibold text-[var(--text-secondary)]">Aksi</th>
                 </tr>
               </thead>
               <tbody>
                 {filtered.map((u) => (
-                  <tr key={u.id} className="border-b border-leaf-50 transition hover:bg-leaf-50/30">
+                  <tr key={u.id} className="border-b border-[var(--border-secondary)] transition hover:bg-[var(--bg-card-hover)]">
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-3">
                         <span className={`flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br ${avatarGradient(u.role)} text-lg text-white shadow-sm`}>
                           {roleIcon(u.role)}
                         </span>
                         <div>
-                          <p className="font-semibold text-leaf-950">{u.name}</p>
-                          <p className="text-xs text-leaf-900/40">ID #{u.id}</p>
+                          <p className="font-semibold text-[var(--text-primary)]">{u.name}</p>
+                          <p className="text-xs text-[var(--text-muted)]">ID #{u.id}</p>
                         </div>
                       </div>
                     </td>
-                    <td className="px-4 py-3 text-leaf-900/60">{u.email}</td>
-                    <td className="px-4 py-3 text-leaf-900/60">{u.phone || '—'}</td>
+                    <td className="px-4 py-3 text-[var(--text-secondary)]">{u.email}</td>
+                    <td className="px-4 py-3 text-[var(--text-secondary)]">{u.phone || '—'}</td>
                     <td className="px-4 py-3 text-center">
                       <select
                         value={u.role}
                         onChange={(e) => changeRole(u.id, e.target.value)}
-                        className="rounded-lg border border-leaf-200 bg-white px-2 py-1 text-xs font-semibold focus:border-leaf-400 focus:outline-none focus:ring-1 focus:ring-leaf-200"
+                        className="rounded-lg border border-[var(--border-primary)] bg-[var(--bg-input)] px-2 py-1 text-xs font-semibold focus:border-leaf-400 focus:outline-none focus:ring-1 focus:ring-leaf-200"
                       >
                         <option value="customer">🧑‍🌾 Customer</option>
                         <option value="seller">🏪 Seller</option>
@@ -236,15 +236,15 @@ export default function AdminUsers() {
       {view === 'card' && (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.map((u) => (
-            <div key={u.id} className="group rounded-2xl border border-leaf-100 bg-white p-5 shadow-soft transition-all hover:-translate-y-0.5 hover:shadow-md">
+            <div key={u.id} className="group rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-card)] p-5 shadow-soft backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:shadow-md">
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-3">
                   <span className={`flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br ${avatarGradient(u.role)} text-2xl text-white shadow-sm transition-transform group-hover:scale-110`}>
                     {roleIcon(u.role)}
                   </span>
                   <div>
-                    <p className="font-bold text-leaf-950">{u.name}</p>
-                    <p className="text-xs text-leaf-900/50">{u.email}</p>
+                    <p className="font-bold text-[var(--text-primary)]">{u.name}</p>
+                    <p className="text-xs text-[var(--text-muted)]">{u.email}</p>
                   </div>
                 </div>
                 <Badge className={u.is_active ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700'}>
@@ -254,15 +254,15 @@ export default function AdminUsers() {
 
               <div className="mt-4 space-y-2">
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-leaf-900/50">Telepon</span>
-                  <span className="font-semibold text-leaf-950">{u.phone || '—'}</span>
+                  <span className="text-[var(--text-muted)]">Telepon</span>
+                  <span className="font-semibold text-[var(--text-primary)]">{u.phone || '—'}</span>
                 </div>
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-leaf-900/50">Peran</span>
+                  <span className="text-[var(--text-muted)]">Peran</span>
                   <select
                     value={u.role}
                     onChange={(e) => changeRole(u.id, e.target.value)}
-                    className="rounded-lg border border-leaf-200 bg-white px-2 py-1 text-xs font-semibold focus:border-leaf-400 focus:outline-none"
+                    className="rounded-lg border border-[var(--border-primary)] bg-[var(--bg-input)] px-2 py-1 text-xs font-semibold focus:border-leaf-400 focus:outline-none"
                   >
                     <option value="customer">🧑‍🌾 Customer</option>
                     <option value="seller">🏪 Seller</option>
@@ -270,14 +270,14 @@ export default function AdminUsers() {
                   </select>
                 </div>
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-leaf-900/50">Terdaftar</span>
-                  <span className="text-xs text-leaf-900/50">
+                  <span className="text-[var(--text-muted)]">Terdaftar</span>
+                  <span className="text-xs text-[var(--text-muted)]">
                     {new Date(u.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}
                   </span>
                 </div>
               </div>
 
-              <div className="mt-4 border-t border-leaf-100 pt-3">
+              <div className="mt-4 border-t border-[var(--border-primary)] pt-3">
                 <button
                   onClick={() => toggleActive(u.id)}
                   className={`w-full rounded-xl py-2 text-xs font-bold transition ${
@@ -292,10 +292,10 @@ export default function AdminUsers() {
             </div>
           ))}
           {filtered.length === 0 && (
-            <div className="col-span-full rounded-2xl border border-leaf-100 bg-white p-12 text-center shadow-soft">
+            <div className="col-span-full rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-card)] p-12 text-center shadow-soft">
               <span className="text-5xl">🔍</span>
-              <p className="mt-3 text-lg font-bold text-leaf-900/50">Tidak ada pengguna ditemukan</p>
-              <p className="mt-1 text-sm text-leaf-900/40">Coba ubah filter atau kata kunci pencarian</p>
+              <p className="mt-3 text-lg font-bold text-[var(--text-muted)]">Tidak ada pengguna ditemukan</p>
+              <p className="mt-1 text-sm text-[var(--text-muted)]">Coba ubah filter atau kata kunci pencarian</p>
             </div>
           )}
         </div>

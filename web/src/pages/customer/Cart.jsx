@@ -51,8 +51,8 @@ export default function Cart() {
     <div className="page-container">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="display text-3xl font-semibold text-forest">Keranjang Belanja 🛒</h1>
-          <p className="mt-1 text-sm text-muted">{count} item dalam keranjang</p>
+          <h1 className="display text-3xl font-semibold text-[var(--text-primary)]">Keranjang Belanja 🛒</h1>
+          <p className="mt-1 text-sm text-[var(--text-secondary)]">{count} item dalam keranjang</p>
         </div>
         <button
           onClick={onClear}
@@ -68,7 +68,7 @@ export default function Cart() {
           {items.map((item) => (
             <div
               key={item.lineId}
-              className="flex animate-fade-up gap-4 rounded-3xl border border-leaf-100 bg-white p-4 shadow-soft"
+              className="flex animate-fade-up gap-4 rounded-3xl border border-[var(--border-primary)] bg-[var(--bg-card)] p-4 shadow-soft backdrop-blur-sm"
             >
               <Link to={`/product/${item.slug}`} className="shrink-0">
                 <ProductVisual emoji={item.emoji} gradient={item.gradient} className="h-24 w-24 rounded-2xl" emojiClassName="text-4xl" />
@@ -76,10 +76,10 @@ export default function Cart() {
               <div className="flex min-w-0 flex-1 flex-col">
                 <div className="flex items-start justify-between gap-2">
                   <div className="min-w-0">
-                    <Link to={`/product/${item.slug}`} className="block truncate font-semibold text-forest hover:text-leaf-700">
+                    <Link to={`/product/${item.slug}`} className="block truncate font-semibold text-[var(--text-primary)] hover:text-leaf-400">
                       {item.name}
                     </Link>
-                    <p className="mt-0.5 text-xs text-leaf-900/50">Varian: {item.variant}</p>
+                    <p className="mt-0.5 text-xs text-[var(--text-muted)]">Varian: {item.variant}</p>
                   </div>
                   <button
                     onClick={() => onRemove(item.lineId)}
@@ -92,10 +92,10 @@ export default function Cart() {
                   </button>
                 </div>
                 <div className="mt-auto flex items-center justify-between pt-3">
-                  <div className="flex items-center rounded-xl bg-leaf-50">
-                    <button onClick={() => onQty(item.lineId, item.qty - 1)} aria-label="Kurangi jumlah" className="min-h-[44px] min-w-[44px] px-3 py-2 font-bold text-leaf-700 transition hover:text-leaf-900">−</button>
-                    <span className="w-8 text-center text-sm font-bold text-leaf-950" aria-live="polite">{item.qty}</span>
-                    <button onClick={() => onQty(item.lineId, item.qty + 1)} aria-label="Tambah jumlah" className="min-h-[44px] min-w-[44px] px-3 py-2 font-bold text-leaf-700 transition hover:text-leaf-900">+</button>
+                  <div className="flex items-center rounded-xl bg-leaf-800/20">
+                    <button onClick={() => onQty(item.lineId, item.qty - 1)} aria-label="Kurangi jumlah" className="min-h-[44px] min-w-[44px] px-3 py-2 font-bold text-leaf-400 transition hover:text-leaf-300">−</button>
+                    <span className="w-8 text-center text-sm font-bold text-[var(--text-primary)]" aria-live="polite">{item.qty}</span>
+                    <button onClick={() => onQty(item.lineId, item.qty + 1)} aria-label="Tambah jumlah" className="min-h-[44px] min-w-[44px] px-3 py-2 font-bold text-leaf-400 transition hover:text-leaf-300">+</button>
                   </div>
                   <p className="font-extrabold text-leaf-700">{formatRupiah(item.price * item.qty)}</p>
                 </div>
@@ -105,26 +105,26 @@ export default function Cart() {
         </div>
 
         {/* Ringkasan */}
-        <div className="sticky top-20 h-fit rounded-3xl border border-leaf-100 bg-white p-6 shadow-soft">
+        <div className="sticky top-20 h-fit rounded-3xl border border-[var(--border-primary)] bg-[var(--bg-card)] p-6 shadow-soft backdrop-blur-sm">
           <h2 className="section-title">Ringkasan Belanja</h2>
           <dl className="mt-4 space-y-3 text-sm">
             <div className="flex justify-between">
-              <dt className="text-leaf-900/60">Subtotal ({count} item)</dt>
-              <dd className="font-semibold text-leaf-950">{formatRupiah(subtotal)}</dd>
+              <dt className="text-[var(--text-muted)]">Subtotal ({count} item)</dt>
+              <dd className="font-semibold text-[var(--text-primary)]">{formatRupiah(subtotal)}</dd>
             </div>
             <div className="flex justify-between">
-              <dt className="text-leaf-900/60">Ongkir (estimasi)</dt>
-              <dd className="font-semibold text-leaf-950">{formatRupiah(shipping)}</dd>
+              <dt className="text-[var(--text-muted)]">Ongkir (estimasi)</dt>
+              <dd className="font-semibold text-[var(--text-primary)]">{formatRupiah(shipping)}</dd>
             </div>
             <div className="flex justify-between border-t border-leaf-100 pt-3">
-              <dt className="font-bold text-forest">Total</dt>
-              <dd className="text-xl font-extrabold text-leaf-700">{formatRupiah(total)}</dd>
+              <dt className="font-bold text-[var(--text-primary)]">Total</dt>
+              <dd className="text-xl font-extrabold text-leaf-400">{formatRupiah(total)}</dd>
             </div>
           </dl>
           <Button to="/checkout" size="lg" className="mt-6 w-full">
             Lanjut checkout →
           </Button>
-          <Link to="/explore" className="mt-3 block text-center text-sm font-semibold text-leaf-900/50 hover:text-leaf-700">
+          <Link to="/explore" className="mt-3 block text-center text-sm font-semibold text-[var(--text-muted)] hover:text-leaf-400">
             ← Lanjut belanja
           </Link>
         </div>

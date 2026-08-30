@@ -80,14 +80,13 @@ export default function Community() {
           <div className="flex items-center gap-3">
             <span className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-leaf-400 to-leaf-600 text-xl">
               {user?.avatar || '🧑‍🌾'}
-            </span>
-            <textarea
+            </span>              <textarea
               autoFocus
               value={content}
               onChange={(e) => setContent(e.target.value)}
               placeholder="Bagikan cerita, hasil panen, atau tips berkebunmu..."
               rows={3}
-              className="flex-1 resize-none rounded-2xl border border-sage-200 bg-cream/60 p-3.5 text-sm focus:border-leaf-400 focus:outline-none focus:ring-2 focus:ring-leaf-200"
+              className="flex-1 resize-none rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-input)] p-3.5 text-sm text-[var(--text-primary)] focus:border-leaf-400 focus:outline-none focus:ring-2 focus:ring-leaf-200"
             />
           </div>
           <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
@@ -122,16 +121,16 @@ export default function Community() {
           <Loading />
         ) : (
           posts.map((post) => (
-            <article key={post.id} className="animate-fade-up overflow-hidden rounded-3xl border border-leaf-100 bg-white shadow-soft">
+            <article key={post.id} className="animate-fade-up overflow-hidden rounded-3xl border border-[var(--border-primary)] bg-[var(--bg-card)] shadow-soft backdrop-blur-sm">
               <div className="flex items-center gap-3 p-5 pb-0">
-                <span className="flex h-11 w-11 items-center justify-center rounded-full bg-leaf-100 text-xl">{post.avatar}</span>
+                <span className="flex h-11 w-11 items-center justify-center rounded-full bg-leaf-800/20 text-xl">{post.avatar}</span>
                 <div>
-                  <p className="font-semibold text-forest">{post.author}</p>
-                  <p className="text-xs text-leaf-900/40">{timeAgo(post.time)}</p>
+                  <p className="font-semibold text-[var(--text-primary)]">{post.author}</p>
+                  <p className="text-xs text-[var(--text-muted)]">{timeAgo(post.time)}</p>
                 </div>
               </div>
               <div className="p-5">
-                <p className="leading-relaxed text-leaf-900/80">{post.content}</p>
+                <p className="leading-relaxed text-[var(--text-secondary)]">{post.content}</p>
                 {post.emoji && (
                   <div className="mt-4">
                     <ProductVisual emoji={post.emoji} gradient={post.gradient} className="h-48 w-full rounded-2xl" emojiClassName="text-7xl" />
@@ -148,17 +147,17 @@ export default function Community() {
                 <button onClick={() => setCommentFor(commentFor === post.id ? null : post.id)} className="flex items-center gap-1.5 rounded-xl px-3 py-2 text-sm font-semibold text-leaf-900/50 transition hover:bg-leaf-50">
                   💬 {post.comments.length}
                 </button>
-                <span className="ml-auto text-xs text-leaf-900/35">Tanamanku</span>
+                <span className="ml-auto text-xs text-[var(--text-muted)]">Tanamanku</span>
               </div>
               {commentFor === post.id && (
-                <div className="flex items-center gap-2 border-t border-leaf-100 bg-leaf-50/50 px-5 py-3">
+                <div className="flex items-center gap-2 border-t border-[var(--border-primary)] bg-[var(--bg-card)] px-5 py-3">
                   <input
                     autoFocus
                     value={commentText}
                     onChange={(e) => setCommentText(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && submitComment(post.id)}
                     placeholder="Tulis komentar... (Enter untuk kirim)"
-                    className="flex-1 rounded-xl border border-leaf-200 bg-white px-4 py-2.5 text-sm focus:border-leaf-400 focus:outline-none focus:ring-2 focus:ring-leaf-200"
+                    className="flex-1 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-input)] px-4 py-2.5 text-sm text-[var(--text-primary)] focus:border-leaf-400 focus:outline-none focus:ring-2 focus:ring-leaf-200"
                   />
                   <Button size="sm" onClick={() => submitComment(post.id)} disabled={!commentText.trim()}>
                     Kirim
@@ -166,13 +165,13 @@ export default function Community() {
                 </div>
               )}
               {post.comments.length > 0 && (
-                <div className="space-y-3 bg-leaf-50/50 px-5 py-4">
+                <div className="space-y-3 bg-[var(--bg-card)] px-5 py-4">
                   {post.comments.map((c, i) => (
                     <div key={i} className="flex gap-3">
-                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white text-sm shadow-sm">{c.avatar}</span>
+                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[var(--bg-card-hover)] text-sm shadow-sm">{c.avatar}</span>
                       <div className="rounded-2xl bg-white px-4 py-2.5 shadow-sm">
-                        <p className="text-xs font-bold text-leaf-800">{c.author} <span className="font-normal text-leaf-900/40">· {timeAgo(c.time)}</span></p>
-                        <p className="mt-0.5 text-sm text-leaf-900/75">{c.content}</p>
+                        <p className="text-xs font-bold text-[var(--text-primary)]">{c.author} <span className="font-normal text-[var(--text-muted)]">· {timeAgo(c.time)}</span></p>
+                        <p className="mt-0.5 text-sm text-[var(--text-secondary)]">{c.content}</p>
                       </div>
                     </div>
                   ))}

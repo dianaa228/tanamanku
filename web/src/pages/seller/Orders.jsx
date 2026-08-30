@@ -44,7 +44,7 @@ export default function SellerOrders() {
             key={t.value}
             onClick={() => setTab(t.value)}
             className={`shrink-0 rounded-full px-4 py-2 text-sm font-semibold transition ${
-              tab === t.value ? 'bg-leaf-600 text-white' : 'bg-white text-leaf-900/60 ring-1 ring-leaf-200 hover:bg-leaf-50'
+              tab === t.value ? 'bg-leaf-600 text-white' : 'bg-[var(--bg-card)] text-[var(--text-muted)] ring-1 ring-[var(--border-primary)] hover:bg-[var(--bg-card-hover)]'
             }`}
           >
             {t.label}
@@ -54,19 +54,19 @@ export default function SellerOrders() {
 
       <div className="space-y-3">
         {filtered.length === 0 ? (
-          <div className="rounded-2xl border border-dashed border-leaf-200 bg-leaf-50/50 px-6 py-16 text-center">
+          <div className="rounded-2xl border border-dashed border-[var(--border-primary)] bg-[var(--bg-card)] px-6 py-16 text-center backdrop-blur-sm">
             <p className="text-4xl">📦</p>
-            <p className="mt-2 text-sm font-semibold text-leaf-900/60">Tidak ada pesanan di tab ini</p>
+            <p className="mt-2 text-sm font-semibold text-[var(--text-secondary)]">Tidak ada pesanan di tab ini</p>
           </div>
         ) : (
           filtered.map((order) => {
             const meta = ORDER_STATUS[order.status]
             return (
-              <div key={order.id} className="rounded-2xl border border-leaf-100 bg-white p-5 shadow-soft">
+              <div key={order.id} className="rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-card)] p-5 shadow-soft backdrop-blur-sm">
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <div>
-                    <p className="font-bold text-leaf-950">{order.id}</p>
-                    <p className="text-xs text-leaf-900/50">{order.user?.name} · {formatDateTime(order.createdAt || order.created_at)}</p>
+                    <p className="font-bold text-[var(--text-primary)]">{order.id}</p>
+                    <p className="text-xs text-[var(--text-muted)]">{order.user?.name} · {formatDateTime(order.createdAt || order.created_at)}</p>
                   </div>
                   <div className="flex items-center gap-3">
                     <Badge className={meta.badge}>{meta.icon} {meta.label}</Badge>
@@ -75,7 +75,7 @@ export default function SellerOrders() {
                 </div>
 
                 {/* Items */}
-                <div className="mt-3 text-sm text-leaf-900/60">
+                <div className="mt-3 text-sm text-[var(--text-secondary)]">
                   {(order.items || []).map((i) => i.product?.name || `Produk #${i.productId}`).join(', ')}
                 </div>
 

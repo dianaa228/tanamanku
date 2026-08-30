@@ -67,8 +67,8 @@ export default function AdminCategories() {
       {/* Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-extrabold text-leaf-950">🏷️ Kelola Kategori</h1>
-          <p className="mt-1 text-sm text-leaf-900/50">Atur kategori produk di platform</p>
+          <h1 className="text-2xl font-extrabold text-[var(--text-primary)]">🏷️ Kelola Kategori</h1>
+          <p className="mt-1 text-sm text-[var(--text-secondary)]">Atur kategori produk di platform</p>
         </div>
         <Button onClick={openCreate}>➕ Tambah Kategori</Button>
       </div>
@@ -80,14 +80,14 @@ export default function AdminCategories() {
           { label: 'Total Produk', value: totalProducts, icon: '📦', color: 'from-sky-400 to-blue-600', bg: 'bg-sky-50' },
           { label: 'Rata-rata per Kategori', value: Math.round(totalProducts / categories.length), icon: '📊', color: 'from-violet-400 to-purple-600', bg: 'bg-violet-50' },
         ].map((s) => (
-          <div key={s.label} className={`rounded-2xl border border-leaf-100 ${s.bg} p-4 transition-all hover:-translate-y-0.5 hover:shadow-md`}>
+          <div key={s.label} className={`rounded-2xl border border-[var(--border-primary)] ${s.bg} p-4 transition-all hover:-translate-y-0.5 hover:shadow-md`}>
             <div className="flex items-center gap-3">
               <span className={`flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br ${s.color} text-xl text-white shadow-sm`}>
                 {s.icon}
               </span>
               <div>
-                <p className="text-xs text-leaf-900/50">{s.label}</p>
-                <p className="text-xl font-extrabold text-leaf-950">{s.value}</p>
+                <p className="text-xs text-[var(--text-muted)]">{s.label}</p>
+                <p className="text-xl font-extrabold text-[var(--text-primary)]">{s.value}</p>
               </div>
             </div>
           </div>
@@ -97,7 +97,7 @@ export default function AdminCategories() {
       {/* Categories Grid */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {categories.map((c, i) => (
-          <div key={c.id} className="group rounded-2xl border border-leaf-100 bg-white shadow-soft transition-all hover:-translate-y-0.5 hover:shadow-md">
+          <div key={c.id} className="group rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-card)] shadow-soft backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:shadow-md">
             {/* Category Header */}
             <div className={`bg-gradient-to-br ${gradients[i % gradients.length]} rounded-t-2xl p-5`}>
               <div className="flex items-center justify-between">
@@ -133,16 +133,16 @@ export default function AdminCategories() {
       <Modal open={modalOpen} onClose={() => setModalOpen(false)} title={editing ? '✏️ Edit Kategori' : '➕ Tambah Kategori'}>
         <div className="space-y-4">
           <div>
-            <label className="mb-1 block text-sm font-semibold text-leaf-900">Nama Kategori</label>
+            <label className="mb-1 block text-sm font-semibold text-[var(--text-primary)]">Nama Kategori</label>
             <input
               value={form.name}
               onChange={(e) => setForm({ ...form, name: e.target.value })}
-              className="w-full rounded-xl border border-leaf-200 bg-white px-4 py-2.5 text-sm focus:border-leaf-400 focus:outline-none focus:ring-2 focus:ring-leaf-100"
+              className="w-full rounded-xl border border-[var(--border-primary)] bg-[var(--bg-input)] px-4 py-2.5 text-sm text-[var(--text-primary)] focus:border-leaf-400 focus:outline-none focus:ring-2 focus:ring-leaf-200"
               placeholder="Contoh: Tanaman Hias"
             />
           </div>
           <div>
-            <label className="mb-1 block text-sm font-semibold text-leaf-900">Icon (Emoji)</label>
+            <label className="mb-1 block text-sm font-semibold text-[var(--text-primary)]">Icon (Emoji)</label>
             <div className="flex gap-2">
               {['🪴', '🥬', '🍅', '🪨', '🧪', '🛠️', '🏺', '🌿', '🌵', '🌻'].map((emoji) => (
                 <button

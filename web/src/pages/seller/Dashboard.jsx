@@ -53,11 +53,11 @@ export default function SellerDashboard() {
           { label: 'Pesanan Baru', value: stats.newOrders, icon: '🆕', color: 'from-amber-400 to-orange-600', change: 'Menunggu' },
           { label: 'Stok Menipis', value: stats.lowStock, icon: '⚠️', color: 'from-rose-400 to-pink-600', change: stats.lowStock > 0 ? 'Perlu diatur' : 'Aman' },
         ].map((s) => (
-          <div key={s.label} className="group rounded-2xl border border-leaf-100 bg-white p-5 shadow-soft transition-all hover:-translate-y-0.5 hover:shadow-md">
+          <div key={s.label} className="group rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-card)] p-5 shadow-soft backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:shadow-md">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-leaf-900/50">{s.label}</p>
-                <p className="mt-1 text-2xl font-extrabold text-leaf-950">{s.value}</p>
+                <p className="text-sm text-[var(--text-muted)]">{s.label}</p>
+                <p className="mt-1 text-2xl font-extrabold text-[var(--text-primary)]">{s.value}</p>
               </div>
               <span className={`flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br ${s.color} text-2xl shadow-soft transition-transform group-hover:scale-110`}>
                 {s.icon}
@@ -69,20 +69,20 @@ export default function SellerDashboard() {
       </div>
 
       {/* Quick Actions */}
-      <div className="rounded-2xl border border-leaf-100 bg-white p-6 shadow-soft">
-        <h2 className="font-bold text-leaf-950">⚡ Aksi Cepat</h2>
+      <div className="rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-card)] p-6 shadow-soft backdrop-blur-sm">
+        <h2 className="font-bold text-[var(--text-primary)]">⚡ Aksi Cepat</h2>
         <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
           {quickActions.map((action) => (
             <Link
               key={action.to}
               to={action.to}
-              className="group relative overflow-hidden rounded-2xl border border-leaf-100 p-4 transition-all hover:-translate-y-1 hover:border-leaf-200 hover:shadow-md"
+              className="group relative overflow-hidden rounded-2xl border border-[var(--border-primary)] p-4 transition-all hover:-translate-y-1 hover:border-leaf-400/50 hover:shadow-md"
             >
               <div className={`flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br ${action.color} text-2xl shadow-soft transition-transform group-hover:scale-110`}>
                 {action.icon}
               </div>
-              <p className="mt-3 text-sm font-bold text-leaf-950">{action.label}</p>
-              <p className="mt-0.5 text-xs text-leaf-900/50">{action.desc}</p>
+              <p className="mt-3 text-sm font-bold text-[var(--text-primary)]">{action.label}</p>
+              <p className="mt-0.5 text-xs text-[var(--text-muted)]">{action.desc}</p>
               <span className="absolute right-3 top-3 text-leaf-200 transition-all group-hover:right-2 group-hover:text-leaf-400">
                 →
               </span>
@@ -93,9 +93,9 @@ export default function SellerDashboard() {
 
       <div className="grid gap-6 lg:grid-cols-[1fr_320px]">
         {/* Sales Chart */}
-        <div className="rounded-2xl border border-leaf-100 bg-white p-6 shadow-soft">
+        <div className="rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-card)] p-6 shadow-soft backdrop-blur-sm">
           <div className="flex items-center justify-between">
-            <h2 className="font-bold text-leaf-950">📈 Penjualan 7 Hari Terakhir</h2>
+            <h2 className="font-bold text-[var(--text-primary)]">📈 Penjualan 7 Hari Terakhir</h2>
             <Link to="/seller/analytics" className="text-xs font-semibold text-leaf-600 hover:text-leaf-700">
               Detail →
             </Link>
@@ -103,7 +103,7 @@ export default function SellerDashboard() {
           <div className="mt-4 flex items-end gap-2 h-48 overflow-x-auto">
             {salesChart.map((s, i) => (
               <div key={i} className="flex-1 flex flex-col items-center gap-1">
-                <span className="text-[10px] font-bold text-leaf-700">{formatRupiah(s.total, false)}</span>
+                <span className="text-[10px] font-bold text-[var(--text-primary)]">{formatRupiah(s.total, false)}</span>
                 <div
                   className="w-full rounded-t-lg bg-gradient-to-t from-leaf-600 to-leaf-400 transition-all hover:from-leaf-700 hover:to-leaf-500"
                   style={{ height: `${(s.total / maxSales) * 100}%`, minHeight: '4px' }}
@@ -117,33 +117,33 @@ export default function SellerDashboard() {
         </div>
 
         {/* Low Stock Alert */}
-        <div className="rounded-2xl border border-leaf-100 bg-white p-6 shadow-soft">
+        <div className="rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-card)] p-6 shadow-soft backdrop-blur-sm">
           <div className="flex items-center justify-between">
-            <h2 className="font-bold text-leaf-950">⚠️ Stok Menipis</h2>
+            <h2 className="font-bold text-[var(--text-primary)]">⚠️ Stok Menipis</h2>
             <Link to="/seller/inventory" className="text-xs font-semibold text-leaf-600 hover:text-leaf-700">
               Atur Semua →
             </Link>
           </div>
           <div className="mt-4 space-y-3">
             {lowStockProducts.length === 0 ? (
-              <div className="rounded-xl bg-emerald-50 p-4 text-center">
+              <div className="rounded-xl bg-emerald-800/20 p-4 text-center">
                 <span className="text-3xl">✅</span>
-                <p className="mt-2 text-sm font-semibold text-emerald-700">Semua stok aman!</p>
-                <p className="text-xs text-emerald-600">Tidak ada produk yang perlu diisi ulang.</p>
+                <p className="mt-2 text-sm font-semibold text-emerald-400">Semua stok aman!</p>
+                <p className="text-xs text-emerald-300/80">Tidak ada produk yang perlu diisi ulang.</p>
               </div>
             ) : (
               lowStockProducts.map((p) => (
-                <div key={p.id} className="flex items-center justify-between rounded-xl bg-rose-50 px-4 py-3 transition hover:bg-rose-100">
+                <div key={p.id} className="flex items-center justify-between rounded-xl bg-rose-800/20 px-4 py-3 transition hover:bg-rose-800/30">
                   <div className="flex items-center gap-3">
                     <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-rose-100 text-lg">
                       ⚠️
                     </span>
                     <div>
-                      <p className="text-sm font-semibold text-leaf-950">{p.name}</p>
-                      <p className="text-xs font-bold text-rose-600">Sisa {p.stock}</p>
+                      <p className="text-sm font-semibold text-[var(--text-primary)]">{p.name}</p>
+                      <p className="text-xs font-bold text-rose-400">Sisa {p.stock}</p>
                     </div>
                   </div>
-                  <Link to="/seller/inventory" className="rounded-lg bg-white px-3 py-1.5 text-xs font-bold text-leaf-700 shadow-sm transition hover:shadow-md">
+                  <Link to="/seller/inventory" className="rounded-lg bg-[var(--bg-card)] px-3 py-1.5 text-xs font-bold text-leaf-400 shadow-sm transition hover:shadow-md">
                     Atur →
                   </Link>
                 </div>
@@ -154,9 +154,8 @@ export default function SellerDashboard() {
       </div>
 
       {/* Recent Orders */}
-      <div className="rounded-2xl border border-leaf-100 bg-white p-6 shadow-soft">
-        <div className="flex items-center justify-between">
-          <h2 className="font-bold text-leaf-950">🆕 Pesanan Terbaru</h2>
+      <div className="rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-card)] p-6 shadow-soft backdrop-blur-sm">
+        <div className="flex items-center justify-between">            <h2 className="font-bold text-[var(--text-primary)]">🆕 Pesanan Terbaru</h2>
           <Link to="/seller/orders" className="text-sm font-semibold text-leaf-700 hover:text-leaf-800">
             Lihat semua →
           </Link>
@@ -165,14 +164,14 @@ export default function SellerDashboard() {
           {recentOrders.map((order) => {
             const meta = ORDER_STATUS[order.status]
             return (
-              <div key={order.id} className="flex items-center justify-between rounded-xl bg-leaf-50/50 px-4 py-3 transition hover:bg-leaf-50">
+              <div key={order.id} className="flex items-center justify-between rounded-xl bg-[var(--bg-card)] px-4 py-3 transition hover:bg-[var(--bg-card-hover)]">
                 <div className="flex items-center gap-3">
-                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-leaf-100 text-lg">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-leaf-800/20 text-lg">
                     📦
                   </span>
                   <div>
-                    <p className="text-sm font-semibold text-leaf-950">{order.id}</p>
-                    <p className="text-xs text-leaf-900/50">{order.user?.name} · {formatDateTime(order.created_at)}</p>
+                    <p className="text-sm font-semibold text-[var(--text-primary)]">{order.id}</p>
+                    <p className="text-xs text-[var(--text-muted)]">{order.user?.name} · {formatDateTime(order.created_at)}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
@@ -186,19 +185,19 @@ export default function SellerDashboard() {
       </div>
 
       {/* Seller Tips */}
-      <div className="rounded-2xl border border-leaf-100 bg-gradient-to-r from-leaf-50 to-emerald-50 p-6">
-        <h3 className="font-bold text-leaf-950">💡 Tips Seller</h3>
+      <div className="rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-card)] p-6 backdrop-blur-sm">
+        <h3 className="font-bold text-[var(--text-primary)]">💡 Tips Seller</h3>
         <div className="mt-3 grid gap-3 sm:grid-cols-3">
           {[
             { icon: '📸', title: 'Foto Produk', desc: 'Gunakan foto berkualitas tinggi untuk menarik pembeli.' },
             { icon: '📝', title: 'Deskripsi Lengkap', desc: 'Jelaskan produk dengan detail: ukuran, perawatan, manfaat.' },
             { icon: '⚡', title: 'Respon Cepat', desc: 'Balas pertanyaan pembeli dalam waktu singkat.' },
           ].map((tip) => (
-            <div key={tip.title} className="flex items-start gap-3 rounded-xl bg-white p-4">
+            <div key={tip.title} className="flex items-start gap-3 rounded-xl bg-[var(--bg-card-hover)] p-4">
               <span className="text-2xl">{tip.icon}</span>
               <div>
-                <p className="text-sm font-bold text-leaf-950">{tip.title}</p>
-                <p className="mt-0.5 text-xs text-leaf-900/60">{tip.desc}</p>
+                <p className="text-sm font-bold text-[var(--text-primary)]">{tip.title}</p>
+                <p className="mt-0.5 text-xs text-[var(--text-muted)]">{tip.desc}</p>
               </div>
             </div>
           ))}

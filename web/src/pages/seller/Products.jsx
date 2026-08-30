@@ -39,7 +39,7 @@ export default function SellerProducts() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Cari produk..."
-          className="rounded-xl border border-leaf-200 bg-white px-4 py-2.5 text-sm focus:border-leaf-400 focus:outline-none w-64"
+          className="rounded-xl border border-[var(--border-primary)] bg-[var(--bg-input)] px-4 py-2.5 text-sm text-[var(--text-primary)] focus:border-leaf-400 focus:outline-none w-64"
         />
         <Button to="/seller/products/create">+ Tambah Produk</Button>
       </div>
@@ -47,34 +47,34 @@ export default function SellerProducts() {
       {filtered.length === 0 ? (
         <EmptyState icon="📦" title="Belum ada produk" description="Mulai tambahkan produk pertamamu" actionLabel="Tambah Produk" actionTo="/seller/products/create" />
       ) : (
-        <div className="rounded-2xl border border-leaf-100 bg-white shadow-soft overflow-hidden">
+        <div className="rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-card)] shadow-soft backdrop-blur-sm overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full min-w-[600px] text-sm">
               <thead>
-                <tr className="border-b border-leaf-100 bg-leaf-50/50">
-                  <th className="px-4 py-3 text-left font-semibold text-leaf-900/70">Produk</th>
-                  <th className="px-4 py-3 text-left font-semibold text-leaf-900/70">Kategori</th>
-                  <th className="px-4 py-3 text-right font-semibold text-leaf-900/70">Harga</th>
-                  <th className="px-4 py-3 text-right font-semibold text-leaf-900/70">Stok</th>
-                  <th className="px-4 py-3 text-center font-semibold text-leaf-900/70">Status</th>
-                  <th className="px-4 py-3 text-center font-semibold text-leaf-900/70">Aksi</th>
+                <tr className="border-b border-[var(--border-primary)] bg-[var(--bg-card)]">
+                  <th className="px-4 py-3 text-left font-semibold text-[var(--text-secondary)]">Produk</th>
+                  <th className="px-4 py-3 text-left font-semibold text-[var(--text-secondary)]">Kategori</th>
+                  <th className="px-4 py-3 text-right font-semibold text-[var(--text-secondary)]">Harga</th>
+                  <th className="px-4 py-3 text-right font-semibold text-[var(--text-secondary)]">Stok</th>
+                  <th className="px-4 py-3 text-center font-semibold text-[var(--text-secondary)]">Status</th>
+                  <th className="px-4 py-3 text-center font-semibold text-[var(--text-secondary)]">Aksi</th>
                 </tr>
               </thead>
               <tbody>
                 {filtered.map((p) => {
                   const v = visualFor(p)
                   return (
-                    <tr key={p.id} className="border-b border-leaf-50 hover:bg-leaf-50/30">
+                    <tr key={p.id} className="border-b border-[var(--border-secondary)] hover:bg-[var(--bg-card-hover)]">
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-3">
                           <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-leaf-100 text-lg">{v.emoji}</span>
                           <div>
-                            <p className="font-semibold text-leaf-950">{p.name}</p>
-                            <p className="text-xs text-leaf-900/40">SKU #{p.id}</p>
+                            <p className="font-semibold text-[var(--text-primary)]">{p.name}</p>
+                            <p className="text-xs text-[var(--text-muted)]">SKU #{p.id}</p>
                           </div>
                         </div>
                       </td>
-                      <td className="px-4 py-3 text-leaf-900/60">{p.category?.name || '—'}</td>
+                      <td className="px-4 py-3 text-[var(--text-secondary)]">{p.category?.name || '—'}</td>
                       <td className="px-4 py-3 text-right font-semibold">{formatRupiah(p.price)}</td>
                       <td className="px-4 py-3 text-right">
                         <span className={p.stock <= 5 ? 'text-rose-600 font-bold' : 'text-leaf-900/60'}>

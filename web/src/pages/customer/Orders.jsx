@@ -46,7 +46,7 @@ export default function Orders() {
             key={t.value}
             onClick={() => setTab(t.value)}
             className={`shrink-0 rounded-full px-4 py-2 text-sm font-semibold transition ${
-              tab === t.value ? 'bg-leaf-600 text-white shadow-soft' : 'bg-white text-leaf-900/60 ring-1 ring-leaf-200 hover:bg-leaf-50'
+              tab === t.value ? 'bg-leaf-600 text-white shadow-soft' : 'bg-[var(--bg-card)] text-[var(--text-muted)] ring-1 ring-[var(--border-primary)] hover:bg-[var(--bg-card-hover)]'
             }`}
           >
             {t.label}
@@ -68,12 +68,12 @@ export default function Orders() {
               <Link
                 key={order.id}
                 to={`/orders/${order.id}`}
-                className="block animate-fade-up rounded-3xl border border-leaf-100 bg-white p-5 shadow-soft transition hover:-translate-y-0.5 hover:shadow-lift"
+                className="block animate-fade-up rounded-3xl border border-[var(--border-primary)] bg-[var(--bg-card)] p-5 shadow-soft backdrop-blur-sm transition hover:-translate-y-0.5 hover:shadow-lift"
               >
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <div>
-                    <p className="font-semibold text-forest">{order.id}</p>
-                    <p className="text-xs text-leaf-900/50">{formatDateTime(order.date)}</p>
+                    <p className="font-semibold text-[var(--text-primary)]">{order.id}</p>
+                    <p className="text-xs text-[var(--text-muted)]">{formatDateTime(order.date)}</p>
                   </div>
                   <Badge className={meta.badge}>
                     {meta.icon} {meta.label}
@@ -92,12 +92,12 @@ export default function Orders() {
                     ))}
                   </div>
                   <div className="flex-1">
-                    <p className="truncate text-sm font-medium text-leaf-900/80">
+                    <p className="truncate text-sm font-medium text-[var(--text-secondary)]">
                       {order.items.length > 1
                         ? `${order.items[0].name} +${order.items.length - 1} lainnya`
                         : order.items[0].name}
                     </p>
-                    <p className="text-xs text-leaf-900/50">
+                    <p className="text-xs text-[var(--text-muted)]">
                       {order.items.reduce((n, i) => n + i.qty, 0)} item
                     </p>
                   </div>

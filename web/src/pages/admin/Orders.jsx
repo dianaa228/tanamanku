@@ -49,8 +49,8 @@ export default function AdminOrders() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-extrabold text-leaf-950">🧾 Kelola Pesanan</h1>
-        <p className="mt-1 text-sm text-leaf-900/50">Monitor dan kelola semua pesanan platform</p>
+        <h1 className="text-2xl font-extrabold text-[var(--text-primary)]">🧾 Kelola Pesanan</h1>
+        <p className="mt-1 text-sm text-[var(--text-secondary)]">Monitor dan kelola semua pesanan platform</p>
       </div>
 
       {/* Stats */}
@@ -61,14 +61,14 @@ export default function AdminOrders() {
           { label: 'Sudah Dibayar', value: paidOrders, icon: '✅', color: 'from-emerald-400 to-green-600', bg: 'bg-emerald-50' },
           { label: 'Menunggu', value: pendingOrders, icon: '⏳', color: 'from-amber-400 to-orange-600', bg: 'bg-amber-50' },
         ].map((s) => (
-          <div key={s.label} className={`rounded-2xl border border-leaf-100 ${s.bg} p-4 transition-all hover:-translate-y-0.5 hover:shadow-md`}>
+          <div key={s.label} className={`rounded-2xl border border-[var(--border-primary)] ${s.bg} p-4 transition-all hover:-translate-y-0.5 hover:shadow-md`}>
             <div className="flex items-center gap-3">
               <span className={`flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br ${s.color} text-xl text-white shadow-sm`}>
                 {s.icon}
               </span>
               <div>
-                <p className="text-xs text-leaf-900/50">{s.label}</p>
-                <p className="text-xl font-extrabold text-leaf-950">{s.value}</p>
+                <p className="text-xs text-[var(--text-muted)]">{s.label}</p>
+                <p className="text-xl font-extrabold text-[var(--text-primary)]">{s.value}</p>
               </div>
             </div>
           </div>
@@ -82,7 +82,7 @@ export default function AdminOrders() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Cari ID pesanan, pembeli, atau toko..."
-          className="w-full rounded-xl border border-leaf-200 bg-white py-2.5 pl-10 pr-4 text-sm focus:border-leaf-400 focus:outline-none focus:ring-2 focus:ring-leaf-100"
+          className="w-full rounded-xl border border-[var(--border-primary)] bg-[var(--bg-input)] py-2.5 pl-10 pr-4 text-sm text-[var(--text-primary)] focus:border-leaf-400 focus:outline-none focus:ring-2 focus:ring-leaf-200"
         />
       </div>
 
@@ -93,7 +93,7 @@ export default function AdminOrders() {
             key={t.value}
             onClick={() => setTab(t.value)}
             className={`shrink-0 rounded-full px-4 py-2 text-sm font-semibold transition ${
-              tab === t.value ? 'bg-leaf-600 text-white shadow-sm' : 'bg-white text-leaf-900/60 ring-1 ring-leaf-200 hover:bg-leaf-50'
+              tab === t.value ? 'bg-leaf-600 text-white shadow-sm' : 'bg-[var(--bg-card)] text-[var(--text-muted)] ring-1 ring-[var(--border-primary)] hover:bg-[var(--bg-card-hover)]'
             }`}
           >
             {t.label} <span className="ml-1 opacity-70">({t.count})</span>
@@ -102,21 +102,21 @@ export default function AdminOrders() {
       </div>
 
       {/* Results */}
-      <p className="text-sm text-leaf-900/50">
-        Menampilkan <span className="font-bold text-leaf-950">{filtered.length}</span> pesanan
+      <p className="text-sm text-[var(--text-muted)]">
+        Menampilkan <span className="font-bold text-[var(--text-primary)]">{filtered.length}</span> pesanan
       </p>
 
-      {/* Orders Table */}        <div className="rounded-2xl border border-leaf-100 bg-white shadow-soft overflow-hidden">
+      {/* Orders Table */}        <div className="rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-card)] shadow-soft backdrop-blur-sm overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full min-w-[640px] text-sm">
             <thead>
-              <tr className="border-b border-leaf-100 bg-leaf-50/50">
-                <th className="px-4 py-3 text-left font-semibold text-leaf-900/70">Pesanan</th>
-                <th className="px-4 py-3 text-left font-semibold text-leaf-900/70">Pembeli</th>
-                <th className="px-4 py-3 text-left font-semibold text-leaf-900/70">Toko</th>
-                <th className="px-4 py-3 text-right font-semibold text-leaf-900/70">Total</th>
-                <th className="px-4 py-3 text-center font-semibold text-leaf-900/70">Status</th>
-                <th className="px-4 py-3 text-center font-semibold text-leaf-900/70">Pembayaran</th>
+              <tr className="border-b border-[var(--border-primary)] bg-[var(--bg-card)]">
+                <th className="px-4 py-3 text-left font-semibold text-[var(--text-secondary)]">Pesanan</th>
+                <th className="px-4 py-3 text-left font-semibold text-[var(--text-secondary)]">Pembeli</th>
+                <th className="px-4 py-3 text-left font-semibold text-[var(--text-secondary)]">Toko</th>
+                <th className="px-4 py-3 text-right font-semibold text-[var(--text-secondary)]">Total</th>
+                <th className="px-4 py-3 text-center font-semibold text-[var(--text-secondary)]">Status</th>
+                <th className="px-4 py-3 text-center font-semibold text-[var(--text-secondary)]">Pembayaran</th>
               </tr>
             </thead>
             <tbody>
@@ -132,18 +132,18 @@ export default function AdminOrders() {
                 filtered.map((o) => {
                   const meta = ORDER_STATUS[o.status]
                   return (
-                    <tr key={o.id} className="border-b border-leaf-50 transition hover:bg-leaf-50/30">
+                    <tr key={o.id} className="border-b border-[var(--border-secondary)] transition hover:bg-[var(--bg-card-hover)]">
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-3">
                           <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-leaf-100 text-sm">📦</span>
                           <div>
-                            <p className="font-semibold text-leaf-950">{o.id}</p>
-                            <p className="text-xs text-leaf-900/40">{formatDateTime(o.created_at)}</p>
+                            <p className="font-semibold text-[var(--text-primary)]">{o.id}</p>
+                            <p className="text-xs text-[var(--text-muted)]">{formatDateTime(o.created_at)}</p>
                           </div>
                         </div>
                       </td>
-                      <td className="px-4 py-3 text-leaf-900/60">{o.user?.name || '—'}</td>
-                      <td className="px-4 py-3 text-leaf-900/60">{o.store?.name || '—'}</td>
+                      <td className="px-4 py-3 text-[var(--text-secondary)]">{o.user?.name || '—'}</td>
+                      <td className="px-4 py-3 text-[var(--text-secondary)]">{o.store?.name || '—'}</td>
                       <td className="px-4 py-3 text-right font-bold text-leaf-700">{formatRupiah(o.total)}</td>
                       <td className="px-4 py-3 text-center">
                         <Badge className={meta?.badge || 'bg-gray-100 text-gray-500'}>

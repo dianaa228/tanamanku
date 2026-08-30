@@ -31,7 +31,7 @@ export default function AdminCommunity() {
     <div className="space-y-6">
       {/* Open reports */}
       <div>
-        <h2 className="font-bold text-leaf-950">🔴 Laporan Terbuka ({openReports.length})</h2>
+        <h2 className="font-bold text-[var(--text-primary)]">🔴 Laporan Terbuka ({openReports.length})</h2>
         {openReports.length === 0 ? (
           <div className="mt-4">
             <EmptyState icon="✅" title="Tidak ada laporan terbuka" description="Semua laporan sudah ditangani" />
@@ -39,19 +39,19 @@ export default function AdminCommunity() {
         ) : (
           <div className="mt-4 space-y-3">
             {openReports.map((r) => (
-              <div key={r.id} className="rounded-2xl border border-amber-200 bg-amber-50/50 p-5">
+              <div key={r.id} className="rounded-2xl border border-amber-200 bg-amber-800/10 p-5">
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div>
                     <div className="flex items-center gap-2">
                       <Badge className="bg-amber-100 text-amber-800">🔴 Terbuka</Badge>
-                      <span className="text-xs text-leaf-900/40">{formatDateTime(r.created_at)}</span>
+                      <span className="text-xs text-[var(--text-muted)]">{formatDateTime(r.created_at)}</span>
                     </div>
-                    <p className="mt-2 text-sm font-semibold text-leaf-950">
+                    <p className="mt-2 text-sm font-semibold text-[var(--text-primary)]">
                       Dilaporkan oleh: {r.reporter?.name || 'Anonymous'}
                     </p>
-                    <p className="mt-1 text-sm text-leaf-900/70">Alasan: {r.reason}</p>
+                    <p className="mt-1 text-sm text-[var(--text-secondary)]">Alasan: {r.reason}</p>
                     {r.reportable?.content && (
-                      <p className="mt-2 rounded-xl bg-white px-4 py-2 text-sm text-leaf-900/60 border border-leaf-100">
+                      <p className="mt-2 rounded-xl bg-[var(--bg-input)] px-4 py-2 text-sm text-[var(--text-secondary)] border border-[var(--border-primary)]">
                         "{r.reportable.content}"
                       </p>
                     )}
@@ -69,15 +69,15 @@ export default function AdminCommunity() {
       {/* Resolved */}
       {resolvedReports.length > 0 && (
         <div>
-          <h2 className="font-bold text-leaf-950">✅ Selesai ({resolvedReports.length})</h2>
+          <h2 className="font-bold text-[var(--text-primary)]">✅ Selesai ({resolvedReports.length})</h2>
           <div className="mt-4 space-y-3">
             {resolvedReports.map((r) => (
-              <div key={r.id} className="rounded-2xl border border-leaf-100 bg-white p-4 opacity-60">
+              <div key={r.id} className="rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-card)] p-4 opacity-60">
                 <div className="flex items-center gap-2">
                   <Badge className="bg-leaf-100 text-leaf-700">✅ Selesai</Badge>
-                  <span className="text-xs text-leaf-900/40">{formatDateTime(r.created_at)}</span>
+                  <span className="text-xs text-[var(--text-muted)]">{formatDateTime(r.created_at)}</span>
                 </div>
-                <p className="mt-1 text-sm text-leaf-900/60">{r.reason}</p>
+                <p className="mt-1 text-sm text-[var(--text-secondary)]">{r.reason}</p>
               </div>
             ))}
           </div>

@@ -54,8 +54,8 @@ export default function AdminSettings() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-extrabold text-leaf-950 dark:text-white">⚙️ Pengaturan Platform</h1>
-          <p className="mt-1 text-sm text-leaf-900/50 dark:text-sage-400">Konfigurasi seluruh sistem Tanamanku</p>
+          <h1 className="text-2xl font-extrabold text-[var(--text-primary)]">⚙️ Pengaturan Platform</h1>
+          <p className="mt-1 text-sm text-[var(--text-secondary)]">Konfigurasi seluruh sistem Tanamanku</p>
         </div>
         <ThemeToggle />
       </div>
@@ -70,7 +70,7 @@ export default function AdminSettings() {
               className={`flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition ${
                 activeTab === t.id
                   ? 'bg-leaf-600 text-white shadow-sm'
-                  : 'bg-white text-leaf-900/60 hover:bg-leaf-50 dark:bg-sage-800 dark:text-sage-300 dark:hover:bg-sage-700'
+                  : 'bg-[var(--bg-card)] text-[var(--text-muted)] hover:bg-[var(--bg-card-hover)]'
               }`}
             >
               <span>{t.icon}</span>
@@ -83,53 +83,53 @@ export default function AdminSettings() {
         <div className="space-y-6">
           {/* General Settings */}
           {activeTab === 'general' && (
-            <div className="rounded-2xl border border-leaf-100 bg-white p-6 shadow-soft dark:border-sage-800 dark:bg-sage-900">
-              <h3 className="text-lg font-bold text-leaf-950 dark:text-white">🏪 Pengaturan Umum</h3>
+            <div className="rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-card)] p-6 shadow-soft backdrop-blur-sm">
+              <h3 className="text-lg font-bold text-[var(--text-primary)]">🏪 Pengaturan Umum</h3>
               <div className="mt-4 space-y-4">
                 <div>
-                  <label className="mb-1 block text-sm font-semibold text-leaf-900 dark:text-sage-300">Nama Platform</label>
+                  <label className="mb-1 block text-sm font-semibold text-[var(--text-primary)]">Nama Platform</label>
                   <input
                     value={settings.platformName}
                     onChange={set('platformName')}
-                    className="w-full rounded-xl border border-leaf-200 bg-white px-4 py-2.5 text-sm focus:border-leaf-400 focus:outline-none focus:ring-2 focus:ring-leaf-100 dark:border-sage-700 dark:bg-sage-800 dark:text-white"
+                    className="w-full rounded-xl border border-[var(--border-primary)] bg-[var(--bg-input)] px-4 py-2.5 text-sm text-[var(--text-primary)] focus:border-leaf-400 focus:outline-none focus:ring-2 focus:ring-leaf-200"
                   />
                 </div>
                 <div>
-                  <label className="mb-1 block text-sm font-semibold text-leaf-900 dark:text-sage-300">Deskripsi</label>
+                  <label className="mb-1 block text-sm font-semibold text-[var(--text-primary)]">Deskripsi</label>
                   <textarea
                     value={settings.platformDescription}
                     onChange={set('platformDescription')}
                     rows={3}
-                    className="w-full rounded-xl border border-leaf-200 bg-white px-4 py-2.5 text-sm focus:border-leaf-400 focus:outline-none focus:ring-2 focus:ring-leaf-100 dark:border-sage-700 dark:bg-sage-800 dark:text-white"
+                    className="w-full rounded-xl border border-[var(--border-primary)] bg-[var(--bg-input)] px-4 py-2.5 text-sm text-[var(--text-primary)] focus:border-leaf-400 focus:outline-none focus:ring-2 focus:ring-leaf-200"
                   />
                 </div>
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div>
-                    <label className="mb-1 block text-sm font-semibold text-leaf-900 dark:text-sage-300">Min. Order (Rp)</label>
+                    <label className="mb-1 block text-sm font-semibold text-[var(--text-primary)]">Min. Order (Rp)</label>
                     <input
                       type="number"
                       value={settings.minOrderAmount}
                       onChange={(e) => setSettings({ ...settings, minOrderAmount: Number(e.target.value) })}
-                      className="w-full rounded-xl border border-leaf-200 bg-white px-4 py-2.5 text-sm focus:border-leaf-400 focus:outline-none dark:border-sage-700 dark:bg-sage-800 dark:text-white"
+                      className="w-full rounded-xl border border-[var(--border-primary)] bg-[var(--bg-input)] px-4 py-2.5 text-sm text-[var(--text-primary)] focus:border-leaf-400 focus:outline-none"
                     />
                   </div>
                   <div>
-                    <label className="mb-1 block text-sm font-semibold text-leaf-900 dark:text-sage-300">Maks. Item Keranjang</label>
+                    <label className="mb-1 block text-sm font-semibold text-[var(--text-primary)]">Maks. Item Keranjang</label>
                     <input
                       type="number"
                       value={settings.maxCartItems}
                       onChange={(e) => setSettings({ ...settings, maxCartItems: Number(e.target.value) })}
-                      className="w-full rounded-xl border border-leaf-200 bg-white px-4 py-2.5 text-sm focus:border-leaf-400 focus:outline-none dark:border-sage-700 dark:bg-sage-800 dark:text-white"
+                      className="w-full rounded-xl border border-[var(--border-primary)] bg-[var(--bg-input)] px-4 py-2.5 text-sm text-[var(--text-primary)] focus:border-leaf-400 focus:outline-none"
                     />
                   </div>
                 </div>
                 <div>
-                  <label className="mb-1 block text-sm font-semibold text-leaf-900 dark:text-sage-300">Komisi Seller (%)</label>
+                  <label className="mb-1 block text-sm font-semibold text-[var(--text-primary)]">Komisi Seller (%)</label>
                   <input
                     type="number"
                     value={settings.sellerCommission}
                     onChange={(e) => setSettings({ ...settings, sellerCommission: Number(e.target.value) })}
-                    className="w-full rounded-xl border border-leaf-200 bg-white px-4 py-2.5 text-sm focus:border-leaf-400 focus:outline-none dark:border-sage-700 dark:bg-sage-800 dark:text-white"
+                    className="w-full rounded-xl border border-[var(--border-primary)] bg-[var(--bg-input)] px-4 py-2.5 text-sm text-[var(--text-primary)] focus:border-leaf-400 focus:outline-none"
                   />
                 </div>
               </div>
@@ -138,40 +138,40 @@ export default function AdminSettings() {
 
           {/* Shipping Settings */}
           {activeTab === 'shipping' && (
-            <div className="rounded-2xl border border-leaf-100 bg-white p-6 shadow-soft dark:border-sage-800 dark:bg-sage-900">
-              <h3 className="text-lg font-bold text-leaf-950 dark:text-white">🚚 Pengaturan Pengiriman</h3>
+            <div className="rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-card)] p-6 shadow-soft backdrop-blur-sm">
+              <h3 className="text-lg font-bold text-[var(--text-primary)]">🚚 Pengaturan Pengiriman</h3>
               <div className="mt-4 space-y-4">
                 <div className="grid gap-4 sm:grid-cols-3">
-                  <div className="rounded-xl bg-leaf-50 p-4">
-                    <p className="text-sm font-semibold text-leaf-900">🚚 Reguler</p>
-                    <p className="text-xs text-leaf-900/50">Estimasi 2-4 hari</p>
+                  <div className="rounded-xl bg-leaf-800/20 p-4">
+                    <p className="text-sm font-semibold text-[var(--text-primary)]">🚚 Reguler</p>
+                    <p className="text-xs text-[var(--text-muted)]">Estimasi 2-4 hari</p>
                     <input
                       type="number"
                       value={settings.defaultShippingCost}
                       onChange={(e) => setSettings({ ...settings, defaultShippingCost: Number(e.target.value) })}
-                      className="mt-2 w-full rounded-lg border border-leaf-200 bg-white px-3 py-2 text-sm focus:border-leaf-400 focus:outline-none"
+                      className="mt-2 w-full rounded-lg border border-[var(--border-primary)] bg-[var(--bg-input)] px-3 py-2 text-sm text-[var(--text-primary)] focus:border-leaf-400 focus:outline-none"
                       placeholder="Biaya (Rp)"
                     />
                   </div>
-                  <div className="rounded-xl bg-sky-50 p-4">
-                    <p className="text-sm font-semibold text-leaf-900">⚡ Express</p>
-                    <p className="text-xs text-leaf-900/50">Estimasi 1-2 hari</p>
+                  <div className="rounded-xl bg-sky-800/20 p-4">
+                    <p className="text-sm font-semibold text-[var(--text-primary)]">⚡ Express</p>
+                    <p className="text-xs text-[var(--text-muted)]">Estimasi 1-2 hari</p>
                     <input
                       type="number"
                       value={settings.expressShippingCost}
                       onChange={(e) => setSettings({ ...settings, expressShippingCost: Number(e.target.value) })}
-                      className="mt-2 w-full rounded-lg border border-leaf-200 bg-white px-3 py-2 text-sm focus:border-leaf-400 focus:outline-none"
+                      className="mt-2 w-full rounded-lg border border-[var(--border-primary)] bg-[var(--bg-input)] px-3 py-2 text-sm text-[var(--text-primary)] focus:border-leaf-400 focus:outline-none"
                       placeholder="Biaya (Rp)"
                     />
                   </div>
-                  <div className="rounded-xl bg-amber-50 p-4">
-                    <p className="text-sm font-semibold text-leaf-900">🚀 Same Day</p>
-                    <p className="text-xs text-leaf-900/50">Jabodetabek hari ini</p>
+                  <div className="rounded-xl bg-amber-800/20 p-4">
+                    <p className="text-sm font-semibold text-[var(--text-primary)]">🚀 Same Day</p>
+                    <p className="text-xs text-[var(--text-muted)]">Jabodetabek hari ini</p>
                     <input
                       type="number"
                       value={settings.sameDayShippingCost}
                       onChange={(e) => setSettings({ ...settings, sameDayShippingCost: Number(e.target.value) })}
-                      className="mt-2 w-full rounded-lg border border-leaf-200 bg-white px-3 py-2 text-sm focus:border-leaf-400 focus:outline-none"
+                      className="mt-2 w-full rounded-lg border border-[var(--border-primary)] bg-[var(--bg-input)] px-3 py-2 text-sm text-[var(--text-primary)] focus:border-leaf-400 focus:outline-none"
                       placeholder="Biaya (Rp)"
                     />
                   </div>
@@ -184,11 +184,11 @@ export default function AdminSettings() {
           {activeTab === 'payment' && (
             <div className="space-y-6">
               {/* Midtrans Status */}
-              <div className="rounded-2xl border border-leaf-100 bg-white p-6 shadow-soft dark:border-sage-800 dark:bg-sage-900">
+              <div className="rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-card)] p-6 shadow-soft backdrop-blur-sm">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h3 className="text-lg font-bold text-leaf-950">💳 Midtrans Payment Gateway</h3>
-                    <p className="mt-1 text-sm text-leaf-900/50">Integrasi pembayaran dengan Midtrans</p>
+                    <h3 className="text-lg font-bold text-[var(--text-primary)]">💳 Midtrans Payment Gateway</h3>
+                    <p className="mt-1 text-sm text-[var(--text-secondary)]">Integrasi pembayaran dengan Midtrans</p>
                   </div>
                   <Badge className={settings.midtransEnabled ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700'}>
                     {settings.midtransEnabled ? '✅ Aktif' : '❌ Nonaktif'}
@@ -197,10 +197,10 @@ export default function AdminSettings() {
 
                 <div className="mt-6 space-y-4">
                   {/* Enable/Disable */}
-                  <div className="flex items-center justify-between rounded-xl bg-leaf-50 p-4">
+                  <div className="flex items-center justify-between rounded-xl bg-leaf-800/20 p-4">
                     <div>
-                      <p className="font-semibold text-leaf-950">Aktifkan Midtrans</p>
-                      <p className="text-xs text-leaf-900/50">Aktifkan/nonaktifkan payment gateway</p>
+                      <p className="font-semibold text-[var(--text-primary)]">Aktifkan Midtrans</p>
+                      <p className="text-xs text-[var(--text-muted)]">Aktifkan/nonaktifkan payment gateway</p>
                     </div>
                     <button
                       onClick={() => toggle('midtransEnabled')}
@@ -215,10 +215,10 @@ export default function AdminSettings() {
                   </div>
 
                   {/* Sandbox Mode */}
-                  <div className="flex items-center justify-between rounded-xl bg-amber-50 p-4">
+                  <div className="flex items-center justify-between rounded-xl bg-amber-800/20 p-4">
                     <div>
-                      <p className="font-semibold text-leaf-950">🧪 Sandbox Mode</p>
-                      <p className="text-xs text-leaf-900/50">Gunakan environment testing Midtrans</p>
+                      <p className="font-semibold text-[var(--text-primary)]">🧪 Sandbox Mode</p>
+                      <p className="text-xs text-[var(--text-muted)]">Gunakan environment testing Midtrans</p>
                     </div>
                     <button
                       onClick={() => toggle('midtransSandbox')}
@@ -234,27 +234,27 @@ export default function AdminSettings() {
 
                   {/* Client Key */}
                   <div>
-                    <label className="mb-1 block text-sm font-semibold text-leaf-900">Client Key</label>
+                    <label className="mb-1 block text-sm font-semibold text-[var(--text-primary)]">Client Key</label>
                     <input
                       value={settings.midtransClientId}
                       onChange={set('midtransClientId')}
-                      className="w-full rounded-xl border border-leaf-200 bg-white px-4 py-2.5 font-mono text-sm focus:border-leaf-400 focus:outline-none focus:ring-2 focus:ring-leaf-100"
+                      className="w-full rounded-xl border border-[var(--border-primary)] bg-[var(--bg-input)] px-4 py-2.5 font-mono text-sm text-[var(--text-primary)] focus:border-leaf-400 focus:outline-none focus:ring-2 focus:ring-leaf-200"
                       placeholder="SB-Mid-client-XXXXX"
                     />
-                    <p className="mt-1 text-xs text-leaf-900/40">Dari Merchant Dashboard → Settings → API Keys</p>
+                    <p className="mt-1 text-xs text-[var(--text-muted)]">Dari Merchant Dashboard → Settings → API Keys</p>
                   </div>
 
                   {/* Server Key */}
                   <div>
-                    <label className="mb-1 block text-sm font-semibold text-leaf-900">Server Key</label>
+                    <label className="mb-1 block text-sm font-semibold text-[var(--text-primary)]">Server Key</label>
                     <input
                       type="password"
                       value={settings.midtransServerKey}
                       onChange={set('midtransServerKey')}
-                      className="w-full rounded-xl border border-leaf-200 bg-white px-4 py-2.5 font-mono text-sm focus:border-leaf-400 focus:outline-none focus:ring-2 focus:ring-leaf-100"
+                      className="w-full rounded-xl border border-[var(--border-primary)] bg-[var(--bg-input)] px-4 py-2.5 font-mono text-sm text-[var(--text-primary)] focus:border-leaf-400 focus:outline-none focus:ring-2 focus:ring-leaf-200"
                       placeholder="SB-Mid-server-XXXXX"
                     />
-                    <p className="mt-1 text-xs text-leaf-900/40">⚠️ Jangan bagikan server key ke siapapun</p>
+                    <p className="mt-1 text-xs text-[var(--text-muted)]">⚠️ Jangan bagikan server key ke siapapun</p>
                   </div>
 
                   {/* Supported Payment Methods */}
@@ -273,8 +273,8 @@ export default function AdminSettings() {
 
               {/* Midtrans Info */}
               <div className="rounded-2xl border border-leaf-100 bg-white p-6 shadow-soft">
-                <h3 className="font-bold text-leaf-950">📋 Cara Mendapatkan API Key</h3>
-                <ol className="mt-3 space-y-2 text-sm text-leaf-900/70">
+                <h3 className="font-bold text-[var(--text-primary)]">📋 Cara Mendapatkan API Key</h3>
+                <ol className="mt-3 space-y-2 text-sm text-[var(--text-secondary)]">
                   <li className="flex items-start gap-2">
                     <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-leaf-100 text-xs font-bold text-leaf-700">1</span>
                     <span>Daftar akun di <a href="https://dashboard.midtrans.com" target="_blank" rel="noopener" className="font-semibold text-leaf-700 hover:underline">dashboard.midtrans.com</a></span>
@@ -298,17 +298,17 @@ export default function AdminSettings() {
 
           {/* Notification Settings */}
           {activeTab === 'notification' && (
-            <div className="rounded-2xl border border-leaf-100 bg-white p-6 shadow-soft dark:border-sage-800 dark:bg-sage-900">
-              <h3 className="text-lg font-bold text-leaf-950 dark:text-white">🔔 Pengaturan Notifikasi</h3>
+            <div className="rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-card)] p-6 shadow-soft backdrop-blur-sm">
+              <h3 className="text-lg font-bold text-[var(--text-primary)]">🔔 Pengaturan Notifikasi</h3>
               <div className="mt-4 space-y-3">
                 {[
                   { key: 'emailNotifications', label: 'Email Notifikasi', desc: 'Kirim notifikasi via email' },
                   { key: 'orderNotifications', label: 'Notifikasi Pesanan', desc: 'Notifikasi saat ada pesanan baru' },
                 ].map((item) => (
-                  <div key={item.key} className="flex items-center justify-between rounded-xl bg-leaf-50 p-4">
+                  <div key={item.key} className="flex items-center justify-between rounded-xl bg-leaf-800/20 p-4">
                     <div>
-                      <p className="font-semibold text-leaf-950">{item.label}</p>
-                      <p className="text-xs text-leaf-900/50">{item.desc}</p>
+                      <p className="font-semibold text-[var(--text-primary)]">{item.label}</p>
+                      <p className="text-xs text-[var(--text-muted)]">{item.desc}</p>
                     </div>
                     <button
                       onClick={() => toggle(item.key)}
