@@ -3,14 +3,14 @@ import { Link } from 'react-router-dom'
 import { cx } from '../../utils/format'
 
 const variants = {
-  primary: 'bg-leaf-700 text-cream hover:bg-leaf-800 shadow-soft hover:shadow-lift dark:bg-leaf-600 dark:hover:bg-leaf-700',
-  secondary: 'bg-white text-forest ring-1 ring-sage-200 hover:bg-sage-50 hover:ring-sage-300 shadow-soft dark:bg-sage-800 dark:text-white dark:ring-sage-600 dark:hover:bg-sage-700',
-  outline: 'bg-transparent text-leaf-700 ring-1 ring-leaf-300 hover:bg-leaf-50 hover:ring-leaf-400 dark:text-leaf-400 dark:ring-leaf-600 dark:hover:bg-leaf-900/30',
-  soft: 'bg-leaf-100 text-leaf-800 hover:bg-leaf-200 dark:bg-leaf-900/30 dark:text-leaf-300 dark:hover:bg-leaf-900/50',
+  primary: 'bg-leaf-700 text-white hover:bg-leaf-800 shadow-soft hover:shadow-lift',
+  secondary: 'bg-[var(--bg-card)] text-[var(--text-primary)] ring-1 ring-[var(--border-primary)] hover:bg-[var(--bg-card-hover)] shadow-soft backdrop-blur-sm',
+  outline: 'bg-transparent text-leaf-300 ring-1 ring-leaf-400/50 hover:bg-leaf-800/30 hover:ring-leaf-300',
+  soft: 'bg-leaf-800/30 text-leaf-200 hover:bg-leaf-800/50',
   danger: 'bg-terra-600 text-white hover:bg-terra-700 shadow-soft',
-  ghost: 'bg-transparent text-muted hover:bg-sage-50 hover:text-forest dark:text-sage-400 dark:hover:bg-sage-800 dark:hover:text-white',
+  ghost: 'bg-transparent text-[var(--text-secondary)] hover:bg-white/10 hover:text-[var(--text-primary)]',
   terra: 'bg-terra-500 text-white hover:bg-terra-600 shadow-soft',
-  sun: 'bg-sun-200 text-forest hover:bg-sun-300 shadow-soft dark:bg-sun-800 dark:text-white dark:hover:bg-sun-700',
+  sun: 'bg-sun-400 text-forest hover:bg-sun-500 shadow-soft font-bold',
 }
 
 const sizes = {

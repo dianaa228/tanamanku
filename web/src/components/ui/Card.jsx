@@ -4,7 +4,7 @@ export default function Card({ children, className, hover = false, as: Tag = 'di
   return (
     <Tag
       className={cx(
-        'rounded-2xl border border-leaf-100/80 bg-white shadow-soft dark:border-sage-700 dark:bg-sage-900',
+        'rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-card)] shadow-soft backdrop-blur-sm',
         hover && 'transition-all duration-300 hover:-translate-y-1 hover:shadow-lift',
         className,
       )}

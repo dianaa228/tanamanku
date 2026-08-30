@@ -38,8 +38,8 @@ export default function Login() {
 
   return (
     <div>
-      <h1 className="display text-3xl font-semibold text-forest dark:text-white">Selamat datang kembali 👋</h1>
-      <p className="mt-2 text-sm text-muted dark:text-sage-400">Masuk untuk lanjut merawat kebunmu.</p>
+      <h1 className="display text-3xl font-semibold text-[var(--text-primary)]">Selamat datang kembali 👋</h1>
+      <p className="mt-2 text-sm text-[var(--text-secondary)]">Masuk untuk lanjut merawat kebunmu.</p>
 
       <form onSubmit={submit} className="mt-8 space-y-4">
         {error && (
@@ -66,10 +66,10 @@ export default function Login() {
           required
         />
         <div className="flex items-center justify-between text-sm">
-          <label className="flex cursor-pointer items-center gap-2 text-leaf-900/60">
-            <input type="checkbox" className="h-4 w-4 rounded border-leaf-300 accent-leaf-600" /> Ingat saya
+          <label className="flex cursor-pointer items-center gap-2 text-[var(--text-muted)]">
+            <input type="checkbox" className="h-4 w-4 rounded border-[var(--border-primary)] accent-leaf-500" /> Ingat saya
           </label>
-          <Link to="/forgot-password" className="font-semibold text-leaf-700 hover:text-leaf-800">
+          <Link to="/forgot-password" className="font-semibold text-leaf-400 hover:text-leaf-300">
             Lupa password?
           </Link>
         </div>
@@ -78,13 +78,13 @@ export default function Login() {
         </Button>
       </form>
 
-      <div className="mt-6 rounded-2xl bg-leaf-50 px-4 py-3 text-xs text-leaf-900/60">
+      <div className="mt-6 rounded-2xl bg-leaf-800/30 px-4 py-3 text-xs text-[var(--text-secondary)]">
         💡 <strong>Mode demo:</strong> email sudah terisi — cukup isi password apa pun lalu klik Masuk.
       </div>
 
-      <p className="mt-8 text-center text-sm text-leaf-900/60 dark:text-sage-400">
+      <p className="mt-8 text-center text-sm text-[var(--text-muted)]">
         Belum punya akun?{' '}
-        <Link to="/register" className="font-bold text-leaf-700 hover:text-leaf-800 dark:text-leaf-400 dark:hover:text-leaf-300">
+        <Link to="/register" className="font-bold text-leaf-400 hover:text-leaf-300">
           Daftar gratis
         </Link>
       </p>

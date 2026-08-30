@@ -31,13 +31,13 @@ const Input = forwardRef(function Input(
   return (
     <div className={cx('w-full', wrapperClassName)}>
       {label && (
-        <label htmlFor={id} className="mb-1.5 block text-sm font-semibold text-leaf-900 dark:text-sage-300">
+        <label htmlFor={id} className="mb-1.5 block text-sm font-semibold text-[var(--text-primary)]">
           {label}
         </label>
       )}
       <div className="relative">
         {icon && (
-          <span className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-lg opacity-60 dark:text-sage-400">
+          <span className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-lg opacity-60 text-[var(--text-muted)]">
             {icon}
           </span>
         )}
@@ -46,14 +46,13 @@ const Input = forwardRef(function Input(
           id={id}
           type={inputType}
           className={cx(
-            'w-full rounded-xl border bg-white px-4 py-2.5 text-sm text-leaf-950 shadow-sm transition-all',
-            'placeholder:text-leaf-900/35 focus:outline-none focus:ring-2 focus:ring-offset-0',
-            'dark:bg-sage-800 dark:text-white dark:placeholder:text-sage-500',
+            'w-full rounded-xl border bg-[var(--bg-input)] px-4 py-2.5 text-sm text-[var(--text-primary)] shadow-sm transition-all',
+            'placeholder:text-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-offset-0',
             icon && 'pl-11',
             isPassword && 'pr-11',
             error
-              ? 'border-rose-300 focus:border-rose-400 focus:ring-rose-200 dark:border-rose-600'
-              : 'border-leaf-200 focus:border-leaf-400 focus:ring-leaf-200 dark:border-sage-600 dark:focus:border-leaf-500 dark:focus:ring-leaf-900/50',
+              ? 'border-rose-300 focus:border-rose-400 focus:ring-rose-200'
+              : 'border-[var(--border-primary)] focus:border-leaf-400 focus:ring-leaf-200/50',
             className,
           )}
           {...props}
@@ -63,15 +62,15 @@ const Input = forwardRef(function Input(
             type="button"
             tabIndex={-1}
             onClick={() => setShowPassword((v) => !v)}
-            className="absolute right-3 top-1/2 -translate-y-1/2 rounded-lg p-1 text-leaf-900/40 transition hover:bg-leaf-50 hover:text-leaf-700 dark:text-sage-400 dark:hover:bg-sage-700 dark:hover:text-white"
+            className="absolute right-3 top-1/2 -translate-y-1/2 rounded-lg p-1 text-[var(--text-muted)] transition hover:bg-white/20 hover:text-[var(--text-primary)]"
             aria-label={showPassword ? 'Sembunyikan password' : 'Tampilkan password'}
           >
             <EyeIcon open={showPassword} />
           </button>
         )}
       </div>
-      {error && <p className="mt-1.5 text-xs font-medium text-rose-600">{error}</p>}
-      {!error && hint && <p className="mt-1.5 text-xs text-leaf-900/50 dark:text-sage-500">{hint}</p>}
+      {error && <p className="mt-1.5 text-xs font-medium text-rose-400">{error}</p>}
+      {!error && hint && <p className="mt-1.5 text-xs text-[var(--text-muted)]">{hint}</p>}
     </div>
   )
 })

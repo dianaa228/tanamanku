@@ -9,8 +9,8 @@ export default function ThemeToggle({ className = '' }) {
       onClick={toggleTheme}
       className={`group relative flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold transition-all ${
         isDark
-          ? 'bg-slate-700 text-yellow-300 hover:bg-slate-600'
-          : 'bg-leaf-50 text-leaf-700 hover:bg-leaf-100'
+          ? 'bg-leaf-800/50 text-sun-300 hover:bg-leaf-700/50'
+          : 'bg-leaf-800/20 text-leaf-300 hover:bg-leaf-700/30'
       } ${className}`}
       aria-label={isDark ? 'Mode terang' : 'Mode gelap'}
     >

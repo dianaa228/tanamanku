@@ -36,7 +36,7 @@ export default function Footer() {
   const [email, setEmail] = useState('')
 
   return (
-    <footer className="relative mt-20 overflow-hidden bg-leaf-950 pb-24 text-leaf-100 lg:pb-0">
+    <footer className="relative mt-20 overflow-hidden bg-gradient-to-b from-[#1a3328] via-[#152a20] to-[#0a120e] pb-24 text-leaf-100 lg:pb-0">
       {/* subtle botanical texture */}
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.35]"

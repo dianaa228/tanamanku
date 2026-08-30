@@ -21,7 +21,7 @@ export default function Dropdown({ trigger, children, align = 'right', className
       {open && (
         <div
           className={cx(
-            'absolute z-30 mt-2 min-w-[10rem] animate-pop rounded-2xl border border-leaf-100 bg-white p-1.5 shadow-lift',
+            'absolute z-30 mt-2 min-w-[10rem] animate-pop rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-card)] p-1.5 shadow-lift backdrop-blur-xl',
             align === 'right' ? 'right-0' : 'left-0',
             className,
           )}
@@ -37,7 +37,7 @@ export const DropdownItem = ({ onClick, children, className }) => (
   <button
     onClick={onClick}
     className={cx(
-      'flex w-full items-center gap-2.5 rounded-xl px-3 py-2.5 text-left text-sm font-medium text-leaf-900 transition hover:bg-leaf-50',
+      'flex w-full items-center gap-2.5 rounded-xl px-3 py-2.5 text-left text-sm font-medium text-[var(--text-primary)] transition hover:bg-white/10',
       className,
     )}
   >

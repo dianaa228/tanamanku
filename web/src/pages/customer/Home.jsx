@@ -210,7 +210,7 @@ export default function Home() {
       </section>
 
       {/* ═══ KATEGORI ═══ */}
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6">
+      <section className="section-cream mx-auto max-w-7xl px-4 py-16 sm:px-6">
         <div className="reveal flex items-end justify-between">
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.16em] text-terra-500">Belanja</p>
@@ -241,7 +241,7 @@ export default function Home() {
       </section>
 
       {/* ═══ PRODUK PILIHAN ═══ */}
-      <section className="bg-warm-white py-16 sm:py-20">
+      <section className="section-gradient py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <div className="reveal flex items-end justify-between">
             <div>
@@ -284,7 +284,7 @@ export default function Home() {
       </section>
 
       {/* ═══ WHY / EDITORIAL SPLIT ═══ */}
-      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6">
+      <section className="section-cream mx-auto max-w-7xl px-4 py-20 sm:px-6">
         <div className="grid items-center gap-12 lg:grid-cols-2">
           <div className="reveal">
             <p className="text-xs font-bold uppercase tracking-[0.16em] text-terra-500">Kenapa Tanamanku</p>
@@ -335,7 +335,7 @@ export default function Home() {
       </section>
 
       {/* ═══ CARA KERJA ═══ */}
-      <section className="mx-auto max-w-7xl px-4 pb-20 sm:px-6">
+      <section className="section-cream mx-auto max-w-7xl px-4 pb-20 sm:px-6">
         <div className="reveal text-center">
           <p className="text-xs font-bold uppercase tracking-[0.16em] text-terra-500">Cara kerja</p>
           <h2 className="display mt-2 text-3xl font-semibold text-forest sm:text-4xl">Mulai dalam 4 langkah</h2>
@@ -357,7 +357,7 @@ export default function Home() {
       </section>
 
       {/* ═══ FITUR CERDAS (dark) ═══ */}
-      <section className="bg-leaf-950 py-20">
+      <section className="section-dark py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <div className="reveal mx-auto max-w-2xl text-center">
             <p className="text-xs font-bold uppercase tracking-[0.16em] text-sun-300">Berkebun lebih cerdas</p>
@@ -392,7 +392,7 @@ export default function Home() {
       </section>
 
       {/* ═══ KOMUNITAS ═══ */}
-      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6">
+      <section className="section-cream mx-auto max-w-7xl px-4 py-20 sm:px-6">
         <div className="reveal flex items-end justify-between">
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.16em] text-terra-500">Komunitas</p>
@@ -441,7 +441,7 @@ export default function Home() {
       </section>
 
       {/* ═══ CTA ═══ */}
-      <section className="mx-auto max-w-7xl px-4 pb-6 sm:px-6">
+      <section className="section-dark mx-auto max-w-7xl px-4 pb-6 sm:px-6">
         <div className="reveal relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-leaf-700 via-leaf-800 to-leaf-900 px-6 py-16 text-center shadow-elevated sm:px-12">
           <div className="pointer-events-none absolute -left-16 -top-16 h-56 w-56 rounded-full bg-white/10 blur-3xl" />
           <div className="pointer-events-none absolute -bottom-16 -right-10 h-60 w-60 rounded-full bg-sun-300/15 blur-3xl" />

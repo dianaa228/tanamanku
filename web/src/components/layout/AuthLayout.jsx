@@ -8,7 +8,7 @@ export default function AuthLayout() {
   const { theme } = useTheme()
   const isDark = theme === 'dark'
   return (
-    <div className={cx('flex min-h-screen', isDark ? 'bg-[#0f1a14]' : 'bg-cream')}>
+    <div className={cx('flex min-h-screen', isDark ? 'bg-gradient-to-br from-[#0a120e] via-[#0f1a14] to-[#142319]' : 'bg-gradient-to-br from-[#f7f4ee] via-[#e8f0e6] to-[#d4e4d1]')}>
       <ScrollToTop />
       {/* Panel brand */}
       <div className="relative hidden w-1/2 overflow-hidden bg-gradient-to-br from-leaf-800 via-leaf-700 to-leaf-900 lg:flex">

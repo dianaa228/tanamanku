@@ -61,7 +61,7 @@ export default function Explore() {
   return (
     <div className="page-container">
       {/* Header editorial */}
-      <div className="page-hero animate-fade-up">
+      <div className="page-hero animate-fade-up bg-[var(--bg-card)]">
         <span className="page-eyebrow">Katalog Tanamanku</span>
         <h1 className="page-title">
           {activeCategory ? (
@@ -79,11 +79,10 @@ export default function Explore() {
       </div>
 
       {/* Mobile Filter Toggle */}
-      <div className="mt-5 lg:hidden">
-        <button
-          onClick={() => setFilterOpen(!filterOpen)}
-          className="flex w-full items-center justify-center gap-2 rounded-2xl border border-sage-200 bg-white px-4 py-3 text-sm font-semibold text-forest shadow-sm transition hover:bg-leaf-50"
-        >
+      <div className="mt-5 lg:hidden">          <button
+            onClick={() => setFilterOpen(!filterOpen)}
+            className="flex w-full items-center justify-center gap-2 rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-card)] px-4 py-3 text-sm font-semibold text-[var(--text-primary)] shadow-sm transition hover:bg-[var(--bg-card-hover)] backdrop-blur-sm"
+          >
           🔎 Filter & Urutkan {filterOpen ? '▲' : '▼'}
         </button>
       </div>
@@ -92,7 +91,7 @@ export default function Explore() {
         {/* Filter sidebar */}
         <div className={`mb-6 lg:mb-0 ${filterOpen ? 'block' : 'hidden lg:block'}`}>
           <div className="card-v2 sticky top-20 rounded-2xl p-5 pb-4 hover:-translate-y-0">
-            <h2 className="mb-4 flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-muted">🔎 Filter</h2>
+            <h2 className="mb-4 flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-[var(--text-secondary)]">🔎 Filter</h2>
             <ProductFilter categories={categories} active={filters} onChange={update} />
           </div>
         </div>
@@ -104,11 +103,11 @@ export default function Explore() {
               <ProductSearch value={filters.search} onChange={(v) => update({ ...filters, search: v })} />
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-sm font-medium text-muted">Urutkan</span>
+              <span className="text-sm font-medium text-[var(--text-secondary)]">Urutkan</span>
               <select
                 value={filters.sort}
                 onChange={(e) => update({ ...filters, sort: e.target.value })}
-                className="rounded-xl border border-sage-200 bg-white px-3 py-2.5 text-sm font-medium text-forest shadow-sm focus:border-leaf-400 focus:outline-none"
+                className="rounded-xl border border-[var(--border-primary)] bg-[var(--bg-input)] px-3 py-2.5 text-sm font-medium text-[var(--text-primary)] shadow-sm focus:border-leaf-400 focus:outline-none"
               >
                 {[
                   { value: 'relevansi', label: 'Paling relevan' },

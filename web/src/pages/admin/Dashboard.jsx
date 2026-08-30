@@ -73,11 +73,11 @@ export default function AdminDashboard() {
       {/* Platform Stats - from Database */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {platformStats.map((s) => (
-          <div key={s.label} className="group rounded-2xl border border-leaf-100 bg-white p-5 shadow-soft transition-all hover:-translate-y-0.5 hover:shadow-md dark:border-sage-800 dark:bg-sage-900">
+          <div key={s.label} className="group rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-card)] p-5 shadow-soft backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:shadow-md">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-leaf-900/50 dark:text-sage-400">{s.label}</p>
-                <p className="mt-1 text-2xl font-extrabold text-leaf-950 dark:text-white">{s.value}</p>
+                <p className="text-sm text-[var(--text-muted)]">{s.label}</p>
+                <p className="mt-1 text-2xl font-extrabold text-[var(--text-primary)]">{s.value}</p>
               </div>
               <span className={`flex h-12 w-12 items-center justify-center rounded-2xl text-2xl transition-transform group-hover:scale-110 ${s.color}`}>
                 {s.icon}
@@ -92,20 +92,20 @@ export default function AdminDashboard() {
       </div>
 
       {/* Quick Actions Grid */}
-      <div className="rounded-2xl border border-leaf-100 bg-white p-6 shadow-soft dark:border-sage-800 dark:bg-sage-900">
-        <h2 className="font-bold text-leaf-950 dark:text-white">⚡ Aksi Cepat</h2>
+      <div className="rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-card)] p-6 shadow-soft backdrop-blur-sm">
+        <h2 className="font-bold text-[var(--text-primary)]">⚡ Aksi Cepat</h2>
         <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
           {quickActions.map((action) => (
             <Link
               key={action.to}
               to={action.to}
-              className="group relative overflow-hidden rounded-2xl border border-leaf-100 p-4 transition-all hover:-translate-y-1 hover:border-leaf-200 hover:shadow-md dark:border-sage-700 dark:hover:border-sage-600"
+              className="group relative overflow-hidden rounded-2xl border border-[var(--border-primary)] p-4 transition-all hover:-translate-y-1 hover:border-leaf-400/50 hover:shadow-md"
             >
               <div className={`flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${action.color} text-3xl shadow-soft transition-transform group-hover:scale-110`}>
                 {action.icon}
               </div>
-              <p className="mt-3 text-sm font-bold text-leaf-950 dark:text-white">{action.label}</p>
-              <p className="mt-0.5 text-xs text-leaf-900/50 dark:text-sage-400">{action.desc}</p>
+              <p className="mt-3 text-sm font-bold text-[var(--text-primary)]">{action.label}</p>
+              <p className="mt-0.5 text-xs text-[var(--text-muted)]">{action.desc}</p>
               <span className="absolute right-3 top-3 text-leaf-200 transition-all group-hover:right-2 group-hover:text-leaf-400 dark:text-sage-600">
                 →
               </span>
@@ -116,9 +116,9 @@ export default function AdminDashboard() {
 
       <div className="grid gap-6 lg:grid-cols-[1fr_320px]">
         {/* User Growth Chart */}
-        <div className="rounded-2xl border border-leaf-100 bg-white p-6 shadow-soft dark:border-sage-800 dark:bg-sage-900">
+        <div className="rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-card)] p-6 shadow-soft backdrop-blur-sm">
           <div className="flex items-center justify-between">
-            <h2 className="font-bold text-leaf-950 dark:text-white">📈 Pertumbuhan Pengguna (7 Hari)</h2>
+            <h2 className="font-bold text-[var(--text-primary)]">📈 Pertumbuhan Pengguna (7 Hari)</h2>
             <Link to="/admin/analytics" className="text-xs font-semibold text-leaf-600 hover:text-leaf-700 dark:text-leaf-400">
               Detail →
             </Link>
@@ -126,7 +126,7 @@ export default function AdminDashboard() {
           <div className="mt-4 flex items-end gap-2 h-48 overflow-x-auto">
             {userGrowth.map((u, i) => (
               <div key={i} className="flex-1 flex flex-col items-center gap-1">
-                <span className="text-xs font-bold text-leaf-700 dark:text-leaf-300">{u.count}</span>
+                <span className="text-xs font-bold text-[var(--text-primary)]">{u.count}</span>
                 <div
                   className="w-full rounded-t-lg bg-gradient-to-t from-sky-600 to-sky-400 transition-all hover:from-sky-700 hover:to-sky-500 dark:from-sky-500 dark:to-sky-300"
                   style={{ height: `${(u.count / maxUsers) * 100}%`, minHeight: '4px' }}
@@ -140,36 +140,36 @@ export default function AdminDashboard() {
         </div>
 
         {/* Platform Summary */}
-        <div className="rounded-2xl border border-leaf-100 bg-white p-6 shadow-soft dark:border-sage-800 dark:bg-sage-900">
-          <h2 className="font-bold text-leaf-950 dark:text-white">📊 Ringkasan Platform</h2>
+        <div className="rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-card)] p-6 shadow-soft backdrop-blur-sm">
+          <h2 className="font-bold text-[var(--text-primary)]">📊 Ringkasan Platform</h2>
           <div className="mt-4 space-y-3">
             {[
-              { label: 'Pesanan Aktif', value: stats.totalOrders, icon: '🧾', bg: 'bg-leaf-50 dark:bg-leaf-900/30' },
-              { label: 'Pengguna Baru', value: stats.newUsersThisMonth, icon: '🆕', bg: 'bg-sky-50 dark:bg-sky-900/30' },
-              { label: 'Toko Aktif', value: stats.totalStores, icon: '🏪', bg: 'bg-amber-50 dark:bg-amber-900/30' },
-              { label: 'Total Produk', value: siteStats?.products || stats.totalProducts, icon: '📦', bg: 'bg-violet-50 dark:bg-violet-900/30' },
-              { label: 'Nursery Lokal', value: siteStats?.nurseries || 0, icon: '🪴', bg: 'bg-teal-50 dark:bg-teal-900/30' },
-              { label: 'Kebun Aktif', value: siteStats?.gardens || 0, icon: '🌱', bg: 'bg-emerald-50 dark:bg-emerald-900/30' },
+              { label: 'Pesanan Aktif', value: stats.totalOrders, icon: '🧾', bg: 'bg-leaf-800/20' },
+              { label: 'Pengguna Baru', value: stats.newUsersThisMonth, icon: '🆕', bg: 'bg-sky-800/20' },
+              { label: 'Toko Aktif', value: stats.totalStores, icon: '🏪', bg: 'bg-amber-800/20' },
+              { label: 'Total Produk', value: siteStats?.products || stats.totalProducts, icon: '📦', bg: 'bg-violet-800/20' },
+              { label: 'Nursery Lokal', value: siteStats?.nurseries || 0, icon: '🪴', bg: 'bg-teal-800/20' },
+              { label: 'Kebun Aktif', value: siteStats?.gardens || 0, icon: '🌱', bg: 'bg-emerald-800/20' },
             ].map((item) => (
               <div key={item.label} className={`flex items-center justify-between rounded-xl ${item.bg} px-4 py-3`}>
                 <div className="flex items-center gap-3">
                   <span className="text-xl">{item.icon}</span>
-                  <span className="text-sm text-leaf-900/60 dark:text-sage-300">{item.label}</span>
+                  <span className="text-sm text-[var(--text-secondary)]">{item.label}</span>
                 </div>
-                <span className="font-bold text-leaf-950 dark:text-white">{item.value}</span>
+                <span className="font-bold text-[var(--text-primary)]">{item.value}</span>
               </div>
             ))}
           </div>
-          <Link to="/admin/analytics" className="mt-4 flex items-center justify-center gap-2 rounded-xl bg-leaf-50 py-3 text-sm font-bold text-leaf-700 transition hover:bg-leaf-100 dark:bg-leaf-900/30 dark:text-leaf-400 dark:hover:bg-leaf-900/50">
+          <Link to="/admin/analytics" className="mt-4 flex items-center justify-center gap-2 rounded-xl bg-leaf-800/20 py-3 text-sm font-bold text-leaf-400 transition hover:bg-leaf-700/30">
             📈 Lihat Analytics Lengkap
           </Link>
         </div>
       </div>
 
       {/* Recent Orders */}
-      <div className="rounded-2xl border border-leaf-100 bg-white p-6 shadow-soft dark:border-sage-800 dark:bg-sage-900">
+      <div className="rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-card)] p-6 shadow-soft backdrop-blur-sm">
         <div className="flex items-center justify-between">
-          <h2 className="font-bold text-leaf-950 dark:text-white">🆕 Pesanan Terbaru (Platform)</h2>
+          <h2 className="font-bold text-[var(--text-primary)]">🆕 Pesanan Terbaru (Platform)</h2>
           <Link to="/admin/orders" className="text-sm font-semibold text-leaf-700 hover:text-leaf-800 dark:text-leaf-400">
             Lihat semua →
           </Link>
@@ -178,14 +178,14 @@ export default function AdminDashboard() {
           {recentOrders.map((order) => {
             const meta = ORDER_STATUS[order.status] || { badge: 'bg-gray-100 text-gray-700', icon: '❓', label: order.status }
             return (
-              <div key={order.id} className="flex items-center justify-between rounded-xl bg-leaf-50/50 px-4 py-3 transition hover:bg-leaf-50 dark:bg-sage-800/50 dark:hover:bg-sage-800">
+              <div key={order.id} className="flex items-center justify-between rounded-xl bg-[var(--bg-card)] px-4 py-3 transition hover:bg-[var(--bg-card-hover)]">
                 <div className="flex items-center gap-3">
                   <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-leaf-100 text-lg dark:bg-sage-700">
                     📦
                   </span>
                   <div>
-                    <p className="text-sm font-semibold text-leaf-950 dark:text-white">{order.order_number || order.id}</p>
-                    <p className="text-xs text-leaf-900/50 dark:text-sage-400">{order.user?.name} · {order.store?.name}</p>
+                    <p className="text-sm font-semibold text-[var(--text-primary)]">{order.order_number || order.id}</p>
+                    <p className="text-xs text-[var(--text-muted)]">{order.user?.name} · {order.store?.name}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
@@ -199,7 +199,7 @@ export default function AdminDashboard() {
       </div>
 
       {/* Admin Info */}
-      <div className="rounded-2xl border border-leaf-100 bg-gradient-to-r from-leaf-50 to-emerald-50 p-6 dark:border-sage-800 dark:from-leaf-900/20 dark:to-emerald-900/20">
+      <div className="rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-card)] p-6 backdrop-blur-sm">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h3 className="font-bold text-leaf-950 dark:text-white">🛡️ Mode Admin Aktif</h3>

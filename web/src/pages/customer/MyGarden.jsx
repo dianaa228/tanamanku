@@ -19,7 +19,7 @@ const WATER_OPTIONS = [
 ]
 
 const inputCls =
-  'w-full rounded-2xl border border-sage-200 bg-white px-4 py-2.5 text-sm text-forest shadow-sm transition focus:border-leaf-400 focus:outline-none focus:ring-2 focus:ring-leaf-200/60'
+  'w-full rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-input)] px-4 py-2.5 text-sm text-[var(--text-primary)] shadow-sm transition focus:border-leaf-400 focus:outline-none focus:ring-2 focus:ring-leaf-200/60'
 
 export default function MyGarden() {
   const [plants, setPlants] = useState([])
@@ -140,8 +140,8 @@ export default function MyGarden() {
               {s.icon}
             </span>
             <div>
-              <p className="display text-2xl font-semibold text-forest">{healthSummary[s.key]}</p>
-              <p className="text-xs font-medium text-muted">{s.label}</p>
+              <p className="display text-2xl font-semibold text-[var(--text-primary)]">{healthSummary[s.key]}</p>
+              <p className="text-xs font-medium text-[var(--text-secondary)]">{s.label}</p>
             </div>
           </div>
         ))}
@@ -154,7 +154,7 @@ export default function MyGarden() {
             <span className="page-eyebrow">Koleksi</span>
             <h2 className="section-title">Tanamanku</h2>
           </div>
-          <span className="rounded-full bg-leaf-100 px-3 py-1 text-xs font-bold text-leaf-700">
+          <span className="rounded-full bg-leaf-800/20 px-3 py-1 text-xs font-bold text-leaf-300">
             {plants.length} tanaman
           </span>
         </div>
@@ -162,10 +162,10 @@ export default function MyGarden() {
         {loading ? (
           <Loading label="Menyiapkan kebunmu..." />
         ) : plants.length === 0 ? (
-          <div className="mt-6 rounded-[2rem] border border-dashed border-sage-300 bg-white/60 px-6 py-14 text-center">
+          <div className="mt-6 rounded-[2rem] border border-dashed border-[var(--border-primary)] bg-[var(--bg-card)] px-6 py-14 text-center backdrop-blur-sm">
             <span className="text-5xl">🪴</span>
-            <h3 className="display mt-4 text-xl font-semibold text-forest">Kebunmu masih kosong</h3>
-            <p className="mx-auto mt-2 max-w-sm text-sm text-muted">
+            <h3 className="display mt-4 text-xl font-semibold text-[var(--text-primary)]">Kebunmu masih kosong</h3>
+            <p className="mx-auto mt-2 max-w-sm text-sm text-[var(--text-secondary)]">
               Pilih tanaman dari katalog spesies untuk mulai merawat dan menjadwalkan pengingat.
             </p>
             <Button className="mt-6" onClick={openAdd}>
@@ -188,13 +188,13 @@ export default function MyGarden() {
             <span className="page-eyebrow">Jadwal</span>
             <h2 className="section-title">🔔 Pengingat Perawatan</h2>
           </div>
-          <span className="rounded-full bg-sun-100 px-3 py-1 text-xs font-bold text-sun-700">
+          <span className="rounded-full bg-sun-500/20 px-3 py-1 text-xs font-bold text-sun-300">
             {todayReminders.length} aktif
           </span>
         </div>
         <div className="mt-5 space-y-3">
           {todayReminders.length === 0 && (
-            <p className="rounded-[2rem] border border-dashed border-sage-300 bg-white/60 px-6 py-10 text-center text-sm text-muted">
+            <p className="rounded-[2rem] border border-dashed border-[var(--border-primary)] bg-[var(--bg-card)] px-6 py-10 text-center text-sm text-[var(--text-secondary)] backdrop-blur-sm">
               Belum ada pengingat. Tambahkan tanaman untuk mulai menjadwalkan perawatan. 🌱
             </p>
           )}
@@ -206,15 +206,15 @@ export default function MyGarden() {
                 className="card-v2 flex flex-col gap-3 rounded-2xl p-4 hover:-translate-y-0 sm:flex-row sm:items-center"
               >
                 <div className="flex min-w-0 flex-1 items-center gap-3">
-                  <span className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-leaf-50 text-xl">
+                  <span className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-leaf-800/20 text-xl">
                     <span className="absolute inset-0 rounded-2xl opacity-40" />
                     {r.plant.species.emoji}
                   </span>
                   <div className="min-w-0">
-                    <p className="truncate text-sm font-bold text-forest">
-                      {r.plant.nickname} <span className="font-medium text-muted">· {CARE_TYPES[r.type].label}</span>
+                    <p className="truncate text-sm font-bold text-[var(--text-primary)]">
+                      {r.plant.nickname} <span className="font-medium text-[var(--text-secondary)]">· {CARE_TYPES[r.type].label}</span>
                     </p>
-                    <p className={cx('text-xs font-semibold', due <= 0 ? 'text-terra-600' : 'text-muted')}>
+                    <p className={cx('text-xs font-semibold', due <= 0 ? 'text-terra-400' : 'text-[var(--text-muted)]')}>
                       {CARE_TYPES[r.type].icon} {due <= 0 ? 'Jatuh tempo hari ini!' : `${due} hari lagi`}
                     </p>
                   </div>
@@ -262,7 +262,7 @@ export default function MyGarden() {
                     key={s.id}
                     type="button"
                     onClick={() => pickSpecies(s)}
-                    className="group flex flex-col overflow-hidden rounded-2xl border border-sage-200 bg-white text-left shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-leaf-300 hover:shadow-soft"
+                    className="group flex flex-col overflow-hidden rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-card)] text-left shadow-sm backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-leaf-400/50 hover:shadow-soft"
                   >
                     <div className="relative">
                       <ProductVisual
@@ -271,13 +271,13 @@ export default function MyGarden() {
                         className="h-28 w-full"
                         emojiClassName="text-4xl"
                       />
-                      <span className="absolute right-2 top-2 rounded-full bg-white/85 px-2 py-0.5 text-[10px] font-bold text-leaf-700 shadow-sm backdrop-blur">
+                      <span className="absolute right-2 top-2 rounded-full bg-[var(--bg-card)] px-2 py-0.5 text-[10px] font-bold text-leaf-400 shadow-sm backdrop-blur">
                         {s.careLevel}
                       </span>
                     </div>
                     <div className="flex-1 p-3">
-                      <p className="text-sm font-bold text-forest group-hover:text-leaf-700">{s.name}</p>
-                      <p className="text-[11px] text-muted">{s.scientificName}</p>
+                      <p className="text-sm font-bold text-[var(--text-primary)] group-hover:text-leaf-400">{s.name}</p>
+                      <p className="text-[11px] text-[var(--text-muted)]">{s.scientificName}</p>
                     </div>
                   </button>
                 ))}
@@ -289,17 +289,17 @@ export default function MyGarden() {
 
         {step === 'detail' && selected && (
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="flex items-center gap-4 rounded-2xl bg-leaf-50 p-4">
+            <div className="flex items-center gap-4 rounded-2xl bg-leaf-800/20 p-4">
               <ProductVisual emoji={selected.emoji} gradient={selected.gradient} className="h-16 w-16" emojiClassName="text-3xl" />
               <div className="min-w-0">
-                <p className="font-bold text-forest">{selected.name}</p>
-                <p className="text-xs text-muted">{selected.light}</p>
+                <p className="font-bold text-[var(--text-primary)]">{selected.name}</p>
+                <p className="text-xs text-[var(--text-secondary)]">{selected.light}</p>
               </div>
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2">
               <label className="block">
-                <span className="mb-1.5 block text-xs font-semibold text-forest">Nama panggilan *</span>
+                <span className="mb-1.5 block text-xs font-semibold text-[var(--text-primary)]">Nama panggilan *</span>
                 <input
                   value={form.nickname || ''}
                   onChange={(e) => setForm({ ...form, nickname: e.target.value })}
@@ -309,7 +309,7 @@ export default function MyGarden() {
                 />
               </label>
               <label className="block">
-                <span className="mb-1.5 block text-xs font-semibold text-forest">Lokasi</span>
+                <span className="mb-1.5 block text-xs font-semibold text-[var(--text-primary)]">Lokasi</span>
                 <input
                   value={form.location || ''}
                   onChange={(e) => setForm({ ...form, location: e.target.value })}
@@ -318,7 +318,7 @@ export default function MyGarden() {
                 />
               </label>
               <label className="block">
-                <span className="mb-1.5 block text-xs font-semibold text-forest">Pot</span>
+                <span className="mb-1.5 block text-xs font-semibold text-[var(--text-primary)]">Pot</span>
                 <input
                   value={form.pot || ''}
                   onChange={(e) => setForm({ ...form, pot: e.target.value })}
@@ -327,7 +327,7 @@ export default function MyGarden() {
                 />
               </label>
               <label className="block">
-                <span className="mb-1.5 block text-xs font-semibold text-forest">Tinggi (cm)</span>
+                <span className="mb-1.5 block text-xs font-semibold text-[var(--text-primary)]">Tinggi (cm)</span>
                 <input
                   type="number"
                   min="0"
@@ -340,7 +340,7 @@ export default function MyGarden() {
             </div>
 
             <label className="block">
-              <span className="mb-1.5 block text-xs font-semibold text-forest">Pengingat siram</span>
+              <span className="mb-1.5 block text-xs font-semibold text-[var(--text-primary)]">Pengingat siram</span>
               <select
                 value={form.waterFrequencyDays || ''}
                 onChange={(e) => setForm({ ...form, waterFrequencyDays: e.target.value })}
