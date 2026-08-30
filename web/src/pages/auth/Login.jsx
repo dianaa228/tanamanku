@@ -38,8 +38,8 @@ export default function Login() {
 
   return (
     <div>
-      <h1 className="display text-3xl font-semibold text-[var(--text-primary)]">Selamat datang kembali 👋</h1>
-      <p className="mt-2 text-sm text-[var(--text-secondary)]">Masuk untuk lanjut merawat kebunmu.</p>
+      <h1 className="text-3xl font-semibold text-[#1c2b22]">Selamat datang kembali 👋</h1>
+      <p className="mt-2 text-sm text-[#3f654c]">Masuk untuk lanjut merawat kebunmu.</p>
 
       <form onSubmit={submit} className="mt-8 space-y-4">
         {error && (
@@ -76,15 +76,13 @@ export default function Login() {
         <Button type="submit" size="lg" className="w-full" loading={loading}>
           Masuk
         </Button>
-      </form>
-
-      <div className="mt-6 rounded-2xl bg-leaf-800/30 px-4 py-3 text-xs text-[var(--text-secondary)]">
+      </form>        <div className="mt-6 rounded-2xl bg-[#e8f0e6] px-4 py-3 text-xs text-[#3f654c]">
         💡 <strong>Mode demo:</strong> email sudah terisi — cukup isi password apa pun lalu klik Masuk.
       </div>
 
-      <p className="mt-8 text-center text-sm text-[var(--text-muted)]">
+      <p className="mt-8 text-center text-sm text-[#68756c]">
         Belum punya akun?{' '}
-        <Link to="/register" className="font-bold text-leaf-400 hover:text-leaf-300">
+        <Link to="/register" className="font-bold text-[#345240] hover:text-[#1a3328]">
           Daftar gratis
         </Link>
       </p>

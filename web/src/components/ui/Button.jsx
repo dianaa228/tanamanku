@@ -3,14 +3,14 @@ import { Link } from 'react-router-dom'
 import { cx } from '../../utils/format'
 
 const variants = {
-  primary: 'bg-leaf-700 text-white hover:bg-leaf-800 shadow-soft hover:shadow-lift',
-  secondary: 'bg-[var(--bg-card)] text-[var(--text-primary)] ring-1 ring-[var(--border-primary)] hover:bg-[var(--bg-card-hover)] shadow-soft backdrop-blur-sm',
-  outline: 'bg-transparent text-leaf-300 ring-1 ring-leaf-400/50 hover:bg-leaf-800/30 hover:ring-leaf-300',
-  soft: 'bg-leaf-800/30 text-leaf-200 hover:bg-leaf-800/50',
-  danger: 'bg-terra-600 text-white hover:bg-terra-700 shadow-soft',
-  ghost: 'bg-transparent text-[var(--text-secondary)] hover:bg-white/10 hover:text-[var(--text-primary)]',
-  terra: 'bg-terra-500 text-white hover:bg-terra-600 shadow-soft',
-  sun: 'bg-sun-400 text-forest hover:bg-sun-500 shadow-soft font-bold',
+  primary: 'bg-[#345240] text-white hover:bg-[#2b4235] shadow-sm',
+  secondary: 'bg-white text-[#1c2b22] ring-1 ring-[#c3d7c4] hover:bg-[#f5f2eb] shadow-sm',
+  outline: 'bg-transparent text-[#345240] ring-1 ring-[#c3d7c4] hover:bg-[#e8f0e6]',
+  soft: 'bg-[#e8f0e6] text-[#1c2b22] hover:bg-[#d4e4d1]',
+  danger: 'bg-[#9c5238] text-white hover:bg-[#804230] shadow-sm',
+  ghost: 'bg-transparent text-[#3f654c] hover:bg-[#e8f0e6] hover:text-[#1c2b22]',
+  terra: 'bg-[#b56545] text-white hover:bg-[#9c5238] shadow-sm',
+  sun: 'bg-[#d2a74e] text-[#1c2b22] hover:bg-[#c28d3a] shadow-sm font-bold',
 }
 
 const sizes = {
