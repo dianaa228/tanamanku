@@ -1,1 +1,0 @@
-import{j as s,a}from"./index-D75Z8icA.js";import{P as r}from"./constants-C6v_dywc.js";function p({status:e,size:n="md"}){const t=r[e];return t?s.jsxs("span",{className:a("inline-flex items-center gap-1.5 rounded-full font-semibold",t.chip,n==="sm"?"px-2 py-0.5 text-[11px]":"px-2.5 py-1 text-xs"),children:[s.jsx("span",{children:t.icon}),t.label]}):null}export{p as P};
