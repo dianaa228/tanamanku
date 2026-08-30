@@ -22,7 +22,7 @@ export const api = axios.create({
 
 // Sisipkan token Bearer dari localStorage
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('tanamanku_token')
+  const token = localStorage.getItem('tanamanku_token') // konsisten dengan TOKEN_KEY di auth.js
   if (token) config.headers.Authorization = `Bearer ${token}`
   return config
 })
@@ -31,7 +31,7 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (res) => res.data,
   (err) => {
-    if (err.response?.status === 401) {
+    if (err.response?.status === 401 || err.response?.status === 403) {
       localStorage.removeItem('tanamanku_token')
       localStorage.removeItem('tanamanku_user')
     }

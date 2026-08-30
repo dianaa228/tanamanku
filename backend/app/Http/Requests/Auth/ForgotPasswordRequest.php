@@ -14,7 +14,11 @@ class ForgotPasswordRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'email', 'exists:users,email'],
+            // NOTE: 'exists:users,email' sengaja DIHAPUS untuk mencegah
+            // email enumeration attack. AuthService::forgotPassword()
+            // sudah menangani case email tidak terdaftar secara aman
+            // (return success tanpa mengirim email).
+            'email' => ['required', 'email'],
         ];
     }
 }

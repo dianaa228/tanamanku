@@ -41,8 +41,8 @@ class OrderService
                 $subtotal += $item->quantity * (float) $item->unit_price;
             }
 
-            // 2) Ongkir & diskon ditentukan server (tarif default untuk scaffold)
-            $shippingCost = (float) ($data['shipping_cost'] ?? 15000);
+            // 2) Ongkir & diskon ditentukan server (tarif dari config, bukan hardcoded)
+            $shippingCost = (float) ($data['shipping_cost'] ?? config('shop.shipping_cost_default', 15000));
             $discount = 0.0; // kupon diimplementasikan di fase berikutnya
 
             // 3) Buat order + items

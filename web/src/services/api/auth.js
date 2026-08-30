@@ -8,8 +8,8 @@ import { demoUser } from './mock-data'
  * 'mock' → demo lokal (token & profil di localStorage).
  */
 
-const TOKEN_KEY = 'tanamanku_token'
-const USER_KEY = 'tanamanku_user'
+export const TOKEN_KEY = 'tanamanku_token'
+export const USER_KEY = 'tanamanku_user'
 
 const persistSession = (user, token) => {
   localStorage.setItem(TOKEN_KEY, token)
@@ -122,8 +122,8 @@ export const authApi = {
         password: payload.password,
         password_confirmation: payload.passwordConfirmation,
       })
-      persistSession(res.data.user, res.data.token)
-      return { success: true, message: res.message, data: { user: mapUser(res.data.user), token: res.data.token } }
+      persistSession(res.data, res.data.token)
+      return { success: true, message: res.message, data: { user: mapUser(res.data), token: res.data.token } }
     }
     return mockImpl.register(payload)
   },

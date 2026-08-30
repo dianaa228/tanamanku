@@ -10,10 +10,10 @@ class UserModel {
   final bool isActive;
   final String? memberSince;
   final String? token;
-  final AddressModel? address;
+  final List<AddressModel> addresses;
   final Map<String, dynamic>? stats;
 
-  UserModel({
+  const UserModel({
     required this.id,
     required this.name,
     required this.email,
@@ -23,17 +23,19 @@ class UserModel {
     this.isActive = true,
     this.memberSince,
     this.token,
-    this.address,
+    this.addresses = const [],
     this.stats,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
-    // Parse address from nested addresses array or direct address field
-    AddressModel? address;
+    // Parse daftar alamat dari nested addresses atau direct address field
+    List<AddressModel> addresses = [];
     if (json['addresses'] != null && (json['addresses'] as List).isNotEmpty) {
-      address = AddressModel.fromJson(json['addresses'][0]);
+      addresses = (json['addresses'] as List)
+          .map((a) => AddressModel.fromJson(a as Map<String, dynamic>))
+          .toList();
     } else if (json['address'] != null) {
-      address = AddressModel.fromJson(json['address']);
+      addresses = [AddressModel.fromJson(json['address'])];
     }
 
     return UserModel(
@@ -46,11 +48,14 @@ class UserModel {
       isActive: json['is_active'] ?? true,
       memberSince: json['member_since'],
       token: json['token'],
-      address: address,
+      addresses: addresses,
       stats: json['stats'],
     );
   }
 
+  /// Konversi ke JSON untuk penyimpanan lokal.
+  /// Token TIDAK disimpan di JSON untuk keamanan — token disimpan
+  /// secara terpisah di secure storage via LocalStorage.saveToken().
   Map<String, dynamic> toJson() => {
     'id': id,
     'name': name,
@@ -60,10 +65,27 @@ class UserModel {
     'avatar': avatar,
     'is_active': isActive,
     'member_since': memberSince,
-    'token': token,
-    'address': address?.toJson(),
+    'addresses': addresses.map((a) => a.toJson()).toList(),
     'stats': stats,
   };
+
+  /// Konversi ke JSON lengkap (termasuk token) — HANYA untuk respons API,
+  /// bukan untuk penyimpanan lokal.
+  Map<String, dynamic> toFullJson() => {
+    ...toJson(),
+    if (token != null) 'token': token,
+  };
+
+  /// Alamat utama (default pertama yang dipakai pesanan).
+  AddressModel? get address {
+    if (addresses.isNotEmpty) {
+      for (final a in addresses) {
+        if (a.isDefault) return a;
+      }
+      return addresses.first;
+    }
+    return null;
+  }
 
   bool get isAdmin => role == 'admin';
   bool get isSeller => role == 'seller';

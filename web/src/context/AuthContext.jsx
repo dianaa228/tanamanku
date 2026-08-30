@@ -2,8 +2,9 @@ import { createContext, useContext, useState, useCallback, useEffect } from 'rea
 import { apiMode, onModeChange } from '../services/api/client'
 import { authApi } from '../services/api/auth'
 
+import { TOKEN_KEY, USER_KEY } from '../services/api/auth'
+
 const AuthContext = createContext(null)
-const USER_KEY = 'tanamanku_user'
 
 const readStoredUser = () => {
   try {
@@ -21,7 +22,7 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const restore = async () => {
       if (apiMode() !== 'api') return
-      const token = localStorage.getItem('tanamanku_token')
+      const token = localStorage.getItem(TOKEN_KEY)
       if (!token) return
       try {
         const res = await authApi.me()

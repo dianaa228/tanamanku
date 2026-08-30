@@ -8,18 +8,22 @@ class AuthService {
 
   /// Login: POST /auth/login
   Future<UserModel> login(String email, String password) async {
-    final res = await _api.post('/auth/login', data: {
-      'email': email,
-      'password': password,
-    });
-    final data = res.data['data'];
-    final user = UserModel.fromJson(data);
+    try {
+      final res = await _api.post('/auth/login', data: {
+        'email': email,
+        'password': password,
+      });
+      final data = res.data['data'];
+      final user = UserModel.fromJson(data);
 
-    // Simpan token & user
-    if (user.token != null) await LocalStorage.saveToken(user.token!);
-    await LocalStorage.saveUser(user.toJson());
+      // Simpan token & user (token disimpan terpisah, tidak di JSON user)
+      if (user.token != null) await LocalStorage.saveToken(user.token!);
+      await LocalStorage.saveUser(user.toJson());
 
-    return user;
+      return user;
+    } catch (e) {
+      throw Exception(ApiClient.extractError(e));
+    }
   }
 
   /// Register: POST /auth/register
@@ -29,20 +33,24 @@ class AuthService {
     required String password,
     String? phone,
   }) async {
-    final res = await _api.post('/auth/register', data: {
-      'name': name,
-      'email': email,
-      'password': password,
-      'password_confirmation': password,
-      if (phone != null) 'phone': phone,
-    });
-    final data = res.data['data'];
-    final user = UserModel.fromJson(data);
+    try {
+      final res = await _api.post('/auth/register', data: {
+        'name': name,
+        'email': email,
+        'password': password,
+        'password_confirmation': password,
+        if (phone != null) 'phone': phone,
+      });
+      final data = res.data['data'];
+      final user = UserModel.fromJson(data);
 
-    if (user.token != null) await LocalStorage.saveToken(user.token!);
-    await LocalStorage.saveUser(user.toJson());
+      if (user.token != null) await LocalStorage.saveToken(user.token!);
+      await LocalStorage.saveUser(user.toJson());
 
-    return user;
+      return user;
+    } catch (e) {
+      throw Exception(ApiClient.extractError(e));
+    }
   }
 
   /// Logout: POST /auth/logout
@@ -79,7 +87,11 @@ class AuthService {
 
   /// Forgot password: POST /auth/forgot-password
   Future<void> forgotPassword(String email) async {
-    await _api.post('/auth/forgot-password', data: {'email': email});
+    try {
+      await _api.post('/auth/forgot-password', data: {'email': email});
+    } catch (e) {
+      throw Exception(ApiClient.extractError(e));
+    }
   }
 
   /// Reset password: POST /auth/reset-password
@@ -89,11 +101,15 @@ class AuthService {
     required String password,
     required String passwordConfirmation,
   }) async {
-    await _api.post('/auth/reset-password', data: {
-      'token': token,
-      'email': email,
-      'password': password,
-      'password_confirmation': passwordConfirmation,
-    });
+    try {
+      await _api.post('/auth/reset-password', data: {
+        'token': token,
+        'email': email,
+        'password': password,
+        'password_confirmation': passwordConfirmation,
+      });
+    } catch (e) {
+      throw Exception(ApiClient.extractError(e));
+    }
   }
 }
