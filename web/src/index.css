@@ -126,15 +126,15 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Light mode (default) — green gradient theme */
+/* Light mode (default) — flat solid colors */
 body {
   @apply font-sans antialiased;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-feature-settings: "ss01";
-  background: #f0ede6;
+  background: #f5f2eb;
   color: #1c2b22;
-  --bg-primary: #f0ede6;
+  --bg-primary: #f5f2eb;
   --bg-secondary: #e8f0e6;
   --bg-card: #ffffff;
   --bg-card-hover: #f8faf8;
@@ -146,7 +146,7 @@ body {
   --text-muted: #68756c;
 }
 
-/* Dark mode — deep forest gradient */
+/* Dark mode — flat solid colors */
 .dark body,
 body.dark {
   background: #0f1a14;
@@ -244,19 +244,19 @@ body.dark {
   border-bottom: 1px solid rgba(46, 51, 44, 0.5);
 }
 
-/* ── Section gradient backgrounds ── */
+/* ── Section solid backgrounds ── */
 .section-gradient {
-  background: linear-gradient(180deg, #e8f0e6 0%, #dce8da 50%, #d4e4d1 100%);
+  background: #e8f0e6;
 }
 .dark .section-gradient {
-  background: linear-gradient(180deg, #142319 0%, #1a2820 50%, #1e3028 100%);
+  background: #142319;
 }
 
 .section-dark {
-  background: linear-gradient(180deg, #1a3328 0%, #152a20 50%, #102019 100%);
+  background: #1a3328;
 }
 .dark .section-dark {
-  background: linear-gradient(180deg, #0d1a13 0%, #0a120e 50%, #070d0a 100%);
+  background: #0d1a13;
 }
 
 .section-cream {

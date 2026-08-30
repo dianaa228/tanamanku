@@ -115,11 +115,10 @@ export default function Home() {
   return (
     <div ref={revealRef}>
       {/* ═══ HERO ═══ */}
-      <section className="relative overflow-hidden" style={{ background: 'linear-gradient(180deg, #e0ebe0 0%, #e8f0e6 40%, #f0ede6 100%)' }}>
+      <section className="relative overflow-hidden bg-[#e8f0e6]">
         {/* decorative botanical orbs */}
-        <div className="pointer-events-none absolute -right-28 -top-24 h-[420px] w-[420px] rounded-full bg-leaf-400/20 blur-3xl" />
-        <div className="pointer-events-none absolute -left-24 bottom-6 h-80 w-80 rounded-full bg-sun-300/25 blur-3xl" />
-        <div className="pointer-events-none absolute right-1/3 top-10 text-6xl opacity-15" style={{ transform: 'rotate(-18deg)' }}>🍃</div>
+        <div className="pointer-events-none absolute -right-28 -top-24 h-[420px] w-[420px] rounded-full bg-[#9abba0]/20 blur-3xl" />
+        <div className="pointer-events-none absolute -left-24 bottom-6 h-80 w-80 rounded-full bg-[#d2a74e]/15 blur-3xl" />
 
         <div className="relative mx-auto grid max-w-7xl items-center gap-14 px-4 pb-16 pt-10 sm:px-6 lg:grid-cols-2 lg:pb-24 lg:pt-16">
           {/* Copy */}
@@ -176,7 +175,7 @@ export default function Home() {
                   <p className="display text-lg font-semibold text-[#1c2b22]">Momo · Monstera</p>
                   <p className="text-sm text-[#3f654c]">Disiram 2 jam lalu · 68 cm · Sehat</p>
                 </div>
-                <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#e0ebe0] text-xl">😊</span>
+                <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#e8f0e6] text-xl">😊</span>
               </div>
             </div>
 
