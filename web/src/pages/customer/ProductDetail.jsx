@@ -69,12 +69,12 @@ export default function ProductDetail() {
   return (
     <div className="page-container">
       {/* Breadcrumb */}
-      <nav className="mb-6 flex items-center gap-1.5 text-sm text-muted">
-        <Link to="/" className="hover:text-leaf-700">Beranda</Link>
+      <nav className="mb-6 flex items-center gap-1.5 text-sm text-[var(--text-muted)]">
+        <Link to="/" className="hover:text-leaf-400">Beranda</Link>
         <span>/</span>
-        <Link to="/explore" className="hover:text-leaf-700">Jelajahi</Link>
+        <Link to="/explore" className="hover:text-leaf-400">Jelajahi</Link>
         <span>/</span>
-        <span className="font-semibold text-forest">{product.name}</span>
+        <span className="font-semibold text-[var(--text-primary)]">{product.name}</span>
       </nav>
 
       <div className="grid gap-10 lg:grid-cols-2">
@@ -92,9 +92,9 @@ export default function ProductDetail() {
             {care && <Badge className={care.chip}>{care.icon} Perawatan {care.label}</Badge>}
           </div>
 
-          <h1 className="display mt-4 text-3xl font-semibold leading-tight text-forest">{product.name}</h1>
-          <p className="mt-2 text-sm text-muted">
-            Dijual oleh <span className="font-semibold text-leaf-700">🏪 {product.storeName}</span> · {product.sold}+ terjual
+          <h1 className="display mt-4 text-3xl font-semibold leading-tight text-[var(--text-primary)]">{product.name}</h1>
+          <p className="mt-2 text-sm text-[var(--text-secondary)]">
+            Dijual oleh <span className="font-semibold text-leaf-400">🏪 {product.storeName}</span> · {product.sold}+ terjual
           </p>
 
           <div className="mt-3 flex items-center gap-2">
@@ -102,17 +102,17 @@ export default function ProductDetail() {
             <span className="text-sm text-leaf-900/40">({product.reviewCount} ulasan)</span>
           </div>
 
-          <div className="mt-6 flex items-end gap-3 rounded-3xl bg-leaf-50 px-6 py-5">
-            <p className="text-4xl font-extrabold text-leaf-700">{formatRupiah(product.price)}</p>
+          <div className="mt-6 flex items-end gap-3 rounded-3xl bg-leaf-800/20 px-6 py-5">
+            <p className="text-4xl font-extrabold text-leaf-400">{formatRupiah(product.price)}</p>
             {product.originalPrice && (
-              <p className="pb-1 text-lg text-leaf-900/40 line-through">{formatRupiah(product.originalPrice)}</p>
+              <p className="pb-1 text-lg text-[var(--text-muted)] line-through">{formatRupiah(product.originalPrice)}</p>
             )}
           </div>
 
           {/* Varian */}
           {product.variants && product.variants.length > 1 && (
             <div className="mt-6">
-              <p className="mb-2 text-sm font-semibold text-forest">Pilih varian</p>
+              <p className="mb-2 text-sm font-semibold text-[var(--text-primary)]">Pilih varian</p>
               <div className="flex flex-wrap gap-2">
                 {product.variants.map((v) => (
                   <button
@@ -121,7 +121,7 @@ export default function ProductDetail() {
                     className={`rounded-2xl px-4 py-2.5 text-sm font-semibold transition ${
                       variant === v
                         ? 'bg-leaf-600 text-white shadow-soft'
-                        : 'bg-white text-leaf-900 ring-1 ring-leaf-200 hover:bg-leaf-50'
+                        : 'bg-[var(--bg-card)] text-[var(--text-primary)] ring-1 ring-[var(--border-primary)] hover:bg-[var(--bg-card-hover)]'
                     }`}
                   >
                     {v}
@@ -133,10 +133,10 @@ export default function ProductDetail() {
 
           {/* Jumlah */}
           <div className="mt-6 flex items-center gap-4">
-            <div className="flex items-center rounded-2xl bg-white ring-1 ring-leaf-200">
-              <button onClick={() => setQty((q) => Math.max(1, q - 1))} aria-label="Kurangi jumlah" className="px-4 py-2.5 text-lg font-bold text-leaf-700 transition hover:bg-leaf-50">−</button>
-              <span className="w-10 text-center font-bold text-leaf-950" aria-live="polite">{qty}</span>
-              <button onClick={() => setQty((q) => Math.min(product.stock, q + 1))} aria-label="Tambah jumlah" className="px-4 py-2.5 text-lg font-bold text-leaf-700 transition hover:bg-leaf-50">+</button>
+            <div className="flex items-center rounded-2xl bg-[var(--bg-card)] ring-1 ring-[var(--border-primary)]">
+              <button onClick={() => setQty((q) => Math.max(1, q - 1))} aria-label="Kurangi jumlah" className="px-4 py-2.5 text-lg font-bold text-leaf-400 transition hover:bg-white/10">−</button>
+              <span className="w-10 text-center font-bold text-[var(--text-primary)]" aria-live="polite">{qty}</span>
+              <button onClick={() => setQty((q) => Math.min(product.stock, q + 1))} aria-label="Tambah jumlah" className="px-4 py-2.5 text-lg font-bold text-leaf-400 transition hover:bg-white/10">+</button>
             </div>
             <p className={`text-sm font-semibold ${product.stock <= 5 ? 'text-rose-600' : 'text-leaf-900/50'}`}>
               {product.stock <= 5 ? `⚠️ Sisa ${product.stock} — buruan!` : `Stok tersedia: ${product.stock}`}
@@ -161,11 +161,11 @@ export default function ProductDetail() {
           )}
 
           {/* Manfaat */}
-          <div className="mt-8 space-y-3 rounded-3xl border border-leaf-100 bg-white p-6 shadow-soft">
+          <div className="mt-8 space-y-3 rounded-3xl border border-[var(--border-primary)] bg-[var(--bg-card)] p-6 shadow-soft backdrop-blur-sm">
             {product.benefits.map((b, i) => (
               <div key={i} className="flex items-start gap-3">
-                <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-leaf-100 text-xs text-leaf-700">✓</span>
-                <p className="text-sm text-leaf-900/70">{b}</p>
+                <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-leaf-800/20 text-xs text-leaf-400">✓</span>
+                <p className="text-sm text-[var(--text-secondary)]">{b}</p>
               </div>
             ))}
           </div>
@@ -176,17 +176,17 @@ export default function ProductDetail() {
       <section className="mt-14">
         <span className="page-eyebrow">Detail</span>
         <h2 className="section-title">Deskripsi Produk</h2>
-        <p className="mt-4 max-w-3xl leading-relaxed text-muted">{product.description}</p>
+        <p className="mt-4 max-w-3xl leading-relaxed text-[var(--text-secondary)]">{product.description}</p>
         <div className="mt-6 grid gap-4 sm:grid-cols-3">
           {[
             { icon: '🚚', title: 'Pengiriman aman', desc: 'Tanaman dikemas khusus anti benturan & layu' },
             { icon: '🔄', title: 'Garansi 7 hari', desc: 'Layu di perjalanan? Bisa tukar atau refund' },
             { icon: '💬', title: 'Chat seller', desc: 'Tanya perawatan langsung ke nursery' },
           ].map((s) => (
-            <div key={s.title} className="card-v2 rounded-2xl bg-leaf-50/60 p-5 hover:-translate-y-0">
+            <div key={s.title} className="card-v2 rounded-2xl bg-[var(--bg-card)] p-5 hover:-translate-y-0">
               <span className="text-2xl">{s.icon}</span>
-              <p className="mt-2 font-bold text-forest">{s.title}</p>
-              <p className="mt-1 text-sm text-muted">{s.desc}</p>
+              <p className="mt-2 font-bold text-[var(--text-primary)]">{s.title}</p>
+              <p className="mt-1 text-sm text-[var(--text-secondary)]">{s.desc}</p>
             </div>
           ))}
         </div>
@@ -200,14 +200,14 @@ export default function ProductDetail() {
           {reviews.map((r) => (
             <div key={r.author} className="card-v2 rounded-2xl p-5">
               <div className="flex items-center gap-3">
-                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-leaf-100 text-xl">{r.avatar}</span>
+                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-leaf-800/20 text-xl">{r.avatar}</span>
                 <div>
-                  <p className="text-sm font-bold text-forest">{r.author}</p>
+                  <p className="text-sm font-bold text-[var(--text-primary)]">{r.author}</p>
                   <Rating value={r.rating} />
                 </div>
               </div>
-              <p className="mt-3 text-sm leading-relaxed text-muted">{r.text}</p>
-              <p className="mt-2 text-xs text-muted-light">{r.time} · ✓ Pembelian terverifikasi</p>
+              <p className="mt-3 text-sm leading-relaxed text-[var(--text-secondary)]">{r.text}</p>
+              <p className="mt-2 text-xs text-[var(--text-muted)]">{r.time} · ✓ Pembelian terverifikasi</p>
             </div>
           ))}
         </div>

@@ -32,14 +32,14 @@ export default function OrderDetail() {
 
   return (
     <div className="page-container max-w-4xl">
-      <Link to="/orders" className="text-sm font-semibold text-muted hover:text-leaf-700">
+      <Link to="/orders" className="text-sm font-semibold text-[var(--text-secondary)] hover:text-leaf-400">
         ← Kembali ke pesanan
       </Link>
 
       <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h1 className="display text-2xl font-semibold text-forest">{order.id}</h1>
-          <p className="mt-0.5 text-sm text-muted">{formatDateTime(order.date)}</p>
+          <h1 className="display text-2xl font-semibold text-[var(--text-primary)]">{order.id}</h1>
+          <p className="mt-0.5 text-sm text-[var(--text-secondary)]">{formatDateTime(order.date)}</p>
         </div>
         <Badge className={meta.badge}>{meta.icon} {meta.label}</Badge>
       </div>
@@ -52,7 +52,7 @@ export default function OrderDetail() {
 
       {/* Timeline */}
       {!cancelled && (
-        <div className="mt-8 rounded-3xl border border-leaf-100 bg-white p-6 shadow-soft">
+        <div className="mt-8 rounded-3xl border border-[var(--border-primary)] bg-[var(--bg-card)] p-6 shadow-soft backdrop-blur-sm">
           <div className="flex">
             {ORDER_FLOW.map((s, i) => {
               const done = i <= stepIndex
@@ -83,59 +83,59 @@ export default function OrderDetail() {
 
       <div className="mt-8 grid gap-6 lg:grid-cols-[1fr_18rem]">
         {/* Items */}
-        <div className="rounded-3xl border border-leaf-100 bg-white p-6 shadow-soft">
+        <div className="rounded-3xl border border-[var(--border-primary)] bg-[var(--bg-card)] p-6 shadow-soft backdrop-blur-sm">
           <h2 className="section-title">Item Pesanan</h2>
           <div className="mt-4 space-y-4">
             {order.items.map((item, i) => (
               <div key={i} className="flex items-center gap-4">
                 <ProductVisual emoji={item.emoji} gradient={item.gradient} className="h-16 w-16 rounded-2xl" emojiClassName="text-3xl" />
                 <div className="min-w-0 flex-1">
-                  <Link to={`/product/${item.slug || item.productId}`} className="block truncate font-semibold text-forest hover:text-leaf-700">
+                  <Link to={`/product/${item.slug || item.productId}`} className="block truncate font-semibold text-[var(--text-primary)] hover:text-leaf-400">
                     {item.name}
                   </Link>
-                  <p className="text-xs text-leaf-900/50">Varian: {item.variant} · {item.qty}x</p>
+                  <p className="text-xs text-[var(--text-muted)]">Varian: {item.variant} · {item.qty}x</p>
                 </div>
-                <p className="font-bold text-leaf-950">{formatRupiah(item.price * item.qty)}</p>
+                <p className="font-bold text-[var(--text-primary)]">{formatRupiah(item.price * item.qty)}</p>
               </div>
             ))}
           </div>
 
           {/* Pembayaran */}
-          <div className="mt-6 rounded-2xl bg-leaf-50 p-4">
-            <h3 className="text-sm font-semibold text-forest">Pembayaran</h3>
-            <p className="mt-1 text-sm text-leaf-900/60">{order.payment.method}</p>
-            <p className="text-sm text-leaf-900/60">Referensi: {order.payment.reference}</p>
+          <div className="mt-6 rounded-2xl bg-leaf-800/10 p-4">
+            <h3 className="text-sm font-semibold text-[var(--text-primary)]">Pembayaran</h3>
+            <p className="mt-1 text-sm text-[var(--text-secondary)]">{order.payment.method}</p>
+            <p className="text-sm text-[var(--text-secondary)]">Referensi: {order.payment.reference}</p>
           </div>
         </div>
 
         {/* Info pengiriman & total */}
         <div className="space-y-6">
-          <div className="rounded-3xl border border-leaf-100 bg-white p-6 shadow-soft">
+          <div className="rounded-3xl border border-[var(--border-primary)] bg-[var(--bg-card)] p-6 shadow-soft backdrop-blur-sm">
             <h2 className="section-title">Pengiriman</h2>
             <div className="mt-3 space-y-2 text-sm">
-              <p className="flex justify-between"><span className="text-leaf-900/50">Kurir</span><span className="font-semibold">🚚 {order.shipment.courier}</span></p>
-              <p className="flex justify-between"><span className="text-leaf-900/50">Resi</span><span className="font-semibold">{order.shipment.tracking}</span></p>
-              <p className="flex justify-between"><span className="text-leaf-900/50">Estimasi</span><span className="font-semibold">{order.shipment.eta}</span></p>
+              <p className="flex justify-between"><span className="text-[var(--text-muted)]">Kurir</span><span className="font-semibold">🚚 {order.shipment.courier}</span></p>
+              <p className="flex justify-between"><span className="text-[var(--text-muted)]">Resi</span><span className="font-semibold">{order.shipment.tracking}</span></p>
+              <p className="flex justify-between"><span className="text-[var(--text-muted)]">Estimasi</span><span className="font-semibold">{order.shipment.eta}</span></p>
             </div>
-            <div className="mt-4 border-t border-leaf-100 pt-3">
-              <p className="text-sm font-semibold text-forest">{order.address.label} · {order.address.recipient}</p>
-              <p className="mt-1 text-xs leading-relaxed text-leaf-900/55">
+            <div className="mt-4 border-t border-[var(--border-primary)] pt-3">
+              <p className="text-sm font-semibold text-[var(--text-primary)]">{order.address.label} · {order.address.recipient}</p>
+              <p className="mt-1 text-xs leading-relaxed text-[var(--text-muted)]">
                 {order.address.street}, {order.address.district}, {order.address.city}, {order.address.province} {order.address.postalCode}
               </p>
             </div>
           </div>
 
-          <div className="rounded-3xl border border-leaf-100 bg-white p-6 shadow-soft">
+          <div className="rounded-3xl border border-[var(--border-primary)] bg-[var(--bg-card)] p-6 shadow-soft backdrop-blur-sm">
             <h2 className="section-title">Rincian Biaya</h2>
             <dl className="mt-3 space-y-2 text-sm">
-              <div className="flex justify-between"><dt className="text-leaf-900/60">Subtotal</dt><dd className="font-semibold">{formatRupiah(order.subtotal)}</dd></div>
-              <div className="flex justify-between"><dt className="text-leaf-900/60">Ongkir</dt><dd className="font-semibold">{formatRupiah(order.shippingCost)}</dd></div>
+              <div className="flex justify-between"><dt className="text-[var(--text-muted)]">Subtotal</dt><dd className="font-semibold text-[var(--text-primary)]">{formatRupiah(order.subtotal)}</dd></div>
+              <div className="flex justify-between"><dt className="text-[var(--text-muted)]">Ongkir</dt><dd className="font-semibold text-[var(--text-primary)]">{formatRupiah(order.shippingCost)}</dd></div>
               {order.discount > 0 && (
                 <div className="flex justify-between text-leaf-700"><dt>Diskon</dt><dd className="font-semibold">−{formatRupiah(order.discount)}</dd></div>
               )}
-              <div className="flex justify-between border-t border-leaf-100 pt-3">
-                <dt className="font-bold text-forest">Total</dt>
-                <dd className="text-xl font-extrabold text-leaf-700">{formatRupiah(order.total)}</dd>
+              <div className="flex justify-between border-t border-[var(--border-primary)] pt-3">
+                <dt className="font-bold text-[var(--text-primary)]">Total</dt>
+                <dd className="text-xl font-extrabold text-leaf-400">{formatRupiah(order.total)}</dd>
               </div>
             </dl>
             {order.status === 'pending' && (
@@ -148,7 +148,7 @@ export default function OrderDetail() {
               </Button>
             )}
             {order.status === 'delivered' && (
-              <p className="mt-4 rounded-2xl bg-leaf-50 px-4 py-3 text-center text-sm font-semibold text-leaf-800">
+              <p className="mt-4 rounded-2xl bg-leaf-800/10 px-4 py-3 text-center text-sm font-semibold text-[var(--text-primary)]">
                 📝 Terima kasih! Ulas produkmu untuk membantu pekebun lain.
               </p>
             )}

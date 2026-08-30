@@ -57,7 +57,7 @@ export default function PlantExchange() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="🔍 Cari tanaman..."
-          className="w-full rounded-xl border border-leaf-200 bg-white px-4 py-3 text-sm focus:border-leaf-400 focus:outline-none shadow-soft"
+          className="w-full rounded-xl border border-[var(--border-primary)] bg-[var(--bg-input)] px-4 py-3 text-sm text-[var(--text-primary)] focus:border-leaf-400 focus:outline-none shadow-soft"
         />
       </div>
 
@@ -67,7 +67,7 @@ export default function PlantExchange() {
           onClick={() => setType('')}
           className={cx(
             'rounded-full px-4 py-2 text-sm font-semibold transition',
-            !type ? 'bg-leaf-600 text-white shadow-soft' : 'bg-white text-leaf-900/60 ring-1 ring-leaf-200 hover:bg-leaf-50',
+            !type ? 'bg-leaf-600 text-white shadow-soft' : 'bg-[var(--bg-card)] text-[var(--text-muted)] ring-1 ring-[var(--border-primary)] hover:bg-[var(--bg-card-hover)]',
           )}
         >
           Semua
@@ -106,7 +106,7 @@ export default function PlantExchange() {
                 <Link
                   key={l.id}
                   to={`/plant-exchange/${l.id}`}
-                  className="group rounded-2xl border border-leaf-100 bg-white shadow-soft transition-all duration-200 hover:shadow-lift hover:-translate-y-0.5 overflow-hidden"
+                  className="group rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-card)] shadow-soft backdrop-blur-sm transition-all duration-200 hover:shadow-lift hover:-translate-y-0.5 overflow-hidden"
                 >
                   {/* Image placeholder */}
                   <div className="h-44 bg-gradient-to-br from-leaf-100 to-leaf-50 flex items-center justify-center text-6xl">
@@ -129,24 +129,24 @@ export default function PlantExchange() {
                     </div>
 
                     {/* Title */}
-                    <h3 className="mt-3 text-lg font-semibold text-forest group-hover:text-leaf-700 transition-colors line-clamp-1">
+                    <h3 className="mt-3 text-lg font-semibold text-[var(--text-primary)] group-hover:text-leaf-400 transition-colors line-clamp-1">
                       {l.title}
                     </h3>
 
                     {/* Species */}
-                    <p className="mt-0.5 text-xs text-leaf-900/50 italic">{l.species?.name || 'Tanaman hias'}</p>
+                    <p className="mt-0.5 text-xs text-[var(--text-muted)] italic">{l.species?.name || 'Tanaman hias'}</p>
 
                     {/* Description */}
-                    <p className="mt-2 text-sm text-leaf-900/60 line-clamp-2">{l.description}</p>
+                    <p className="mt-2 text-sm text-[var(--text-secondary)] line-clamp-2">{l.description}</p>
 
                     {/* Owner + time */}
-                    <div className="mt-3 flex items-center justify-between text-xs text-leaf-900/40">
+                    <div className="mt-3 flex items-center justify-between text-xs text-[var(--text-muted)]">
                       <span>👤 {l.user?.name}</span>
                       <span>{timeAgo(l.createdAt)}</span>
                     </div>
 
                     {/* Price */}
-                    <div className="mt-3 border-t border-leaf-50 pt-3 flex items-center justify-between">
+                    <div className="mt-3 border-t border-[var(--border-secondary)] pt-3 flex items-center justify-between">
                       {l.price != null ? (
                         <p className="text-lg font-extrabold text-leaf-700">{formatRupiah(l.price)}</p>
                       ) : (

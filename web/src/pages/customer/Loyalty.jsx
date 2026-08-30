@@ -91,19 +91,19 @@ export default function Loyalty() {
       <div className="mt-8 grid grid-cols-2 gap-4">
         <Link
           to="/loyalty/redeem"
-          className="rounded-2xl border border-leaf-100 bg-white p-5 shadow-soft transition-all hover:shadow-lift hover:-translate-y-0.5 text-center"
+          className="rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-card)] p-5 shadow-soft backdrop-blur-sm transition-all hover:shadow-lift hover:-translate-y-0.5 text-center"
         >
           <span className="text-3xl">🎁</span>
-          <p className="mt-2 font-semibold text-forest">Tukar Poin</p>
-          <p className="text-xs text-leaf-900/50">Tukar dengan voucher & hadiah</p>
+          <p className="mt-2 font-semibold text-[var(--text-primary)]">Tukar Poin</p>
+          <p className="text-xs text-[var(--text-muted)]">Tukar dengan voucher & hadiah</p>
         </Link>
         <Link
           to="/loyalty/history"
-          className="rounded-2xl border border-leaf-100 bg-white p-5 shadow-soft transition-all hover:shadow-lift hover:-translate-y-0.5 text-center"
+          className="rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-card)] p-5 shadow-soft backdrop-blur-sm transition-all hover:shadow-lift hover:-translate-y-0.5 text-center"
         >
           <span className="text-3xl">📊</span>
-          <p className="mt-2 font-semibold text-forest">Riwayat Poin</p>
-          <p className="text-xs text-leaf-900/50">Lihat transaksi poin</p>
+          <p className="mt-2 font-semibold text-[var(--text-primary)]">Riwayat Poin</p>
+          <p className="text-xs text-[var(--text-muted)]">Lihat transaksi poin</p>
         </Link>
       </div>
 
@@ -121,7 +121,7 @@ export default function Loyalty() {
             <div key={i} className={cx('flex items-center gap-4 rounded-xl px-4 py-3', item.color)}>
               <span className="text-2xl">{item.icon}</span>
               <div className="flex-1">
-                <p className="text-sm font-semibold text-forest">{item.action}</p>
+                <p className="text-sm font-semibold text-[var(--text-primary)]">{item.action}</p>
               </div>
               <p className="text-sm font-bold text-leaf-700">{item.points}</p>
             </div>
@@ -141,14 +141,14 @@ export default function Loyalty() {
                 key={tier.id}
                 className={cx(
                   'rounded-2xl border-2 p-5 transition-all',
-                  isActive ? `border-current ${tc.ring} shadow-soft` : 'border-leaf-100 bg-white',
+                  isActive ? `border-current ${tc.ring} shadow-soft` : 'border-[var(--border-primary)] bg-[var(--bg-card)]',
                 )}
               >
                 <div className="flex items-center gap-3">
                   <span className="text-3xl">{tier.icon}</span>
                   <div>
-                    <p className={cx('font-bold', isActive ? tc.text : 'text-forest')}>{tier.name}</p>
-                    <p className="text-xs text-leaf-900/50">≥ {tier.minPoints.toLocaleString('id-ID')} poin</p>
+                    <p className={cx('font-bold', isActive ? tc.text : 'text-[var(--text-primary)]')}>{tier.name}</p>
+                    <p className="text-xs text-[var(--text-muted)]">≥ {tier.minPoints.toLocaleString('id-ID')} poin</p>
                   </div>
                   {isActive && (
                     <span className={cx('ml-auto rounded-full px-3 py-1 text-xs font-bold', tc.bg, tc.text)}>
@@ -158,7 +158,7 @@ export default function Loyalty() {
                 </div>
                 <ul className="mt-3 space-y-1">
                   {tier.benefits.map((b, i) => (
-                    <li key={i} className="flex items-start gap-2 text-sm text-leaf-900/70">
+                    <li key={i} className="flex items-start gap-2 text-sm text-[var(--text-secondary)]">
                       <span className="mt-0.5 text-leaf-500">✓</span>
                       {b}
                     </li>
@@ -180,7 +180,7 @@ export default function Loyalty() {
         </div>
         <div className="mt-4 space-y-3">
           {history.slice(0, 5).map((h) => (
-            <div key={h.id} className="flex items-center gap-3 rounded-xl bg-white border border-leaf-100 px-4 py-3">
+            <div key={h.id} className="flex items-center gap-3 rounded-xl bg-[var(--bg-card)] border border-[var(--border-primary)] px-4 py-3">
               <span className={cx(
                 'flex h-10 w-10 items-center justify-center rounded-xl text-lg',
                 h.type === 'earn' ? 'bg-leaf-100' : h.type === 'redeem' ? 'bg-rose-100' : 'bg-sun-100',
@@ -188,8 +188,8 @@ export default function Loyalty() {
                 {h.type === 'earn' ? '📈' : h.type === 'redeem' ? '🎁' : '🎉'}
               </span>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold text-leaf-950 truncate">{h.description}</p>
-                <p className="text-xs text-leaf-900/40">{formatDateTime(h.createdAt)}</p>
+                <p className="text-sm font-semibold text-[var(--text-primary)] truncate">{h.description}</p>
+                <p className="text-xs text-[var(--text-muted)]">{formatDateTime(h.createdAt)}</p>
               </div>
               <span className={cx(
                 'text-sm font-bold',

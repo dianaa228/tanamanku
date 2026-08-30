@@ -67,7 +67,7 @@ export default function CreateListing() {
         <form onSubmit={handleSubmit} className="mt-6 space-y-5">
           {/* Type selection */}
           <div>
-            <label className="mb-2 block text-sm font-semibold text-leaf-900">Tipe Listing *</label>
+            <label className="mb-2 block text-sm font-semibold text-[var(--text-primary)]">Tipe Listing *</label>
             <div className="grid grid-cols-2 gap-3">
               {LISTING_TYPES.map((t) => (
                 <button
@@ -77,13 +77,13 @@ export default function CreateListing() {
                   className={cx(
                     'rounded-xl border-2 px-4 py-4 text-center transition-all',
                     form.type === t.value
-                      ? 'border-leaf-500 bg-leaf-50 ring-2 ring-leaf-200'
-                      : 'border-leaf-100 bg-white hover:border-leaf-200',
+                      ? 'border-leaf-500 bg-leaf-800/20 ring-2 ring-leaf-400/30'
+                      : 'border-[var(--border-primary)] bg-[var(--bg-card)] hover:border-leaf-400/50',
                   )}
                 >
                   <span className="text-2xl">{t.icon}</span>
-                  <p className="mt-1 text-sm font-semibold text-forest">{t.label}</p>
-                  <p className="text-xs text-leaf-900/50">{t.desc}</p>
+                  <p className="mt-1 text-sm font-semibold text-[var(--text-primary)]">{t.label}</p>
+                  <p className="text-xs text-[var(--text-muted)]">{t.desc}</p>
                 </button>
               ))}
             </div>
@@ -91,30 +91,30 @@ export default function CreateListing() {
 
           {/* Title */}
           <div>
-            <label className="mb-1 block text-sm font-semibold text-leaf-900">Judul *</label>
+            <label className="mb-1 block text-sm font-semibold text-[var(--text-primary)]">Judul *</label>
             <input
               value={form.title}
               onChange={set('title')}
               required
               placeholder="Contoh: Monstera Deliciosa 3 Daun"
-              className="w-full rounded-xl border border-leaf-200 bg-white px-4 py-2.5 text-sm focus:border-leaf-400 focus:outline-none"
+              className="w-full rounded-xl border border-[var(--border-primary)] bg-[var(--bg-input)] px-4 py-2.5 text-sm text-[var(--text-primary)] focus:border-leaf-400 focus:outline-none"
             />
           </div>
 
           {/* Species name */}
           <div>
-            <label className="mb-1 block text-sm font-semibold text-leaf-900">Jenis Tanaman</label>
+            <label className="mb-1 block text-sm font-semibold text-[var(--text-primary)]">Jenis Tanaman</label>
             <input
               value={form.species_name}
               onChange={set('species_name')}
               placeholder="Contoh: Monstera Deliciosa"
-              className="w-full rounded-xl border border-leaf-200 bg-white px-4 py-2.5 text-sm focus:border-leaf-400 focus:outline-none"
+              className="w-full rounded-xl border border-[var(--border-primary)] bg-[var(--bg-input)] px-4 py-2.5 text-sm text-[var(--text-primary)] focus:border-leaf-400 focus:outline-none"
             />
           </div>
 
           {/* Description */}
           <div>
-            <label className="mb-1 block text-sm font-semibold text-leaf-900">Deskripsi</label>
+            <label className="mb-1 block text-sm font-semibold text-[var(--text-primary)]">Deskripsi</label>
             <textarea
               value={form.description}
               onChange={set('description')}
@@ -127,16 +127,16 @@ export default function CreateListing() {
           {/* Price (only for sell) */}
           {form.type === 'sell' && (
             <div>
-              <label className="mb-1 block text-sm font-semibold text-leaf-900">Harga (Rp)</label>
+              <label className="mb-1 block text-sm font-semibold text-[var(--text-primary)]">Harga (Rp)</label>
               <input
                 type="number"
                 value={form.price}
                 onChange={set('price')}
                 min={0}
                 placeholder="0 = gratis"
-                className="w-full rounded-xl border border-leaf-200 bg-white px-4 py-2.5 text-sm focus:border-leaf-400 focus:outline-none"
+                className="w-full rounded-xl border border-[var(--border-primary)] bg-[var(--bg-input)] px-4 py-2.5 text-sm text-[var(--text-primary)] focus:border-leaf-400 focus:outline-none"
               />
-              <p className="mt-1 text-xs text-leaf-900/40">Isi 0 atau kosongkan jika ingin memberikan gratis</p>
+              <p className="mt-1 text-xs text-[var(--text-muted)]">Isi 0 atau kosongkan jika ingin memberikan gratis</p>
             </div>
           )}
 

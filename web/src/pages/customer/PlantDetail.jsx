@@ -59,7 +59,7 @@ export default function PlantDetail() {
       <div className="mt-4 grid gap-8 lg:grid-cols-[20rem_1fr]">
         {/* Kartu info tanaman */}
         <div className="space-y-4">
-          <div className="overflow-hidden rounded-3xl border border-leaf-100 bg-white shadow-soft">
+          <div className="overflow-hidden rounded-3xl border border-[var(--border-primary)] bg-[var(--bg-card)] shadow-soft backdrop-blur-sm">
             <ProductVisual
               emoji={species.emoji}
               gradient={plant.photoGradient || species.gradient}
@@ -68,15 +68,15 @@ export default function PlantDetail() {
             />
             <div className="p-5">
               <div className="flex items-center justify-between">
-                <h1 className="display text-2xl font-semibold text-forest">{plant.nickname}</h1>
+                <h1 className="display text-2xl font-semibold text-[var(--text-primary)]">{plant.nickname}</h1>
                 <PlantStatus status={plant.status} />
               </div>
-              <p className="mt-0.5 text-sm italic text-muted">{species.scientificName}</p>
+              <p className="mt-0.5 text-sm italic text-[var(--text-secondary)]">{species.scientificName}</p>
               <div className="mt-4 space-y-2.5 text-sm">
-                <p className="flex items-center gap-2 text-forest/70">📍 {plant.location} · Pot {plant.pot}</p>
-                <p className="flex items-center gap-2 text-forest/70">📅 Ditanam {formatDate(plant.plantedAt)}</p>
-                <p className="flex items-center gap-2 text-forest/70">📏 Tinggi {plant.height} cm</p>
-                <p className="flex items-center gap-2 text-forest/70">💧 Terakhir disiram {formatDate(plant.lastWatered)}</p>
+                <p className="flex items-center gap-2 text-[var(--text-secondary)]">📍 {plant.location} · Pot {plant.pot}</p>
+                <p className="flex items-center gap-2 text-[var(--text-secondary)]">📅 Ditanam {formatDate(plant.plantedAt)}</p>
+                <p className="flex items-center gap-2 text-[var(--text-secondary)]">📏 Tinggi {plant.height} cm</p>
+                <p className="flex items-center gap-2 text-[var(--text-secondary)]">💧 Terakhir disiram {formatDate(plant.lastWatered)}</p>
               </div>
               <Button className="mt-5 w-full" onClick={handleWater}>
                 💧 Siram sekarang
@@ -85,15 +85,15 @@ export default function PlantDetail() {
           </div>
 
           {/* Panduan spesies */}
-          <div className="rounded-3xl border border-leaf-100 bg-white p-5 shadow-soft">
-            <h2 className="text-lg font-semibold text-forest">Panduan {species.name}</h2>
+          <div className="rounded-3xl border border-[var(--border-primary)] bg-[var(--bg-card)] p-5 shadow-soft backdrop-blur-sm">
+            <h2 className="text-lg font-semibold text-[var(--text-primary)]">Panduan {species.name}</h2>
             <div className="mt-3 space-y-2.5">
               {infoRows.map((r) => (
                 <div key={r.label} className="flex items-start gap-3 text-sm">
                   <span className="text-base">{r.icon}</span>
                   <div>
-                    <p className="text-xs font-bold uppercase tracking-wide text-leaf-900/45">{r.label}</p>
-                    <p className="text-leaf-900/75">{r.value}</p>
+                    <p className="text-xs font-bold uppercase tracking-wide text-[var(--text-muted)]">{r.label}</p>
+                    <p className="text-[var(--text-secondary)]">{r.value}</p>
                   </div>
                 </div>
               ))}
@@ -103,17 +103,17 @@ export default function PlantDetail() {
 
         {/* Grafik & perawatan */}
         <div className="space-y-6">
-          <div className="rounded-3xl border border-leaf-100 bg-white p-6 shadow-soft">
+          <div className="rounded-3xl border border-[var(--border-primary)] bg-[var(--bg-card)] p-6 shadow-soft backdrop-blur-sm">
             <div className="flex items-center justify-between">
               <h2 className="section-title">📈 Riwayat Pertumbuhan</h2>
-              <span className="rounded-full bg-leaf-100 px-3 py-1 text-xs font-bold text-leaf-700">+{plant.height - plant.growthLogs[0].height} cm total</span>
+              <span className="rounded-full bg-leaf-800/20 px-3 py-1 text-xs font-bold text-leaf-400">+{plant.height - plant.growthLogs[0].height} cm total</span>
             </div>
             <div className="mt-4">
               <GrowthChart logs={plant.growthLogs} />
             </div>
           </div>
 
-          <div className="rounded-3xl border border-leaf-100 bg-white p-6 shadow-soft">
+          <div className="rounded-3xl border border-[var(--border-primary)] bg-[var(--bg-card)] p-6 shadow-soft backdrop-blur-sm">
             <h2 className="section-title">🔔 Jadwal Perawatan</h2>
             <div className="mt-4 space-y-3">
               {plant.reminders.map((r) => (
@@ -135,7 +135,7 @@ export default function PlantDetail() {
           </div>
 
           {/* Catatan perawatan */}
-          <div className="rounded-3xl border border-leaf-100 bg-white p-6 shadow-soft">
+          <div className="rounded-3xl border border-[var(--border-primary)] bg-[var(--bg-card)] p-6 shadow-soft backdrop-blur-sm">
             <h2 className="section-title">📒 Catatan Perawatan</h2>
             <div className="mt-4 space-y-3">
               {plant.careLogs.map((log, i) => {

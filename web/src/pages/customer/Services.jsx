@@ -43,7 +43,7 @@ export default function Services() {
           onClick={() => setCategory('')}
           className={cx(
             'rounded-full px-4 py-2 text-sm font-semibold transition',
-            !category ? 'bg-leaf-600 text-white shadow-soft' : 'bg-white text-leaf-900/60 ring-1 ring-leaf-200 hover:bg-leaf-50',
+            !category ? 'bg-leaf-600 text-white shadow-soft' : 'bg-[var(--bg-card)] text-[var(--text-muted)] ring-1 ring-[var(--border-primary)] hover:bg-[var(--bg-card-hover)]',
           )}
         >
           Semua
@@ -80,11 +80,11 @@ export default function Services() {
                 <Link
                   key={s.id}
                   to={`/services/${s.id}`}
-                  className="group rounded-2xl border border-leaf-100 bg-white p-5 shadow-soft transition-all duration-200 hover:shadow-lift hover:-translate-y-0.5"
+                  className="group rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-card)] p-5 shadow-soft backdrop-blur-sm transition-all duration-200 hover:shadow-lift hover:-translate-y-0.5"
                 >
                   {/* Category badge */}
                   <div className="flex items-center justify-between">
-                    <span className="inline-flex items-center gap-1 rounded-full bg-leaf-100 px-3 py-1 text-xs font-semibold text-leaf-700">
+                    <span className="inline-flex items-center gap-1 rounded-full bg-leaf-800/20 px-3 py-1 text-xs font-semibold text-leaf-400">
                       {cat?.icon} {cat?.label || s.category}
                     </span>
                     <div className="flex items-center gap-1 text-sm">
@@ -95,26 +95,26 @@ export default function Services() {
                   </div>
 
                   {/* Title */}
-                  <h3 className="mt-3 text-lg font-semibold text-forest group-hover:text-leaf-700 transition-colors">
+                  <h3 className="mt-3 text-lg font-semibold text-[var(--text-primary)] group-hover:text-leaf-400 transition-colors">
                     {s.name}
                   </h3>
 
                   {/* Provider */}
-                  <p className="mt-1 text-sm text-leaf-900/50">oleh {s.provider?.name}</p>
+                  <p className="mt-1 text-sm text-[var(--text-muted)]">oleh {s.provider?.name}</p>
 
                   {/* Description */}
-                  <p className="mt-2 text-sm text-leaf-900/60 line-clamp-2">{s.description}</p>
+                  <p className="mt-2 text-sm text-[var(--text-secondary)] line-clamp-2">{s.description}</p>
 
                   {/* Meta */}
-                  <div className="mt-4 flex flex-wrap items-center gap-3 text-xs text-leaf-900/50">
+                  <div className="mt-4 flex flex-wrap items-center gap-3 text-xs text-[var(--text-muted)]">
                     <span className="inline-flex items-center gap-1">⏱️ {durationText(s.duration)}</span>
                     <span className="inline-flex items-center gap-1">📍 {s.serviceArea}</span>
                   </div>
 
                   {/* Price */}
-                  <div className="mt-4 flex items-center justify-between border-t border-leaf-50 pt-3">
+                  <div className="mt-4 flex items-center justify-between border-t border-[var(--border-secondary)] pt-3">
                     <div>
-                      <p className="text-[10px] font-medium text-leaf-900/40">Harga per kunjungan</p>
+                      <p className="text-[10px] font-medium text-[var(--text-muted)]">Harga per kunjungan</p>
                       <p className="text-lg font-extrabold text-leaf-700">{formatRupiah(s.price)}</p>
                     </div>
                     <span className="rounded-xl bg-leaf-600 px-4 py-2 text-sm font-semibold text-white opacity-0 group-hover:opacity-100 transition-opacity">

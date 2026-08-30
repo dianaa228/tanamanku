@@ -91,29 +91,29 @@ export default function ServiceDetail() {
       </Link>
 
       {/* Card */}
-      <div className="rounded-3xl border border-leaf-100 bg-white shadow-soft overflow-hidden">
+      <div className="rounded-3xl border border-[var(--border-primary)] bg-[var(--bg-card)] shadow-soft backdrop-blur-sm overflow-hidden">
         {/* Header */}
         <div className="bg-gradient-to-br from-leaf-50 to-leaf-100 px-6 py-8 sm:px-8">
           <Badge className="bg-white/80 text-leaf-700">
             {cat?.icon} {cat?.label || service.category}
           </Badge>
-          <h1 className="display mt-4 text-2xl font-semibold text-forest sm:text-3xl">{service.name}</h1>
-          <p className="mt-1 text-sm text-muted">oleh <span className="font-semibold text-leaf-700">{service.provider?.name}</span></p>
+          <h1 className="display mt-4 text-2xl font-semibold text-[var(--text-primary)] sm:text-3xl">{service.name}</h1>
+          <p className="mt-1 text-sm text-[var(--text-secondary)]">oleh <span className="font-semibold text-leaf-400">{service.provider?.name}</span></p>
         </div>
 
         {/* Body */}
         <div className="px-6 py-6 sm:px-8 space-y-6">
           {/* Stats */}
           <div className="grid grid-cols-3 gap-4">
-            <div className="rounded-2xl bg-leaf-50 px-4 py-3 text-center">
+            <div className="rounded-2xl bg-leaf-800/20 px-4 py-3 text-center">
               <p className="text-2xl font-extrabold text-leaf-700">{formatRupiah(service.price)}</p>
               <p className="text-[11px] text-leaf-900/50">per kunjungan</p>
             </div>
-            <div className="rounded-2xl bg-sky-50 px-4 py-3 text-center">
+            <div className="rounded-2xl bg-sky-800/20 px-4 py-3 text-center">
               <p className="text-2xl font-extrabold text-sky-700">{durationText(service.duration)}</p>
               <p className="text-[11px] text-leaf-900/50">durasi</p>
             </div>
-            <div className="rounded-2xl bg-amber-50 px-4 py-3 text-center">
+            <div className="rounded-2xl bg-amber-800/20 px-4 py-3 text-center">
               <div className="flex items-center justify-center gap-1">
                 <span className="text-lg">⭐</span>
                 <p className="text-2xl font-extrabold text-amber-700">{service.ratingAvg}</p>
@@ -124,24 +124,24 @@ export default function ServiceDetail() {
 
           {/* Description */}
           <div>
-            <h2 className="text-base font-semibold text-forest">Deskripsi Layanan</h2>
-            <p className="mt-2 text-sm leading-relaxed text-leaf-900/70">{service.description}</p>
+            <h2 className="text-base font-semibold text-[var(--text-primary)]">Deskripsi Layanan</h2>
+            <p className="mt-2 text-sm leading-relaxed text-[var(--text-secondary)]">{service.description}</p>
           </div>
 
           {/* Info */}
           <div className="grid gap-3 sm:grid-cols-2">
-            <div className="flex items-center gap-3 rounded-xl bg-leaf-50 px-4 py-3">
+            <div className="flex items-center gap-3 rounded-xl bg-leaf-800/10 px-4 py-3">
               <span className="text-xl">📍</span>
               <div>
-                <p className="text-[11px] text-leaf-900/40">Area Layanan</p>
-                <p className="text-sm font-semibold text-forest">{service.serviceArea}</p>
+                <p className="text-[11px] text-[var(--text-muted)]">Area Layanan</p>
+                <p className="text-sm font-semibold text-[var(--text-primary)]">{service.serviceArea}</p>
               </div>
             </div>
-            <div className="flex items-center gap-3 rounded-xl bg-leaf-50 px-4 py-3">
+            <div className="flex items-center gap-3 rounded-xl bg-leaf-800/10 px-4 py-3">
               <span className="text-xl">📞</span>
               <div>
-                <p className="text-[11px] text-leaf-900/40">Provider</p>
-                <p className="text-sm font-semibold text-forest">{service.provider?.name}</p>
+                <p className="text-[11px] text-[var(--text-muted)]">Provider</p>
+                <p className="text-sm font-semibold text-[var(--text-primary)]">{service.provider?.name}</p>
               </div>
             </div>
           </div>
@@ -157,30 +157,30 @@ export default function ServiceDetail() {
       <Modal open={modalOpen} onClose={() => setModalOpen(false)} title="📝 Pesan Layanan">
         <form onSubmit={handleBook} className="space-y-4">
           {/* Service summary */}
-          <div className="rounded-xl bg-leaf-50 px-4 py-3">
-            <p className="text-sm font-semibold text-forest">{service.name}</p>
-            <p className="text-xs text-leaf-900/50">{formatRupiah(service.price)} · {durationText(service.duration)}</p>
+          <div className="rounded-xl bg-leaf-800/10 px-4 py-3">
+            <p className="text-sm font-semibold text-[var(--text-primary)]">{service.name}</p>
+            <p className="text-xs text-[var(--text-muted)]">{formatRupiah(service.price)} · {durationText(service.duration)}</p>
           </div>
 
           {/* Schedule */}
           <div className="grid gap-4 sm:grid-cols-2">
             <div>
-              <label className="mb-1 block text-sm font-semibold text-leaf-900">Tanggal *</label>
+              <label className="mb-1 block text-sm font-semibold text-[var(--text-primary)]">Tanggal *</label>
               <input
                 type="date"
                 value={form.schedule_date}
                 onChange={set('schedule_date')}
                 min={minDate}
                 required
-                className="w-full rounded-xl border border-leaf-200 bg-white px-4 py-2.5 text-sm focus:border-leaf-400 focus:outline-none"
+                className="w-full rounded-xl border border-[var(--border-primary)] bg-[var(--bg-input)] px-4 py-2.5 text-sm text-[var(--text-primary)] focus:border-leaf-400 focus:outline-none"
               />
             </div>
             <div>
-              <label className="mb-1 block text-sm font-semibold text-leaf-900">Jam *</label>
+              <label className="mb-1 block text-sm font-semibold text-[var(--text-primary)]">Jam *</label>
               <select
                 value={form.schedule_time}
                 onChange={set('schedule_time')}
-                className="w-full rounded-xl border border-leaf-200 bg-white px-4 py-2.5 text-sm focus:border-leaf-400 focus:outline-none"
+                className="w-full rounded-xl border border-[var(--border-primary)] bg-[var(--bg-input)] px-4 py-2.5 text-sm text-[var(--text-primary)] focus:border-leaf-400 focus:outline-none"
               >
                 {['07:00', '08:00', '09:00', '10:00', '11:00', '13:00', '14:00', '15:00', '16:00'].map((t) => (
                   <option key={t} value={t}>{t} WIB</option>
@@ -191,7 +191,7 @@ export default function ServiceDetail() {
 
           {/* Address */}
           <div>
-            <label className="mb-1 block text-sm font-semibold text-leaf-900">Label Lokasi</label>
+            <label className="mb-1 block text-sm font-semibold text-[var(--text-primary)]">Label Lokasi</label>
             <input
               value={form.address_label}
               onChange={set('address_label')}
@@ -200,7 +200,7 @@ export default function ServiceDetail() {
             />
           </div>
           <div>
-            <label className="mb-1 block text-sm font-semibold text-leaf-900">Alamat Lengkap *</label>
+            <label className="mb-1 block text-sm font-semibold text-[var(--text-primary)]">Alamat Lengkap *</label>
             <textarea
               value={form.address_street}
               onChange={set('address_street')}
@@ -212,30 +212,30 @@ export default function ServiceDetail() {
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
             <div>
-              <label className="mb-1 block text-sm font-semibold text-leaf-900">Kota *</label>
+              <label className="mb-1 block text-sm font-semibold text-[var(--text-primary)]">Kota *</label>
               <input
                 value={form.address_city}
                 onChange={set('address_city')}
                 required
                 placeholder="Jakarta Selatan"
-                className="w-full rounded-xl border border-leaf-200 bg-white px-4 py-2.5 text-sm focus:border-leaf-400 focus:outline-none"
+                className="w-full rounded-xl border border-[var(--border-primary)] bg-[var(--bg-input)] px-4 py-2.5 text-sm text-[var(--text-primary)] focus:border-leaf-400 focus:outline-none"
               />
             </div>
             <div>
-              <label className="mb-1 block text-sm font-semibold text-leaf-900">No. Telepon *</label>
+              <label className="mb-1 block text-sm font-semibold text-[var(--text-primary)]">No. Telepon *</label>
               <input
                 value={form.address_phone}
                 onChange={set('address_phone')}
                 required
                 placeholder="0812..."
-                className="w-full rounded-xl border border-leaf-200 bg-white px-4 py-2.5 text-sm focus:border-leaf-400 focus:outline-none"
+                className="w-full rounded-xl border border-[var(--border-primary)] bg-[var(--bg-input)] px-4 py-2.5 text-sm text-[var(--text-primary)] focus:border-leaf-400 focus:outline-none"
               />
             </div>
           </div>
 
           {/* Note */}
           <div>
-            <label className="mb-1 block text-sm font-semibold text-leaf-900">Catatan (opsional)</label>
+            <label className="mb-1 block text-sm font-semibold text-[var(--text-primary)]">Catatan (opsional)</label>
             <textarea
               value={form.note}
               onChange={set('note')}
@@ -246,10 +246,10 @@ export default function ServiceDetail() {
           </div>
 
           {/* Total */}
-          <div className="rounded-xl bg-leaf-50 px-4 py-3">
+          <div className="rounded-xl bg-leaf-800/10 px-4 py-3">
             <div className="flex items-center justify-between">
-              <span className="text-sm text-leaf-900/60">Total Biaya</span>
-              <span className="text-xl font-extrabold text-leaf-700">{formatRupiah(service.price)}</span>
+              <span className="text-sm text-[var(--text-secondary)]">Total Biaya</span>
+              <span className="text-xl font-extrabold text-leaf-400">{formatRupiah(service.price)}</span>
             </div>
           </div>
 

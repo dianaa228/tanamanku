@@ -47,15 +47,15 @@ export default function LoyaltyHistory() {
 
       {/* Summary */}
       <div className="mt-6 grid grid-cols-3 gap-3">
-        <div className="rounded-2xl bg-leaf-50 px-4 py-3 text-center">
+        <div className="rounded-2xl bg-leaf-800/20 px-4 py-3 text-center">
           <p className="text-xs text-leaf-900/40">Total Masuk</p>
           <p className="text-lg font-extrabold text-leaf-600">+{totalEarned.toLocaleString('id-ID')}</p>
         </div>
-        <div className="rounded-2xl bg-rose-50 px-4 py-3 text-center">
+        <div className="rounded-2xl bg-rose-800/20 px-4 py-3 text-center">
           <p className="text-xs text-leaf-900/40">Total Tukar</p>
           <p className="text-lg font-extrabold text-rose-600">-{totalRedeemed.toLocaleString('id-ID')}</p>
         </div>
-        <div className="rounded-2xl bg-sky-50 px-4 py-3 text-center">
+        <div className="rounded-2xl bg-sky-800/20 px-4 py-3 text-center">
           <p className="text-xs text-leaf-900/40">Selisih</p>
           <p className="text-lg font-extrabold text-sky-700">
             {(totalEarned - totalRedeemed) > 0 ? '+' : ''}{(totalEarned - totalRedeemed).toLocaleString('id-ID')}
@@ -71,7 +71,7 @@ export default function LoyaltyHistory() {
             onClick={() => setTab(t.value)}
             className={cx(
               'shrink-0 rounded-full px-4 py-2 text-sm font-semibold transition',
-              tab === t.value ? 'bg-leaf-600 text-white' : 'bg-white text-leaf-900/60 ring-1 ring-leaf-200 hover:bg-leaf-50',
+              tab === t.value ? 'bg-leaf-600 text-white' : 'bg-[var(--bg-card)] text-[var(--text-muted)] ring-1 ring-[var(--border-primary)] hover:bg-[var(--bg-card-hover)]',
             )}
           >
             {t.label}
@@ -91,7 +91,7 @@ export default function LoyaltyHistory() {
           />
         ) : (
           history.map((h) => (
-            <div key={h.id} className="flex items-center gap-4 rounded-2xl border border-leaf-100 bg-white px-5 py-4 shadow-soft">
+            <div key={h.id} className="flex items-center gap-4 rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-card)] px-5 py-4 shadow-soft backdrop-blur-sm">
               <span className={cx(
                 'flex h-12 w-12 items-center justify-center rounded-2xl text-xl',
                 h.type === 'earn' ? 'bg-leaf-100' : h.type === 'redeem' ? 'bg-rose-100' : 'bg-sun-100',
@@ -100,8 +100,8 @@ export default function LoyaltyHistory() {
               </span>
 
               <div className="flex-1 min-w-0">
-                <p className="font-semibold text-forest">{h.description}</p>
-                <p className="text-xs text-leaf-900/40">{formatDateTime(h.createdAt)}</p>
+                <p className="font-semibold text-[var(--text-primary)]">{h.description}</p>
+                <p className="text-xs text-[var(--text-muted)]">{formatDateTime(h.createdAt)}</p>
               </div>
 
               <span className={cx(

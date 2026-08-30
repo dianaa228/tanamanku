@@ -41,7 +41,7 @@ export default function NurseryDetail() {
       </Link>
 
       {/* Hero */}
-      <div className="rounded-3xl border border-leaf-100 bg-white shadow-soft overflow-hidden">
+      <div className="rounded-3xl border border-[var(--border-primary)] bg-[var(--bg-card)] shadow-soft backdrop-blur-sm overflow-hidden">
         <div className="h-48 sm:h-64 bg-gradient-to-br from-leaf-100 to-leaf-50 flex items-center justify-center text-8xl">
           🏪
         </div>
@@ -51,22 +51,22 @@ export default function NurseryDetail() {
           <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
             <div>
               <div className="flex items-center gap-3">
-                <h1 className="display text-2xl font-semibold text-forest sm:text-3xl">{nursery.name}</h1>
+                <h1 className="display text-2xl font-semibold text-[var(--text-primary)] sm:text-3xl">{nursery.name}</h1>
                 <Badge className={nursery.isOpen ? 'bg-leaf-100 text-leaf-700' : 'bg-gray-100 text-gray-500'}>
                   {nursery.isOpen ? '🟢 Buka' : '🔴 Tutup'}
                 </Badge>
               </div>
-              <p className="mt-1 text-sm text-muted">Berdiri sejak {nursery.foundedYear} · Dimiliki oleh {nursery.owner?.name}</p>
+              <p className="mt-1 text-sm text-[var(--text-secondary)]">Berdiri sejak {nursery.foundedYear} · Dimiliki oleh {nursery.owner?.name}</p>
             </div>
             <div className="flex items-center gap-2">
               <span className="text-sun-400 text-xl">⭐</span>
-              <span className="display text-2xl font-semibold text-forest">{nursery.ratingAvg}</span>
-              <span className="text-sm text-muted">({nursery.reviewsCount} ulasan)</span>
+              <span className="display text-2xl font-semibold text-[var(--text-primary)]">{nursery.ratingAvg}</span>
+              <span className="text-sm text-[var(--text-secondary)]">({nursery.reviewsCount} ulasan)</span>
             </div>
           </div>
 
           {/* Description */}
-          <p className="mt-4 text-sm leading-relaxed text-leaf-900/70">{nursery.description}</p>
+          <p className="mt-4 text-sm leading-relaxed text-[var(--text-secondary)]">{nursery.description}</p>
 
           {/* Categories */}
           <div className="mt-4 flex flex-wrap gap-2">
@@ -77,28 +77,28 @@ export default function NurseryDetail() {
 
           {/* Info Cards */}
           <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            <div className="flex items-center gap-3 rounded-xl bg-leaf-50 px-4 py-3">
+            <div className="flex items-center gap-3 rounded-xl bg-leaf-800/10 px-4 py-3">
               <span className="text-xl">📍</span>
               <div>
                 <p className="text-[11px] text-leaf-900/40">Alamat</p>
                 <p className="text-sm font-semibold text-leaf-950">{nursery.address}</p>
               </div>
             </div>
-            <div className="flex items-center gap-3 rounded-xl bg-leaf-50 px-4 py-3">
+            <div className="flex items-center gap-3 rounded-xl bg-leaf-800/10 px-4 py-3">
               <span className="text-xl">🕐</span>
               <div>
                 <p className="text-[11px] text-leaf-900/40">Jam Buka</p>
                 <p className="text-sm font-semibold text-leaf-950">{nursery.hours}</p>
               </div>
             </div>
-            <div className="flex items-center gap-3 rounded-xl bg-leaf-50 px-4 py-3">
+            <div className="flex items-center gap-3 rounded-xl bg-leaf-800/10 px-4 py-3">
               <span className="text-xl">📞</span>
               <div>
                 <p className="text-[11px] text-leaf-900/40">Telepon</p>
                 <p className="text-sm font-semibold text-leaf-950">{nursery.phone}</p>
               </div>
             </div>
-            <div className="flex items-center gap-3 rounded-xl bg-leaf-50 px-4 py-3">
+            <div className="flex items-center gap-3 rounded-xl bg-leaf-800/10 px-4 py-3">
               <span className="text-xl">📧</span>
               <div>
                 <p className="text-[11px] text-leaf-900/40">Email</p>
@@ -138,21 +138,21 @@ export default function NurseryDetail() {
         </div>
 
         {products.length === 0 ? (
-          <div className="mt-6 rounded-2xl border border-dashed border-leaf-200 bg-leaf-50/50 p-12 text-center">
+          <div className="mt-6 rounded-2xl border border-dashed border-[var(--border-primary)] bg-[var(--bg-card)] p-12 text-center backdrop-blur-sm">
             <p className="text-4xl">📦</p>
             <p className="mt-2 text-sm text-leaf-900/60">Belum ada produk</p>
           </div>
         ) : (
           <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {products.map((p) => (
-              <div key={p.id} className="rounded-2xl border border-leaf-100 bg-white p-4 shadow-soft transition-all hover:shadow-lift">
+              <div key={p.id} className="rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-card)] p-4 shadow-soft backdrop-blur-sm transition-all hover:shadow-lift">
                 <div className="flex items-start gap-3">
                   <div className="h-16 w-16 shrink-0 rounded-xl bg-leaf-100 flex items-center justify-center text-2xl">
                     🌱
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-semibold text-forest truncate">{p.name}</p>
-                    <p className="text-xs text-leaf-900/50">{p.category}</p>
+                    <p className="text-sm font-semibold text-[var(--text-primary)] truncate">{p.name}</p>
+                    <p className="text-xs text-[var(--text-muted)]">{p.category}</p>
                     <div className="mt-1 flex items-center justify-between">
                       <p className="text-base font-extrabold text-leaf-700">{formatRupiah(p.price)}</p>
                       <p className={cx('text-xs font-semibold', p.stock > 0 ? 'text-leaf-600' : 'text-rose-600')}>

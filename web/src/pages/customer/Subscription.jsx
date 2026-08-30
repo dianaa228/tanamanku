@@ -71,7 +71,7 @@ export default function Subscription() {
       {/* Header */}
       <div className="text-center animate-fade-up">
         <h1 className="page-title">⭐ Pilih Paket Langganan</h1>
-        <p className="mt-2 text-sm text-leaf-900/50 max-w-lg mx-auto">
+        <p className="mt-2 text-sm text-[var(--text-secondary)] max-w-lg mx-auto">
           Tingkatkan pengalaman berkebunmu dengan fitur premium. Mulai dari gratis!
         </p>
       </div>
@@ -183,9 +183,9 @@ export default function Subscription() {
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-leaf-200">
-                <th className="py-3 px-4 text-left font-semibold text-forest">Fitur</th>
+                <th className="py-3 px-4 text-left font-semibold text-[var(--text-primary)]">Fitur</th>
                 {plans.map((p) => (
-                  <th key={p.id} className="py-3 px-4 text-center font-semibold text-forest">
+                  <th key={p.id} className="py-3 px-4 text-center font-semibold text-[var(--text-primary)]">
                     {p.badge} {p.name}
                   </th>
                 ))}
@@ -205,10 +205,10 @@ export default function Subscription() {
                 { feature: 'Komisi', free: '5%', pro: '5%', seller: '3%' },
               ].map((row, i) => (
                 <tr key={i} className={cx('border-b border-leaf-100', i % 2 === 0 ? 'bg-leaf-50/50' : 'bg-white')}>
-                  <td className="py-3 px-4 font-semibold text-forest">{row.feature}</td>
-                  <td className="py-3 px-4 text-center text-leaf-900/60">{row.free}</td>
-                  <td className="py-3 px-4 text-center text-leaf-900/60">{row.pro}</td>
-                  <td className="py-3 px-4 text-center text-leaf-900/60">{row.seller}</td>
+                  <td className="py-3 px-4 font-semibold text-[var(--text-primary)]">{row.feature}</td>
+                  <td className="py-3 px-4 text-center text-[var(--text-secondary)]">{row.free}</td>
+                  <td className="py-3 px-4 text-center text-[var(--text-secondary)]">{row.pro}</td>
+                  <td className="py-3 px-4 text-center text-[var(--text-secondary)]">{row.seller}</td>
                 </tr>
               ))}
             </tbody>
@@ -249,7 +249,7 @@ export default function Subscription() {
 
             {/* Payment Method */}
             <div>
-              <label className="mb-2 block text-sm font-semibold text-leaf-900">Metode Pembayaran</label>
+              <label className="mb-2 block text-sm font-semibold text-[var(--text-primary)]">Metode Pembayaran</label>
               <div className="grid grid-cols-2 gap-3">
                 {[
                   { value: 'ewallet', label: 'E-Wallet', icon: '📱', desc: 'GoPay, OVO, DANA' },
@@ -269,8 +269,8 @@ export default function Subscription() {
                     )}
                   >
                     <span className="text-2xl">{m.icon}</span>
-                    <p className="mt-1 text-sm font-semibold text-leaf-950">{m.label}</p>
-                    <p className="text-[10px] text-leaf-900/40">{m.desc}</p>
+                    <p className="mt-1 text-sm font-semibold text-[var(--text-primary)]">{m.label}</p>
+                    <p className="text-[10px] text-[var(--text-muted)]">{m.desc}</p>
                   </button>
                 ))}
               </div>
@@ -279,7 +279,7 @@ export default function Subscription() {
             {/* Total */}
             <div className="rounded-xl bg-leaf-50 px-4 py-3">
               <div className="flex items-center justify-between">
-                <span className="text-sm text-leaf-900/60">Total hari ini</span>
+                <span className="text-sm text-[var(--text-secondary)]">Total hari ini</span>
                 <span className="text-xl font-extrabold text-leaf-700">{formatRupiah(selectedPlan.price)}</span>
               </div>
             </div>

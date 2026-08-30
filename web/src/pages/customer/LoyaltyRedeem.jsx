@@ -59,9 +59,9 @@ export default function LoyaltyRedeem() {
           <h1 className="page-title">Tukar Poin</h1>
           <p className="page-subtitle">Tukar poin Anda dengan voucher dan hadiah menarik</p>
         </div>
-        <div className="shrink-0 rounded-2xl bg-leaf-100 px-5 py-3 text-center">
-          <p className="text-xs text-leaf-900/50">Poin tersedia</p>
-          <p className="text-2xl font-extrabold text-leaf-700">{profile?.points.toLocaleString('id-ID')}</p>
+        <div className="shrink-0 rounded-2xl bg-leaf-800/20 px-5 py-3 text-center">
+          <p className="text-xs text-[var(--text-muted)]">Poin tersedia</p>
+          <p className="text-2xl font-extrabold text-leaf-400">{profile?.points.toLocaleString('id-ID')}</p>
         </div>
       </div>
 
@@ -71,7 +71,7 @@ export default function LoyaltyRedeem() {
           onClick={() => setFilter('')}
           className={cx(
             'rounded-full px-4 py-2 text-sm font-semibold transition',
-            !filter ? 'bg-leaf-600 text-white shadow-soft' : 'bg-white text-leaf-900/60 ring-1 ring-leaf-200 hover:bg-leaf-50',
+            !filter ? 'bg-leaf-600 text-white shadow-soft' : 'bg-[var(--bg-card)] text-[var(--text-muted)] ring-1 ring-[var(--border-primary)] hover:bg-[var(--bg-card-hover)]',
           )}
         >
           Semua
@@ -106,8 +106,8 @@ export default function LoyaltyRedeem() {
                 <div
                   key={r.id}
                   className={cx(
-                    'rounded-2xl border bg-white p-5 shadow-soft transition-all',
-                    canAfford ? 'border-leaf-100 hover:shadow-lift hover:-translate-y-0.5' : 'border-leaf-100 opacity-60',
+                    'rounded-2xl border bg-[var(--bg-card)] p-5 shadow-soft backdrop-blur-sm transition-all',
+                    canAfford ? 'border-[var(--border-primary)] hover:shadow-lift hover:-translate-y-0.5' : 'border-[var(--border-primary)] opacity-60',
                   )}
                 >
                   <div className="flex items-start justify-between">
@@ -117,17 +117,17 @@ export default function LoyaltyRedeem() {
                     </Badge>
                   </div>
 
-                  <h3 className="mt-3 text-lg font-semibold text-forest">{r.name}</h3>
-                  <p className="mt-1 text-sm text-leaf-900/60 line-clamp-2">{r.description}</p>
+                  <h3 className="mt-3 text-lg font-semibold text-[var(--text-primary)]">{r.name}</h3>
+                  <p className="mt-1 text-sm text-[var(--text-secondary)] line-clamp-2">{r.description}</p>
 
                   <div className="mt-4 flex items-center justify-between">
                     <div>
-                      <p className="text-xs text-leaf-900/40">Biaya poin</p>
+                      <p className="text-xs text-[var(--text-muted)]">Biaya poin</p>
                       <p className={cx('text-xl font-extrabold', canAfford ? 'text-leaf-700' : 'text-gray-400')}>
                         {r.pointsCost.toLocaleString('id-ID')} poin
                       </p>
                     </div>
-                    <p className="text-xs text-leaf-900/40">Stok: {r.stock}</p>
+                    <p className="text-xs text-[var(--text-muted)]">Stok: {r.stock}</p>
                   </div>
 
                   <Button
@@ -150,22 +150,22 @@ export default function LoyaltyRedeem() {
       <Modal open={!!confirmModal} onClose={() => setConfirmModal(null)} title="✅ Konfirmasi Penukaran">
         {confirmModal && (
           <div className="space-y-4">
-            <div className="rounded-xl bg-leaf-50 px-4 py-4 text-center">
+            <div className="rounded-xl bg-leaf-800/10 px-4 py-4 text-center">
               <span className="text-4xl">{confirmModal.icon}</span>
-              <p className="mt-2 font-semibold text-forest">{confirmModal.name}</p>
-              <p className="text-sm text-leaf-900/60">{confirmModal.description}</p>
+              <p className="mt-2 font-semibold text-[var(--text-primary)]">{confirmModal.name}</p>
+              <p className="text-sm text-[var(--text-secondary)]">{confirmModal.description}</p>
             </div>
 
-            <div className="flex items-center justify-between rounded-xl bg-white border border-leaf-100 px-4 py-3">
-              <span className="text-sm text-leaf-900/60">Poin Anda saat ini</span>
-              <span className="font-bold text-leaf-950">{profile?.points.toLocaleString('id-ID')}</span>
+            <div className="flex items-center justify-between rounded-xl bg-[var(--bg-card)] border border-[var(--border-primary)] px-4 py-3">
+              <span className="text-sm text-[var(--text-secondary)]">Poin Anda saat ini</span>
+              <span className="font-bold text-[var(--text-primary)]">{profile?.points.toLocaleString('id-ID')}</span>
             </div>
-            <div className="flex items-center justify-between rounded-xl bg-white border border-leaf-100 px-4 py-3">
-              <span className="text-sm text-leaf-900/60">Biaya penukaran</span>
+            <div className="flex items-center justify-between rounded-xl bg-[var(--bg-card)] border border-[var(--border-primary)] px-4 py-3">
+              <span className="text-sm text-[var(--text-secondary)]">Biaya penukaran</span>
               <span className="font-bold text-rose-600">-{confirmModal.pointsCost.toLocaleString('id-ID')}</span>
             </div>
-            <div className="flex items-center justify-between rounded-xl bg-leaf-50 px-4 py-3">
-              <span className="text-sm font-semibold text-leaf-900">Sisa poin</span>
+            <div className="flex items-center justify-between rounded-xl bg-leaf-800/10 px-4 py-3">
+              <span className="text-sm font-semibold text-[var(--text-primary)]">Sisa poin</span>
               <span className="font-bold text-leaf-700">
                 {(profile?.points - confirmModal.pointsCost).toLocaleString('id-ID')}
               </span>

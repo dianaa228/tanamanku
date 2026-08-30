@@ -138,25 +138,25 @@ export default function Alamat() {
             <div
               key={a.id}
               className={cx(
-                'rounded-3xl border bg-white p-5 shadow-soft transition',
-                a.is_default ? 'border-leaf-300 ring-1 ring-leaf-200' : 'border-leaf-100',
+                'rounded-3xl border bg-[var(--bg-card)] p-5 shadow-soft backdrop-blur-sm transition',
+                a.is_default ? 'border-leaf-400 ring-1 ring-leaf-300/50' : 'border-[var(--border-primary)]',
               )}
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="flex items-center gap-3">
-                  <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-leaf-100 text-xl">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-leaf-800/20 text-xl">
                     {['Rumah', 'Rumah Utama'].includes(a.label) ? '🏠' : ['Kantor'].includes(a.label) ? '🏢' : '📍'}
                   </span>
                   <div>
                     <div className="flex flex-wrap items-center gap-2">
-                      <p className="font-semibold text-forest">{a.label}</p>
+                      <p className="font-semibold text-[var(--text-primary)]">{a.label}</p>
                       {a.is_default && (
                         <Badge className="bg-leaf-600 text-white" icon="⭐">
                           Utama
                         </Badge>
                       )}
                     </div>
-                    <p className="text-sm text-leaf-900/60">
+                    <p className="text-sm text-[var(--text-secondary)]">
                       {a.recipient} · {a.phone}
                     </p>
                   </div>
@@ -172,10 +172,10 @@ export default function Alamat() {
                   </Button>
                 </div>
               </div>
-              <p className="mt-3 text-sm leading-relaxed text-forest/80">
+              <p className="mt-3 text-sm leading-relaxed text-[var(--text-secondary)]">
                 {a.street}, {a.district}, {a.city}, {a.province} {a.postal_code || ''}
               </p>
-              {a.created_at && <p className="mt-2 text-[11px] text-leaf-900/40">Ditambahkan {formatDate(a.created_at)}</p>}
+              {a.created_at && <p className="mt-2 text-[11px] text-[var(--text-muted)]">Ditambahkan {formatDate(a.created_at)}</p>}
             </div>
           ))
         )}
@@ -214,7 +214,7 @@ export default function Alamat() {
           <Input label="Alamat lengkap *" placeholder="Jl. ..., RT/RW, kelurahan"
             wrapperClassName="sm:col-span-2" value={form.street} error={errors.street}
             onChange={(e) => setField('street', e.target.value)} />
-          <label className="flex items-center gap-2.5 text-sm font-medium text-leaf-900 sm:col-span-2">
+          <label className="flex items-center gap-2.5 text-sm font-medium text-[var(--text-primary)] sm:col-span-2">
             <input
               type="checkbox"
               className="h-4 w-4 accent-leaf-600"

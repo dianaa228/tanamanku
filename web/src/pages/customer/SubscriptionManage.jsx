@@ -57,7 +57,7 @@ export default function SubscriptionManage() {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 animate-fade-up">
         <div>
           <h1 className="page-title">⚙️ Kelola Langganan</h1>
-          <p className="mt-1 text-sm text-leaf-900/50">Atur paket dan pembayaran Anda</p>
+          <p className="mt-1 text-sm text-[var(--text-secondary)]">Atur paket dan pembayaran Anda</p>
         </div>
         <Link to="/subscription" className="shrink-0 text-sm font-semibold text-leaf-700 hover:text-leaf-800">
           ← Lihat Paket Lain
@@ -74,12 +74,12 @@ export default function SubscriptionManage() {
             <span className="text-5xl">{currentPlan?.badge}</span>
             <div>
               <div className="flex items-center gap-2">
-                <h2 className="text-xl font-semibold text-forest">{currentPlan?.name}</h2>
+                <h2 className="text-xl font-semibold text-[var(--text-primary)]">{currentPlan?.name}</h2>
                 <Badge className={isActive ? 'bg-leaf-100 text-leaf-700' : 'bg-gray-100 text-gray-500'}>
                   {isActive ? '✓ Aktif' : 'Nonaktif'}
                 </Badge>
               </div>
-              <p className="mt-1 text-sm text-leaf-900/60">{currentPlan?.description}</p>
+              <p className="mt-1 text-sm text-[var(--text-secondary)]">{currentPlan?.description}</p>
             </div>
           </div>
           <div className="text-right">
@@ -94,28 +94,28 @@ export default function SubscriptionManage() {
 
         {/* Subscription Details */}
         <div className="mt-6 grid gap-3 sm:grid-cols-2">
-          <div className="rounded-xl bg-white px-4 py-3 border border-leaf-100">
-            <p className="text-[11px] text-leaf-900/40">Mulai Berlangganan</p>
-            <p className="text-sm font-semibold text-leaf-950">{subscription?.started_at ? formatDate(subscription.started_at) : '—'}</p>
+          <div className="rounded-xl bg-[var(--bg-card)] px-4 py-3 border border-[var(--border-primary)]">
+            <p className="text-[11px] text-[var(--text-muted)]">Mulai Berlangganan</p>
+            <p className="text-sm font-semibold text-[var(--text-primary)]">{subscription?.started_at ? formatDate(subscription.started_at) : '—'}</p>
           </div>
-          <div className="rounded-xl bg-white px-4 py-3 border border-leaf-100">
-            <p className="text-[11px] text-leaf-900/40">Berakhir</p>
-            <p className="text-sm font-semibold text-leaf-950">
+          <div className="rounded-xl bg-[var(--bg-card)] px-4 py-3 border border-[var(--border-primary)]">
+            <p className="text-[11px] text-[var(--text-muted)]">Berakhir</p>
+            <p className="text-sm font-semibold text-[var(--text-primary)]">
               {subscription?.expires_at ? formatDate(subscription.expires_at) : 'Selamanya'}
             </p>
           </div>
-          <div className="rounded-xl bg-white px-4 py-3 border border-leaf-100">
-            <p className="text-[11px] text-leaf-900/40">Pembayaran</p>
-            <p className="text-sm font-semibold text-leaf-950">
+          <div className="rounded-xl bg-[var(--bg-card)] px-4 py-3 border border-[var(--border-primary)]">
+            <p className="text-[11px] text-[var(--text-muted)]">Pembayaran</p>
+            <p className="text-sm font-semibold text-[var(--text-primary)]">
               {subscription?.payment_method === 'ewallet' ? '📱 E-Wallet' :
                subscription?.payment_method === 'transfer' ? '🏦 Transfer Bank' :
                subscription?.payment_method === 'qris' ? '🔳 QRIS' :
                subscription?.payment_method === 'card' ? '💳 Kartu' : '—'}
             </p>
           </div>
-          <div className="rounded-xl bg-white px-4 py-3 border border-leaf-100">
-            <p className="text-[11px] text-leaf-900/40">Perpanjangan Otomatis</p>
-            <p className="text-sm font-semibold text-leaf-950">
+          <div className="rounded-xl bg-[var(--bg-card)] px-4 py-3 border border-[var(--border-primary)]">
+            <p className="text-[11px] text-[var(--text-muted)]">Perpanjangan Otomatis</p>
+            <p className="text-sm font-semibold text-[var(--text-primary)]">
               {subscription?.auto_renew ? '✅ Aktif' : '❌ Nonaktif'}
             </p>
           </div>
@@ -142,9 +142,9 @@ export default function SubscriptionManage() {
           <h2 className="section-title">✨ Fitur Aktif Anda</h2>
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
             {currentPlan.features.filter((f) => f.included).map((f, i) => (
-              <div key={i} className="flex items-center gap-2 rounded-xl bg-leaf-50 px-4 py-2.5">
+              <div key={i} className="flex items-center gap-2 rounded-xl bg-leaf-800/10 px-4 py-2.5">
                 <span className="text-leaf-500">✓</span>
-                <span className="text-sm text-leaf-900/80">{f.text}</span>
+                <span className="text-sm text-[var(--text-secondary)]">{f.text}</span>
               </div>
             ))}
           </div>
@@ -155,14 +155,14 @@ export default function SubscriptionManage() {
       <div className="mt-8">
         <h2 className="section-title">🧾 Riwayat Pembayaran</h2>
         {billing.length === 0 ? (
-          <div className="mt-4 rounded-2xl border border-dashed border-leaf-200 bg-leaf-50/50 p-8 text-center">
+          <div className="mt-4 rounded-2xl border border-dashed border-[var(--border-primary)] bg-[var(--bg-card)] p-8 text-center backdrop-blur-sm">
             <p className="text-4xl">📋</p>
             <p className="mt-2 text-sm text-leaf-900/60">Belum ada riwayat pembayaran</p>
           </div>
         ) : (
           <div className="mt-4 space-y-3">
             {billing.map((b) => (
-              <div key={b.id} className="flex items-center justify-between rounded-2xl border border-leaf-100 bg-white px-5 py-4 shadow-soft">
+              <div key={b.id} className="flex items-center justify-between rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-card)] px-5 py-4 shadow-soft backdrop-blur-sm">
                 <div className="flex items-center gap-3">
                   <span className={cx(
                     'flex h-10 w-10 items-center justify-center rounded-xl text-lg',
@@ -171,8 +171,8 @@ export default function SubscriptionManage() {
                     {b.status === 'paid' ? '✅' : '⏳'}
                   </span>
                   <div>
-                    <p className="font-semibold text-leaf-950">{b.description}</p>
-                    <p className="text-xs text-leaf-900/40">{formatDate(b.date)}</p>
+                    <p className="font-semibold text-[var(--text-primary)]">{b.description}</p>
+                    <p className="text-xs text-[var(--text-muted)]">{formatDate(b.date)}</p>
                   </div>
                 </div>
                 <p className="text-lg font-extrabold text-leaf-700">{formatRupiah(b.amount)}</p>

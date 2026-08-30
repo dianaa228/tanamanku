@@ -52,8 +52,8 @@ export default function PlantDiagnosis() {
         <span className="inline-flex items-center gap-2 rounded-full border border-rose-200 bg-rose-100/60 px-4 py-1.5 text-xs font-bold text-rose-700">
           🩺 Plant Diagnosis — Cek Kesehatan
         </span>
-        <h1 className="display mt-4 text-3xl font-semibold text-forest sm:text-4xl">Tanamanmu kenapa?</h1>
-        <p className="mx-auto mt-2 max-w-md text-sm text-muted">
+        <h1 className="display mt-4 text-3xl font-semibold text-[var(--text-primary)] sm:text-4xl">Tanamanmu kenapa?</h1>
+        <p className="mx-auto mt-2 max-w-md text-sm text-[var(--text-secondary)]">
           Pilih gejala yang terlihat pada tanamanmu — kami berikan diagnosis awal dan langkah penanganannya.
         </p>
       </div>
@@ -103,12 +103,12 @@ export default function PlantDiagnosis() {
                   key={s.id}
                   onClick={() => toggle(s.id)}
                   className={cx(
-                    'flex flex-col items-center gap-2 rounded-3xl border-2 bg-white p-5 text-center transition-all hover:-translate-y-0.5 hover:shadow-lift',
-                    active ? 'border-leaf-600 bg-leaf-50 shadow-soft' : 'border-leaf-100',
+                    'flex flex-col items-center gap-2 rounded-3xl border-2 bg-[var(--bg-card)] p-5 text-center backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:shadow-lift',
+                    active ? 'border-leaf-500 bg-leaf-800/20 shadow-soft' : 'border-[var(--border-primary)]',
                   )}
                 >
                   <span className={cx('text-3xl transition-transform', active && 'scale-110')}>{s.icon}</span>
-                  <span className={cx('text-xs font-semibold', active ? 'text-leaf-800' : 'text-leaf-900/60')}>{s.label}</span>
+                  <span className={cx('text-xs font-semibold', active ? 'text-leaf-400' : 'text-[var(--text-muted)]')}>{s.label}</span>
                   <span className={cx('flex h-5 w-5 items-center justify-center rounded-full border-2 text-[10px] font-bold', active ? 'border-leaf-600 bg-leaf-600 text-white' : 'border-leaf-200')}>
                     {active ? '✓' : ''}
                   </span>

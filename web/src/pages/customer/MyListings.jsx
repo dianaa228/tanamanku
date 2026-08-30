@@ -54,7 +54,7 @@ export default function MyListings() {
             onClick={() => setTab(t.value)}
             className={cx(
               'shrink-0 rounded-full px-4 py-2 text-sm font-semibold transition',
-              tab === t.value ? 'bg-leaf-600 text-white' : 'bg-white text-leaf-900/60 ring-1 ring-leaf-200 hover:bg-leaf-50',
+              tab === t.value ? 'bg-leaf-600 text-white' : 'bg-[var(--bg-card)] text-[var(--text-muted)] ring-1 ring-[var(--border-primary)] hover:bg-[var(--bg-card-hover)]',
             )}
           >
             {t.label}
@@ -80,16 +80,16 @@ export default function MyListings() {
               <Link
                 key={l.id}
                 to={`/plant-exchange/${l.id}`}
-                className="block rounded-2xl border border-leaf-100 bg-white p-5 shadow-soft transition-all hover:shadow-lift"
+                className="block rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-card)] p-5 shadow-soft backdrop-blur-sm transition-all hover:shadow-lift"
               >
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div className="flex items-center gap-3">
-                    <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-leaf-100 text-2xl">
+                    <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-leaf-800/20 text-2xl">
                       {l.species?.scientific_name?.[0]?.toUpperCase() || '🌱'}
                     </span>
                     <div>
-                      <p className="font-semibold text-forest">{l.title}</p>
-                      <p className="text-xs text-leaf-900/50">
+                      <p className="font-semibold text-[var(--text-primary)]">{l.title}</p>
+                      <p className="text-xs text-[var(--text-muted)]">
                         {l.species?.name || 'Tanaman hias'} · {typeInfo?.label}
                       </p>
                     </div>
@@ -97,9 +97,9 @@ export default function MyListings() {
                   <Badge className={statusInfo.badge}>{statusInfo.icon} {statusInfo.label}</Badge>
                 </div>
 
-                <p className="mt-2 text-sm text-leaf-900/60 line-clamp-2">{l.description}</p>
+                <p className="mt-2 text-sm text-[var(--text-secondary)] line-clamp-2">{l.description}</p>
 
-                <div className="mt-3 flex flex-wrap items-center justify-between gap-2 text-xs text-leaf-900/40">
+                <div className="mt-3 flex flex-wrap items-center justify-between gap-2 text-xs text-[var(--text-muted)]">
                   <div className="flex items-center gap-3">
                     <span>💬 {l.offersCount} tawaran</span>
                     {l.price != null && <span className="font-bold text-leaf-700">{formatRupiah(l.price)}</span>}
