@@ -115,26 +115,26 @@ export default function Home() {
   return (
     <div ref={revealRef}>
       {/* ═══ HERO ═══ */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-leaf-50/80 via-cream to-cream">
+      <section className="relative overflow-hidden section-cream">
         {/* decorative botanical orbs */}
-        <div className="pointer-events-none absolute -right-28 -top-24 h-[420px] w-[420px] rounded-full bg-leaf-200/40 blur-3xl" />
-        <div className="pointer-events-none absolute -left-24 bottom-6 h-80 w-80 rounded-full bg-sun-100/70 blur-3xl" />
+        <div className="pointer-events-none absolute -right-28 -top-24 h-[420px] w-[420px] rounded-full bg-leaf-500/10 blur-3xl" />
+        <div className="pointer-events-none absolute -left-24 bottom-6 h-80 w-80 rounded-full bg-sun-400/10 blur-3xl" />
         <div className="pointer-events-none absolute right-1/3 top-10 text-6xl opacity-10" style={{ transform: 'rotate(-18deg)' }}>🍃</div>
 
         <div className="relative mx-auto grid max-w-7xl items-center gap-14 px-4 pb-16 pt-10 sm:px-6 lg:grid-cols-2 lg:pb-24 lg:pt-16">
           {/* Copy */}
           <div className="relative z-10">
-            <span className="inline-flex items-center gap-2 rounded-full border border-leaf-200 bg-white/70 px-4 py-1.5 text-xs font-semibold text-leaf-700 shadow-soft backdrop-blur">
+            <span className="inline-flex items-center gap-2 rounded-full border border-[var(--border-primary)] bg-[var(--bg-card)] px-4 py-1.5 text-xs font-semibold text-leaf-400 shadow-soft backdrop-blur-sm">
               <span className="h-2 w-2 rounded-full bg-leaf-500" />
               Kebun perkotaan dalam genggaman
             </span>
 
-            <h1 className="display mt-6 text-balance text-[2.6rem] font-semibold leading-[1.02] tracking-tight text-forest sm:text-6xl lg:text-[4.2rem]">
+            <h1 className="display mt-6 text-balance text-[2.6rem] font-semibold leading-[1.02] tracking-tight text-[var(--text-primary)] sm:text-6xl lg:text-[4.2rem]">
               Rawat tanamanmu.{' '}
               <span className="text-gradient-botanical">Tumbuhkan</span> kebiasaan baik.
             </h1>
 
-            <p className="mt-6 max-w-lg text-base leading-relaxed text-muted sm:text-lg">
+            <p className="mt-6 max-w-lg text-base leading-relaxed text-[var(--text-secondary)] sm:text-lg">
               Tanamanku menyatukan belanja tanaman dari nursery tepercaya, kebun pribadi yang mudah dicatat, dan pengingat perawatan cerdas — jadi berkebun terasa ringan, tidak rumit.
             </p>
 
@@ -149,14 +149,14 @@ export default function Home() {
             </div>
 
             {/* stats */}
-            <dl className="mt-10 grid grid-cols-3 gap-6 border-t border-sage-200/70 pt-7">
+            <dl className="mt-10 grid grid-cols-3 gap-6 border-t border-[var(--border-primary)] pt-7">
               {stats.map((s) => (
                 <div key={s.label}>
                   <dt className="sr-only">{s.label}</dt>
-                  <dd className="display text-2xl font-semibold text-forest sm:text-3xl">
+                  <dd className="display text-2xl font-semibold text-[var(--text-primary)] sm:text-3xl">
                     <CountUp end={s.end} suffix={s.suffix} label={s.label} />
                   </dd>
-                  <dd className="mt-1 text-xs font-medium text-muted">{s.label}</dd>
+                  <dd className="mt-1 text-xs font-medium text-[var(--text-secondary)]">{s.label}</dd>
                 </div>
               ))}
             </dl>
@@ -165,7 +165,7 @@ export default function Home() {
           {/* Visual composition */}
           <div className="relative mx-auto hidden w-full max-w-xl lg:block">
             {/* main card */}
-            <div className="relative overflow-hidden rounded-[2rem] border border-leaf-100 bg-white shadow-elevated">
+            <div className="relative overflow-hidden rounded-[2rem] border border-[var(--border-primary)] bg-[var(--bg-card)] shadow-elevated backdrop-blur-sm">
               <div className="relative overflow-hidden bg-gradient-to-br from-leaf-100 via-cream to-sun-50">
                 <div className="flex h-80 items-center justify-center">
                   <span className="animate-float text-[9rem] drop-shadow-xl">🪴</span>
@@ -173,31 +173,31 @@ export default function Home() {
               </div>
               <div className="flex items-center justify-between px-6 py-5">
                 <div>
-                  <p className="display text-lg font-semibold text-forest">Momo · Monstera</p>
-                  <p className="text-sm text-muted">Disiram 2 jam lalu · 68 cm · Sehat</p>
+                  <p className="display text-lg font-semibold text-[var(--text-primary)]">Momo · Monstera</p>
+                  <p className="text-sm text-[var(--text-secondary)]">Disiram 2 jam lalu · 68 cm · Sehat</p>
                 </div>
-                <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-leaf-50 text-xl">😊</span>
+                <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-leaf-800/20 text-xl">😊</span>
               </div>
             </div>
 
             {/* floating chip: watering */}
-            <div className="absolute -left-10 top-8 animate-float rounded-2xl border border-sage-100 bg-white px-4 py-3 shadow-card [animation-delay:1s]">
+            <div className="absolute -left-10 top-8 animate-float rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-card)] px-4 py-3 shadow-card backdrop-blur-sm [animation-delay:1s]">
               <div className="flex items-center gap-3">
-                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-50 text-lg">💧</span>
+                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-800/20 text-lg">💧</span>
                 <div>
-                  <p className="text-xs font-semibold text-forest">Pengingat siram</p>
-                  <p className="text-[11px] text-muted">Momo · hari ini</p>
+                  <p className="text-xs font-semibold text-[var(--text-primary)]">Pengingat siram</p>
+                  <p className="text-[11px] text-[var(--text-muted)]">Momo · hari ini</p>
                 </div>
               </div>
             </div>
 
             {/* floating chip: order */}
-            <div className="absolute -right-6 bottom-20 animate-float rounded-2xl border border-sage-100 bg-white px-4 py-3 shadow-card [animation-delay:2s]">
+            <div className="absolute -right-6 bottom-20 animate-float rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-card)] px-4 py-3 shadow-card backdrop-blur-sm [animation-delay:2s]">
               <div className="flex items-center gap-3">
-                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-terra-50 text-lg">🌿</span>
+                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-terra-800/20 text-lg">🌿</span>
                 <div>
-                  <p className="text-xs font-semibold text-forest">Pesanan dikemas</p>
-                  <p className="text-[11px] text-muted">2 tanaman siap antar</p>
+                  <p className="text-xs font-semibold text-[var(--text-primary)]">Pesanan dikemas</p>
+                  <p className="text-[11px] text-[var(--text-muted)]">2 tanaman siap antar</p>
                 </div>
               </div>
             </div>
@@ -213,10 +213,10 @@ export default function Home() {
       <section className="section-cream mx-auto max-w-7xl px-4 py-16 sm:px-6">
         <div className="reveal flex items-end justify-between">
           <div>
-            <p className="text-xs font-bold uppercase tracking-[0.16em] text-terra-500">Belanja</p>
-            <h2 className="display mt-2 text-3xl font-semibold text-forest sm:text-4xl">Temukan per kategori</h2>
+            <p className="text-xs font-bold uppercase tracking-[0.16em] text-terra-400">Belanja</p>
+            <h2 className="display mt-2 text-3xl font-semibold text-[var(--text-primary)] sm:text-4xl">Temukan per kategori</h2>
           </div>
-          <Link to="/explore" className="hidden text-sm font-semibold text-leaf-700 transition hover:text-leaf-800 sm:block">
+          <Link to="/explore" className="hidden text-sm font-semibold text-leaf-400 transition hover:text-leaf-300 sm:block">
             Lihat semua →
           </Link>
         </div>
@@ -228,11 +228,11 @@ export default function Home() {
               className="reveal group min-w-[9.5rem] shrink-0 sm:min-w-0"
               style={{ transitionDelay: `${i * 60}ms` }}
             >
-              <div className="flex aspect-[4/5] flex-col items-center justify-center gap-3 rounded-3xl border border-sage-100 bg-white shadow-soft transition-all duration-300 group-hover:-translate-y-1.5 group-hover:border-leaf-200 group-hover:shadow-card">
+              <div className="flex aspect-[4/5] flex-col items-center justify-center gap-3 rounded-3xl border border-[var(--border-primary)] bg-[var(--bg-card)] shadow-soft backdrop-blur-sm transition-all duration-300 group-hover:-translate-y-1.5 group-hover:border-leaf-400/50 group-hover:shadow-card">
                 <span className="text-5xl transition-transform duration-300 group-hover:scale-110">{c.emoji}</span>
                 <div className="text-center">
-                  <p className="text-sm font-bold text-forest">{c.name}</p>
-                  <p className="text-xs text-muted">{c.tagline}</p>
+                  <p className="text-sm font-bold text-[var(--text-primary)]">{c.name}</p>
+                  <p className="text-xs text-[var(--text-secondary)]">{c.tagline}</p>
                 </div>
               </div>
             </Link>
@@ -245,9 +245,9 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <div className="reveal flex items-end justify-between">
             <div>
-              <p className="text-xs font-bold uppercase tracking-[0.16em] text-terra-500">Paling diminati</p>
-              <h2 className="display mt-2 text-3xl font-semibold text-forest sm:text-4xl">Favorit minggu ini</h2>
-              <p className="mt-2 text-sm text-muted">Pilihan komunitas Tanamanku yang laris manis.</p>
+              <p className="text-xs font-bold uppercase tracking-[0.16em] text-terra-400">Paling diminati</p>
+              <h2 className="display mt-2 text-3xl font-semibold text-[var(--text-primary)] sm:text-4xl">Favorit minggu ini</h2>
+              <p className="mt-2 text-sm text-[var(--text-secondary)]">Pilihan komunitas Tanamanku yang laris manis.</p>
             </div>
             <Button to="/explore" variant="ghost" className="hidden sm:inline-flex">
               Jelajahi semua
@@ -263,10 +263,10 @@ export default function Home() {
             <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-4">
               {featured.length === 0 && (
                 <div className="col-span-full">
-                  <div className="flex flex-col items-center justify-center gap-4 rounded-[2rem] border border-dashed border-leaf-200 bg-leaf-50/40 px-6 py-16 text-center">
-                    <span className="flex h-20 w-20 items-center justify-center rounded-full bg-white text-5xl shadow-card ring-1 ring-leaf-100">🛍️</span>
-                    <h3 className="text-2xl font-semibold text-forest">Koleksi sedang disiapkan</h3>
-                    <p className="max-w-sm text-sm leading-relaxed text-muted">
+                  <div className="flex flex-col items-center justify-center gap-4 rounded-[2rem] border border-dashed border-[var(--border-primary)] bg-[var(--bg-card)] px-6 py-16 text-center backdrop-blur-sm">
+                    <span className="flex h-20 w-20 items-center justify-center rounded-full bg-[var(--bg-card)] text-5xl shadow-card ring-1 ring-[var(--border-primary)]">🛍️</span>
+                    <h3 className="text-2xl font-semibold text-[var(--text-primary)]">Koleksi sedang disiapkan</h3>
+                    <p className="max-w-sm text-sm leading-relaxed text-[var(--text-secondary)]">
                       Toko-toko kami sedang merapikan koleksi terbaru. Coba lihat lagi sebentar lagi ya!
                     </p>
                     <Button to="/explore" variant="primary">Jelajahi katalog</Button>
@@ -287,11 +287,11 @@ export default function Home() {
       <section className="section-cream mx-auto max-w-7xl px-4 py-20 sm:px-6">
         <div className="grid items-center gap-12 lg:grid-cols-2">
           <div className="reveal">
-            <p className="text-xs font-bold uppercase tracking-[0.16em] text-terra-500">Kenapa Tanamanku</p>
-            <h2 className="display mt-2 text-balance text-3xl font-semibold text-forest sm:text-4xl">
+            <p className="text-xs font-bold uppercase tracking-[0.16em] text-terra-400">Kenapa Tanamanku</p>
+            <h2 className="display mt-2 text-balance text-3xl font-semibold text-[var(--text-primary)] sm:text-4xl">
               Berbeda dari marketplace biasa — dibuat untuk pekebun sungguhan.
             </h2>
-            <p className="mt-4 max-w-lg text-base leading-relaxed text-muted">
+            <p className="mt-4 max-w-lg text-base leading-relaxed text-[var(--text-secondary)]">
               Tanamanku bukan sekadar tempat belanja. Ini rumah digital tempat setiap tanaman punya riwayat, setiap perawatan punya jadwal, dan setiap pekebun punya komunitas.
             </p>
             <ul className="mt-8 space-y-5">
@@ -301,10 +301,10 @@ export default function Home() {
                 { icon: '🤝', title: 'Nursery terverifikasi', desc: 'Jual beli bersama penjual lokal terpercaya dengan ulasan asli.' },
               ].map((f) => (
                 <li key={f.title} className="flex gap-4">
-                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-leaf-50 text-2xl ring-1 ring-leaf-100">{f.icon}</span>
+                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-leaf-800/20 text-2xl ring-1 ring-[var(--border-primary)]">{f.icon}</span>
                   <div>
-                    <p className="font-bold text-forest">{f.title}</p>
-                    <p className="text-sm leading-relaxed text-muted">{f.desc}</p>
+                    <p className="font-bold text-[var(--text-primary)]">{f.title}</p>
+                    <p className="text-sm leading-relaxed text-[var(--text-secondary)]">{f.desc}</p>
                   </div>
                 </li>
               ))}
@@ -321,12 +321,12 @@ export default function Home() {
                 <p className="display mt-4 text-4xl font-semibold">4 langkah</p>
                 <p className="mt-2 text-sm text-leaf-100/80">Dari bibit hingga kebun yang tumbuh, kami menemani.</p>
               </div>
-              <div className="mt-6 rounded-[2rem] border border-sage-100 bg-white p-7 shadow-card">
+              <div className="mt-6 rounded-[2rem] border border-[var(--border-primary)] bg-[var(--bg-card)] p-7 shadow-card backdrop-blur-sm">
                 <span className="text-4xl">🪴</span>
-                <p className="display mt-4 text-4xl font-semibold text-forest">
+                <p className="display mt-4 text-4xl font-semibold text-[var(--text-primary)]">
                   <CountUp end={siteStats.gardens || 10000} suffix="+" label="Kebun aktif" />
                 </p>
-                <p className="mt-2 text-sm text-muted">kebun aktif tumbuh bersama setiap hari.</p>
+                <p className="mt-2 text-sm text-[var(--text-secondary)]">kebun aktif tumbuh bersama setiap hari.</p>
               </div>
             </div>
             <span className="absolute -right-8 -top-8 text-6xl opacity-15" style={{ transform: 'rotate(18deg)' }}>🪴</span>
@@ -337,20 +337,20 @@ export default function Home() {
       {/* ═══ CARA KERJA ═══ */}
       <section className="section-cream mx-auto max-w-7xl px-4 pb-20 sm:px-6">
         <div className="reveal text-center">
-          <p className="text-xs font-bold uppercase tracking-[0.16em] text-terra-500">Cara kerja</p>
-          <h2 className="display mt-2 text-3xl font-semibold text-forest sm:text-4xl">Mulai dalam 4 langkah</h2>
+          <p className="text-xs font-bold uppercase tracking-[0.16em] text-terra-400">Cara kerja</p>
+          <h2 className="display mt-2 text-3xl font-semibold text-[var(--text-primary)] sm:text-4xl">Mulai dalam 4 langkah</h2>
         </div>
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {steps.map((s, i) => (
             <div
               key={s.title}
-              className="reveal relative rounded-3xl border border-sage-100 bg-white p-7 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-card"
+              className="reveal relative rounded-3xl border border-[var(--border-primary)] bg-[var(--bg-card)] p-7 shadow-soft backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-card"
               style={{ transitionDelay: `${i * 80}ms` }}
             >
-              <span className="absolute right-5 top-4 display text-5xl font-semibold text-sage-100">{i + 1}</span>
-              <span className="flex h-13 w-13 items-center justify-center rounded-2xl bg-leaf-50 text-3xl ring-1 ring-leaf-100" style={{ height: '3.25rem', width: '3.25rem' }}>{s.icon}</span>
-              <h3 className="display mt-4 text-lg font-semibold text-forest">{s.title}</h3>
-              <p className="mt-1.5 text-sm leading-relaxed text-muted">{s.desc}</p>
+              <span className="absolute right-5 top-4 display text-5xl font-semibold text-[var(--border-primary)]">{i + 1}</span>
+              <span className="flex h-13 w-13 items-center justify-center rounded-2xl bg-leaf-800/20 text-3xl ring-1 ring-[var(--border-primary)]" style={{ height: '3.25rem', width: '3.25rem' }}>{s.icon}</span>
+              <h3 className="display mt-4 text-lg font-semibold text-[var(--text-primary)]">{s.title}</h3>
+              <p className="mt-1.5 text-sm leading-relaxed text-[var(--text-secondary)]">{s.desc}</p>
             </div>
           ))}
         </div>
@@ -395,9 +395,9 @@ export default function Home() {
       <section className="section-cream mx-auto max-w-7xl px-4 py-20 sm:px-6">
         <div className="reveal flex items-end justify-between">
           <div>
-            <p className="text-xs font-bold uppercase tracking-[0.16em] text-terra-500">Komunitas</p>
-            <h2 className="display mt-2 text-3xl font-semibold text-forest sm:text-4xl">Cerita dari para pekebun</h2>
-            <p className="mt-2 text-sm text-muted">Hasil kebun para anggota Tanamanku.</p>
+            <p className="text-xs font-bold uppercase tracking-[0.16em] text-terra-400">Komunitas</p>
+            <h2 className="display mt-2 text-3xl font-semibold text-[var(--text-primary)] sm:text-4xl">Cerita dari para pekebun</h2>
+            <p className="mt-2 text-sm text-[var(--text-secondary)]">Hasil kebun para anggota Tanamanku.</p>
           </div>
           <Button to="/community" variant="ghost" className="hidden sm:inline-flex">
             Buka komunitas
@@ -406,10 +406,10 @@ export default function Home() {
         <div className="mt-8 grid gap-5 md:grid-cols-3">
           {communityPosts.length === 0 && (
             <div className="md:col-span-3">
-              <div className="flex flex-col items-center justify-center gap-4 rounded-[2rem] border border-dashed border-leaf-200 bg-leaf-50/40 px-6 py-16 text-center">
-                <span className="flex h-20 w-20 items-center justify-center rounded-full bg-white text-5xl shadow-card ring-1 ring-leaf-100">💬</span>
-                <h3 className="text-2xl font-semibold text-forest">Belum ada cerita</h3>
-                <p className="max-w-sm text-sm leading-relaxed text-muted">
+              <div className="flex flex-col items-center justify-center gap-4 rounded-[2rem] border border-dashed border-[var(--border-primary)] bg-[var(--bg-card)] px-6 py-16 text-center backdrop-blur-sm">
+                <span className="flex h-20 w-20 items-center justify-center rounded-full bg-[var(--bg-card)] text-5xl shadow-card ring-1 ring-[var(--border-primary)]">💬</span>
+                <h3 className="text-2xl font-semibold text-[var(--text-primary)]">Belum ada cerita</h3>
+                <p className="max-w-sm text-sm leading-relaxed text-[var(--text-secondary)]">
                   Jadilah pekebun pertama yang berbagi hasil kebun. Ceritamu bisa menginspirasi komunitas!
                 </p>
                 <Button to="/community" variant="primary">Mulai cerita</Button>
@@ -417,20 +417,20 @@ export default function Home() {
             </div>
           )}
           {communityPosts.slice(0, 3).map((post, i) => (
-            <div key={post.id} className="reveal group overflow-hidden rounded-3xl border border-sage-100 bg-white shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-card" style={{ transitionDelay: `${i * 70}ms` }}>
+            <div key={post.id} className="reveal group overflow-hidden rounded-3xl border border-[var(--border-primary)] bg-[var(--bg-card)] shadow-soft backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-card" style={{ transitionDelay: `${i * 70}ms` }}>
               <Link to="/community" className="block">
                 <ProductVisual emoji={post.emoji} gradient={post.gradient} className="h-44" emojiClassName="text-6xl" />
               </Link>
               <div className="p-6">
                 <div className="flex items-center gap-3">
-                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-leaf-50 text-lg ring-1 ring-leaf-100">{post.avatar}</span>
+                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-leaf-800/20 text-lg ring-1 ring-[var(--border-primary)]">{post.avatar}</span>
                   <div>
-                    <p className="text-sm font-bold text-forest">{post.author}</p>
-                    <p className="text-xs text-muted">Anggota komunitas</p>
+                    <p className="text-sm font-bold text-[var(--text-primary)]">{post.author}</p>
+                    <p className="text-xs text-[var(--text-muted)]">Anggota komunitas</p>
                   </div>
                 </div>
-                <p className="mt-4 line-clamp-2 text-sm leading-relaxed text-muted">{post.content}</p>
-                <div className="mt-5 flex items-center gap-4 border-t border-sage-100 pt-4 text-xs font-semibold text-muted">
+                <p className="mt-4 line-clamp-2 text-sm leading-relaxed text-[var(--text-secondary)]">{post.content}</p>
+                <div className="mt-5 flex items-center gap-4 border-t border-[var(--border-primary)] pt-4 text-xs font-semibold text-[var(--text-muted)]">
                   <span className="flex items-center gap-1.5">❤️ {post.likes}</span>
                   <span className="flex items-center gap-1.5">💬 {post.comments?.length || 0}</span>
                 </div>
