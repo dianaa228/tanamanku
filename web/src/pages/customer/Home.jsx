@@ -115,11 +115,11 @@ export default function Home() {
   return (
     <div ref={revealRef}>
       {/* ═══ HERO ═══ */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-[#e8f0e6] to-[#f5f2eb]">
+      <section className="relative overflow-hidden" style={{ background: 'linear-gradient(180deg, #e0ebe0 0%, #e8f0e6 40%, #f0ede6 100%)' }}>
         {/* decorative botanical orbs */}
-        <div className="pointer-events-none absolute -right-28 -top-24 h-[420px] w-[420px] rounded-full bg-leaf-400/15 blur-3xl" />
-        <div className="pointer-events-none absolute -left-24 bottom-6 h-80 w-80 rounded-full bg-sun-300/20 blur-3xl" />
-        <div className="pointer-events-none absolute right-1/3 top-10 text-6xl opacity-10" style={{ transform: 'rotate(-18deg)' }}>🍃</div>
+        <div className="pointer-events-none absolute -right-28 -top-24 h-[420px] w-[420px] rounded-full bg-leaf-400/20 blur-3xl" />
+        <div className="pointer-events-none absolute -left-24 bottom-6 h-80 w-80 rounded-full bg-sun-300/25 blur-3xl" />
+        <div className="pointer-events-none absolute right-1/3 top-10 text-6xl opacity-15" style={{ transform: 'rotate(-18deg)' }}>🍃</div>
 
         <div className="relative mx-auto grid max-w-7xl items-center gap-14 px-4 pb-16 pt-10 sm:px-6 lg:grid-cols-2 lg:pb-24 lg:pt-16">
           {/* Copy */}
@@ -129,12 +129,12 @@ export default function Home() {
               Kebun perkotaan dalam genggaman
             </span>
 
-            <h1 className="display mt-6 text-balance text-[2.6rem] font-semibold leading-[1.02] tracking-tight text-[var(--text-primary)] sm:text-6xl lg:text-[4.2rem]">
+            <h1 className="display mt-6 text-balance text-[2.6rem] font-semibold leading-[1.02] tracking-tight text-[#1c2b22] sm:text-6xl lg:text-[4.2rem]">
               Rawat tanamanmu.{' '}
               <span className="text-gradient-botanical">Tumbuhkan</span> kebiasaan baik.
             </h1>
 
-            <p className="mt-6 max-w-lg text-base leading-relaxed text-[var(--text-secondary)] sm:text-lg">
+            <p className="mt-6 max-w-lg text-base leading-relaxed text-[#3f654c] sm:text-lg">
               Tanamanku menyatukan belanja tanaman dari nursery tepercaya, kebun pribadi yang mudah dicatat, dan pengingat perawatan cerdas — jadi berkebun terasa ringan, tidak rumit.
             </p>
 
@@ -149,14 +149,14 @@ export default function Home() {
             </div>
 
             {/* stats */}
-            <dl className="mt-10 grid grid-cols-3 gap-6 border-t border-[var(--border-primary)] pt-7">
+            <dl className="mt-10 grid grid-cols-3 gap-6 border-t border-[#c3d7c4] pt-7">
               {stats.map((s) => (
                 <div key={s.label}>
                   <dt className="sr-only">{s.label}</dt>
-                  <dd className="display text-2xl font-semibold text-[var(--text-primary)] sm:text-3xl">
+                  <dd className="display text-2xl font-semibold text-[#1c2b22] sm:text-3xl">
                     <CountUp end={s.end} suffix={s.suffix} label={s.label} />
                   </dd>
-                  <dd className="mt-1 text-xs font-medium text-[var(--text-secondary)]">{s.label}</dd>
+                  <dd className="mt-1 text-xs font-medium text-[#3f654c]">{s.label}</dd>
                 </div>
               ))}
             </dl>
@@ -165,7 +165,7 @@ export default function Home() {
           {/* Visual composition */}
           <div className="relative mx-auto hidden w-full max-w-xl lg:block">
             {/* main card */}
-            <div className="relative overflow-hidden rounded-[2rem] border border-[var(--border-primary)] bg-[var(--bg-card)] shadow-elevated backdrop-blur-sm">
+            <div className="relative overflow-hidden rounded-[2rem] border border-[#c3d7c4] bg-white shadow-elevated">
               <div className="relative overflow-hidden bg-gradient-to-br from-leaf-100 via-cream to-sun-50">
                 <div className="flex h-80 items-center justify-center">
                   <span className="animate-float text-[9rem] drop-shadow-xl">🪴</span>
@@ -173,31 +173,31 @@ export default function Home() {
               </div>
               <div className="flex items-center justify-between px-6 py-5">
                 <div>
-                  <p className="display text-lg font-semibold text-[var(--text-primary)]">Momo · Monstera</p>
-                  <p className="text-sm text-[var(--text-secondary)]">Disiram 2 jam lalu · 68 cm · Sehat</p>
+                  <p className="display text-lg font-semibold text-[#1c2b22]">Momo · Monstera</p>
+                  <p className="text-sm text-[#3f654c]">Disiram 2 jam lalu · 68 cm · Sehat</p>
                 </div>
-                <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-leaf-800/20 text-xl">😊</span>
+                <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#e0ebe0] text-xl">😊</span>
               </div>
             </div>
 
             {/* floating chip: watering */}
-            <div className="absolute -left-10 top-8 animate-float rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-card)] px-4 py-3 shadow-card backdrop-blur-sm [animation-delay:1s]">
+            <div className="absolute -left-10 top-8 animate-float rounded-2xl border border-[#c3d7c4] bg-white px-4 py-3 shadow-card [animation-delay:1s]">
               <div className="flex items-center gap-3">
-                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-800/20 text-lg">💧</span>
+                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#e0f2fe] text-lg">💧</span>
                 <div>
-                  <p className="text-xs font-semibold text-[var(--text-primary)]">Pengingat siram</p>
-                  <p className="text-[11px] text-[var(--text-muted)]">Momo · hari ini</p>
+                  <p className="text-xs font-semibold text-[#1c2b22]">Pengingat siram</p>
+                  <p className="text-[11px] text-[#68756c]">Momo · hari ini</p>
                 </div>
               </div>
             </div>
 
             {/* floating chip: order */}
-            <div className="absolute -right-6 bottom-20 animate-float rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-card)] px-4 py-3 shadow-card backdrop-blur-sm [animation-delay:2s]">
+            <div className="absolute -right-6 bottom-20 animate-float rounded-2xl border border-[#c3d7c4] bg-white px-4 py-3 shadow-card [animation-delay:2s]">
               <div className="flex items-center gap-3">
-                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-terra-800/20 text-lg">🌿</span>
+                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#f0fdf4] text-lg">🌿</span>
                 <div>
-                  <p className="text-xs font-semibold text-[var(--text-primary)]">Pesanan dikemas</p>
-                  <p className="text-[11px] text-[var(--text-muted)]">2 tanaman siap antar</p>
+                  <p className="text-xs font-semibold text-[#1c2b22]">Pesanan dikemas</p>
+                  <p className="text-[11px] text-[#68756c]">2 tanaman siap antar</p>
                 </div>
               </div>
             </div>
