@@ -72,6 +72,36 @@ class GardenService {
     });
   }
 
+  /// Ambil daftar foto: GET /my-garden/{id}/photos
+  Future<List<Map<String, dynamic>>> getPhotos(int plantId) async {
+    final res = await _api.get('/my-garden/$plantId/photos');
+    final data = res.data['data'];
+    final list = data is List ? data : [];
+    return List<Map<String, dynamic>>.from(list);
+  }
+
+  /// Hapus foto: DELETE /my-garden/photos/{photoId}
+  Future<void> deletePhoto(int photoId) async {
+    await _api.delete('/my-garden/photos/$photoId');
+  }
+
+  /// Ambil riwayat pertumbuhan: GET /my-garden/{id}/growth-logs
+  Future<List<Map<String, dynamic>>> getGrowthLogs(int plantId) async {
+    final res = await _api.get('/my-garden/$plantId/growth-logs');
+    final data = res.data['data'];
+    final list = data is List ? data : [];
+    return List<Map<String, dynamic>>.from(list);
+  }
+
+  /// Tambah log pertumbuhan: POST /my-garden/{id}/growth-logs
+  Future<void> addGrowthLog(int plantId, {required double heightCm, int? leavesCount, String? note}) async {
+    await _api.post('/my-garden/$plantId/growth-logs', data: {
+      'height_cm': heightCm,
+      if (leavesCount != null) 'leaves_count': leavesCount,
+      if (note != null) 'note': note,
+    });
+  }
+
   // ── Reminders ─────────────────────────────────────────
 
   /// Ambil reminder: GET /my-garden/{id}/reminders
@@ -95,6 +125,10 @@ class GardenService {
   Future<void> markReminderDone(int reminderId) async {
     await _api.post('/my-garden/reminders/$reminderId/done');
   }
+
+  // ── Reminders (by plantId) ─────────────────────────────
+
+  /// Ambil reminder per tanaman: GET /my-garden/{id}/reminders (sudah ada di atas)
 
   // ── Plant Species ─────────────────────────────────────
 

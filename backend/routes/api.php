@@ -27,6 +27,8 @@ use App\Http\Controllers\Api\V1\LoyaltyController;
 use App\Http\Controllers\Api\V1\SubscriptionController;
 use App\Http\Controllers\Api\V1\NurseryController;
 use App\Http\Controllers\Api\V1\AnalyticsController;
+use App\Http\Controllers\Api\V1\StatsController;
+use App\Http\Controllers\Api\V1\HealthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -42,6 +44,12 @@ Route::post('/login', fn () => response()->json([
     'success' => false,
     'message' => 'Unauthenticated.',
 ], 401))->name('login');
+
+// ===== Public Stats (homepage counters) =====
+Route::get('/stats', [StatsController::class, 'index']);
+
+// ===== Health Check =====
+Route::get('/health', HealthController::class);
 
 // ===== Auth (publik) — rate limit ketat untuk brute-force protection =====
 Route::prefix('auth')->group(function () {

@@ -3,6 +3,9 @@ class CategoryModel {
   final String name;
   final String slug;
   final String? icon;
+  final int? parentId;
+  final bool isActive;
+  final int sortOrder;
   final int productsCount;
 
   CategoryModel({
@@ -10,6 +13,9 @@ class CategoryModel {
     required this.name,
     required this.slug,
     this.icon,
+    this.parentId,
+    this.isActive = true,
+    this.sortOrder = 0,
     this.productsCount = 0,
   });
 
@@ -19,6 +25,9 @@ class CategoryModel {
       name: json['name'] ?? '',
       slug: json['slug'] ?? '',
       icon: json['icon'],
+      parentId: json['parent_id'],
+      isActive: json['is_active'] ?? true,
+      sortOrder: json['sort_order'] ?? 0,
       productsCount: json['products_count'] ?? 0,
     );
   }

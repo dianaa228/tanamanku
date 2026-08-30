@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import '../../core/theme/app_theme.dart';
 import '../../widgets/app_button.dart';
 import '../../widgets/app_text_field.dart';
 import 'auth_provider.dart';
@@ -20,7 +19,6 @@ class _RegisterPageState extends State<RegisterPage> {
   final _emailCtrl = TextEditingController();
   final _passCtrl = TextEditingController();
   final _confirmCtrl = TextEditingController();
-  bool _obscure = true;
 
   @override
   void dispose() {
@@ -104,12 +102,8 @@ class _RegisterPageState extends State<RegisterPage> {
                           AppTextField(label: 'Email', controller: _emailCtrl, prefixIcon: Icons.email_outlined, hint: 'nama@email.com', keyboardType: TextInputType.emailAddress),
                           const SizedBox(height: 16),
                           AppTextField(
-                            label: 'Password', controller: _passCtrl, prefixIcon: Icons.lock_outline, obscure: _obscure,
+                            label: 'Password', controller: _passCtrl, prefixIcon: Icons.lock_outline, obscure: true,
                             hint: '••••••••',
-                            suffix: IconButton(
-                              icon: Icon(_obscure ? Icons.visibility_off_outlined : Icons.visibility_outlined, size: 20, color: AppTheme.leaf400),
-                              onPressed: () => setState(() => _obscure = !_obscure),
-                            ),
                           ),
                           const SizedBox(height: 16),
                           AppTextField(label: 'Konfirmasi Password', controller: _confirmCtrl, prefixIcon: Icons.lock_outline, obscure: true, hint: '••••••••'),

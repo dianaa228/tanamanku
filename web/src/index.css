@@ -126,15 +126,49 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Light mode (default) */
 body {
   @apply bg-cream text-forest font-sans antialiased;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-feature-settings: "ss01";
+  --bg-primary: #f7f4ee;
+  --bg-secondary: #fdfcfa;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f2f6f1;
+  --bg-input: #ffffff;
+  --border-primary: #c3d7c4;
+  --border-secondary: #e0ebe0;
+  --text-primary: #1c2b22;
+  --text-secondary: #68756c;
+  --text-muted: #97a29a;
+}
+
+/* Dark mode */
+.dark body,
+body.dark {
+  --bg-primary: #0f1a14;
+  --bg-secondary: #162019;
+  --bg-card: #1a2820;
+  --bg-card-hover: #22352b;
+  --bg-input: #1a2820;
+  --border-primary: #2e332c;
+  --border-secondary: #383f35;
+  --text-primary: #e0ebe0;
+  --text-secondary: #9abba0;
+  --text-muted: #6a7a64;
+}
+
+.dark body {
+  @apply bg-[#0f1a14] text-[#e0ebe0];
 }
 
 ::selection {
   @apply bg-leaf-200 text-leaf-950;
+}
+
+.dark ::selection {
+  @apply bg-leaf-800 text-leaf-100;
 }
 
 /* ── Typography helpers ── */
@@ -186,6 +220,8 @@ body {
 *::-webkit-scrollbar-thumb { background: #c3d7c4; border-radius: 8px; }
 *::-webkit-scrollbar-thumb:hover { background: #9abba0; }
 *::-webkit-scrollbar-track { background: transparent; }
+.dark *::-webkit-scrollbar-thumb { background: #383f35; }
+.dark *::-webkit-scrollbar-thumb:hover { background: #434d40; }
 
 /* ── Glass ── */
 .glass {
@@ -193,6 +229,10 @@ body {
   backdrop-filter: blur(20px) saturate(160%);
   -webkit-backdrop-filter: blur(20px) saturate(160%);
   border-bottom: 1px solid rgba(195, 215, 196, 0.32);
+}
+.dark .glass {
+  background: rgba(15, 26, 20, 0.85);
+  border-bottom: 1px solid rgba(46, 51, 44, 0.5);
 }
 
 /* ── Button Shine ── */

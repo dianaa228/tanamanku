@@ -21,6 +21,7 @@ export default function Modal({ open, onClose, title, children, footer, classNam
       <div
         className={cx(
           'relative z-10 w-full animate-pop rounded-t-3xl bg-white shadow-lift sm:rounded-3xl',
+          'dark:bg-sage-900 dark:text-white',
           'max-h-[88vh] overflow-y-auto',
           className,
         )}
@@ -28,11 +29,11 @@ export default function Modal({ open, onClose, title, children, footer, classNam
         aria-modal="true"
       >
         {title && (
-          <div className="flex items-center justify-between border-b border-leaf-100 px-6 py-4">
-            <h3 className="text-lg font-semibold text-forest">{title}</h3>
+          <div className="flex items-center justify-between border-b border-leaf-100 px-6 py-4 dark:border-sage-700">
+            <h3 className="text-lg font-semibold text-forest dark:text-white">{title}</h3>
             <button
               onClick={onClose}
-              className="rounded-full p-2 text-leaf-900/50 transition hover:bg-leaf-50 hover:text-leaf-900"
+              className="rounded-full p-2 text-leaf-900/50 transition hover:bg-leaf-50 hover:text-leaf-900 dark:text-sage-400 dark:hover:bg-sage-800 dark:hover:text-white"
               aria-label="Tutup"
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
@@ -42,7 +43,7 @@ export default function Modal({ open, onClose, title, children, footer, classNam
           </div>
         )}
         <div className="px-6 py-5">{children}</div>
-        {footer && <div className="flex justify-end gap-3 border-t border-leaf-100 px-6 py-4">{footer}</div>}
+        {footer && <div className="flex justify-end gap-3 border-t border-leaf-100 px-6 py-4 dark:border-sage-700">{footer}</div>}
       </div>
     </div>
   )

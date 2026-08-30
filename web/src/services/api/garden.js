@@ -179,6 +179,57 @@ export const gardenApi = {
     return mockImpl.finderRecommend(answers)
   },
 
+  // ===== Plant Photos =====
+  getPhotos: async (plantId) => {
+    if (apiMode() === 'api') {
+      const res = await api.get(`/my-garden/${plantId}/photos`)
+      return { success: true, message: 'Foto dimuat', data: res.data?.data || res.data || [] }
+    }
+    await new Promise((r) => setTimeout(r, 300))
+    return { success: true, message: 'Foto dimuat', data: [] }
+  },
+
+  addPhoto: async (plantId, path, note) => {
+    if (apiMode() === 'api') {
+      const res = await api.post(`/my-garden/${plantId}/photos`, { path, note })
+      return { success: true, message: 'Foto ditambahkan', data: res.data?.data || res.data }
+    }
+    await new Promise((r) => setTimeout(r, 400))
+    return { success: true, message: 'Foto ditambahkan', data: { id: Date.now(), path, note } }
+  },
+
+  deletePhoto: async (photoId) => {
+    if (apiMode() === 'api') {
+      await api.delete(`/my-garden/photos/${photoId}`)
+      return { success: true, message: 'Foto dihapus' }
+    }
+    await new Promise((r) => setTimeout(r, 200))
+    return { success: true, message: 'Foto dihapus' }
+  },
+
+  // ===== Growth Logs =====
+  getGrowthLogs: async (plantId) => {
+    if (apiMode() === 'api') {
+      const res = await api.get(`/my-garden/${plantId}/growth-logs`)
+      return { success: true, message: 'Riwayat pertumbuhan dimuat', data: res.data?.data || res.data || [] }
+    }
+    await new Promise((r) => setTimeout(r, 300))
+    return { success: true, message: 'Riwayat pertumbuhan dimuat', data: [] }
+  },
+
+  addGrowthLog: async (plantId, { heightCm, leavesCount, note }) => {
+    if (apiMode() === 'api') {
+      const res = await api.post(`/my-garden/${plantId}/growth-logs`, {
+        height_cm: heightCm,
+        leaves_count: leavesCount,
+        note,
+      })
+      return { success: true, message: 'Log pertumbuhan ditambahkan', data: res.data?.data || res.data }
+    }
+    await new Promise((r) => setTimeout(r, 400))
+    return { success: true, message: 'Log pertumbuhan ditambahkan', data: { id: Date.now(), heightCm, leavesCount, note } }
+  },
+
   // ===== Plant Diagnosis =====
   diagnose: async (plantId, symptoms) => {
     if (apiMode() === 'api') {

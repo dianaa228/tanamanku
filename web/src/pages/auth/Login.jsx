@@ -38,8 +38,8 @@ export default function Login() {
 
   return (
     <div>
-      <h1 className="display text-3xl font-semibold text-forest">Selamat datang kembali 👋</h1>
-      <p className="mt-2 text-sm text-muted">Masuk untuk lanjut merawat kebunmu.</p>
+      <h1 className="display text-3xl font-semibold text-forest dark:text-white">Selamat datang kembali 👋</h1>
+      <p className="mt-2 text-sm text-muted dark:text-sage-400">Masuk untuk lanjut merawat kebunmu.</p>
 
       <form onSubmit={submit} className="mt-8 space-y-4">
         {error && (
@@ -82,9 +82,9 @@ export default function Login() {
         💡 <strong>Mode demo:</strong> email sudah terisi — cukup isi password apa pun lalu klik Masuk.
       </div>
 
-      <p className="mt-8 text-center text-sm text-leaf-900/60">
+      <p className="mt-8 text-center text-sm text-leaf-900/60 dark:text-sage-400">
         Belum punya akun?{' '}
-        <Link to="/register" className="font-bold text-leaf-700 hover:text-leaf-800">
+        <Link to="/register" className="font-bold text-leaf-700 hover:text-leaf-800 dark:text-leaf-400 dark:hover:text-leaf-300">
           Daftar gratis
         </Link>
       </p>

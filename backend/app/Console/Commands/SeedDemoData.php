@@ -90,7 +90,7 @@ class SeedDemoData extends Command
                 ['email' => $email],
                 [
                     'name' => $name,
-                    'password' => Hash::make('Tanamanku2025!'),
+                    'password' => Hash::make(env('DEMO_SEED_PASSWORD', 'Tanamanku2025!')),
                     'phone' => null,
                     'role' => $role,
                     'avatar' => $avatar,

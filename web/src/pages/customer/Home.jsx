@@ -2,10 +2,12 @@ import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { productsApi } from '../../services/api/products'
 import { communityApi } from '../../services/api/community'
-import { nurseryApi } from '../../services/api/nursery'
+import { statsApi } from '../../services/api/stats'
 import ProductCard from '../../components/product/ProductCard'
 import Button from '../../components/ui/Button'
 import ProductVisual from '../../components/product/ProductVisual'
+import CountUp from '../../components/ui/CountUp'
+import { mockProducts, communityPosts as mockPosts } from '../../services/api/mock-data'
 
 /* ── Scroll reveal hook ─────────────────────────────────── */
 function useReveal() {
@@ -57,14 +59,6 @@ const toHomeCategory = (c) => ({
   count: c.count ?? c.products_count ?? 0,
 })
 
-/* 1000+ → "1rb+", 1200000 → "1jt+" */
-const formatStat = (n) => {
-  if (!n || n <= 0) return null
-  if (n >= 1000000) return `${Math.floor(n / 1000000)}jt+`
-  if (n >= 1000) return `${Math.floor(n / 1000)}rb+`
-  return `${n}+`
-}
-
 const careFeatures = [
   { icon: '🪴', title: 'My Garden', desc: 'Catat setiap tanaman, pantau tinggi & kesehatan, simpan riwayat perawatan.', to: '/my-garden' },
   { icon: '💡', title: 'Plant Finder', desc: 'Jawab 4 pertanyaan, kami rekomendasikan tanaman yang paling cocok.', to: '/plant-finder' },
@@ -83,8 +77,8 @@ export default function Home() {
   const [featured, setFeatured] = useState([])
   const [communityPosts, setCommunityPosts] = useState([])
   const [categories, setCategories] = useState(FALLBACK_CATEGORIES)
-  const [nurseryCount, setNurseryCount] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [siteStats, setSiteStats] = useState({ products: 0, nurseries: 0, gardens: 0 })
   const revealRef = useReveal()
 
   useEffect(() => {
@@ -92,23 +86,30 @@ export default function Home() {
       productsApi.getProducts({ sort: 'terlaris' }),
       productsApi.getCategories(),
       communityApi.getPosts(),
-      nurseryApi.getNurseries(),
-    ]).then(([productsRes, catsRes, postsRes, nurseriesRes]) => {
-      if (productsRes.status === 'fulfilled') setFeatured(productsRes.value.data.slice(0, 8))
+      statsApi.getStats(),
+    ]).then(([productsRes, catsRes, postsRes, statsRes]) => {
+      // Products: fallback to mock if API returns empty
+      const apiProducts = productsRes.status === 'fulfilled' ? productsRes.value.data : []
+      setFeatured(apiProducts.length > 0 ? apiProducts.slice(0, 8) : mockProducts.slice(0, 8))
+
+      // Categories: fallback to default if API returns empty
       if (catsRes.status === 'fulfilled' && catsRes.value.data?.length) {
         setCategories(catsRes.value.data.map(toHomeCategory))
       }
-      if (postsRes.status === 'fulfilled') setCommunityPosts(postsRes.value.data.slice(0, 3))
-      if (nurseriesRes.status === 'fulfilled') setNurseryCount(nurseriesRes.value.data.length)
+
+      // Community posts: fallback to mock if API returns empty
+      const apiPosts = postsRes.status === 'fulfilled' ? postsRes.value.data : []
+      setCommunityPosts(apiPosts.length > 0 ? apiPosts.slice(0, 3) : mockPosts.slice(0, 3))
+
+      if (statsRes.status === 'fulfilled') setSiteStats(statsRes.value.data)
       setLoading(false)
     })
   }, [])
 
-  const productCount = categories.reduce((sum, c) => sum + (c.count || 0), 0)
   const stats = [
-    { value: formatStat(productCount) || '500+', label: 'Produk pilihan' },
-    { value: formatStat(nurseryCount) || '120+', label: 'Nursery lokal' },
-    { value: '10rb+', label: 'Kebun aktif' },
+    { end: siteStats.products || 27, suffix: '+', label: 'Produk pilihan' },
+    { end: siteStats.nurseries || 6, suffix: '+', label: 'Nursery lokal' },
+    { end: siteStats.gardens || 10000, suffix: '+', label: 'Kebun aktif' },
   ]
 
   return (
@@ -152,7 +153,9 @@ export default function Home() {
               {stats.map((s) => (
                 <div key={s.label}>
                   <dt className="sr-only">{s.label}</dt>
-                  <dd className="display text-2xl font-semibold text-forest sm:text-3xl">{s.value}</dd>
+                  <dd className="display text-2xl font-semibold text-forest sm:text-3xl">
+                    <CountUp end={s.end} suffix={s.suffix} label={s.label} />
+                  </dd>
                   <dd className="mt-1 text-xs font-medium text-muted">{s.label}</dd>
                 </div>
               ))}
@@ -320,7 +323,9 @@ export default function Home() {
               </div>
               <div className="mt-6 rounded-[2rem] border border-sage-100 bg-white p-7 shadow-card">
                 <span className="text-4xl">🪴</span>
-                <p className="display mt-4 text-4xl font-semibold text-forest">10rb+</p>
+                <p className="display mt-4 text-4xl font-semibold text-forest">
+                  <CountUp end={siteStats.gardens || 10000} suffix="+" label="Kebun aktif" />
+                </p>
                 <p className="mt-2 text-sm text-muted">kebun aktif tumbuh bersama setiap hari.</p>
               </div>
             </div>

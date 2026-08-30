@@ -27,8 +27,6 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
   bool _loading = false;
   bool _success = false;
   String? _error;
-  bool _obscurePass = true;
-  bool _obscureConfirm = true;
 
   @override
   void initState() {
@@ -153,21 +151,13 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
 
                     const SizedBox(height: 16),
 
-                    // New password
+                    // New password (toggle visibility built-in)
                     AppTextField(
                       label: 'Password baru',
                       hint: '••••••••',
                       prefixIcon: Icons.lock_outline,
-                      suffix: IconButton(
-                        icon: Icon(
-                          _obscurePass ? Icons.visibility_off_outlined : Icons.visibility_outlined,
-                          size: 20,
-                          color: AppTheme.leaf900.withValues(alpha: 0.4),
-                        ),
-                        onPressed: () => setState(() => _obscurePass = !_obscurePass),
-                      ),
                       controller: _passCtrl,
-                      obscure: _obscurePass,
+                      obscure: true,
                       validator: (v) {
                         if (v == null || v.isEmpty) return 'Password wajib diisi';
                         if (v.length < 8) return 'Password minimal 8 karakter';
@@ -177,21 +167,13 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
 
                     const SizedBox(height: 16),
 
-                    // Confirm password
+                    // Confirm password (toggle visibility built-in)
                     AppTextField(
                       label: 'Konfirmasi password',
                       hint: '••••••••',
                       prefixIcon: Icons.lock_outline,
-                      suffix: IconButton(
-                        icon: Icon(
-                          _obscureConfirm ? Icons.visibility_off_outlined : Icons.visibility_outlined,
-                          size: 20,
-                          color: AppTheme.leaf900.withValues(alpha: 0.4),
-                        ),
-                        onPressed: () => setState(() => _obscureConfirm = !_obscureConfirm),
-                      ),
                       controller: _confirmCtrl,
-                      obscure: _obscureConfirm,
+                      obscure: true,
                       textInputAction: TextInputAction.done,
                       validator: (v) {
                         if (v == null || v.isEmpty) return 'Konfirmasi password wajib diisi';

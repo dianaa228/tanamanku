@@ -2,7 +2,9 @@ import { useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import { useCart } from '../../context/CartContext'
+import { useTheme } from '../../context/ThemeContext'
 import Dropdown, { DropdownItem } from '../ui/Dropdown'
+import ThemeToggle from '../ui/ThemeToggle'
 import { cx } from '../../utils/format'
 
 const links = [
@@ -29,7 +31,9 @@ const roleConfig = {
 export default function Navbar() {
   const { user, logout } = useAuth()
   const { count } = useCart()
+  const { theme } = useTheme()
   const navigate = useNavigate()
+  const isDark = theme === 'dark'
   const [query, setQuery] = useState('')
   const [menuOpen, setMenuOpen] = useState(false)
 
@@ -41,7 +45,7 @@ export default function Navbar() {
   }
 
   return (
-    <header className="sticky top-0 z-40 glass">
+    <header className={cx('sticky top-0 z-40 glass', isDark && 'dark')}>
       <div className="mx-auto flex h-16 max-w-7xl items-center gap-3 px-4 sm:px-6 lg:gap-8">
         {/* Logo */}
         <Link to="/" className="group flex shrink-0 items-center gap-2.5">
@@ -49,7 +53,7 @@ export default function Navbar() {
             🌿
           </span>
           <span className="hidden text-xl font-bold tracking-tight sm:block">
-            <span className="text-forest">Tana</span>
+            <span className={isDark ? 'text-white' : 'text-forest'}>Tana</span>
             <span className="text-gradient-botanical display">manku</span>
           </span>
         </Link>
@@ -67,7 +71,11 @@ export default function Navbar() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Cari tanaman, pot, pupuk..."
-              className="w-full rounded-full border border-sage-200 bg-white/80 py-2.5 pl-11 pr-4 text-sm text-forest shadow-soft backdrop-blur-sm transition placeholder:text-muted-light/60 focus:border-leaf-400 focus:bg-white focus:outline-none focus:ring-4 focus:ring-leaf-100/70"
+              className={cx('w-full rounded-full border py-2.5 pl-11 pr-4 text-sm shadow-soft backdrop-blur-sm transition focus:outline-none focus:ring-4',
+                isDark
+                  ? 'border-sage-700 bg-sage-900/80 text-white placeholder:text-sage-500 focus:border-leaf-500 focus:bg-sage-800 focus:ring-leaf-900/50'
+                  : 'border-sage-200 bg-white/80 text-forest placeholder:text-muted-light/60 focus:border-leaf-400 focus:bg-white focus:ring-leaf-100/70'
+              )}
             />
           </div>
         </form>
@@ -84,7 +92,9 @@ export default function Navbar() {
                   'relative rounded-full px-4 py-2 text-sm font-semibold transition-all duration-200',
                   isActive
                     ? 'bg-leaf-700 text-cream shadow-soft'
-                    : 'text-muted hover:bg-leaf-50 hover:text-forest',
+                    : isDark
+                      ? 'text-sage-300 hover:bg-sage-800 hover:text-white'
+                      : 'text-muted hover:bg-leaf-50 hover:text-forest',
                 )
               }
             >
@@ -95,7 +105,7 @@ export default function Navbar() {
           {/* Lainnya grouped dropdown */}
           <Dropdown
             trigger={
-              <button className="flex items-center gap-1 rounded-full px-4 py-2 text-sm font-semibold text-muted transition hover:bg-leaf-50 hover:text-forest">
+              <button className={cx('flex items-center gap-1 rounded-full px-4 py-2 text-sm font-semibold transition', isDark ? 'text-sage-300 hover:bg-sage-800 hover:text-white' : 'text-muted hover:bg-leaf-50 hover:text-forest')}>
                 Lainnya
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
                   <path d="m6 9 6 6 6-6" />
@@ -112,8 +122,11 @@ export default function Navbar() {
         </nav>
 
         <div className="ml-auto flex items-center gap-1.5 lg:ml-0">
+          {/* Theme Toggle */}
+          <ThemeToggle />
+
           {/* Cart */}
-          <Link to="/cart" className="relative rounded-full p-2.5 text-muted transition hover:bg-leaf-50 hover:text-forest" aria-label="Keranjang">
+          <Link to="/cart" className={cx('relative rounded-full p-2.5 transition', isDark ? 'text-sage-300 hover:bg-sage-800 hover:text-white' : 'text-muted hover:bg-leaf-50 hover:text-forest')} aria-label="Keranjang">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="9" cy="21" r="1.5" />
               <circle cx="20" cy="21" r="1.5" />
@@ -132,7 +145,7 @@ export default function Navbar() {
               trigger={
                 <div className="flex cursor-pointer items-center gap-2">
                   {roleConfig[user.role] && (
-                    <span className={`hidden items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-bold ring-1 ring-inset sm:flex ${roleConfig[user.role].color}`}>
+                    <span className={cx('hidden items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-bold ring-1 ring-inset sm:flex', roleConfig[user.role].color)}>
                       <span>{roleConfig[user.role].icon}</span>
                       <span>{roleConfig[user.role].label}</span>
                     </span>
@@ -144,14 +157,14 @@ export default function Navbar() {
                 </div>
               }
             >
-              <div className="border-b border-sage-100 px-4 py-3">
+              <div className={cx('border-b px-4 py-3', isDark ? 'border-sage-700' : 'border-sage-100')}>
                 <div className="flex items-center gap-3">
                   <span className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-leaf-600 to-leaf-800 text-lg text-cream shadow-soft">
                     {user.avatar || '🧑‍🌾'}
                   </span>
                   <div className="min-w-0 flex-1">
-                    <p className="truncate text-sm font-bold text-forest">{user.name}</p>
-                    <p className="truncate text-xs text-muted">{user.email}</p>
+                    <p className={cx('truncate text-sm font-bold', isDark ? 'text-white' : 'text-forest')}>{user.name}</p>
+                    <p className={cx('truncate text-xs', isDark ? 'text-sage-400' : 'text-muted')}>{user.email}</p>
                   </div>
                 </div>
                 {roleConfig[user.role] && (
@@ -200,7 +213,7 @@ export default function Navbar() {
             </Dropdown>
           ) : (
             <div className="hidden items-center gap-2 sm:flex">
-              <Link to="/login" className="rounded-full px-4 py-2 text-sm font-semibold text-muted transition hover:bg-leaf-50 hover:text-forest">
+              <Link to="/login" className={cx('rounded-full px-4 py-2 text-sm font-semibold transition', isDark ? 'text-sage-300 hover:bg-sage-800 hover:text-white' : 'text-muted hover:bg-leaf-50 hover:text-forest')}>
                 Masuk
               </Link>
               <Link to="/register" className="btn-shine rounded-full bg-leaf-700 px-5 py-2 text-sm font-bold text-cream shadow-soft transition hover:bg-leaf-800 hover:shadow-lift">
@@ -226,7 +239,7 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className="animate-fade-in border-t border-sage-100 bg-white/95 px-4 py-4 backdrop-blur-xl lg:hidden">
+        <div className={cx('animate-fade-in border-t px-4 py-4 backdrop-blur-xl lg:hidden', isDark ? 'border-sage-700 bg-sage-900/95' : 'border-sage-100 bg-white/95')}>
           <form onSubmit={submitSearch} className="mb-3">
             <div className="relative">
               <span className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-light">🔍</span>
@@ -234,7 +247,11 @@ export default function Navbar() {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Cari tanaman, pot, pupuk..."
-                className="w-full rounded-xl border border-sage-200 bg-leaf-50/50 py-2.5 pl-10 pr-4 text-sm shadow-soft focus:border-leaf-400 focus:outline-none focus:ring-2 focus:ring-leaf-100"
+                className={cx('w-full rounded-xl border py-2.5 pl-10 pr-4 text-sm shadow-soft focus:outline-none focus:ring-2',
+                  isDark
+                    ? 'border-sage-700 bg-sage-800 text-white placeholder:text-sage-500 focus:border-leaf-500 focus:ring-leaf-900/50'
+                    : 'border-sage-200 bg-leaf-50/50 focus:border-leaf-400 focus:ring-leaf-100'
+                )}
               />
             </div>
           </form>
@@ -248,7 +265,7 @@ export default function Navbar() {
                 className={({ isActive }) =>
                   cx(
                     'rounded-xl px-4 py-3 text-sm font-medium transition-all',
-                    isActive ? 'bg-leaf-700 text-cream shadow-soft' : 'text-muted hover:bg-leaf-50 hover:text-forest',
+                    isActive ? 'bg-leaf-700 text-cream shadow-soft' : isDark ? 'text-sage-300 hover:bg-sage-800 hover:text-white' : 'text-muted hover:bg-leaf-50 hover:text-forest',
                   )
                 }
               >
@@ -257,7 +274,7 @@ export default function Navbar() {
             ))}
             {!user && (
               <div className="mt-2 flex gap-2">
-                <Link to="/login" onClick={() => setMenuOpen(false)} className="flex-1 rounded-xl border border-sage-200 bg-white px-4 py-3 text-center text-sm font-semibold text-forest transition hover:bg-sage-50">
+                <Link to="/login" onClick={() => setMenuOpen(false)} className={cx('flex-1 rounded-xl border px-4 py-3 text-center text-sm font-semibold transition', isDark ? 'border-sage-700 bg-sage-800 text-white hover:bg-sage-700' : 'border-sage-200 bg-white text-forest hover:bg-sage-50')}>
                   Masuk
                 </Link>
                 <Link to="/register" onClick={() => setMenuOpen(false)} className="flex-1 rounded-xl bg-leaf-700 px-4 py-3 text-center text-sm font-bold text-cream shadow-soft">
@@ -266,11 +283,11 @@ export default function Navbar() {
               </div>
             )}
             {user && roleConfig[user.role] && (
-              <div className="mt-2 flex items-center gap-2 rounded-xl bg-leaf-50 px-4 py-3">
+              <div className={cx('mt-2 flex items-center gap-2 rounded-xl px-4 py-3', isDark ? 'bg-sage-800' : 'bg-leaf-50')}>
                 <span className="text-lg">{roleConfig[user.role].icon}</span>
                 <div>
-                  <p className="text-xs text-muted">Login sebagai</p>
-                  <p className="text-sm font-bold text-forest">{roleConfig[user.role].label}</p>
+                  <p className={cx('text-xs', isDark ? 'text-sage-400' : 'text-muted')}>Login sebagai</p>
+                  <p className={cx('text-sm font-bold', isDark ? 'text-white' : 'text-forest')}>{roleConfig[user.role].label}</p>
                 </div>
               </div>
             )}

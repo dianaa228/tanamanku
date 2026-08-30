@@ -1,9 +1,14 @@
 import { Outlet, Link } from 'react-router-dom'
+import { useTheme } from '../../context/ThemeContext'
 import ScrollToTop from '../ui/ScrollToTop'
+import ThemeToggle from '../ui/ThemeToggle'
+import { cx } from '../../utils/format'
 
 export default function AuthLayout() {
+  const { theme } = useTheme()
+  const isDark = theme === 'dark'
   return (
-    <div className="flex min-h-screen bg-cream">
+    <div className={cx('flex min-h-screen', isDark ? 'bg-[#0f1a14]' : 'bg-cream')}>
       <ScrollToTop />
       {/* Panel brand */}
       <div className="relative hidden w-1/2 overflow-hidden bg-gradient-to-br from-leaf-800 via-leaf-700 to-leaf-900 lg:flex">
@@ -43,10 +48,13 @@ export default function AuthLayout() {
 
       {/* Form area */}
       <div className="relative flex flex-1 items-center justify-center px-4 py-10 sm:px-8">
+        <div className="absolute right-4 top-4">
+          <ThemeToggle />
+        </div>
         <div className="w-full max-w-md animate-fade-up">
           <Link to="/" className="mb-8 flex items-center justify-center gap-2.5 lg:hidden">
             <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-leaf-600 to-leaf-800 text-2xl text-cream">🌿</span>
-            <span className="display text-2xl font-semibold text-forest">Tanamanku</span>
+            <span className={cx('display text-2xl font-semibold', isDark ? 'text-white' : 'text-forest')}>Tanamanku</span>
           </Link>
           <Outlet />
         </div>

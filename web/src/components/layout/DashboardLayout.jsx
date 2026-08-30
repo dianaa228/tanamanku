@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import { Link, useLocation, Outlet, Navigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
+import { useTheme } from '../../context/ThemeContext'
 import { cx } from '../../utils/format'
+import ThemeToggle from '../ui/ThemeToggle'
 
 /**
  * Layout dashboard dengan sidebar + topbar.
@@ -9,8 +11,10 @@ import { cx } from '../../utils/format'
  */
 export default function DashboardLayout({ role = 'seller', navItems = [] }) {
   const { user, logout } = useAuth()
+  const { theme } = useTheme()
   const location = useLocation()
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const isDark = theme === 'dark'
 
   // Cek role
   if (!user) return <Navigate to="/login" replace />
@@ -20,7 +24,7 @@ export default function DashboardLayout({ role = 'seller', navItems = [] }) {
   const activeItem = navItems.find((item) => location.pathname === item.to || location.pathname.startsWith(item.to + '/'))
 
   return (
-    <div className="flex min-h-screen bg-cream">
+    <div className={cx('flex min-h-screen', isDark ? 'bg-[#0f1a14]' : 'bg-cream')}>
       {/* Mobile overlay */}
       {sidebarOpen && (
         <div className="fixed inset-0 z-40 bg-black/40 lg:hidden" onClick={() => setSidebarOpen(false)} />
@@ -29,7 +33,8 @@ export default function DashboardLayout({ role = 'seller', navItems = [] }) {
       {/* ── Sidebar ── */}
       <aside
         className={cx(
-          'fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-leaf-100 transform transition-transform duration-200 lg:translate-x-0 lg:static lg:z-auto',
+          'fixed inset-y-0 left-0 z-50 w-64 border-r transform transition-transform duration-200 lg:translate-x-0 lg:static lg:z-auto',
+          isDark ? 'bg-[#1a2820] border-sage-800' : 'bg-white border-leaf-100',
           sidebarOpen ? 'translate-x-0' : '-translate-x-full',
         )}
       >
@@ -37,8 +42,8 @@ export default function DashboardLayout({ role = 'seller', navItems = [] }) {
         <div className="flex items-center gap-3 px-5 py-5 border-b border-leaf-100">
           <span className="text-2xl">🌿</span>
           <div>
-            <p className="font-extrabold text-forest">Tanamanku</p>
-            <p className="text-[10px] font-semibold text-leaf-900/50 uppercase tracking-wider">
+            <p className={cx('font-extrabold', isDark ? 'text-white' : 'text-forest')}>Tanamanku</p>
+            <p className={cx('text-[10px] font-semibold uppercase tracking-wider', isDark ? 'text-sage-400' : 'text-leaf-900/50')}>
               {role === 'admin' ? 'Admin Panel' : 'Seller Panel'}
             </p>
           </div>
@@ -57,7 +62,9 @@ export default function DashboardLayout({ role = 'seller', navItems = [] }) {
                   'flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-150',
                   active
                     ? 'bg-leaf-600 text-white shadow-soft'
-                    : 'text-leaf-900/70 hover:bg-leaf-50 hover:text-leaf-900',
+                    : isDark
+                      ? 'text-sage-300 hover:bg-sage-800 hover:text-white'
+                      : 'text-leaf-900/70 hover:bg-leaf-50 hover:text-leaf-900',
                 )}
               >
                 <span className="text-lg">{item.icon}</span>
@@ -73,11 +80,14 @@ export default function DashboardLayout({ role = 'seller', navItems = [] }) {
         </nav>
 
         {/* Back to store / Admin link */}
-        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-leaf-100">
+        <div className={cx('absolute bottom-0 left-0 right-0 p-4 border-t', isDark ? 'border-sage-800' : 'border-leaf-100')}>
+          <div className="mb-2">
+            <ThemeToggle className="w-full justify-center" />
+          </div>
           {user.role === 'admin' && role === 'seller' ? (
             <Link
               to="/admin"
-              className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-leaf-900/60 hover:bg-leaf-50 transition"
+              className={cx('flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition', isDark ? 'text-sage-400 hover:bg-sage-800' : 'text-leaf-900/60 hover:bg-leaf-50')}
             >
               <span>🛡️</span>
               <span>Kembali ke Admin Panel</span>
@@ -85,7 +95,7 @@ export default function DashboardLayout({ role = 'seller', navItems = [] }) {
           ) : (
             <Link
               to="/"
-              className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-leaf-900/60 hover:bg-leaf-50 transition"
+              className={cx('flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition', isDark ? 'text-sage-400 hover:bg-sage-800' : 'text-leaf-900/60 hover:bg-leaf-50')}
             >
               <span>🏪</span>
               <span>Kembali ke Toko</span>
@@ -97,7 +107,7 @@ export default function DashboardLayout({ role = 'seller', navItems = [] }) {
       {/* ── Main ── */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Topbar */}
-        <header className="sticky top-0 z-30 flex items-center gap-4 px-4 sm:px-6 py-3 bg-white/80 backdrop-blur-md border-b border-leaf-100">
+        <header className={cx('sticky top-0 z-30 flex items-center gap-4 px-4 sm:px-6 py-3 backdrop-blur-md border-b', isDark ? 'bg-[#0f1a14]/80 border-sage-800' : 'bg-white/80 border-leaf-100')}>
           {/* Mobile hamburger */}
           <button
             onClick={() => setSidebarOpen(true)}
@@ -110,23 +120,24 @@ export default function DashboardLayout({ role = 'seller', navItems = [] }) {
 
           {/* Breadcrumb */}
           <div className="flex-1">
-            <h1 className="text-lg font-bold text-forest">
+            <h1 className={cx('text-lg font-bold', isDark ? 'text-white' : 'text-forest')}>
               {activeItem?.label || 'Dashboard'}
             </h1>
           </div>
 
           {/* User menu */}
           <div className="flex items-center gap-3">
+            <ThemeToggle />
             <div className="hidden sm:block text-right">
-              <p className="text-sm font-semibold text-forest">{user.name}</p>
-              <p className="text-[11px] text-leaf-900/50 capitalize">{user.role}</p>
+              <p className={cx('text-sm font-semibold', isDark ? 'text-white' : 'text-forest')}>{user.name}</p>
+              <p className={cx('text-[11px] capitalize', isDark ? 'text-sage-400' : 'text-leaf-900/50')}>{user.role}</p>
             </div>
-            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-leaf-100 text-lg">
+            <div className={cx('flex h-9 w-9 items-center justify-center rounded-full text-lg', isDark ? 'bg-sage-700' : 'bg-leaf-100')}>
               {user.avatar || '🧑‍🌾'}
             </div>
             <button
               onClick={async () => { await logout(); window.location.href = '/login' }}
-              className="p-2 rounded-xl hover:bg-rose-50 text-leaf-900/40 hover:text-rose-600 transition"
+              className={cx('p-2 rounded-xl transition', isDark ? 'text-sage-500 hover:bg-sage-800 hover:text-rose-400' : 'text-leaf-900/40 hover:bg-rose-50 hover:text-rose-600')}
               title="Keluar"
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
@@ -145,7 +156,7 @@ export default function DashboardLayout({ role = 'seller', navItems = [] }) {
       </div>
 
       {/* Mobile Bottom Navigation */}
-      <nav className="fixed bottom-0 left-0 right-0 z-40 border-t border-leaf-100 bg-white/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-lg lg:hidden">
+      <nav className={cx('fixed bottom-0 left-0 right-0 z-40 border-t pb-[env(safe-area-inset-bottom)] backdrop-blur-lg lg:hidden', isDark ? 'bg-[#1a2820]/95 border-sage-800' : 'bg-white/95 border-leaf-100')}>
         <div className="grid grid-cols-6 gap-1 px-2">
           {navItems.slice(0, 6).map((item) => {
             const active = location.pathname === item.to || location.pathname.startsWith(item.to + '/')
@@ -154,9 +165,9 @@ export default function DashboardLayout({ role = 'seller', navItems = [] }) {
                 key={item.to}
                 to={item.to}
                 onClick={() => setSidebarOpen(false)}
-                className={`flex flex-col items-center gap-0.5 rounded-xl py-2.5 text-[10px] font-semibold transition ${
-                  active ? 'bg-leaf-600 text-white' : 'text-leaf-900/45 hover:bg-leaf-50'
-                }`}
+                className={cx('flex flex-col items-center gap-0.5 rounded-xl py-2.5 text-[10px] font-semibold transition',
+                  active ? 'bg-leaf-600 text-white' : isDark ? 'text-sage-500 hover:bg-sage-800' : 'text-leaf-900/45 hover:bg-leaf-50'
+                )}
               >
                 <span className={`text-lg ${active ? 'scale-110' : ''}`}>{item.icon}</span>
                 <span className="truncate px-1">{item.label}</span>

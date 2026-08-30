@@ -37,16 +37,28 @@ class AuthService
 
     /**
      * Login: verifikasi kredensial, cek akun aktif, terbitkan token Sanctum.
+     * Includes account lockout after 5 failed attempts.
      */
     public function login(array $data): User
     {
         $user = User::where('email', $data['email'])->first();
 
+        // Check account lockout
+        if ($user && $this->isAccountLocked($user)) {
+            throw ValidationException::withMessages([
+                'email' => ['Akun terkunci sementara karena terlalu banyak percobaan gagal. Coba lagi dalam 15 menit.'],
+            ]);
+        }
+
         if (! $user || ! Hash::check($data['password'], $user->password)) {
+            // Record failed attempt
+            if ($user) {
+                $this->recordFailedAttempt($user);
+            }
             throw ValidationException::withMessages([
                 'email' => ['Email atau password salah.'],
             ]);
-        }   
+        }
 
         if (! $user->is_active) {
             throw ValidationException::withMessages([
@@ -54,9 +66,64 @@ class AuthService
             ]);
         }
 
+        // Reset failed attempts on successful login
+        $this->resetFailedAttempts($user);
+
         $user->token = $user->createToken('tanamanku')->plainTextToken;
 
         return $user;
+    }
+
+    /**
+     * Check if account is locked due to too many failed login attempts.
+     */
+    private function isAccountLocked(User $user): bool
+    {
+        $lockoutMinutes = (int) env('LOCKOUT_DURATION_MINUTES', 15);
+        $maxAttempts = (int) env('MAX_LOGIN_ATTEMPTS', 5);
+
+        $failedAttempts = \Cache::get("login_attempts_{$user->id}", 0);
+        $lockedUntil = \Cache::get("login_locked_{$user->id}");
+
+        if ($lockedUntil && now()->timestamp < $lockedUntil) {
+            return true;
+        }
+
+        if ($lockedUntil && now()->timestamp >= $lockedUntil) {
+            // Lockout expired, reset
+            \Cache::forget("login_attempts_{$user->id}");
+            \Cache::forget("login_locked_{$user->id}");
+            return false;
+        }
+
+        return false;
+    }
+
+    /**
+     * Record a failed login attempt.
+     */
+    private function recordFailedAttempt(User $user): void
+    {
+        $lockoutMinutes = (int) env('LOCKOUT_DURATION_MINUTES', 15);
+        $maxAttempts = (int) env('MAX_LOGIN_ATTEMPTS', 5);
+        $attemptKey = "login_attempts_{$user->id}";
+        $lockoutKey = "login_locked_{$user->id}";
+
+        $attempts = \Cache::increment($attemptKey);
+        \Cache::put($attemptKey, $attempts, $lockoutMinutes * 60);
+
+        if ($attempts >= $maxAttempts) {
+            \Cache::put($lockoutKey, now()->addMinutes($lockoutMinutes)->timestamp, $lockoutMinutes * 60);
+        }
+    }
+
+    /**
+     * Reset failed login attempts after successful login.
+     */
+    private function resetFailedAttempts(User $user): void
+    {
+        \Cache::forget("login_attempts_{$user->id}");
+        \Cache::forget("login_locked_{$user->id}");
     }
 
     public function logout(User $user): void

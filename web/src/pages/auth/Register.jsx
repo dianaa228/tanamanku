@@ -32,8 +32,8 @@ export default function Register() {
 
   return (
     <div>
-      <h1 className="display text-3xl font-semibold text-forest">Mulai berkebun 🪴</h1>
-      <p className="mt-2 text-sm text-muted">Gratis selamanya. Tanpa kartu kredit.</p>
+      <h1 className="display text-3xl font-semibold text-forest dark:text-white">Mulai berkebun 🪴</h1>
+      <p className="mt-2 text-sm text-muted dark:text-sage-400">Gratis selamanya. Tanpa kartu kredit.</p>
 
       <form onSubmit={submit} className="mt-8 space-y-4">
         {errors.general && (
@@ -69,12 +69,12 @@ export default function Register() {
         </Button>
       </form>
 
-      <p className="mt-6 text-center text-xs text-leaf-900/50">
+      <p className="mt-6 text-center text-xs text-leaf-900/50 dark:text-sage-500">
         Dengan mendaftar, Anda menyetujui Ketentuan Layanan & Kebijakan Privasi Tanamanku.
       </p>
-      <p className="mt-6 text-center text-sm text-leaf-900/60">
+      <p className="mt-6 text-center text-sm text-leaf-900/60 dark:text-sage-400">
         Sudah punya akun?{' '}
-        <Link to="/login" className="font-bold text-leaf-700 hover:text-leaf-800">
+        <Link to="/login" className="font-bold text-leaf-700 hover:text-leaf-800 dark:text-leaf-400 dark:hover:text-leaf-300">
           Masuk
         </Link>
       </p>

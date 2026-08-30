@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
+import { useTheme } from '../../context/ThemeContext'
 import { cx } from '../../utils/format'
 
 const items = [
@@ -12,9 +13,11 @@ const items = [
 
 export default function MobileNavigation() {
   const { user } = useAuth()
+  const { theme } = useTheme()
+  const isDark = theme === 'dark'
   const profileTo = user ? '/profile' : '/login'
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-40 border-t border-sage-100 bg-white/95 pb-[env(safe-area-inset-bottom)] shadow-[0_-6px_20px_-10px_rgba(28,43,34,0.12)] backdrop-blur-lg lg:hidden">
+    <nav className={cx('fixed bottom-0 left-0 right-0 z-40 border-t pb-[env(safe-area-inset-bottom)] backdrop-blur-lg lg:hidden', isDark ? 'border-sage-700 bg-sage-900/95 shadow-[0_-6px_20px_-10px_rgba(0,0,0,0.3)]' : 'border-sage-100 bg-white/95 shadow-[0_-6px_20px_-10px_rgba(28,43,34,0.12)]')}>
       <div className="grid grid-cols-5">
         {items.map((item) => {
           const to = item.to === '/profile' ? profileTo : item.to
@@ -26,14 +29,14 @@ export default function MobileNavigation() {
               className={({ isActive }) =>
                 cx(
                   'relative flex flex-col items-center gap-1 py-2.5 text-[11px] font-semibold transition',
-                  isActive ? 'text-leaf-700' : 'text-muted hover:text-forest',
+                  isActive ? 'text-leaf-700' : isDark ? 'text-sage-400 hover:text-white' : 'text-muted hover:text-forest',
                 )
               }
             >
               {({ isActive }) => (
                 <>
                   {isActive && <span className="absolute -top-px h-0.5 w-8 rounded-full bg-leaf-700" />}
-                  <span className={cx('flex h-7 w-7 items-center justify-center rounded-full text-xl transition-transform', isActive && 'scale-110 bg-leaf-50')}>
+                  <span className={cx('flex h-7 w-7 items-center justify-center rounded-full text-xl transition-transform', isActive && (isDark ? 'scale-110 bg-sage-800' : 'scale-110 bg-leaf-50'))}>
                     {item.icon}
                   </span>
                   {item.label}

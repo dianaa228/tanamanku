@@ -195,6 +195,8 @@ export const products = [
   },
 ]
 
+export const mockProducts = products
+
 export const plantSpecies = [
   {
     id: 1, slug: 'monstera-deliciosa', name: 'Monstera Deliciosa', scientificName: 'Monstera deliciosa',

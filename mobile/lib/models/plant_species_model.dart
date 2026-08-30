@@ -12,7 +12,6 @@ class PlantSpeciesModel {
   final String? growthDuration;
   final String? description;
   final String? image;
-  final String? icon;
 
   PlantSpeciesModel({
     required this.id,
@@ -28,7 +27,6 @@ class PlantSpeciesModel {
     this.growthDuration,
     this.description,
     this.image,
-    this.icon,
   });
 
   factory PlantSpeciesModel.fromJson(Map<String, dynamic> json) {
@@ -46,7 +44,6 @@ class PlantSpeciesModel {
       growthDuration: json['growth_duration'],
       description: json['description'],
       image: json['image'],
-      icon: json['icon'],
     );
   }
 }

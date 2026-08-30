@@ -2,6 +2,7 @@ import { useState } from 'react'
 import Button from '../../components/ui/Button'
 import { useToast } from '../../context/ToastContext'
 import Badge from '../../components/ui/Badge'
+import ThemeToggle from '../../components/ui/ThemeToggle'
 
 export default function AdminSettings() {
   const { showToast } = useToast()
@@ -51,9 +52,12 @@ export default function AdminSettings() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div>
-        <h1 className="text-2xl font-extrabold text-leaf-950">⚙️ Pengaturan Platform</h1>
-        <p className="mt-1 text-sm text-leaf-900/50">Konfigurasi seluruh sistem Tanamanku</p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-extrabold text-leaf-950 dark:text-white">⚙️ Pengaturan Platform</h1>
+          <p className="mt-1 text-sm text-leaf-900/50 dark:text-sage-400">Konfigurasi seluruh sistem Tanamanku</p>
+        </div>
+        <ThemeToggle />
       </div>
 
       <div className="grid gap-6 lg:grid-cols-[220px_1fr]">
@@ -66,7 +70,7 @@ export default function AdminSettings() {
               className={`flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition ${
                 activeTab === t.id
                   ? 'bg-leaf-600 text-white shadow-sm'
-                  : 'bg-white text-leaf-900/60 hover:bg-leaf-50'
+                  : 'bg-white text-leaf-900/60 hover:bg-leaf-50 dark:bg-sage-800 dark:text-sage-300 dark:hover:bg-sage-700'
               }`}
             >
               <span>{t.icon}</span>
@@ -79,53 +83,53 @@ export default function AdminSettings() {
         <div className="space-y-6">
           {/* General Settings */}
           {activeTab === 'general' && (
-            <div className="rounded-2xl border border-leaf-100 bg-white p-6 shadow-soft">
-              <h3 className="text-lg font-bold text-leaf-950">🏪 Pengaturan Umum</h3>
+            <div className="rounded-2xl border border-leaf-100 bg-white p-6 shadow-soft dark:border-sage-800 dark:bg-sage-900">
+              <h3 className="text-lg font-bold text-leaf-950 dark:text-white">🏪 Pengaturan Umum</h3>
               <div className="mt-4 space-y-4">
                 <div>
-                  <label className="mb-1 block text-sm font-semibold text-leaf-900">Nama Platform</label>
+                  <label className="mb-1 block text-sm font-semibold text-leaf-900 dark:text-sage-300">Nama Platform</label>
                   <input
                     value={settings.platformName}
                     onChange={set('platformName')}
-                    className="w-full rounded-xl border border-leaf-200 bg-white px-4 py-2.5 text-sm focus:border-leaf-400 focus:outline-none focus:ring-2 focus:ring-leaf-100"
+                    className="w-full rounded-xl border border-leaf-200 bg-white px-4 py-2.5 text-sm focus:border-leaf-400 focus:outline-none focus:ring-2 focus:ring-leaf-100 dark:border-sage-700 dark:bg-sage-800 dark:text-white"
                   />
                 </div>
                 <div>
-                  <label className="mb-1 block text-sm font-semibold text-leaf-900">Deskripsi</label>
+                  <label className="mb-1 block text-sm font-semibold text-leaf-900 dark:text-sage-300">Deskripsi</label>
                   <textarea
                     value={settings.platformDescription}
                     onChange={set('platformDescription')}
                     rows={3}
-                    className="w-full rounded-xl border border-leaf-200 bg-white px-4 py-2.5 text-sm focus:border-leaf-400 focus:outline-none focus:ring-2 focus:ring-leaf-100"
+                    className="w-full rounded-xl border border-leaf-200 bg-white px-4 py-2.5 text-sm focus:border-leaf-400 focus:outline-none focus:ring-2 focus:ring-leaf-100 dark:border-sage-700 dark:bg-sage-800 dark:text-white"
                   />
                 </div>
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div>
-                    <label className="mb-1 block text-sm font-semibold text-leaf-900">Min. Order (Rp)</label>
+                    <label className="mb-1 block text-sm font-semibold text-leaf-900 dark:text-sage-300">Min. Order (Rp)</label>
                     <input
                       type="number"
                       value={settings.minOrderAmount}
                       onChange={(e) => setSettings({ ...settings, minOrderAmount: Number(e.target.value) })}
-                      className="w-full rounded-xl border border-leaf-200 bg-white px-4 py-2.5 text-sm focus:border-leaf-400 focus:outline-none"
+                      className="w-full rounded-xl border border-leaf-200 bg-white px-4 py-2.5 text-sm focus:border-leaf-400 focus:outline-none dark:border-sage-700 dark:bg-sage-800 dark:text-white"
                     />
                   </div>
                   <div>
-                    <label className="mb-1 block text-sm font-semibold text-leaf-900">Maks. Item Keranjang</label>
+                    <label className="mb-1 block text-sm font-semibold text-leaf-900 dark:text-sage-300">Maks. Item Keranjang</label>
                     <input
                       type="number"
                       value={settings.maxCartItems}
                       onChange={(e) => setSettings({ ...settings, maxCartItems: Number(e.target.value) })}
-                      className="w-full rounded-xl border border-leaf-200 bg-white px-4 py-2.5 text-sm focus:border-leaf-400 focus:outline-none"
+                      className="w-full rounded-xl border border-leaf-200 bg-white px-4 py-2.5 text-sm focus:border-leaf-400 focus:outline-none dark:border-sage-700 dark:bg-sage-800 dark:text-white"
                     />
                   </div>
                 </div>
                 <div>
-                  <label className="mb-1 block text-sm font-semibold text-leaf-900">Komisi Seller (%)</label>
+                  <label className="mb-1 block text-sm font-semibold text-leaf-900 dark:text-sage-300">Komisi Seller (%)</label>
                   <input
                     type="number"
                     value={settings.sellerCommission}
                     onChange={(e) => setSettings({ ...settings, sellerCommission: Number(e.target.value) })}
-                    className="w-full rounded-xl border border-leaf-200 bg-white px-4 py-2.5 text-sm focus:border-leaf-400 focus:outline-none"
+                    className="w-full rounded-xl border border-leaf-200 bg-white px-4 py-2.5 text-sm focus:border-leaf-400 focus:outline-none dark:border-sage-700 dark:bg-sage-800 dark:text-white"
                   />
                 </div>
               </div>
@@ -134,8 +138,8 @@ export default function AdminSettings() {
 
           {/* Shipping Settings */}
           {activeTab === 'shipping' && (
-            <div className="rounded-2xl border border-leaf-100 bg-white p-6 shadow-soft">
-              <h3 className="text-lg font-bold text-leaf-950">🚚 Pengaturan Pengiriman</h3>
+            <div className="rounded-2xl border border-leaf-100 bg-white p-6 shadow-soft dark:border-sage-800 dark:bg-sage-900">
+              <h3 className="text-lg font-bold text-leaf-950 dark:text-white">🚚 Pengaturan Pengiriman</h3>
               <div className="mt-4 space-y-4">
                 <div className="grid gap-4 sm:grid-cols-3">
                   <div className="rounded-xl bg-leaf-50 p-4">
@@ -180,7 +184,7 @@ export default function AdminSettings() {
           {activeTab === 'payment' && (
             <div className="space-y-6">
               {/* Midtrans Status */}
-              <div className="rounded-2xl border border-leaf-100 bg-white p-6 shadow-soft">
+              <div className="rounded-2xl border border-leaf-100 bg-white p-6 shadow-soft dark:border-sage-800 dark:bg-sage-900">
                 <div className="flex items-center justify-between">
                   <div>
                     <h3 className="text-lg font-bold text-leaf-950">💳 Midtrans Payment Gateway</h3>
@@ -294,8 +298,8 @@ export default function AdminSettings() {
 
           {/* Notification Settings */}
           {activeTab === 'notification' && (
-            <div className="rounded-2xl border border-leaf-100 bg-white p-6 shadow-soft">
-              <h3 className="text-lg font-bold text-leaf-950">🔔 Pengaturan Notifikasi</h3>
+            <div className="rounded-2xl border border-leaf-100 bg-white p-6 shadow-soft dark:border-sage-800 dark:bg-sage-900">
+              <h3 className="text-lg font-bold text-leaf-950 dark:text-white">🔔 Pengaturan Notifikasi</h3>
               <div className="mt-4 space-y-3">
                 {[
                   { key: 'emailNotifications', label: 'Email Notifikasi', desc: 'Kirim notifikasi via email' },

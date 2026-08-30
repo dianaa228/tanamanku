@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../../core/theme/app_theme.dart';
 import '../../core/constants/app_constants.dart';
+import '../../core/utils/plant_emoji.dart';
 import '../../services/garden_service.dart';
 import 'garden_provider.dart';
 import '../../widgets/loading_widget.dart';
@@ -260,7 +261,7 @@ class _MyGardenPageState extends State<MyGardenPage> {
                   }
                   return Column(
                     children: species.map((s) => ListTile(
-                      leading: Text(s.icon ?? '🌿', style: const TextStyle(fontSize: 28)),
+                      leading: Text(plantEmoji(name: s.name, slug: s.slug), style: const TextStyle(fontSize: 28)),
                       title: Text(s.name, style: GoogleFonts.poppins(fontWeight: FontWeight.w600)),
                       subtitle: Text(s.careLevel, style: GoogleFonts.poppins(fontSize: 11, color: AppTheme.leaf900.withValues(alpha: 0.5))),
                       onTap: () async {

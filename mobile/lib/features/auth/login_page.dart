@@ -18,7 +18,6 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final _emailCtrl = TextEditingController(text: 'rina@tanamanku.id');
   final _passCtrl = TextEditingController();
-  bool _obscure = true;
 
   @override
   void dispose() {
@@ -119,21 +118,13 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           const SizedBox(height: 16),
 
-                          // Password
+                          // Password (toggle visibility built-in)
                           AppTextField(
                             label: 'Password',
                             hint: '••••••••',
                             prefixIcon: Icons.lock_outline,
-                            suffix: IconButton(
-                              icon: Icon(
-                                _obscure ? Icons.visibility_off_outlined : Icons.visibility_outlined,
-                                size: 20,
-                                color: AppTheme.leaf400,
-                              ),
-                              onPressed: () => setState(() => _obscure = !_obscure),
-                            ),
                             controller: _passCtrl,
-                            obscure: _obscure,
+                            obscure: true,
                             textInputAction: TextInputAction.done,
                             validator: (v) {
                               if (v == null || v.isEmpty) return 'Password wajib diisi';
