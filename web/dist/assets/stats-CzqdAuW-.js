@@ -1,1 +1,0 @@
-import{k as s,l as e,n as r}from"./index-B8iNGG2D.js";const d={products:27,nurseries:6,gardens:1e4},c={getStats:async()=>{var a;if(s()==="api"){const t=await e.get("/stats");return{success:!0,message:"Stats dimuat",data:((a=t.data)==null?void 0:a.data)||t.data}}return await r(),{success:!0,message:"Stats dimuat",data:d}}};export{c as s};
