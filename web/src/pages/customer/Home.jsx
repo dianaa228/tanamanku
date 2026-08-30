@@ -115,10 +115,10 @@ export default function Home() {
   return (
     <div ref={revealRef}>
       {/* ═══ HERO ═══ */}
-      <section className="relative overflow-hidden section-cream">
+      <section className="relative overflow-hidden bg-gradient-to-b from-[#e8f0e6] to-[#f5f2eb]">
         {/* decorative botanical orbs */}
-        <div className="pointer-events-none absolute -right-28 -top-24 h-[420px] w-[420px] rounded-full bg-leaf-500/10 blur-3xl" />
-        <div className="pointer-events-none absolute -left-24 bottom-6 h-80 w-80 rounded-full bg-sun-400/10 blur-3xl" />
+        <div className="pointer-events-none absolute -right-28 -top-24 h-[420px] w-[420px] rounded-full bg-leaf-400/15 blur-3xl" />
+        <div className="pointer-events-none absolute -left-24 bottom-6 h-80 w-80 rounded-full bg-sun-300/20 blur-3xl" />
         <div className="pointer-events-none absolute right-1/3 top-10 text-6xl opacity-10" style={{ transform: 'rotate(-18deg)' }}>🍃</div>
 
         <div className="relative mx-auto grid max-w-7xl items-center gap-14 px-4 pb-16 pt-10 sm:px-6 lg:grid-cols-2 lg:pb-24 lg:pt-16">

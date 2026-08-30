@@ -132,15 +132,15 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-feature-settings: "ss01";
-  background: linear-gradient(180deg, #f7f4ee 0%, #f0ede6 30%, #e8f0e6 60%, #d4e4d1 100%);
+  background: #f0ede6;
   color: #1c2b22;
-  --bg-primary: #f7f4ee;
+  --bg-primary: #f0ede6;
   --bg-secondary: #e8f0e6;
-  --bg-card: rgba(255,255,255,0.85);
-  --bg-card-hover: rgba(255,255,255,0.95);
-  --bg-input: rgba(255,255,255,0.9);
-  --border-primary: rgba(195,215,196,0.6);
-  --border-secondary: rgba(224,235,224,0.7);
+  --bg-card: #ffffff;
+  --bg-card-hover: #f8faf8;
+  --bg-input: #ffffff;
+  --border-primary: #c3d7c4;
+  --border-secondary: #dde8dd;
   --text-primary: #1c2b22;
   --text-secondary: #3f654c;
   --text-muted: #68756c;
@@ -149,15 +149,15 @@ body {
 /* Dark mode — deep forest gradient */
 .dark body,
 body.dark {
-  background: linear-gradient(180deg, #0a120e 0%, #0f1a14 30%, #142319 60%, #1a2820 100%);
+  background: #0f1a14;
   color: #e0ebe0;
-  --bg-primary: #0a120e;
-  --bg-secondary: #0f1a14;
-  --bg-card: rgba(26,40,32,0.7);
-  --bg-card-hover: rgba(34,53,43,0.8);
-  --bg-input: rgba(26,40,32,0.8);
-  --border-primary: rgba(46,51,44,0.6);
-  --border-secondary: rgba(56,63,53,0.5);
+  --bg-primary: #0f1a14;
+  --bg-secondary: #142319;
+  --bg-card: #1a2820;
+  --bg-card-hover: #1e3028;
+  --bg-input: #1a2820;
+  --border-primary: #2e332c;
+  --border-secondary: #383f35;
   --text-primary: #e0ebe0;
   --text-secondary: #9abba0;
   --text-muted: #6a7a64;
@@ -205,7 +205,6 @@ body.dark {
   @apply relative overflow-hidden rounded-[2rem] p-6 shadow-soft sm:p-8;
   background: var(--bg-card);
   border: 1px solid var(--border-primary);
-  backdrop-filter: blur(12px);
 }
 
 .section-title {
@@ -217,7 +216,6 @@ body.dark {
   @apply rounded-3xl shadow-soft transition-all duration-300;
   background: var(--bg-card);
   border: 1px solid var(--border-primary);
-  backdrop-filter: blur(12px);
 }
 .card-v2:hover {
   transform: translateY(-4px);
@@ -248,36 +246,24 @@ body.dark {
 
 /* ── Section gradient backgrounds ── */
 .section-gradient {
-  background: linear-gradient(180deg, rgba(247,244,238,0.3) 0%, rgba(232,240,230,0.6) 50%, rgba(212,228,209,0.4) 100%);
-  position: relative;
+  background: linear-gradient(180deg, #e8f0e6 0%, #dce8da 50%, #d4e4d1 100%);
 }
 .dark .section-gradient {
-  background: linear-gradient(180deg, rgba(10,18,14,0.3) 0%, rgba(15,26,20,0.6) 50%, rgba(26,40,32,0.4) 100%);
+  background: linear-gradient(180deg, #142319 0%, #1a2820 50%, #1e3028 100%);
 }
 
 .section-dark {
-  background: linear-gradient(135deg, #1a3328 0%, #152a20 50%, #102019 100%);
-  position: relative;
-}
-.section-dark::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(107,142,35,0.3), transparent);
+  background: linear-gradient(180deg, #1a3328 0%, #152a20 50%, #102019 100%);
 }
 .dark .section-dark {
-  background: linear-gradient(135deg, #0d1a13 0%, #0a120e 50%, #070d0a 100%);
+  background: linear-gradient(180deg, #0d1a13 0%, #0a120e 50%, #070d0a 100%);
 }
 
 .section-cream {
-  background: linear-gradient(180deg, rgba(247,244,238,0.8) 0%, rgba(255,255,255,0.5) 50%, rgba(247,244,238,0.8) 100%);
-  position: relative;
+  background: #f5f2eb;
 }
 .dark .section-cream {
-  background: linear-gradient(180deg, rgba(15,26,20,0.5) 0%, rgba(20,35,25,0.4) 50%, rgba(15,26,20,0.5) 100%);
+  background: #121e17;
 }
 
 /* ── Button Shine ── */
