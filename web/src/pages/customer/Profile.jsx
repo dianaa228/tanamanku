@@ -40,7 +40,7 @@ export default function Profile() {
     { icon: '💡', label: 'Plant Finder', to: '/plant-finder', desc: 'Cari tanaman ideal' },
     { icon: '🩺', label: 'Plant Diagnosis', to: '/plant-diagnosis', desc: 'Cek kesehatan tanaman' },
     { icon: '💬', label: 'Komunitas', to: '/community', desc: `${user.stats?.posts || 0} post` },
-    { icon: '📍', label: 'Alamat', to: '#', desc: user.address ? `${user.address.label} · ${user.address.city}` : 'Belum ada', onClick: () => showToast('Kelola alamat tersedia di versi penuh', 'info') },
+    { icon: '📍', label: 'Alamat', to: '/alamat', desc: user.address ? `${user.address.label} · ${user.address.city}` : 'Kelola alamat pengiriman' },
   ]
 
   return (

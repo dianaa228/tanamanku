@@ -40,7 +40,7 @@ class AuthController extends BaseController
 
     public function me(Request $request): JsonResponse
     {
-        return $this->success(new UserResource($request->user()));
+        return $this->success(new UserResource($request->user()->load('addresses', 'store')));
     }
 
     public function forgotPassword(ForgotPasswordRequest $request): JsonResponse

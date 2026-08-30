@@ -1,1 +1,0 @@
-import{j as s,c as r}from"./index-mNzhqud5.js";function a({children:n,className:t,icon:e}){return s.jsxs("span",{className:r("inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold",t),children:[e&&s.jsx("span",{children:e}),n]})}export{a as B};

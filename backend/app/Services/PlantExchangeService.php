@@ -14,7 +14,7 @@ class PlantExchangeService
     {
         return PlantListing::query()
             ->where('status', 'active')
-            ->with('owner:id,name', 'species:id,name,emoji')
+            ->with('owner:id,name', 'species:id,name')
             ->when($filters['type'] ?? null, fn ($q, $type) => $q->where('type', $type))
             ->latest()
             ->paginate(15);

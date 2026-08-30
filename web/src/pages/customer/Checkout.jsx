@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useCart } from '../../context/CartContext'
 import { useAuth } from '../../context/AuthContext'
 import { useToast } from '../../context/ToastContext'
@@ -166,7 +166,10 @@ export default function Checkout() {
                 </p>
               </div>
             ) : (
-              <p className="mt-4 text-sm text-leaf-900/50">Belum ada alamat. Tambahkan di halaman Profil.</p>
+              <Link to="/alamat" className="mt-4 block rounded-2xl border border-dashed border-leaf-300 bg-leaf-50/60 p-4 text-sm text-leaf-700 transition hover:bg-leaf-50">
+                <span className="font-semibold">＋ Tambahkan alamat pengiriman</span>
+                <span className="block text-xs text-leaf-900/50">Belum ada alamat — atur di Buku Alamat.</span>
+              </Link>
             )}
           </section>
 

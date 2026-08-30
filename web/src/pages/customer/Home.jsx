@@ -258,6 +258,18 @@ export default function Home() {
             </div>
           ) : (
             <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-4">
+              {featured.length === 0 && (
+                <div className="col-span-full">
+                  <div className="flex flex-col items-center justify-center gap-4 rounded-[2rem] border border-dashed border-leaf-200 bg-leaf-50/40 px-6 py-16 text-center">
+                    <span className="flex h-20 w-20 items-center justify-center rounded-full bg-white text-5xl shadow-card ring-1 ring-leaf-100">🛍️</span>
+                    <h3 className="text-2xl font-semibold text-forest">Koleksi sedang disiapkan</h3>
+                    <p className="max-w-sm text-sm leading-relaxed text-muted">
+                      Toko-toko kami sedang merapikan koleksi terbaru. Coba lihat lagi sebentar lagi ya!
+                    </p>
+                    <Button to="/explore" variant="primary">Jelajahi katalog</Button>
+                  </div>
+                </div>
+              )}
               {featured.map((p, i) => (
                 <div key={p.id} className="reveal" style={{ transitionDelay: `${i * 50}ms` }}>
                   <ProductCard product={p} compact />
@@ -387,6 +399,18 @@ export default function Home() {
           </Button>
         </div>
         <div className="mt-8 grid gap-5 md:grid-cols-3">
+          {communityPosts.length === 0 && (
+            <div className="md:col-span-3">
+              <div className="flex flex-col items-center justify-center gap-4 rounded-[2rem] border border-dashed border-leaf-200 bg-leaf-50/40 px-6 py-16 text-center">
+                <span className="flex h-20 w-20 items-center justify-center rounded-full bg-white text-5xl shadow-card ring-1 ring-leaf-100">💬</span>
+                <h3 className="text-2xl font-semibold text-forest">Belum ada cerita</h3>
+                <p className="max-w-sm text-sm leading-relaxed text-muted">
+                  Jadilah pekebun pertama yang berbagi hasil kebun. Ceritamu bisa menginspirasi komunitas!
+                </p>
+                <Button to="/community" variant="primary">Mulai cerita</Button>
+              </div>
+            </div>
+          )}
           {communityPosts.slice(0, 3).map((post, i) => (
             <div key={post.id} className="reveal group overflow-hidden rounded-3xl border border-sage-100 bg-white shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-card" style={{ transitionDelay: `${i * 70}ms` }}>
               <Link to="/community" className="block">

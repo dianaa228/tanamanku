@@ -15,9 +15,9 @@ export default function Dropdown({ trigger, children, align = 'right', className
 
   return (
     <div ref={ref} className="relative">
-      <button onClick={() => setOpen((o) => !o)} className="cursor-pointer" aria-expanded={open}>
+      <div onClick={() => setOpen((o) => !o)} role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setOpen((o) => !o) }} className="cursor-pointer" aria-expanded={open}>
         {trigger}
-      </button>
+      </div>
       {open && (
         <div
           className={cx(

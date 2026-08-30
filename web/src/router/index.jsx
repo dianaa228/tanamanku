@@ -20,6 +20,7 @@ const PlantFinder = lazy(() => import('../pages/customer/PlantFinder'))
 const PlantDiagnosis = lazy(() => import('../pages/customer/PlantDiagnosis'))
 const Community = lazy(() => import('../pages/customer/Community'))
 const Profile = lazy(() => import('../pages/customer/Profile'))
+const Alamat = lazy(() => import('../pages/customer/Alamat'))
 const Services = lazy(() => import('../pages/customer/Services'))
 const ServiceDetail = lazy(() => import('../pages/customer/ServiceDetail'))
 const MyBookings = lazy(() => import('../pages/customer/MyBookings'))
@@ -114,6 +115,7 @@ export const router = createBrowserRouter([
       { path: '/plant-diagnosis', element: <LazyPage><PlantDiagnosis /></LazyPage> },
       { path: '/community', element: <LazyPage><Community /></LazyPage> },
       { path: '/profile', element: <LazyPage><Profile /></LazyPage> },
+      { path: '/alamat', element: <LazyPage><Alamat /></LazyPage> },
       { path: '/services', element: <LazyPage><Services /></LazyPage> },
       { path: '/services/:id', element: <LazyPage><ServiceDetail /></LazyPage> },
       { path: '/my-bookings', element: <LazyPage><MyBookings /></LazyPage> },

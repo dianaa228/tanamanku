@@ -68,6 +68,17 @@ Route::get('/stores/{store}/products', [ProductController::class, 'byStore']);
 Route::get('/plant-species', [PlantSpeciesController::class, 'index']);
 Route::get('/plant-species/{plantSpecies}', [PlantSpeciesController::class, 'show']);
 
+// ===== Publik baca (guest) — agar halaman katalog/nursery/komunitas/tukar/jasa terlihat tanpa login =====
+Route::get('/nurseries', [NurseryController::class, 'index']);
+Route::get('/nurseries/{idOrSlug}', [NurseryController::class, 'show']);
+Route::get('/nurseries/{nurseryId}/products', [NurseryController::class, 'products']);
+Route::get('/community/posts', [CommunityController::class, 'index']);
+Route::get('/community/posts/{post}', [CommunityController::class, 'show']);
+Route::get('/plant-exchange/listings', [PlantExchangeController::class, 'index']);
+Route::get('/plant-exchange/listings/{plantListing}', [PlantExchangeController::class, 'show']);
+Route::get('/services', [ServiceController::class, 'index']);
+Route::get('/services/{service}', [ServiceController::class, 'show']);
+
 // ===== Protected (customer) =====
 Route::middleware('auth:sanctum')->group(function () {
     // User
@@ -127,9 +138,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Community
     Route::prefix('community')->group(function () {
-        Route::get('/posts', [CommunityController::class, 'index']);
         Route::post('/posts', [CommunityController::class, 'store']);
-        Route::get('/posts/{post}', [CommunityController::class, 'show']);
         Route::delete('/posts/{post}', [CommunityController::class, 'destroy'])->middleware('can:delete,post');
         Route::post('/posts/{post}/like', [CommunityController::class, 'toggleLike']);
         Route::post('/posts/{post}/comments', [CommentController::class, 'store']);
@@ -139,18 +148,14 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Plant Exchange
     Route::prefix('plant-exchange')->group(function () {
-        Route::get('/listings', [PlantExchangeController::class, 'index']);
         Route::get('/listings/mine', [PlantExchangeController::class, 'myListings']);
         Route::post('/listings', [PlantExchangeController::class, 'store']);
-        Route::get('/listings/{plantListing}', [PlantExchangeController::class, 'show']);
         Route::post('/listings/{plantListing}/offer', [PlantExchangeController::class, 'offer']);
         Route::get('/exchanges/mine', [PlantExchangeController::class, 'myExchanges']);
         Route::put('/exchanges/{plantExchange}', [PlantExchangeController::class, 'respond']);
     });
 
     // Services
-    Route::get('/services', [ServiceController::class, 'index']);
-    Route::get('/services/{service}', [ServiceController::class, 'show']);
     Route::post('/service-orders', [ServiceOrderController::class, 'store']);
     Route::get('/service-orders', [ServiceOrderController::class, 'index']);
     Route::get('/service-orders/{serviceOrder}', [ServiceOrderController::class, 'show']);
@@ -179,11 +184,6 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/cancel', [SubscriptionController::class, 'cancel']);
         Route::get('/billing', [SubscriptionController::class, 'billing']);
     });
-
-    // Nursery
-    Route::get('/nurseries', [NurseryController::class, 'index']);
-    Route::get('/nurseries/{idOrSlug}', [NurseryController::class, 'show']);
-    Route::get('/nurseries/{nurseryId}/products', [NurseryController::class, 'products']);
 
     // Seller Analytics
     Route::get('/seller/analytics', [AnalyticsController::class, 'seller']);
